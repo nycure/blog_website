@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block hero %}
+<section class="hero">
+    <div class="container">
+        <h1>{{ HERO_TITLE|default(SITENAME) }}</h1>
+        <p>{{ HERO_SUBTITLE|default("Exploring the future.") }}</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="post-list">
+    <h2>Latest Posts</h2>
+    <div class="grid">
+        {% for article in articles_page.object_list %}
+        <article class="post-card">
+            <div class="post-meta">
+                <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+                <span class="category">{{ article.category }}</span>
+            </div>
+            <h3><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
+            <p>{{ article.summary|striptags|truncate(140) }}</p>
+            <a href="{{ SITEURL }}/{{ article.url }}" class="read-more">Read Article &rarr;</a>
+        </article>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if articles_page.has_other_pages() %}
+    <div class="pagination">
+        {% if articles_page.has_previous() %}
+        <a href="{{ SITEURL }}/{{ articles_page.previous_page_number() }}.html">&laquo; Newer</a>
+        {% endif %}
+        {% if articles_page.has_next() %}
+        <a href="{{ SITEURL }}/{{ articles_page.next_page_number() }}.html">Older &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

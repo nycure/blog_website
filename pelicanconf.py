@@ -1,31 +1,77 @@
-AUTHOR = 'Your Name'
-SITENAME = 'My AI Blog'
+from datetime import datetime
+CURRENT_YEAR = datetime.now().year
+AUTHOR = 'Admin'
+SITENAME = 'analyticsdrive'
 SITEURL = ''
 
 PATH = 'content'
-
 TIMEZONE = 'UTC'
-
 DEFAULT_LANG = 'en'
 
-# Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
-TRANSLATION_FEED_ATOM = None
-AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
+# --- THEME SETTINGS ---
+THEME = 'themes/modern-ai'
 
-# Blogroll
-LINKS = (('Pelican', 'https://getpelican.com/'),
-         ('Python.org', 'https://www.python.org/'),
-         ('Jinja2', 'https://jinja.palletsprojects.com/'),
-         ('You can modify those links in your config file', '#'),)
+# --- PLUGINS ---
+# Sitemap is installed via pip, so we don't need PLUGIN_PATHS
+PLUGINS = ['sitemap']
 
-# Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'articles': 0.8,
+        'indexes': 0.5,
+        'pages': 0.5
+    },
+    'changefreqs': {
+        'articles': 'monthly',
+        'indexes': 'daily',
+        'pages': 'monthly'
+    }
+}
+
+# --- SEO SETTINGS ---
+SEO_DESCRIPTION = "A futuristic blog exploring AI, Technology, and Innovation."
+SEO_KEYWORDS = "AI, Machine Learning, Tech, Future, Python"
+OG_IMAGE = "images/blog.jpg" # Place image in content/images/
+
+# --- UI CUSTOMIZATION ---
+# Colors match the CSS variables in style.css
+# You can override them here if you implement dynamic CSS injection, 
+# but usually editing style.css is better.
+HERO_TITLE = "Welcome into the Future"
+HERO_SUBTITLE = "Musings on Artificial Intelligence & Code"
+
+# --- NAVIGATION ---
+# Main Menu
+MENUITEMS = (
+    ('Home', '/'),
+    ('Archives', '/archives.html'),
+    ('Categories', '/categories.html'),
+)
+
+# Social Links
+SOCIAL = (
+    ('GitHub', 'https://github.com/nycure'),
+    ('Twitter', '#'),
+)
 
 DEFAULT_PAGINATION = 10
+RELATIVE_URLS = True
 
-# Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# --- URL SETTINGS (Clean URLs) ---
+ARTICLE_URL = '{slug}/'
+ARTICLE_SAVE_AS = '{slug}/index.html'
+PAGE_URL = '{slug}/'
+PAGE_SAVE_AS = '{slug}/index.html'
+
+# --- STATIC & EXTRA PATHS ---
+STATIC_PATHS = ['images', 'extra']
+EXTRA_PATH_METADATA = {
+    'extra/robots.txt': {'path': 'robots.txt'},
+    'extra/favicon.ico': {'path': 'favicon.ico'},
+    'extra/CNAME': {'path': 'CNAME'},
+}
+
+# Add current year to context
+import datetime
+CURRENT_YEAR = datetime.datetime.now().year

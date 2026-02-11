@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} | {{ SITENAME }}{% endblock %}
+{% block description %}{{ article.summary|striptags|truncate(160) }}{% endblock %}
+{% block og_title %}{{ article.title }}{% endblock %}
+{% block og_description %}{{ article.summary|striptags|truncate(160) }}{% endblock %}
+{% block og_image %}{% if article.image %}{{ article.image }}{% else %}{{ OG_IMAGE }}{% endif %}{% endblock %}
+
+{% block content %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ SITEURL }}/{{ article.url }}"
+  },
+  "headline": "{{ article.title }}",
+  "description": "{{ article.summary|striptags|truncate(160) }}",
+  "image": "{{ SITEURL }}/{% if article.image %}{{ article.image }}{% else %}{{ OG_IMAGE }}{% endif %}",  
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ SITENAME }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ SITEURL }}/favicon.ico"
+    }
+  },
+  "datePublished": "{{ article.date.isoformat() }}"
+}
+</script>
+<article class="single-post">
+    <header class="post-header">
+        <div class="post-meta">
+            <time>{{ article.locale_date }}</time> • <span class="category">{{ article.category }}</span>
+        </div>
+        <h1>{{ article.title }}</h1>
+        {% if article.tags %}
+        <div class="tags">
+            {% for tag in article.tags %}
+            <span class="tag">#{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="post-content">
+        {{ article.content }}
+    </div>
+
+    <div class="post-footer">
+        <a href="{{ SITEURL }}/" class="back-link">&larr; Back to Home</a>
+    </div>
+</article>
+{% endblock %}

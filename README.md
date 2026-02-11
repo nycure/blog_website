@@ -12,7 +12,7 @@ This project is a fully automated blog system using:
     Ensure this folder is a Git repository and linked to GitHub.
     ```bash
     git init
-    git remote add origin https://github.com/your-username/your-repo.git
+    git remote add origin https://github.com/nycure/blog_website.git
     ```
 
 2.  **Setup Environment**:
