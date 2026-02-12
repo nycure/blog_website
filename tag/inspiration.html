@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AnalyticsDrive - Inspiration tag</title>
+    <title>Analytics Drive - Inspiration tag</title>
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://analyticsdrive.tech/tag/inspiration.html" />
@@ -17,7 +17,7 @@
     <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
 
     <!-- RSS Feed -->
-    <link rel="alternate" type="application/atom+xml" title="AnalyticsDrive Atom Feed"
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
         href="https://analyticsdrive.tech/feeds/all.atom.xml" />
 
     <!-- SEO Meta Tags -->
@@ -26,7 +26,7 @@
     <meta name="author" content="Admin" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="AnalyticsDrive" />
+    <meta property="og:title" content="Analytics Drive" />
     <meta property="og:description"
         content="A futuristic blog exploring AI, Technology, and Innovation." />
     <meta property="og:type" content="website" />
@@ -36,7 +36,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="" />
-    <meta name="twitter:title" content="AnalyticsDrive" />
+    <meta name="twitter:title" content="Analytics Drive" />
     <meta name="twitter:description" content="A futuristic blog exploring AI, Technology, and Innovation." />
     <meta name="twitter:image" content="https://analyticsdrive.tech/images/blog.jpg" />
 
@@ -52,7 +52,10 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="https://analyticsdrive.tech/" class="logo">AnalyticsDrive<span class="dot">.</span></a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+            <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
             <nav class="main-nav">
                 <ul>
                     <li><a href="https://analyticsdrive.tech/">Home</a></li>
@@ -99,6 +102,34 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+    </script>
 </body>
 
 </html>
