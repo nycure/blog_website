@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP | Analytics Drive</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/01-matrix-problem-shortest-distance-bfs-dp-explained/index.html" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master LeetCode's 01 Matrix problem (542) by finding the shortest distance to the nearest zero. Explore efficient solutions using Multi-Source BFS and..." />
+    <meta name="keywords" content="AI, Machine Learning, Tech, Future, Python, Data Science, Neural Networks, Robotics, News" />
+    <meta name="author" content="Admin" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP" />
+    <meta property="og:description"
+        content="Master LeetCode's 01 Matrix problem (542) by finding the shortest distance to the nearest zero. Explore efficient solutions using Multi-Source BFS and..." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/01-matrix-problem-shortest-distance-bfs-dp-explained/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/blog.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP" />
+    <meta name="twitter:description" content="Master LeetCode's 01 Matrix problem (542) by finding the shortest distance to the nearest zero. Explore efficient solutions using Multi-Source BFS and..." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/blog.jpg" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://analyticsdrive.tech/theme/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+            rel="stylesheet">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/01-matrix-problem-shortest-distance-bfs-dp-explained/"
+  },
+  "headline": "Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP",
+  "description": "Master LeetCode's 01 Matrix problem (542) by finding the shortest distance to the nearest zero. Explore efficient solutions using Multi-Source BFS and...",
+  "image": [
+    "https://analyticsdrive.tech/images/blog.jpg"
+  ],
+  "datePublished": "2026-02-13T15:40:00+00:00",
+  "dateModified": "2026-02-13T15:40:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+<article class="single-post">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2026-02-13T15:40:00+00:00">Fri 13 February 2026</time>
+    </div>
+    <h1>Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</h1>
+  </header>
+
+  <div class="post-content">
+    <p>The "01 Matrix" problem (LeetCode 542) is a fundamental challenge that effectively tests your graph traversal and dynamic programming skills. Beyond a typical academic exercise, mastering such problems provides a robust foundation for tackling complex shortest path scenarios in real-world applications, spanning from image processing to logistics. In this post, we will dissect this intriguing problem, explore elegant solutions, and equip you with the knowledge to approach similar challenges confidently.</p>
+<h2>What is the 01 Matrix Problem?</h2>
+<p>The "01 Matrix" problem presents a binary matrix, meaning a grid filled with only <code>0</code>s and <code>1</code>s. Your task is to transform this matrix into one where each cell indicates the distance to its nearest <code>0</code>.</p>
+<p><strong>Key Definition:</strong> The "distance" between two adjacent cells (horizontally or vertically) is 1. We seek the shortest distance, often referred to as the Manhattan distance in a grid context.</p>
+<p>Let's illustrate with an example:</p>
+<p><strong>Input Matrix:</strong></p>
+<div class="highlight"><pre><span></span><code>[[0, 0, 0],
+ [0, 1, 0],
+ [0, 0, 0]]
+</code></pre></div>
+
+<p><strong>Expected Output Matrix:</strong></p>
+<div class="highlight"><pre><span></span><code>[[0, 0, 0],
+ [0, 1, 0],
+ [0, 0, 0]]
+</code></pre></div>
+
+<p>Here, the <code>1</code> at <code>(1,1)</code> has a <code>0</code> directly above, below, left, and right, so its shortest distance to a <code>0</code> is 1. All <code>0</code>s remain <code>0</code> as their distance to themselves is 0.</p>
+<p>Another example:</p>
+<p><strong>Input Matrix:</strong></p>
+<div class="highlight"><pre><span></span><code>[[0, 1, 1],
+ [1, 1, 1],
+ [1, 1, 1]]
+</code></pre></div>
+
+<p><strong>Expected Output Matrix:</strong></p>
+<div class="highlight"><pre><span></span><code>[[0, 1, 2],
+ [1, 2, 3],
+ [2, 3, 4]]
+</code></pre></div>
+
+<p>Observe how distances increment as you move further away from the initial <code>0</code>. This problem is essentially a shortest path problem on an unweighted graph where cells are nodes and adjacent cells are edges.</p>
+<h2>Approach 1: Multi-Source Breadth-First Search (BFS)</h2>
+<p>BFS is a natural fit for finding the shortest path in an unweighted graph. A key insight here is the presence of <em>multiple</em> sources (all the <code>0</code>s) from which distances propagate.</p>
+<h3>The Core Idea</h3>
+<p>Instead of starting BFS from a single source, we initialize our queue with <em>all</em> the cells that contain a <code>0</code>. These cells already have a distance of 0. Then, we expand outwards layer by layer, propagating outwards in a layered fashion. Each time we move to an unvisited neighbor, we know its distance is one more than the current cell's distance.</p>
+<h3>Step-by-Step Breakdown</h3>
+<ol>
+<li><strong>Initialize <code>dist</code> Matrix:</strong> Create a result matrix <code>dist</code> of the same dimensions as the input matrix.<ul>
+<li>For cells with <code>0</code> in the input, set <code>dist[r][c] = 0</code>.</li>
+<li>For cells with <code>1</code> in the input, set <code>dist[r][c] = -1</code> (or <code>infinity</code>) to mark them as unvisited and to be calculated.</li>
+</ul>
+</li>
+<li><strong>Initialize Queue:</strong> Create a queue and add all <code>(r, c)</code> coordinates where <code>matrix[r][c] == 0</code>. These are our starting points.</li>
+<li><strong>BFS Traversal:</strong><ul>
+<li>While the queue is not empty:<ul>
+<li>Dequeue a cell <code>(r, c)</code>.</li>
+<li>For each of its four neighbors <code>(nr, nc)</code> (up, down, left, right):<ul>
+<li>Check if <code>(nr, nc)</code> is within bounds.</li>
+<li>If <code>dist[nr][nc]</code> is <code>-1</code> (indicating it's an unvisited <code>1</code>):<ul>
+<li>Set <code>dist[nr][nc] = dist[r][c] + 1</code>.</li>
+<li>Enqueue <code>(nr, nc)</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Return <code>dist</code>:</strong> The <code>dist</code> matrix now contains the shortest distances.</li>
+</ol>
+<h3>Python Code Example (Multi-Source BFS)</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="k">def</span> <span class="nf">updateMatrixBFS</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+
+    <span class="c1"># Initialize dist matrix and queue with all 0s</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">matrix</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dist</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+
+    <span class="c1"># Directions for neighbors (up, down, left, right)</span>
+    <span class="n">directions</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+
+    <span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
+            <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
+
+            <span class="c1"># Check bounds and if neighbor is unvisited (value is -1)</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">dist</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">dist</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">dist</span>
+
+<span class="c1"># Example usage:</span>
+<span class="n">matrix1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">updateMatrixBFS</span><span class="p">(</span><span class="n">matrix1</span><span class="p">))</span>
+<span class="c1"># Expected: [[0, 1, 2], [1, 2, 3], [2, 3, 4]]</span>
+
+<span class="n">matrix2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">updateMatrixBFS</span><span class="p">(</span><span class="n">matrix2</span><span class="p">))</span>
+<span class="c1"># Expected: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]</span>
+</code></pre></div>
+
+<h3>Complexity Analysis (BFS)</h3>
+<ul>
+<li><strong>Time Complexity:</strong> O(M * N), where M is the number of rows and N is the number of columns. Each cell is added to the queue and processed at most once.</li>
+<li><strong>Space Complexity:</strong> O(M * N) for the <code>dist</code> matrix and, in the worst case, the queue can hold all cells (e.g., a matrix of all <code>0</code>s or all <code>1</code>s).</li>
+</ul>
+<h2>Approach 2: Dynamic Programming (DP)</h2>
+<p>While BFS is intuitive for shortest paths, dynamic programming offers an alternative perspective, especially useful in grid problems where dependencies are directional. The core principle is that a cell's distance to the nearest <code>0</code> depends on its neighbors' distances.</p>
+<p>The challenge is that you cannot access all neighbors simultaneously if you are building up the solution. We solve this by doing <em>two passes</em>:</p>
+<ol>
+<li><strong>First Pass (Top-Left to Bottom-Right):</strong> For each cell, we consider its distance from <code>0</code>s that are <em>above</em> or to its <em>left</em>.
+    <code>dp[r][c] = min(dp[r][c], dp[r-1][c] + 1, dp[r][c-1] + 1)</code></li>
+<li><strong>Second Pass (Bottom-Right to Top-Left):</strong> For each cell, we then refine its distance by considering <code>0</code>s that are <em>below</em> or to its <em>right</em>.
+    <code>dp[r][c] = min(dp[r][c], dp[r+1][c] + 1, dp[r][c+1] + 1)</code></li>
+</ol>
+<h3>Step-by-Step Breakdown</h3>
+<ol>
+<li><strong>Initialize <code>dp</code> Matrix:</strong> Create a <code>dp</code> matrix of the same dimensions.<ul>
+<li>If <code>matrix[r][c] == 0</code>, set <code>dp[r][c] = 0</code>.</li>
+<li>If <code>matrix[r][c] == 1</code>, set <code>dp[r][c]</code> to a sufficiently large value (effectively infinity) to represent an unknown, maximum distance.</li>
+</ul>
+</li>
+<li><strong>First Pass (Top-Left to Bottom-Right):</strong> Iterate <code>r</code> from <code>0</code> to <code>m-1</code>, <code>c</code> from <code>0</code> to <code>n-1</code>.<ul>
+<li>For <code>dp[r][c]</code>, if it's not already 0:<ul>
+<li>If <code>r &gt; 0</code>, <code>dp[r][c] = min(dp[r][c], dp[r-1][c] + 1)</code>.</li>
+<li>If <code>c &gt; 0</code>, <code>dp[r][c] = min(dp[r][c], dp[r][c-1] + 1)</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Second Pass (Bottom-Right to Top-Left):</strong> Iterate <code>r</code> from <code>m-1</code> down to <code>0</code>, <code>c</code> from <code>n-1</code> down to <code>0</code>.<ul>
+<li>For <code>dp[r][c]</code>, if it's not already 0:<ul>
+<li>If <code>r &lt; m-1</code>, <code>dp[r][c] = min(dp[r][c], dp[r+1][c] + 1)</code>.</li>
+<li>If <code>c &lt; n-1</code>, <code>dp[r][c] = min(dp[r][c], dp[r][c+1] + 1)</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Return <code>dp</code>:</strong> The <code>dp</code> matrix now holds the shortest distances.</li>
+</ol>
+<h3>Python Code Example (Dynamic Programming)</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">updateMatrixDP</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Initialize dp matrix with a large value for 1s, 0 for 0s</span>
+    <span class="c1"># Using m*n as max possible distance (can be optimized to m+n)</span>
+    <span class="n">max_dist</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">n</span> 
+    <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="n">max_dist</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">matrix</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Check top neighbor</span>
+                <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="c1"># Check left neighbor</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Second pass: bottom-right to top-left</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># Check bottom neighbor</span>
+            <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># Check right neighbor</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dp</span>
+
+<span class="c1"># Example usage:</span>
+<span class="n">matrix1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">updateMatrixDP</span><span class="p">(</span><span class="n">matrix1</span><span class="p">))</span>
+<span class="c1"># Expected: [[0, 1, 2], [1, 2, 3], [2, 3, 4]]</span>
+
+<span class="n">matrix2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">updateMatrixDP</span><span class="p">(</span><span class="n">matrix2</span><span class="p">))</span>
+<span class="c1"># Expected: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]</span>
+</code></pre></div>
+
+<h3>Complexity Analysis (DP)</h3>
+<ul>
+<li><strong>Time Complexity:</strong> O(M * N). We iterate through the matrix twice.</li>
+<li><strong>Space Complexity:</strong> O(M * N) for the <code>dp</code> matrix.</li>
+</ul>
+<h2>BFS vs. DP: Which One to Choose?</h2>
+<p>Both BFS and DP provide correct and efficient solutions with the same time and space complexity for this particular problem.</p>
+<ul>
+<li><strong>BFS:</strong> Often more intuitive for shortest path problems on unweighted graphs. It guarantees finding the shortest path first because it expands layer by layer. The multi-source aspect is handled elegantly.</li>
+<li><strong>DP:</strong> Requires a bit more thought with the two-pass approach to ensure all dependencies (from all four directions) are covered. However, DP can sometimes be more flexible or adaptable for problems with slightly different constraints or for calculating values beyond just "shortest path."</li>
+</ul>
+<p>For the 01 Matrix problem, the Multi-Source BFS is generally considered the more straightforward and natural approach. However, understanding the DP solution broadens your algorithmic toolkit.</p>
+<h2>Conclusion</h2>
+<p>The "01 Matrix" problem (LeetCode 542) is an excellent exercise to solidify your understanding of graph traversal algorithms like Breadth-First Search and dynamic programming. Whether you prefer the elegant ripple effect of a multi-source BFS or the methodical two-pass calculation of DP, both methods lead you to the correct shortest distances to the nearest <code>0</code>.</p>
+<p>By mastering problems like this, you are not just solving a LeetCode puzzle; you are building a strong foundation in algorithmic thinking that is invaluable for any coding challenge or real-world system design task. Continue to practice, explore, and enhance your algorithmic proficiency.</p>
+  </div>
+
+  <div class="article-footer-meta">
+    <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/algorithms.html">Algorithms</a></p>
+    <div class="tags-list">
+      <strong>Tags:</strong>
+      <span class="tag">#01 Matrix</span>
+      <span class="tag">#BFS</span>
+      <span class="tag">#Dynamic Programming</span>
+      <span class="tag">#LeetCode</span>
+      <span class="tag">#Shortest Path</span>
+      <span class="tag">#Graph Algorithms</span>
+    </div>
+  </div>
+
+  <div class="post-footer">
+    <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+  </div>
+</article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Admin.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank">Twitter</a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank">Facebook</a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+    </script>
+</body>
+
+</html>

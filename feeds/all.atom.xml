@@ -1,5 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Analytics Drive</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/all.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-13T12:30:00+00:00</updated><entry><title>India vs Namibia: A Clash of Giants and Rising Stars</title><link href="https://analyticsdrive.tech/india-vs-namibia-cricket-clash-giants-rising-stars/" rel="alternate"/><published>2026-02-13T12:30:00+00:00</published><updated>2026-02-13T12:30:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-13:/india-vs-namibia-cricket-clash-giants-rising-stars/</id><summary type="html">&lt;p&gt;Dive into the anticipated clash between cricketing powerhouse India and the spirited challengers Namibia. Explore the dynamics, key players, and what this fixture means for both nations.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;India vs Namibia: More Than Just a Game&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Analytics Drive</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/all.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-13T15:40:00+00:00</updated><entry><title>Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</title><link href="https://analyticsdrive.tech/01-matrix-problem-shortest-distance-bfs-dp-explained/" rel="alternate"/><published>2026-02-13T15:40:00+00:00</published><updated>2026-02-13T15:40:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-13:/01-matrix-problem-shortest-distance-bfs-dp-explained/</id><summary type="html">&lt;p&gt;Master LeetCode's 01 Matrix problem (542) by finding the shortest distance to the nearest zero. Explore efficient solutions using Multi-Source BFS and Dynamic Programming.&lt;/p&gt;</summary><content type="html">&lt;p&gt;The "01 Matrix" problem (LeetCode 542) is a fundamental challenge that effectively tests your graph traversal and dynamic programming skills. Beyond a typical academic exercise, mastering such problems provides a robust foundation for tackling complex shortest path scenarios in real-world applications, spanning from image processing to logistics. In this post, we will dissect this intriguing problem, explore elegant solutions, and equip you with the knowledge to approach similar challenges confidently.&lt;/p&gt;
+&lt;h2&gt;What is the 01 Matrix Problem?&lt;/h2&gt;
+&lt;p&gt;The "01 Matrix" problem presents a binary matrix, meaning a grid filled with only &lt;code&gt;0&lt;/code&gt;s and &lt;code&gt;1&lt;/code&gt;s. Your task is to transform this matrix into one where each cell indicates the distance to its nearest &lt;code&gt;0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key Definition:&lt;/strong&gt; The "distance" between two adjacent cells (horizontally or vertically) is 1. We seek the shortest distance, often referred to as the Manhattan distance in a grid context.&lt;/p&gt;
+&lt;p&gt;Let's illustrate with an example:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Input Matrix:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;[[0, 0, 0],
+ [0, 1, 0],
+ [0, 0, 0]]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Expected Output Matrix:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;[[0, 0, 0],
+ [0, 1, 0],
+ [0, 0, 0]]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, the &lt;code&gt;1&lt;/code&gt; at &lt;code&gt;(1,1)&lt;/code&gt; has a &lt;code&gt;0&lt;/code&gt; directly above, below, left, and right, so its shortest distance to a &lt;code&gt;0&lt;/code&gt; is 1. All &lt;code&gt;0&lt;/code&gt;s remain &lt;code&gt;0&lt;/code&gt; as their distance to themselves is 0.&lt;/p&gt;
+&lt;p&gt;Another example:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Input Matrix:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;[[0, 1, 1],
+ [1, 1, 1],
+ [1, 1, 1]]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Expected Output Matrix:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;[[0, 1, 2],
+ [1, 2, 3],
+ [2, 3, 4]]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Observe how distances increment as you move further away from the initial &lt;code&gt;0&lt;/code&gt;. This problem is essentially a shortest path problem on an unweighted graph where cells are nodes and adjacent cells are edges.&lt;/p&gt;
+&lt;h2&gt;Approach 1: Multi-Source Breadth-First Search (BFS)&lt;/h2&gt;
+&lt;p&gt;BFS is a natural fit for finding the shortest path in an unweighted graph. A key insight here is the presence of &lt;em&gt;multiple&lt;/em&gt; sources (all the &lt;code&gt;0&lt;/code&gt;s) from which distances propagate.&lt;/p&gt;
+&lt;h3&gt;The Core Idea&lt;/h3&gt;
+&lt;p&gt;Instead of starting BFS from a single source, we initialize our queue with &lt;em&gt;all&lt;/em&gt; the cells that contain a &lt;code&gt;0&lt;/code&gt;. These cells already have a distance of 0. Then, we expand outwards layer by layer, propagating outwards in a layered fashion. Each time we move to an unvisited neighbor, we know its distance is one more than the current cell's distance.&lt;/p&gt;
+&lt;h3&gt;Step-by-Step Breakdown&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Initialize &lt;code&gt;dist&lt;/code&gt; Matrix:&lt;/strong&gt; Create a result matrix &lt;code&gt;dist&lt;/code&gt; of the same dimensions as the input matrix.&lt;ul&gt;
+&lt;li&gt;For cells with &lt;code&gt;0&lt;/code&gt; in the input, set &lt;code&gt;dist[r][c] = 0&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;For cells with &lt;code&gt;1&lt;/code&gt; in the input, set &lt;code&gt;dist[r][c] = -1&lt;/code&gt; (or &lt;code&gt;infinity&lt;/code&gt;) to mark them as unvisited and to be calculated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Initialize Queue:&lt;/strong&gt; Create a queue and add all &lt;code&gt;(r, c)&lt;/code&gt; coordinates where &lt;code&gt;matrix[r][c] == 0&lt;/code&gt;. These are our starting points.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BFS Traversal:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;While the queue is not empty:&lt;ul&gt;
+&lt;li&gt;Dequeue a cell &lt;code&gt;(r, c)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;For each of its four neighbors &lt;code&gt;(nr, nc)&lt;/code&gt; (up, down, left, right):&lt;ul&gt;
+&lt;li&gt;Check if &lt;code&gt;(nr, nc)&lt;/code&gt; is within bounds.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;dist[nr][nc]&lt;/code&gt; is &lt;code&gt;-1&lt;/code&gt; (indicating it's an unvisited &lt;code&gt;1&lt;/code&gt;):&lt;ul&gt;
+&lt;li&gt;Set &lt;code&gt;dist[nr][nc] = dist[r][c] + 1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Enqueue &lt;code&gt;(nr, nc)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Return &lt;code&gt;dist&lt;/code&gt;:&lt;/strong&gt; The &lt;code&gt;dist&lt;/code&gt; matrix now contains the shortest distances.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Python Code Example (Multi-Source BFS)&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;deque&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;updateMatrixBFS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+    &lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;deque&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Initialize dist matrix and queue with all 0s&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+                &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Directions for neighbors (up, down, left, right)&lt;/span&gt;
+    &lt;span class="n"&gt;directions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;popleft&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;directions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;nr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Check bounds and if neighbor is unvisited (value is -1)&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;nr&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;nc&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;nr&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;nc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;nr&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;nc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+                &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;nr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nc&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Example usage:&lt;/span&gt;
+&lt;span class="n"&gt;matrix1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;updateMatrixBFS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;# Expected: [[0, 1, 2], [1, 2, 3], [2, 3, 4]]&lt;/span&gt;
+
+&lt;span class="n"&gt;matrix2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;updateMatrixBFS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;# Expected: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Complexity Analysis (BFS)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Time Complexity:&lt;/strong&gt; O(M * N), where M is the number of rows and N is the number of columns. Each cell is added to the queue and processed at most once.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Space Complexity:&lt;/strong&gt; O(M * N) for the &lt;code&gt;dist&lt;/code&gt; matrix and, in the worst case, the queue can hold all cells (e.g., a matrix of all &lt;code&gt;0&lt;/code&gt;s or all &lt;code&gt;1&lt;/code&gt;s).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Approach 2: Dynamic Programming (DP)&lt;/h2&gt;
+&lt;p&gt;While BFS is intuitive for shortest paths, dynamic programming offers an alternative perspective, especially useful in grid problems where dependencies are directional. The core principle is that a cell's distance to the nearest &lt;code&gt;0&lt;/code&gt; depends on its neighbors' distances.&lt;/p&gt;
+&lt;p&gt;The challenge is that you cannot access all neighbors simultaneously if you are building up the solution. We solve this by doing &lt;em&gt;two passes&lt;/em&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;First Pass (Top-Left to Bottom-Right):&lt;/strong&gt; For each cell, we consider its distance from &lt;code&gt;0&lt;/code&gt;s that are &lt;em&gt;above&lt;/em&gt; or to its &lt;em&gt;left&lt;/em&gt;.
+    &lt;code&gt;dp[r][c] = min(dp[r][c], dp[r-1][c] + 1, dp[r][c-1] + 1)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Second Pass (Bottom-Right to Top-Left):&lt;/strong&gt; For each cell, we then refine its distance by considering &lt;code&gt;0&lt;/code&gt;s that are &lt;em&gt;below&lt;/em&gt; or to its &lt;em&gt;right&lt;/em&gt;.
+    &lt;code&gt;dp[r][c] = min(dp[r][c], dp[r+1][c] + 1, dp[r][c+1] + 1)&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Step-by-Step Breakdown&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Initialize &lt;code&gt;dp&lt;/code&gt; Matrix:&lt;/strong&gt; Create a &lt;code&gt;dp&lt;/code&gt; matrix of the same dimensions.&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;matrix[r][c] == 0&lt;/code&gt;, set &lt;code&gt;dp[r][c] = 0&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;matrix[r][c] == 1&lt;/code&gt;, set &lt;code&gt;dp[r][c]&lt;/code&gt; to a sufficiently large value (effectively infinity) to represent an unknown, maximum distance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;First Pass (Top-Left to Bottom-Right):&lt;/strong&gt; Iterate &lt;code&gt;r&lt;/code&gt; from &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;m-1&lt;/code&gt;, &lt;code&gt;c&lt;/code&gt; from &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;n-1&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;For &lt;code&gt;dp[r][c]&lt;/code&gt;, if it's not already 0:&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;r &amp;gt; 0&lt;/code&gt;, &lt;code&gt;dp[r][c] = min(dp[r][c], dp[r-1][c] + 1)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;c &amp;gt; 0&lt;/code&gt;, &lt;code&gt;dp[r][c] = min(dp[r][c], dp[r][c-1] + 1)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Second Pass (Bottom-Right to Top-Left):&lt;/strong&gt; Iterate &lt;code&gt;r&lt;/code&gt; from &lt;code&gt;m-1&lt;/code&gt; down to &lt;code&gt;0&lt;/code&gt;, &lt;code&gt;c&lt;/code&gt; from &lt;code&gt;n-1&lt;/code&gt; down to &lt;code&gt;0&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;For &lt;code&gt;dp[r][c]&lt;/code&gt;, if it's not already 0:&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;r &amp;lt; m-1&lt;/code&gt;, &lt;code&gt;dp[r][c] = min(dp[r][c], dp[r+1][c] + 1)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;c &amp;lt; n-1&lt;/code&gt;, &lt;code&gt;dp[r][c] = min(dp[r][c], dp[r][c+1] + 1)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Return &lt;code&gt;dp&lt;/code&gt;:&lt;/strong&gt; The &lt;code&gt;dp&lt;/code&gt; matrix now holds the shortest distances.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Python Code Example (Dynamic Programming)&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;updateMatrixDP&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Initialize dp matrix with a large value for 1s, 0 for 0s&lt;/span&gt;
+    &lt;span class="c1"&gt;# Using m*n as max possible distance (can be optimized to m+n)&lt;/span&gt;
+    &lt;span class="n"&gt;max_dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; 
+    &lt;span class="n"&gt;dp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;max_dist&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="c1"&gt;# Check top neighbor&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="c1"&gt;# Check left neighbor&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Second pass: bottom-right to top-left&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="c1"&gt;# Check bottom neighbor&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="c1"&gt;# Check right neighbor&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dp&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;dp&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Example usage:&lt;/span&gt;
+&lt;span class="n"&gt;matrix1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;updateMatrixDP&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;# Expected: [[0, 1, 2], [1, 2, 3], [2, 3, 4]]&lt;/span&gt;
+
+&lt;span class="n"&gt;matrix2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;updateMatrixDP&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;matrix2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c1"&gt;# Expected: [[0, 0, 0], [0, 1, 0], [0, 0, 0]]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Complexity Analysis (DP)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Time Complexity:&lt;/strong&gt; O(M * N). We iterate through the matrix twice.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Space Complexity:&lt;/strong&gt; O(M * N) for the &lt;code&gt;dp&lt;/code&gt; matrix.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;BFS vs. DP: Which One to Choose?&lt;/h2&gt;
+&lt;p&gt;Both BFS and DP provide correct and efficient solutions with the same time and space complexity for this particular problem.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BFS:&lt;/strong&gt; Often more intuitive for shortest path problems on unweighted graphs. It guarantees finding the shortest path first because it expands layer by layer. The multi-source aspect is handled elegantly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DP:&lt;/strong&gt; Requires a bit more thought with the two-pass approach to ensure all dependencies (from all four directions) are covered. However, DP can sometimes be more flexible or adaptable for problems with slightly different constraints or for calculating values beyond just "shortest path."&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the 01 Matrix problem, the Multi-Source BFS is generally considered the more straightforward and natural approach. However, understanding the DP solution broadens your algorithmic toolkit.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The "01 Matrix" problem (LeetCode 542) is an excellent exercise to solidify your understanding of graph traversal algorithms like Breadth-First Search and dynamic programming. Whether you prefer the elegant ripple effect of a multi-source BFS or the methodical two-pass calculation of DP, both methods lead you to the correct shortest distances to the nearest &lt;code&gt;0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;By mastering problems like this, you are not just solving a LeetCode puzzle; you are building a strong foundation in algorithmic thinking that is invaluable for any coding challenge or real-world system design task. Continue to practice, explore, and enhance your algorithmic proficiency.&lt;/p&gt;</content><category term="Algorithms"/><category term="01 Matrix"/><category term="BFS"/><category term="Dynamic Programming"/><category term="LeetCode"/><category term="Shortest Path"/><category term="Graph Algorithms"/></entry><entry><title>India vs Namibia: A Clash of Giants and Rising Stars</title><link href="https://analyticsdrive.tech/india-vs-namibia-cricket-clash-giants-rising-stars/" rel="alternate"/><published>2026-02-13T12:30:00+00:00</published><updated>2026-02-13T12:30:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-13:/india-vs-namibia-cricket-clash-giants-rising-stars/</id><summary type="html">&lt;p&gt;Dive into the anticipated clash between cricketing powerhouse India and the spirited challengers Namibia. Explore the dynamics, key players, and what this fixture means for both nations.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;India vs Namibia: More Than Just a Game&lt;/h2&gt;
 &lt;p&gt;The cricketing world often presents fascinating narratives, and a fixture between cricketing powerhouse India and the spirited, rapidly emerging nation of Namibia is undoubtedly one such tale. While on paper it might seem a David vs. Goliath encounter, these matches are brimming with passion, potential upsets, and invaluable learning experiences for all involved. Let's delve into what makes an India vs. Namibia clash such an intriguing prospect.&lt;/p&gt;
 &lt;h2&gt;A Glimpse into History and Future Aspirations&lt;/h2&gt;
 &lt;p&gt;India, a nation where cricket is practically a religion, boasts a rich history of world championships, legendary players, and a fervent fanbase. They are consistently ranked among the top teams across all formats, setting benchmarks for excellence.&lt;/p&gt;
