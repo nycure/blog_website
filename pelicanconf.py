@@ -52,6 +52,7 @@ MENUITEMS = (
     ('Home', '/'),
     ('Archives', '/archives.html'),
     ('Categories', '/categories.html'),
+    ('About', '/about/'),
 )
 
 # Social Links
