@@ -12,11 +12,51 @@ if not api_key:
     # If not found in .env, check system environment variable as fallback
     api_key = os.environ.get("GEMINI_API_KEY")
 
+api_key2 = os.getenv("GEMINI_API_KEY2")
+if not api_key2:
+    api_key2 = os.environ.get("GEMINI_API_KEY2")
+
 if not api_key:
     print("Error: GEMINI_API_KEY not found. Please set it in a .env file or as an environment variable.")
     exit(1)
 
-client = genai.Client(api_key=api_key)
+# Global variable to track the currently working API key
+active_api_key = api_key
+
+def call_gemini_api(prompt, model="gemini-2.5-flash"):
+    """
+    Calls Gemini API with fallback support and persistence.
+    """
+    global active_api_key
+    
+    # Try with the currently active key
+    client = genai.Client(api_key=active_api_key)
+    try:
+        response = client.models.generate_content(
+            model=model,
+            contents=prompt
+        )
+        return response.text
+    except Exception as e:
+        print(f"   ⚠️ API call failed with current key: {e}")
+        
+        # If we are currently using the primary key and have a secondary one, switch.
+        if active_api_key == api_key and api_key2:
+            print("   🔄 Switching to secondary API key (and setting it as active)...")
+            active_api_key = api_key2
+            try:
+                client2 = genai.Client(api_key=active_api_key)
+                response = client2.models.generate_content(
+                    model=model,
+                    contents=prompt
+                )
+                return response.text
+            except Exception as e2:
+                print(f"   ❌ Secondary API key also failed: {e2}")
+                return None
+        else:
+            print("   ❌ No other API keys to try or secondary key also failed.")
+            return None
 
 def generate_draft(topic):
     """
@@ -48,14 +88,11 @@ def generate_draft(topic):
     - Ensure a proper conclusion.
     """
     
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-        return response.text
-    except Exception as e:
-        print(f"   Error generating draft: {e}")
+    response_text = call_gemini_api(prompt)
+    if response_text:
+        return response_text
+    else:
+        print("   Error generating draft: All API attempts failed.")
         return None
 
 def critique_and_fix(draft_content):
@@ -80,14 +117,11 @@ def critique_and_fix(draft_content):
     --- END DRAFT ---
     """
 
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-        return response.text
-    except Exception as e:
-        print(f"   Error during review: {e}")
+    response_text = call_gemini_api(prompt)
+    if response_text:
+        return response_text
+    else:
+        print("   Error during review: All API attempts failed.")
         return draft_content  # Fallback to draft if review fails
 
 def save_post(content, topic):

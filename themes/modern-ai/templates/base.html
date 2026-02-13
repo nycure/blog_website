@@ -45,21 +45,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
     <header class="site-header">
-        <div class="container">
-            <a href="{{ SITEURL }}/" class="logo">{{ SITENAME }}<span class="dot">.</span></a>
-            <nav class="main-nav">
-                <ul>
-                    {% for title, link in MENUITEMS %}
-                    <li><a href="{{ SITEURL }}{{ link }}">{{ title }}</a></li>
-                    {% endfor %}
-                </ul>
-            </nav>
+        <a href="{{ SITEURL }}/" class="logo">{{ SITENAME }}<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                {% for title, link in MENUITEMS %}
+                <li><a href="{{ SITEURL }}{{ link }}">{{ title }}</a></li>
+                {% endfor %}
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
         </div>
     </header>
 
@@ -80,6 +82,34 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+    </script>
 </body>
 
 </html>

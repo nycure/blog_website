@@ -1,8 +1,8 @@
 from datetime import datetime
 CURRENT_YEAR = datetime.now().year
 AUTHOR = 'Admin'
-SITENAME = 'analyticsdrive'
-SITEURL = ''
+SITENAME = 'Analytics Drive'
+SITEURL = 'analyticsdrive.tech'
 
 PATH = 'content'
 TIMEZONE = 'UTC'
@@ -28,6 +28,11 @@ SITEMAP = {
         'pages': 'monthly'
     }
 }
+
+# --- FEED SETTINGS ---
+# Crucial for Google News & Aggregators
+RSS_FEED_SUMMARY_ONLY = False
+FEED_MAX_ITEMS = 50  # Control feed size
 
 # --- SEO SETTINGS ---
 SEO_DESCRIPTION = "A futuristic blog exploring AI, Technology, and Innovation."
