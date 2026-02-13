@@ -76,16 +76,425 @@
     </script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="https://analyticsdrive.tech/theme/css/style.css" />
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* Code Blocks (Light Mode) */
+        .post-content pre {
+            background: #f4f4f4;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .post-content code {
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            /* Pink/Red for inline code */
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .post-content pre code {
+            background: transparent;
+            color: #333;
+            padding: 0;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
-        rel="stylesheet" media="print" onload="this.media='all'">
+        media="print" onload="this.media='all'">
     <noscript>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
-            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
     </noscript>
 </head>
 
