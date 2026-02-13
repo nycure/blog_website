@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS | Analytics Drive</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/leetcode-417-pacific-atlantic-water-flow-dfs-solution/index.html" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Dive into LeetCode 417 (Pacific Atlantic Water Flow). Learn an efficient DFS/BFS approach to solve this classic graph traversal problem and ace your coding..." />
+    <meta name="keywords" content="AI, Machine Learning, Tech, Future, Python" />
+    <meta name="author" content="Admin" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS" />
+    <meta property="og:description"
+        content="Dive into LeetCode 417 (Pacific Atlantic Water Flow). Learn an efficient DFS/BFS approach to solve this classic graph traversal problem and ace your coding..." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/leetcode-417-pacific-atlantic-water-flow-dfs-solution/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/blog.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="" />
+    <meta name="twitter:title" content="Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS" />
+    <meta name="twitter:description" content="Dive into LeetCode 417 (Pacific Atlantic Water Flow). Learn an efficient DFS/BFS approach to solve this classic graph traversal problem and ace your coding..." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/blog.jpg" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://analyticsdrive.tech/theme/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/leetcode-417-pacific-atlantic-water-flow-dfs-solution/"
+  },
+  "headline": "Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS",
+  "description": "Dive into LeetCode 417 (Pacific Atlantic Water Flow). Learn an efficient DFS/BFS approach to solve this classic graph traversal problem and ace your coding...",
+  "image": [
+    "https://analyticsdrive.tech/images/blog.jpg"
+  ],
+  "datePublished": "2026-02-13T11:13:00+00:00",
+  "dateModified": "2026-02-13T11:13:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+<article class="single-post">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2026-02-13T11:13:00+00:00">Fri 13 February 2026</time>
+    </div>
+    <h1>Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS</h1>
+  </header>
+
+  <div class="post-content">
+    <h2>Navigating the Continental Divide: Understanding LeetCode 417</h2>
+<p>Welcome, fellow coding adventurers! Today, we're setting our compass for a fascinating journey into LeetCode problem 417: "Pacific Atlantic Water Flow." This problem is a brilliant test of your graph traversal skills, specifically your mastery of Depth-First Search (DFS) or Breadth-First Search (BFS). It's a common pattern in technical interviews, making it a crucial concept to grasp.</p>
+<p>Imagine a continent represented by a grid of varying heights. On one side, the mighty Pacific Ocean laps at its shores. On the other, the vast Atlantic Ocean stretches out. Our challenge? To find all the cells on this continent from which water can flow to <em>both</em> oceans.</p>
+<p>Let's dive in and explore the terrain!</p>
+<h2>Unpacking the Problem Statement</h2>
+<p>We are given an <code>m x n</code> integer matrix, <code>heights</code>, where <code>heights[r][c]</code> represents the height of the cell at coordinate <code>(r, c)</code>.</p>
+<p>Here's how the oceans are defined:
+*   <strong>Pacific Ocean:</strong> Touches the top (<code>r=0</code>) and left (<code>c=0</code>) edges of the matrix.
+*   <strong>Atlantic Ocean:</strong> Touches the bottom (<code>r=m-1</code>) and right (<code>c=n-1</code>) edges of the matrix.</p>
+<p>Water can flow from a cell to an adjacent cell (up, down, left, right) if the adjacent cell's height is less than or equal to the current cell's height. Think of it like a topographic map – water always flows downhill or stays level.</p>
+<p>Our ultimate goal is to return a list of <code>[r, c]</code> coordinates for all cells from which water can reach <em>both</em> the Pacific and Atlantic oceans.</p>
+<h3>Why This Problem is Tricky</h3>
+<p>A common initial thought might be to iterate through every cell, perform a DFS/BFS from that cell, and check if it can reach both oceans. While conceptually sound, this approach would be highly inefficient. If the grid is <code>m x n</code>, and each DFS/BFS takes <code>O(m*n)</code> time, the total complexity would be <code>O((m*n)^2)</code>, which is too slow for larger grids. We need a smarter strategy!</p>
+<h2>The Eureka Moment: Flowing Upstream</h2>
+<p>The key insight to efficiently solve this problem lies in <strong>reversing the perspective of water flow</strong>. Instead of trying to determine where water <em>can flow to</em> from a source cell, let's determine which cells <em>can be reached from</em> the oceans.</p>
+<p>Think about it: if water can flow from cell <code>A</code> to cell <code>B</code> (meaning <code>height[A] &gt;= height[B]</code>), then conversely, we can say that cell <code>A</code> is "reachable" from cell <code>B</code> if we imagine water flowing <em>uphill</em>.</p>
+<p>This leads us to our core strategy:
+1.  <strong>Identify all cells reachable by the Pacific Ocean:</strong> Start a traversal (DFS or BFS) from all cells bordering the Pacific Ocean. During this traversal, mark all cells from which water <em>could have originated</em> and flowed into the Pacific.
+2.  <strong>Identify all cells reachable by the Atlantic Ocean:</strong> Do the same for the Atlantic Ocean, starting from its borders and marking all cells that could flow into the Atlantic.
+3.  <strong>Find the Intersection:</strong> The cells that are marked as reachable by <em>both</em> the Pacific and Atlantic oceans are our answer!</p>
+<h2>Algorithm Breakdown: DFS to the Rescue</h2>
+<p>We'll use Depth-First Search (DFS) for this traversal, but BFS would work equally well.</p>
+<h3>Step-by-Step Implementation</h3>
+<ol>
+<li>
+<p><strong>Initialization:</strong></p>
+<ul>
+<li>Get the dimensions <code>m</code> (rows) and <code>n</code> (columns) of the <code>heights</code> matrix.</li>
+<li>Create two boolean matrices, <code>can_reach_pacific</code> and <code>can_reach_atlantic</code>, both of size <code>m x n</code>, initialized to <code>False</code>. These will store whether a cell can reach each respective ocean.</li>
+<li>Define <code>directions</code> for DFS: <code>[(0, 1), (0, -1), (1, 0), (-1, 0)]</code> (right, left, down, up).</li>
+</ul>
+</li>
+<li>
+<p><strong>DFS Function:</strong></p>
+<ul>
+<li><code>dfs(r, c, visited_matrix, prev_height)</code>:<ul>
+<li><strong>Base Cases:</strong><ul>
+<li>If <code>(r, c)</code> is out of bounds, return.</li>
+<li>If <code>(r, c)</code> has already been visited (marked <code>True</code> in <code>visited_matrix</code>), return.</li>
+<li>If <code>heights[r][c]</code> is less than <code>prev_height</code>, return (water cannot flow uphill from a lower height, which is the reverse logic).</li>
+</ul>
+</li>
+<li><strong>Mark Current Cell:</strong> Set <code>visited_matrix[r][c] = True</code>.</li>
+<li><strong>Recurse:</strong> For each <code>(dr, dc)</code> in <code>directions</code>:<ul>
+<li>Calculate <code>new_r = r + dr</code>, <code>new_c = c + dc</code>.</li>
+<li>Call <code>dfs(new_r, new_c, visited_matrix, heights[r][c])</code>. Note: <code>heights[r][c]</code> becomes the <code>prev_height</code> for the next call, ensuring the "flow upstream" condition (<code>current_height &gt;= next_cell_height</code>) is maintained.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Populate <code>can_reach_pacific</code>:</strong></p>
+<ul>
+<li>Iterate through the first row (<code>r=0</code>) and the first column (<code>c=0</code>). These are the direct borders of the Pacific.</li>
+<li>For each cell <code>(0, c)</code> and <code>(r, 0)</code>: call <code>dfs(r, c, can_reach_pacific, -1)</code>. We use <code>-1</code> as <code>prev_height</code> to ensure water can always flow "into" the ocean from any bordering cell.</li>
+</ul>
+</li>
+<li>
+<p><strong>Populate <code>can_reach_atlantic</code>:</strong></p>
+<ul>
+<li>Iterate through the last row (<code>r=m-1</code>) and the last column (<code>c=n-1</code>). These are the direct borders of the Atlantic.</li>
+<li>For each cell <code>(m-1, c)</code> and <code>(r, n-1)</code>: call <code>dfs(r, c, can_reach_atlantic, -1)</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Collect Results:</strong></p>
+<ul>
+<li>Initialize an empty list <code>result</code>.</li>
+<li>Iterate through the entire <code>heights</code> matrix from <code>r=0</code> to <code>m-1</code> and <code>c=0</code> to <code>n-1</code>.</li>
+<li>If <code>can_reach_pacific[r][c]</code> is <code>True</code> AND <code>can_reach_atlantic[r][c]</code> is <code>True</code>, add <code>[r, c]</code> to the <code>result</code> list.</li>
+</ul>
+</li>
+<li>
+<p><strong>Return <code>result</code>.</strong></p>
+</li>
+</ol>
+<h3>Python Code Implementation</h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">pacificAtlantic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heights</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Two boolean matrices to track reachability from Pacific and Atlantic</span>
+        <span class="n">can_reach_pacific</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+        <span class="n">can_reach_atlantic</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+
+        <span class="c1"># Directions for DFS: right, left, down, up</span>
+        <span class="n">directions</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+
+        <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">visited_matrix</span><span class="p">,</span> <span class="n">prev_height</span><span class="p">):</span>
+            <span class="c1"># Base cases for DFS:</span>
+            <span class="c1"># 1. Out of bounds</span>
+            <span class="c1"># 2. Already visited</span>
+            <span class="c1"># 3. Current cell height is less than previous cell&#39;s height (water can&#39;t flow &quot;upstream&quot; if current is lower)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="ow">or</span> <span class="n">visited_matrix</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="ow">or</span> <span class="n">heights</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">prev_height</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="c1"># Mark current cell as reachable</span>
+            <span class="n">visited_matrix</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1"># Explore neighbors</span>
+            <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
+                <span class="n">new_r</span><span class="p">,</span> <span class="n">new_c</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
+                <span class="c1"># The &#39;prev_height&#39; for the next recursive call is the current cell&#39;s height</span>
+                <span class="c1"># This ensures we only &quot;flow upstream&quot; (or stay level)</span>
+                <span class="n">dfs</span><span class="p">(</span><span class="n">new_r</span><span class="p">,</span> <span class="n">new_c</span><span class="p">,</span> <span class="n">visited_matrix</span><span class="p">,</span> <span class="n">heights</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">])</span>
+
+        <span class="c1"># 1. Start DFS from cells bordering the Pacific Ocean</span>
+        <span class="c1"># Top row (r=0)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">can_reach_pacific</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># -1 ensures any height is valid to start from the ocean</span>
+
+        <span class="c1"># Left column (c=0), excluding (0,0) which is covered by the top row loop</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">can_reach_pacific</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># 2. Start DFS from cells bordering the Atlantic Ocean</span>
+        <span class="c1"># Bottom row (r=m-1)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">can_reach_atlantic</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Right column (c=n-1), excluding (m-1,n-1) which is covered by the bottom row loop</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># Note: iterate up to m-2 to avoid (m-1, n-1) duplicate if m-1 &gt;= 0</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">can_reach_atlantic</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+        <span class="c1"># 3. Collect the result: cells reachable by both oceans</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">can_reach_pacific</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="ow">and</span> <span class="n">can_reach_atlantic</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+
+<h2>Complexity Analysis</h2>
+<ul>
+<li>
+<p><strong>Time Complexity:</strong> <code>O(m * n)</code></p>
+<ul>
+<li>We perform two independent DFS traversals. Each DFS visits every cell at most once. For each cell, we perform constant work (checking neighbors).</li>
+<li>The final iteration to collect results also takes <code>O(m * n)</code>.</li>
+<li>Therefore, the total time complexity is proportional to the number of cells in the grid.</li>
+</ul>
+</li>
+<li>
+<p><strong>Space Complexity:</strong> <code>O(m * n)</code></p>
+<ul>
+<li>We use two boolean matrices (<code>can_reach_pacific</code> and <code>can_reach_atlantic</code>), each of size <code>m x n</code>.</li>
+<li>The recursion stack for DFS in the worst case could go <code>O(m * n)</code> deep (if the grid is a long, winding path).</li>
+<li>Thus, the total space complexity is <code>O(m * n)</code>.</li>
+</ul>
+</li>
+</ul>
+<h2>Why This Approach Shines</h2>
+<p>This "flow upstream" or "reverse traversal" technique is incredibly powerful for problems where you need to find reachability from multiple sources. Instead of <code>(m*n)</code> separate traversals, you consolidate it into a fixed number of traversals (in this case, two: one for Pacific, one for Atlantic). It dramatically reduces the time complexity and is a common optimization strategy in graph problems.</p>
+<h2>Conclusion</h2>
+<p>LeetCode 417, "Pacific Atlantic Water Flow," is a fantastic problem that reinforces the power of strategic thinking in algorithm design. By transforming the problem from a "flow downhill" to a "flow upstream" perspective, we unlock an efficient DFS/BFS solution. This problem is more than just coding; it's about understanding how to model real-world scenarios (like water flow) into graph problems and applying optimal traversal techniques.</p>
+<p>Keep practicing, keep exploring different graph traversal variations, and you'll be well-prepared to conquer similar challenges in your next coding interview! Happy coding!</p>
+  </div>
+
+  <div class="article-footer-meta">
+    <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/algorithm-explained.html">Algorithm Explained</a></p>
+    <div class="tags-list">
+      <strong>Tags:</strong>
+      <span class="tag">#LeetCode</span>
+      <span class="tag">#Graph Traversal</span>
+      <span class="tag">#DFS</span>
+      <span class="tag">#BFS</span>
+      <span class="tag">#Algorithm</span>
+      <span class="tag">#Interview Prep</span>
+      <span class="tag">#Python</span>
+      <span class="tag">#Data Structures</span>
+      <span class="tag">#Problem Solving</span>
+    </div>
+  </div>
+
+  <div class="post-footer">
+    <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+  </div>
+</article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Admin.
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/nycure" target="_blank">GitHub</a>
+                <a href="#" target="_blank">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+    </script>
+</body>
+
+</html>

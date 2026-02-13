@@ -1,5 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Analytics Drive - Admin</title><link>https://analyticsdrive.tech/</link><description/><atom:link href="https://analyticsdrive.tech/feeds/admin.rss.xml" rel="self"/><lastBuildDate>Fri, 13 Feb 2026 00:51:00 +0000</lastBuildDate><item><title>Google Gemini: Unveiling the Next Generation of AI Intelligence</title><link>https://analyticsdrive.tech/google-gemini-next-generation-ai-intelligence/</link><description>&lt;h2&gt;The Dawn of a New AI Era: Welcome Google Gemini&lt;/h2&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Analytics Drive - Admin</title><link>https://analyticsdrive.tech/</link><description/><atom:link href="https://analyticsdrive.tech/feeds/admin.rss.xml" rel="self"/><lastBuildDate>Fri, 13 Feb 2026 11:13:00 +0000</lastBuildDate><item><title>Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS</title><link>https://analyticsdrive.tech/leetcode-417-pacific-atlantic-water-flow-dfs-solution/</link><description>&lt;h2&gt;Navigating the Continental Divide: Understanding LeetCode 417&lt;/h2&gt;
+&lt;p&gt;Welcome, fellow coding adventurers! Today, we're setting our compass for a fascinating journey into LeetCode problem 417: "Pacific Atlantic Water Flow." This problem is a brilliant test of your graph traversal skills, specifically your mastery of Depth-First Search (DFS) or Breadth-First Search (BFS). It's a common pattern in technical interviews, making it a crucial concept to grasp.&lt;/p&gt;
+&lt;p&gt;Imagine a continent represented by a grid of varying heights. On one side, the mighty Pacific Ocean laps at its shores. On the other, the vast Atlantic Ocean stretches out. Our challenge? To find all the cells on this continent from which water can flow to &lt;em&gt;both&lt;/em&gt; oceans.&lt;/p&gt;
+&lt;p&gt;Let's dive in and explore the terrain!&lt;/p&gt;
+&lt;h2&gt;Unpacking the Problem Statement&lt;/h2&gt;
+&lt;p&gt;We are given an &lt;code&gt;m x n&lt;/code&gt; integer matrix, &lt;code&gt;heights&lt;/code&gt;, where &lt;code&gt;heights[r][c]&lt;/code&gt; represents the height of the cell at coordinate &lt;code&gt;(r, c)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here's how the oceans are defined:
+*   &lt;strong&gt;Pacific Ocean:&lt;/strong&gt; Touches the top (&lt;code&gt;r=0&lt;/code&gt;) and left (&lt;code&gt;c=0&lt;/code&gt;) edges of the matrix.
+*   &lt;strong&gt;Atlantic Ocean:&lt;/strong&gt; Touches the bottom (&lt;code&gt;r=m-1&lt;/code&gt;) and right (&lt;code&gt;c=n-1&lt;/code&gt;) edges of the matrix.&lt;/p&gt;
+&lt;p&gt;Water can flow from a cell to an adjacent cell (up, down, left, right) if the adjacent cell's height is less than or equal to the current cell's height. Think of it like a topographic map – water always flows downhill or stays level.&lt;/p&gt;
+&lt;p&gt;Our ultimate goal is to return a list of &lt;code&gt;[r, c]&lt;/code&gt; coordinates for all cells from which water can reach &lt;em&gt;both&lt;/em&gt; the Pacific and Atlantic oceans.&lt;/p&gt;
+&lt;h3&gt;Why This Problem is Tricky&lt;/h3&gt;
+&lt;p&gt;A common initial thought might be to iterate through every cell, perform a DFS/BFS from that cell, and check if it can reach both oceans. While conceptually sound, this approach would be highly inefficient. If the grid is &lt;code&gt;m x n&lt;/code&gt;, and each DFS/BFS takes &lt;code&gt;O(m*n)&lt;/code&gt; time, the total complexity would be &lt;code&gt;O((m*n)^2)&lt;/code&gt;, which is too slow for larger grids. We need a smarter strategy!&lt;/p&gt;
+&lt;h2&gt;The Eureka Moment: Flowing Upstream&lt;/h2&gt;
+&lt;p&gt;The key insight to efficiently solve this problem lies in &lt;strong&gt;reversing the perspective of water flow&lt;/strong&gt;. Instead of trying to determine where water &lt;em&gt;can flow to&lt;/em&gt; from a source cell, let's determine which cells &lt;em&gt;can be reached from&lt;/em&gt; the oceans.&lt;/p&gt;
+&lt;p&gt;Think about it: if water can flow from cell &lt;code&gt;A&lt;/code&gt; to cell &lt;code&gt;B&lt;/code&gt; (meaning &lt;code&gt;height[A] &amp;gt;= height[B]&lt;/code&gt;), then conversely, we can say that cell &lt;code&gt;A&lt;/code&gt; is "reachable" from cell &lt;code&gt;B&lt;/code&gt; if we imagine water flowing &lt;em&gt;uphill&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;This leads us to our core strategy:
+1.  &lt;strong&gt;Identify all cells reachable by the Pacific Ocean:&lt;/strong&gt; Start a traversal (DFS or BFS) from all cells bordering the Pacific Ocean. During this traversal, mark all cells from which water &lt;em&gt;could have originated&lt;/em&gt; and flowed into the Pacific.
+2.  &lt;strong&gt;Identify all cells reachable by the Atlantic Ocean:&lt;/strong&gt; Do the same for the Atlantic Ocean, starting from its borders and marking all cells that could flow into the Atlantic.
+3.  &lt;strong&gt;Find the Intersection:&lt;/strong&gt; The cells that are marked as reachable by &lt;em&gt;both&lt;/em&gt; the Pacific and Atlantic oceans are our answer!&lt;/p&gt;
+&lt;h2&gt;Algorithm Breakdown: DFS to the Rescue&lt;/h2&gt;
+&lt;p&gt;We'll use Depth-First Search (DFS) for this traversal, but BFS would work equally well.&lt;/p&gt;
+&lt;h3&gt;Step-by-Step Implementation&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Initialization:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Get the dimensions &lt;code&gt;m&lt;/code&gt; (rows) and &lt;code&gt;n&lt;/code&gt; (columns) of the &lt;code&gt;heights&lt;/code&gt; matrix.&lt;/li&gt;
+&lt;li&gt;Create two boolean matrices, &lt;code&gt;can_reach_pacific&lt;/code&gt; and &lt;code&gt;can_reach_atlantic&lt;/code&gt;, both of size &lt;code&gt;m x n&lt;/code&gt;, initialized to &lt;code&gt;False&lt;/code&gt;. These will store whether a cell can reach each respective ocean.&lt;/li&gt;
+&lt;li&gt;Define &lt;code&gt;directions&lt;/code&gt; for DFS: &lt;code&gt;[(0, 1), (0, -1), (1, 0), (-1, 0)]&lt;/code&gt; (right, left, down, up).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;DFS Function:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dfs(r, c, visited_matrix, prev_height)&lt;/code&gt;:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Base Cases:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;(r, c)&lt;/code&gt; is out of bounds, return.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;(r, c)&lt;/code&gt; has already been visited (marked &lt;code&gt;True&lt;/code&gt; in &lt;code&gt;visited_matrix&lt;/code&gt;), return.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;heights[r][c]&lt;/code&gt; is less than &lt;code&gt;prev_height&lt;/code&gt;, return (water cannot flow uphill from a lower height, which is the reverse logic).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mark Current Cell:&lt;/strong&gt; Set &lt;code&gt;visited_matrix[r][c] = True&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recurse:&lt;/strong&gt; For each &lt;code&gt;(dr, dc)&lt;/code&gt; in &lt;code&gt;directions&lt;/code&gt;:&lt;ul&gt;
+&lt;li&gt;Calculate &lt;code&gt;new_r = r + dr&lt;/code&gt;, &lt;code&gt;new_c = c + dc&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;dfs(new_r, new_c, visited_matrix, heights[r][c])&lt;/code&gt;. Note: &lt;code&gt;heights[r][c]&lt;/code&gt; becomes the &lt;code&gt;prev_height&lt;/code&gt; for the next call, ensuring the "flow upstream" condition (&lt;code&gt;current_height &amp;gt;= next_cell_height&lt;/code&gt;) is maintained.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Populate &lt;code&gt;can_reach_pacific&lt;/code&gt;:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Iterate through the first row (&lt;code&gt;r=0&lt;/code&gt;) and the first column (&lt;code&gt;c=0&lt;/code&gt;). These are the direct borders of the Pacific.&lt;/li&gt;
+&lt;li&gt;For each cell &lt;code&gt;(0, c)&lt;/code&gt; and &lt;code&gt;(r, 0)&lt;/code&gt;: call &lt;code&gt;dfs(r, c, can_reach_pacific, -1)&lt;/code&gt;. We use &lt;code&gt;-1&lt;/code&gt; as &lt;code&gt;prev_height&lt;/code&gt; to ensure water can always flow "into" the ocean from any bordering cell.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Populate &lt;code&gt;can_reach_atlantic&lt;/code&gt;:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Iterate through the last row (&lt;code&gt;r=m-1&lt;/code&gt;) and the last column (&lt;code&gt;c=n-1&lt;/code&gt;). These are the direct borders of the Atlantic.&lt;/li&gt;
+&lt;li&gt;For each cell &lt;code&gt;(m-1, c)&lt;/code&gt; and &lt;code&gt;(r, n-1)&lt;/code&gt;: call &lt;code&gt;dfs(r, c, can_reach_atlantic, -1)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Collect Results:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Initialize an empty list &lt;code&gt;result&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Iterate through the entire &lt;code&gt;heights&lt;/code&gt; matrix from &lt;code&gt;r=0&lt;/code&gt; to &lt;code&gt;m-1&lt;/code&gt; and &lt;code&gt;c=0&lt;/code&gt; to &lt;code&gt;n-1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;can_reach_pacific[r][c]&lt;/code&gt; is &lt;code&gt;True&lt;/code&gt; AND &lt;code&gt;can_reach_atlantic[r][c]&lt;/code&gt; is &lt;code&gt;True&lt;/code&gt;, add &lt;code&gt;[r, c]&lt;/code&gt; to the &lt;code&gt;result&lt;/code&gt; list.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Return &lt;code&gt;result&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Python Code Implementation&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;pacificAtlantic&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;heights&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;]]:&lt;/span&gt;
+        &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;heights&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;heights&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Two boolean matrices to track reachability from Pacific and Atlantic&lt;/span&gt;
+        &lt;span class="n"&gt;can_reach_pacific&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+        &lt;span class="n"&gt;can_reach_atlantic&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Directions for DFS: right, left, down, up&lt;/span&gt;
+        &lt;span class="n"&gt;directions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;visited_matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;prev_height&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="c1"&gt;# Base cases for DFS:&lt;/span&gt;
+            &lt;span class="c1"&gt;# 1. Out of bounds&lt;/span&gt;
+            &lt;span class="c1"&gt;# 2. Already visited&lt;/span&gt;
+            &lt;span class="c1"&gt;# 3. Current cell height is less than previous cell&amp;#39;s height (water can&amp;#39;t flow &amp;quot;upstream&amp;quot; if current is lower)&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;visited_matrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;heights&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;prev_height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Mark current cell as reachable&lt;/span&gt;
+            &lt;span class="n"&gt;visited_matrix&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Explore neighbors&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;directions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;new_r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt;
+                &lt;span class="c1"&gt;# The &amp;#39;prev_height&amp;#39; for the next recursive call is the current cell&amp;#39;s height&lt;/span&gt;
+                &lt;span class="c1"&gt;# This ensures we only &amp;quot;flow upstream&amp;quot; (or stay level)&lt;/span&gt;
+                &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;visited_matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;heights&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 1. Start DFS from cells bordering the Pacific Ocean&lt;/span&gt;
+        &lt;span class="c1"&gt;# Top row (r=0)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;can_reach_pacific&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# -1 ensures any height is valid to start from the ocean&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Left column (c=0), excluding (0,0) which is covered by the top row loop&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;can_reach_pacific&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 2. Start DFS from cells bordering the Atlantic Ocean&lt;/span&gt;
+        &lt;span class="c1"&gt;# Bottom row (r=m-1)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;can_reach_atlantic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Right column (c=n-1), excluding (m-1,n-1) which is covered by the bottom row loop&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="c1"&gt;# Note: iterate up to m-2 to avoid (m-1, n-1) duplicate if m-1 &amp;gt;= 0&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;can_reach_atlantic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+        &lt;span class="c1"&gt;# 3. Collect the result: cells reachable by both oceans&lt;/span&gt;
+        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;can_reach_pacific&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;can_reach_atlantic&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                    &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Complexity Analysis&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Time Complexity:&lt;/strong&gt; &lt;code&gt;O(m * n)&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We perform two independent DFS traversals. Each DFS visits every cell at most once. For each cell, we perform constant work (checking neighbors).&lt;/li&gt;
+&lt;li&gt;The final iteration to collect results also takes &lt;code&gt;O(m * n)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Therefore, the total time complexity is proportional to the number of cells in the grid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Space Complexity:&lt;/strong&gt; &lt;code&gt;O(m * n)&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We use two boolean matrices (&lt;code&gt;can_reach_pacific&lt;/code&gt; and &lt;code&gt;can_reach_atlantic&lt;/code&gt;), each of size &lt;code&gt;m x n&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The recursion stack for DFS in the worst case could go &lt;code&gt;O(m * n)&lt;/code&gt; deep (if the grid is a long, winding path).&lt;/li&gt;
+&lt;li&gt;Thus, the total space complexity is &lt;code&gt;O(m * n)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Why This Approach Shines&lt;/h2&gt;
+&lt;p&gt;This "flow upstream" or "reverse traversal" technique is incredibly powerful for problems where you need to find reachability from multiple sources. Instead of &lt;code&gt;(m*n)&lt;/code&gt; separate traversals, you consolidate it into a fixed number of traversals (in this case, two: one for Pacific, one for Atlantic). It dramatically reduces the time complexity and is a common optimization strategy in graph problems.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;LeetCode 417, "Pacific Atlantic Water Flow," is a fantastic problem that reinforces the power of strategic thinking in algorithm design. By transforming the problem from a "flow downhill" to a "flow upstream" perspective, we unlock an efficient DFS/BFS solution. This problem is more than just coding; it's about understanding how to model real-world scenarios (like water flow) into graph problems and applying optimal traversal techniques.&lt;/p&gt;
+&lt;p&gt;Keep practicing, keep exploring different graph traversal variations, and you'll be well-prepared to conquer similar challenges in your next coding interview! Happy coding!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Admin</dc:creator><pubDate>Fri, 13 Feb 2026 11:13:00 +0000</pubDate><guid>tag:analyticsdrive.tech,2026-02-13:/leetcode-417-pacific-atlantic-water-flow-dfs-solution/</guid><category>Algorithm Explained</category><category>LeetCode</category><category>Graph Traversal</category><category>DFS</category><category>BFS</category><category>Algorithm</category><category>Interview Prep</category><category>Python</category><category>Data Structures</category><category>Problem Solving</category></item><item><title>Google Gemini: Unveiling the Next Generation of AI Intelligence</title><link>https://analyticsdrive.tech/google-gemini-next-generation-ai-intelligence/</link><description>&lt;h2&gt;The Dawn of a New AI Era: Welcome Google Gemini&lt;/h2&gt;
 &lt;p&gt;The landscape of artificial intelligence is evolving at an unprecedented pace, constantly pushing the boundaries of what machines can achieve. At the forefront of this revolution is Google Gemini, a groundbreaking family of multimodal AI models that promises to redefine our interaction with technology. Far from just another chatbot, Gemini represents Google's most ambitious and capable AI to date, designed to understand, operate, and combine information across text, images, audio, and video like never before.&lt;/p&gt;
 &lt;p&gt;The buzz around Gemini has been palpable, and for good reason. It's not merely an incremental update; it's a leap forward in the quest for truly intelligent and adaptable AI. But what exactly makes Gemini so special, and how is it poised to transform everything from our daily routines to complex scientific research? Let's explore.&lt;/p&gt;
 &lt;h2&gt;What is Google Gemini? A Multimodal Marvel&lt;/h2&gt;
