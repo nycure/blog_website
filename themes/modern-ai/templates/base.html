@@ -7,7 +7,11 @@
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
 
     <!-- Canonical URL -->
+    {% if output_file == 'index.html' %}
+    <link rel="canonical" href="{{ SITEURL }}/" />
+    {% else %}
     <link rel="canonical" href="{{ SITEURL }}/{{ output_file }}" />
+    {% endif %}
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ SITEURL }}/apple-touch-icon.png">
@@ -40,13 +44,56 @@
     <meta name="twitter:description" content="{{ self.og_description() }}" />
     <meta name="twitter:image" content="{{ SITEURL }}/{{ self.og_image() }}" />
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '{{ GOOGLE_ANALYTICS }}');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ SITENAME }}",
+      "url": "{{ SITEURL }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ SITEURL }}/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ SITENAME }}",
+      "url": "{{ SITEURL }}",
+      "logo": "{{ SITEURL }}/theme/images/logo.png",
+      "sameAs": [
+        {% for name, link in SOCIAL %}
+        "{{ link }}"{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    }
+    </script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+            rel="stylesheet">
+    </noscript>
 </head>
 
 <body>

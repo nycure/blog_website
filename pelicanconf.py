@@ -2,7 +2,7 @@ from datetime import datetime
 CURRENT_YEAR = datetime.now().year
 AUTHOR = 'Admin'
 SITENAME = 'Analytics Drive'
-SITEURL = 'analyticsdrive.tech'
+SITEURL = 'https://analyticsdrive.tech'
 
 PATH = 'content'
 TIMEZONE = 'UTC'
@@ -35,15 +35,15 @@ RSS_FEED_SUMMARY_ONLY = False
 FEED_MAX_ITEMS = 50  # Control feed size
 
 # --- SEO SETTINGS ---
-SEO_DESCRIPTION = "A futuristic blog exploring AI, Technology, and Innovation."
-SEO_KEYWORDS = "AI, Machine Learning, Tech, Future, Python"
+SEO_DESCRIPTION = "Analytics Drive: Your futuristic guide to AI, Machine Learning, and Tech. Explore in-depth articles, tutorials, and insights on the future of innovation."
+SEO_KEYWORDS = "AI, Machine Learning, Tech, Future, Python, Data Science, Neural Networks, Robotics, News"
 OG_IMAGE = "images/blog.jpg" # Place image in content/images/
 
 # --- UI CUSTOMIZATION ---
 # Colors match the CSS variables in style.css
 # You can override them here if you implement dynamic CSS injection, 
 # but usually editing style.css is better.
-HERO_TITLE = "Welcome into the Future"
+HERO_TITLE = "AI, Tech & Future Innovation Blog"
 HERO_SUBTITLE = "Musings on Artificial Intelligence & Code"
 
 # --- NAVIGATION ---
@@ -56,9 +56,13 @@ MENUITEMS = (
 
 # Social Links
 SOCIAL = (
-    ('GitHub', 'https://github.com/nycure'),
-    ('Twitter', '#'),
+    ('Twitter', 'https://twitter.com/analyticsdrive'),
+    ('Facebook', 'https://www.facebook.com/profile.php?id=61588072082428'),
+    ('Instagram', 'https://www.instagram.com/analyticsdrive'),
 )
+
+TWITTER_USERNAME = '@analyticsdrive'
+GOOGLE_ANALYTICS = 'G-P1LT4885S9'
 
 DEFAULT_PAGINATION = 10
 RELATIVE_URLS = True
@@ -81,6 +85,7 @@ EXTRA_PATH_METADATA = {
     'extra/favicon-16x16.png': {'path': 'favicon-16x16.png'},
     'extra/favicon-32x32.png': {'path': 'favicon-32x32.png'},
     'extra/site.webmanifest': {'path': 'site.webmanifest'},
+    'extra/llms.txt': {'path': 'llms.txt'},
 }
 
 # Add current year to context
