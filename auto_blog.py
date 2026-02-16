@@ -3,6 +3,7 @@ import sys
 import subprocess
 from generate_post import generate_blog_post, save_post
 
+
 def run_command(command):
     """Run a shell command."""
     print(f"Executing: {command}")
@@ -24,7 +25,7 @@ def main():
         print(f"\n[1/3] 🧠 Generating content for '{topic}' using Gemini 2.5 Flash...")
         content = generate_blog_post(topic)
         if content:
-            save_post(content, topic)
+            saved_file = save_post(content, topic)
         else:
             print("❌ Failed to generate content. Aborting.")
             return
@@ -52,9 +53,9 @@ def main():
     if confirm == 'y':
         # Push to gh-pages branch
         if run_command("ghp-import output -b gh_pages -n -p -f"):
-             print("\n✅ Success! Your blog is now live/updating on GitHub Pages.")
+            print("\n✅ Success! Your blog is now live/updating on GitHub Pages.")
         else:
-             print("\n❌ Deployment failed.")
+            print("\n❌ Deployment failed.")
     else:
         print("Deployment skipped.")
 

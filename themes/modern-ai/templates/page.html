@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}{{ page.title }} | {{ SITENAME }}{% endblock %}
+{% block title %}
+{% set title_text = page.title %}
+{% set site_text = SITENAME %}
+{% if (title_text|length + site_text|length + 3) > 70 %}
+{{ title_text|truncate(70, True, '...') }}
+{% else %}
+{{ title_text }} | {{ site_text }}
+{% endif %}
+{% endblock %}
 {% block description %}{{ page.content|striptags|truncate(160) }}{% endblock %}
 {% block og_title %}{{ page.title }}{% endblock %}
 {% block og_description %}{{ page.content|striptags|truncate(160) }}{% endblock %}

@@ -1,10 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}{{ article.title }} | {{ SITENAME }}{% endblock %}
+{% block title %}
+{% set title_text = article.title %}
+{% set site_text = SITENAME %}
+{% if (title_text|length + site_text|length + 3) > 70 %}
+{{ title_text|truncate(70, True, '...') }}
+{% else %}
+{{ title_text }} | {{ site_text }}
+{% endif %}
+{% endblock %}
 {% block description %}{{ article.summary|striptags|truncate(160) }}{% endblock %}
 {% block og_title %}{{ article.title }}{% endblock %}
 {% block og_description %}{{ article.summary|striptags|truncate(160) }}{% endblock %}
-{% block og_image %}{% if article.image %}{{ article.image }}{% else %}{{ OG_IMAGE }}{% endif %}{% endblock %}
+{% block og_image %}{% if article.image %}{% if article.image.startswith('http') %}{{ article.image }}{% else %}{{
+SITEURL }}/{{ article.image }}{% endif %}{% else %}{{ SITEURL }}/{{ OG_IMAGE }}{% endif %}{% endblock %}
 
 {% block content %}
 <script type="application/ld+json">
@@ -18,7 +27,7 @@
   "headline": "{{ article.title }}",
   "description": "{{ article.summary|striptags|truncate(160) }}",
   "image": [
-    "{{ SITEURL }}/{% if article.image %}{{ article.image }}{% else %}{{ OG_IMAGE }}{% endif %}"
+    "{% if article.image %}{% if article.image.startswith('http') %}{{ article.image }}{% else %}{{ SITEURL }}/{{ article.image }}{% endif %}{% else %}{{ SITEURL }}/{{ OG_IMAGE }}{% endif %}"
   ],
   "datePublished": "{{ article.date.isoformat() }}",
   "dateModified": "{{ article.modified.isoformat() if article.modified else article.date.isoformat() }}",
@@ -45,6 +54,16 @@
     <h1>{{ article.title }}</h1>
   </header>
 
+  {% if article.image %}
+  <div class="featured-image">
+    {% if article.image.startswith('http') %}
+    <img src="{{ article.image }}" alt="{{ article.title }}" loading="lazy" />
+    {% else %}
+    <img src="{{ SITEURL }}/{{ article.image }}" alt="{{ article.title }}" loading="lazy" />
+    {% endif %}
+  </div>
+  {% endif %}
+
   <div class="post-content">
     {{ article.content }}
   </div>
@@ -60,6 +79,17 @@
     </div>
     {% endif %}
   </div>
+
+  {% if article.related_posts %}
+  <div class="related-posts">
+    <h3>Related Articles</h3>
+    <ul>
+      {% for related_post in article.related_posts %}
+      <li><a href="{{ SITEURL }}/{{ related_post.url }}">{{ related_post.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
 
   <div class="post-footer">
     <a href="{{ SITEURL }}/" class="back-link">&larr; Back to Home</a>

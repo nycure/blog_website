@@ -1,6 +1,6 @@
 from datetime import datetime
 CURRENT_YEAR = datetime.now().year
-AUTHOR = 'Admin'
+AUTHOR = 'Analytics Drive'
 SITENAME = 'Analytics Drive'
 SITEURL = 'https://analyticsdrive.tech'
 
@@ -12,8 +12,8 @@ DEFAULT_LANG = 'en'
 THEME = 'themes/modern-ai'
 
 # --- PLUGINS ---
-# Sitemap is installed via pip, so we don't need PLUGIN_PATHS
-PLUGINS = ['sitemap']
+PLUGIN_PATHS = ['plugins']
+PLUGINS = ['sitemap', 'related_posts', 'feed_image']
 
 SITEMAP = {
     'format': 'xml',
@@ -87,6 +87,8 @@ EXTRA_PATH_METADATA = {
     'extra/favicon-32x32.png': {'path': 'favicon-32x32.png'},
     'extra/site.webmanifest': {'path': 'site.webmanifest'},
     'extra/llms.txt': {'path': 'llms.txt'},
+    'extra/BingSiteAuth.xml': {'path': 'BingSiteAuth.xml'},
+    'extra/decd7afbea4543c78251f2c1a29d33c9.txt': {'path': 'decd7afbea4543c78251f2c1a29d33c9.txt'},
 }
 
 # Add current year to context

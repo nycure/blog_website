@@ -7,7 +7,11 @@
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
 
     <!-- Canonical URL -->
-    {% if output_file == 'index.html' %}
+    {% if article %}
+    <link rel="canonical" href="{{ SITEURL }}/{{ article.url }}" />
+    {% elif page %}
+    <link rel="canonical" href="{{ SITEURL }}/{{ page.url }}" />
+    {% elif output_file == 'index.html' %}
     <link rel="canonical" href="{{ SITEURL }}/" />
     {% else %}
     <link rel="canonical" href="{{ SITEURL }}/{{ output_file }}" />
@@ -35,14 +39,14 @@
         content="{% block og_description %}{{ SEO_DESCRIPTION|default(SITENAME) }}{% endblock %}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ SITEURL }}/{{ output_file }}" />
-    <meta property="og:image" content="{{ SITEURL }}/{% block og_image %}{{ OG_IMAGE }}{% endblock %}" />
+    <meta property="og:image" content="{% block og_image %}{{ SITEURL }}/{{ OG_IMAGE }}{% endblock %}" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="{{ TWITTER_USERNAME }}" />
     <meta name="twitter:title" content="{{ self.og_title() }}" />
     <meta name="twitter:description" content="{{ self.og_description() }}" />
-    <meta name="twitter:image" content="{{ SITEURL }}/{{ self.og_image() }}" />
+    <meta name="twitter:image" content="{{ self.og_image() }}" />
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS }}"></script>
@@ -379,6 +383,39 @@
             font-size: 1rem;
             color: var(--text-muted);
             font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
         }
 
         .post-content {
