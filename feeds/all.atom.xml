@@ -1,5 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/all.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-17T10:50:00+00:00</updated><entry><title>Lanka Stuns Aussies in T20 WC Thriller</title><link href="https://analyticsdrive.tech/australia-sri-lanka-t20-world-cup-2026-match-review/" rel="alternate"/><published>2026-02-17T10:50:00+00:00</published><updated>2026-02-17T10:50:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-17:/australia-sri-lanka-t20-world-cup-2026-match-review/</id><summary type="html">&lt;p&gt;Sri Lanka delivered a stunning performance to defeat Australia by 8 wickets in the T20 World Cup 2026, with Pathum Nissanka's century leading the charge.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Sri Lanka Electrifies Home Crowd with Dominant T20 World Cup Victory Over Australia&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/all.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-17T14:29:00+00:00</updated><entry><title>Cracking LeetCode 79: Word Search</title><link href="https://analyticsdrive.tech/leetcode-79-word-search-solution/" rel="alternate"/><published>2026-02-17T14:29:00+00:00</published><updated>2026-02-17T14:29:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-17:/leetcode-79-word-search-solution/</id><summary type="html">&lt;p&gt;Dive into LeetCode 79, the Word Search problem. Learn to solve this grid-traversal challenge efficiently using a powerful Depth-First Search (DFS) and backtracking approach.&lt;/p&gt;</summary><content type="html">&lt;hr&gt;
+&lt;h2&gt;Mastering LeetCode 79: The Word Search Challenge&lt;/h2&gt;
+&lt;p&gt;Have you ever found yourself staring at a grid of letters, trying to spell out a word? That's precisely the essence of &lt;a href="https://leetcode.com/problems/word-search/"&gt;LeetCode Problem 79: Word Search&lt;/a&gt;. It's a classic algorithmic puzzle that tests your ability to navigate a grid, making it an excellent exercise for honing your &lt;a href="https://en.wikipedia.org/wiki/Depth-first_search"&gt;Depth-First Search (DFS)&lt;/a&gt; and &lt;a href="https://en.wikipedia.org/wiki/Backtracking"&gt;backtracking&lt;/a&gt; skills.&lt;/p&gt;
+&lt;p&gt;This problem isn't just a technical exercise; it's a fundamental pattern that appears in many real-world scenarios, from game development to pathfinding. Let's break down how to conquer it.&lt;/p&gt;
+&lt;h2&gt;Understanding the LeetCode 79 Problem&lt;/h2&gt;
+&lt;p&gt;The challenge asks us to determine if a given &lt;code&gt;word&lt;/code&gt; exists in a 2D &lt;code&gt;board&lt;/code&gt; of characters. The word can be constructed from letters of sequentially adjacent cells, where "adjacent" cells are those horizontally or vertically neighboring. Crucially, the same letter cell may &lt;strong&gt;not&lt;/strong&gt; be used more than once.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Consider the board:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;[[&amp;#39;A&amp;#39;,&amp;#39;B&amp;#39;,&amp;#39;C&amp;#39;,&amp;#39;E&amp;#39;],
+ [&amp;#39;S&amp;#39;,&amp;#39;F&amp;#39;,&amp;#39;C&amp;#39;,&amp;#39;S&amp;#39;],
+ [&amp;#39;A&amp;#39;,&amp;#39;D&amp;#39;,&amp;#39;E&amp;#39;,&amp;#39;E&amp;#39;]]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And the word: &lt;code&gt;"ABCCED"&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The expected output is &lt;code&gt;true&lt;/code&gt; because we can find 'A' at (0,0), 'B' at (0,1), 'C' at (0,2), 'C' at (1,2), 'E' at (2,3), and 'D' at (1,1). Notice how we traversed from (0,2) to (1,2) for the second 'C'.&lt;/p&gt;
+&lt;p&gt;Key constraints usually include the board dimensions and the length of the word. Both are typically small enough for exponential-time solutions involving backtracking to pass within limits.&lt;/p&gt;
+&lt;h2&gt;The Intuition: Exploring Paths with DFS&lt;/h2&gt;
+&lt;p&gt;How do we begin to search for a word? A brute-force approach might try to list every possible path starting from every cell, which quickly becomes unmanageable. The key insight lies in using a graph traversal algorithm: Depth-First Search (DFS).&lt;/p&gt;
+&lt;p&gt;When we find the first letter of our &lt;code&gt;word&lt;/code&gt; on the &lt;code&gt;board&lt;/code&gt;, we can start a "search path" from that cell. From there, we need to explore all four possible directions (up, down, left, right) for the &lt;em&gt;next&lt;/em&gt; letter in our &lt;code&gt;word&lt;/code&gt;. If we find the next letter, we continue the path. If not, or if we hit a dead end, we need to "backtrack" and try a different path. This recursive exploration is the heart of DFS and backtracking.&lt;/p&gt;
+&lt;h2&gt;Algorithm Breakdown: DFS with Backtracking&lt;/h2&gt;
+&lt;p&gt;Our solution will comprise two main parts:
+1.  &lt;strong&gt;An outer loop&lt;/strong&gt; to iterate through every cell in the &lt;code&gt;board&lt;/code&gt;. If a cell's character matches the first letter of our &lt;code&gt;word&lt;/code&gt;, we initiate a DFS search from that point.
+2.  &lt;strong&gt;A recursive helper function (DFS)&lt;/strong&gt; that attempts to find the rest of the word.&lt;/p&gt;
+&lt;p&gt;Let's detail the DFS helper function:&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;dfs(row, col, index, board, word)&lt;/code&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Base Case 1: Word Found&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;index&lt;/code&gt; equals the length of &lt;code&gt;word&lt;/code&gt;, it means we've successfully found all characters of the word in sequence. Return &lt;code&gt;True&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Base Case 2: Out of Bounds or Mismatch&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;row&lt;/code&gt; or &lt;code&gt;col&lt;/code&gt; are outside the &lt;code&gt;board&lt;/code&gt; boundaries.&lt;/li&gt;
+&lt;li&gt;If the character &lt;code&gt;board[row][col]&lt;/code&gt; does not match &lt;code&gt;word[index]&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If the cell &lt;code&gt;(row, col)&lt;/code&gt; has already been visited (we'll mark visited cells).&lt;/li&gt;
+&lt;li&gt;In any of these cases, this path is invalid. Return &lt;code&gt;False&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Recursive Step:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Mark Current Cell Visited:&lt;/strong&gt; Temporarily change the character at &lt;code&gt;board[row][col]&lt;/code&gt; to a distinct marker (e.g., '#', '*') to prevent reusing it in the current path.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Explore Neighbors:&lt;/strong&gt; Recursively call &lt;code&gt;dfs&lt;/code&gt; for all four adjacent cells:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dfs(row + 1, col, index + 1, ...)&lt;/code&gt; (Down)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(row - 1, col, index + 1, ...)&lt;/code&gt; (Up)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(row, col + 1, index + 1, ...)&lt;/code&gt; (Right)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(row, col - 1, index + 1, ...)&lt;/code&gt; (Left)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Check Results:&lt;/strong&gt; If any of these recursive calls return &lt;code&gt;True&lt;/code&gt;, it means a path was found. Propagate &lt;code&gt;True&lt;/code&gt; upwards.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backtrack (Unmark Cell):&lt;/strong&gt; &lt;em&gt;Crucially&lt;/em&gt;, restore the character &lt;code&gt;board[row][col]&lt;/code&gt; to its original value. This allows other potential paths (started from different initial cells) to use this cell later. If we don't restore it, we might miss valid paths.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Return False:&lt;/strong&gt; If no path from this cell leads to the full word, return &lt;code&gt;False&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The main function &lt;code&gt;exist(board, word)&lt;/code&gt; will iterate &lt;code&gt;(i, j)&lt;/code&gt; through the &lt;code&gt;board&lt;/code&gt;. If &lt;code&gt;board[i][j] == word[0]&lt;/code&gt;, it calls &lt;code&gt;dfs(i, j, 0, board, word)&lt;/code&gt;. If any such call returns &lt;code&gt;True&lt;/code&gt;, the word exists. If all initial calls fail, return &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Python Code Implementation&lt;/h2&gt;
+&lt;p&gt;Here's how you might implement this in Python:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;exist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cols&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Define directions for movement (up, down, left, right)&lt;/span&gt;
+        &lt;span class="n"&gt;directions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="c1"&gt;# Base Case 1: Word Found&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Base Case 2: Out of Bounds or Mismatch&lt;/span&gt;
+            &lt;span class="c1"&gt;# A visited cell will have its character temporarily changed to &amp;#39;#&amp;#39;&lt;/span&gt;
+            &lt;span class="c1"&gt;# which won&amp;#39;t match word[k], effectively handling &amp;#39;already visited&amp;#39;.&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;cols&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;]):&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Mark current cell as visited by changing its character&lt;/span&gt;
+            &lt;span class="c1"&gt;# Store original character to restore later during backtracking&lt;/span&gt;
+            &lt;span class="n"&gt;original_char&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#&amp;#39;&lt;/span&gt; &lt;span class="c1"&gt;# Use a special character to mark as visited&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Explore neighbors&lt;/span&gt;
+            &lt;span class="n"&gt;found&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;directions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;new_r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                    &lt;span class="n"&gt;found&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+                    &lt;span class="k"&gt;break&lt;/span&gt; &lt;span class="c1"&gt;# Optimization: If found, no need to check other directions&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Backtrack: Restore the original character to the cell&lt;/span&gt;
+            &lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;original_char&lt;/span&gt;
+
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;found&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Iterate through each cell to find the starting character of the word&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Time and Space Complexity Analysis&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Time Complexity:&lt;/strong&gt; O(M * N * 3^L)&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;M&lt;/code&gt; is the number of rows, &lt;code&gt;N&lt;/code&gt; is the number of columns in the &lt;code&gt;board&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;L&lt;/code&gt; is the length of the &lt;code&gt;word&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;In the worst case, we might start a DFS from every cell (&lt;code&gt;M * N&lt;/code&gt; possibilities).&lt;/li&gt;
+&lt;li&gt;For each DFS path, we explore up to &lt;code&gt;L&lt;/code&gt; characters. From each character, we have 4 directions. However, since we cannot go back to the cell we just came from, there are effectively 3 choices for the next step after the first one. Hence, &lt;code&gt;3^L&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Space Complexity:&lt;/strong&gt; O(L)&lt;ul&gt;
+&lt;li&gt;This is primarily due to the recursion stack depth, which can go as deep as the length of the &lt;code&gt;word&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;We are modifying the &lt;code&gt;board&lt;/code&gt; in-place to mark visited cells, so no additional &lt;code&gt;visited&lt;/code&gt; set/array is explicitly used, saving space. If we used an auxiliary &lt;code&gt;visited&lt;/code&gt; matrix, it would be O(M*N).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Tips for Similar Problems&lt;/h2&gt;
+&lt;p&gt;This problem is a fantastic illustration of grid traversal with DFS and backtracking. Keep these principles in mind for similar challenges:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Identify the Search Space:&lt;/strong&gt; Is it a grid, a tree, or a graph?&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Define Base Cases:&lt;/strong&gt; What conditions stop the recursion (success, failure)?&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Define Recursive Step:&lt;/strong&gt; How do you move from the current state to the next?&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Manage State:&lt;/strong&gt; How do you keep track of visited elements or accumulated results? (Here, modifying the board temporarily serves as the &lt;code&gt;visited&lt;/code&gt; tracker).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backtracking:&lt;/strong&gt; If a path doesn't lead to a solution, &lt;em&gt;always&lt;/em&gt; revert the changes made to the state to allow other paths to explore.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Practicing problems like "Number of Islands," "Surrounded Regions," or "Pacific Atlantic Water Flow" will further solidify your understanding of these techniques.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Solving LeetCode 79: Word Search isn't just about finding characters on a board; it's about mastering a powerful and widely applicable algorithmic pattern. By understanding and implementing DFS with backtracking, you gain a versatile tool for tackling complex search and exploration problems. Keep practicing, and you'll find these grid-based challenges increasingly intuitive!&lt;/p&gt;
+&lt;p&gt;Happy coding!&lt;/p&gt;
+&lt;h2&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://leetcode.com/problems/word-search/"&gt;LeetCode Problem 79: Word Search&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Depth-first_search"&gt;Depth-First Search (DFS) on Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Backtracking"&gt;Backtracking on Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://leetcode.com/"&gt;LeetCode Official Website&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Algorithm Analysis"/><category term="LeetCode"/><category term="Backtracking"/><category term="DFS"/><category term="Algorithm"/><category term="Word Search"/><media:content height="675" medium="image" type="image/webp" url="https://analyticsdrive.tech/images/leetcode-79-word-search-solution.webp" width="1200"/><media:title type="plain">Cracking LeetCode 79: Word Search</media:title><media:description type="plain">Dive into LeetCode 79, the Word Search problem. Learn to solve this grid-traversal challenge efficiently using a powerful Depth-First Search (DFS) and backtracking approach.</media:description></entry><entry><title>Lanka Stuns Aussies in T20 WC Thriller</title><link href="https://analyticsdrive.tech/australia-sri-lanka-t20-world-cup-2026-match-review/" rel="alternate"/><published>2026-02-17T10:50:00+00:00</published><updated>2026-02-17T10:50:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-17:/australia-sri-lanka-t20-world-cup-2026-match-review/</id><summary type="html">&lt;p&gt;Sri Lanka delivered a stunning performance to defeat Australia by 8 wickets in the T20 World Cup 2026, with Pathum Nissanka's century leading the charge.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Sri Lanka Electrifies Home Crowd with Dominant T20 World Cup Victory Over Australia&lt;/h2&gt;
 &lt;p&gt;The ICC Men's T20 World Cup 2026 witnessed a captivating encounter yesterday, February 16, as co-hosts Sri Lanka delivered a sensational performance to defeat cricketing giants Australia by a resounding eight wickets in a crucial Group B clash. The match, held at the Pallekele International Cricket Stadium in Kandy, saw the Lankan Lions roar to a remarkable victory, largely propelled by a magnificent century from opener Pathum Nissanka.&lt;/p&gt;
 &lt;p&gt;This pivotal win not only secured Sri Lanka's spot in the Super 8 stage but also left Australia's tournament hopes hanging by a thread, reeling from a surprising earlier defeat to Zimbabwe.&lt;/p&gt;
 &lt;h3&gt;Australia's Batting Blitz Stalls After Strong Start&lt;/h3&gt;
