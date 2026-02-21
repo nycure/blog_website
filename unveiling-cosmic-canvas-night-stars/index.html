@@ -780,7 +780,23 @@
                 themeIcon.textContent = '☀️';
             }
         });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
     </script>
+
 </body>
 
 </html>

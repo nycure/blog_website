@@ -685,12 +685,6 @@
     </div>
   </div>
 
-  <div class="related-posts">
-    <h3>Related Articles</h3>
-    <ul>
-      <li><a href="https://analyticsdrive.tech/india-ai-impact-summit-2026-unfolds/">India AI Impact Summit 2026: A New Dawn for Global AI</a></li>
-    </ul>
-  </div>
 
   <div class="post-footer">
     <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
@@ -754,7 +748,23 @@
                 themeIcon.textContent = '☀️';
             }
         });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
     </script>
+
 </body>
 
 </html>

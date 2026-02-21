@@ -676,7 +676,6 @@
     <h3>Related Articles</h3>
     <ul>
       <li><a href="https://analyticsdrive.tech/andrew-mountbatten-windsor-epstein-arrest/">Royal Shock: Andrew Arrested Over Epstein Files</a></li>
-      <li><a href="https://analyticsdrive.tech/unpacking-epstein-files-transparency-accountability/">Unpacking the "Epstein Files": A Quest for Transparency and Accountability</a></li>
     </ul>
   </div>
 
@@ -742,7 +741,23 @@
                 themeIcon.textContent = '☀️';
             }
         });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
     </script>
+
 </body>
 
 </html>

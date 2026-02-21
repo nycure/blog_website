@@ -594,6 +594,8 @@
 
     <dl>
             <dt>Sat 21 February 2026</dt>
+            <dd><a href="https://analyticsdrive.tech/us-supreme-court-trump-tariffs-legal-overview/">US Supreme Court on Trump Tariffs: A Legal Overview</a></dd>
+            <dt>Sat 21 February 2026</dt>
             <dd><a href="https://analyticsdrive.tech/trump-tariffs-economic-political-impact/">Trump Tariffs: A Look Back at Their Economic and Political Impact</a></dd>
             <dt>Sat 21 February 2026</dt>
             <dd><a href="https://analyticsdrive.tech/donald-trumps-unprecedented-second-act/">Trump's Unprecedented Second Act</a></dd>
@@ -776,7 +778,23 @@
                 themeIcon.textContent = '☀️';
             }
         });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
     </script>
+
 </body>
 
 </html>

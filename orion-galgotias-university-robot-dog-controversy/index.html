@@ -675,7 +675,6 @@
     <h3>Related Articles</h3>
     <ul>
       <li><a href="https://analyticsdrive.tech/galgotias-robodog-row-ai-summit-2026/">Galgotias' "Robodog" Row Rocks AI Summit India</a></li>
-      <li><a href="https://analyticsdrive.tech/openclaw-open-source-robotic-gripper-innovation/">OpenClaw: Grasping the Future with Open-Source Robotic Innovation</a></li>
     </ul>
   </div>
 
@@ -741,7 +740,23 @@
                 themeIcon.textContent = '☀️';
             }
         });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
     </script>
+
 </body>
 
 </html>
