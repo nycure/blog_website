@@ -1,5 +1,593 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive - Admin</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/admin.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-23T14:52:00+00:00</updated><entry><title>Shortest path in Directed Acyclic Graph: An In-Depth Guide</title><link href="https://analyticsdrive.tech/shortest-path-directed-acyclic-graph-guide/" rel="alternate"/><published>2026-02-23T14:52:00+00:00</published><updated>2026-02-23T14:52:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-23:/shortest-path-directed-acyclic-graph-guide/</id><summary type="html">&lt;p&gt;Master the efficient algorithm for finding the shortest path in Directed Acyclic Graphs (DAGs). This in-depth guide covers theory, applications, and performance.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Understanding and efficiently computing the &lt;strong&gt;shortest path in Directed Acyclic Graph&lt;/strong&gt; (DAG) structures is a cornerstone of modern computer science, a topic this in-depth guide will thoroughly explore. While graphs are fundamental data structures, modeling everything from social networks to logistical routes, and the problem of finding the shortest path stands as a critical challenge, specific graph types allow for highly optimized solutions. General graph algorithms like Dijkstra's or Bellman-Ford are powerful but often carry a computational overhead that can be significantly reduced when dealing with DAGs. This specialized algorithm not only unlocks superior performance for certain problems but also deepens one's grasp of dynamic programming and graph traversal.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive - Admin</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/admin.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-23T23:16:00+00:00</updated><entry><title>Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</title><link href="https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/" rel="alternate"/><published>2026-02-23T23:16:00+00:00</published><updated>2026-02-23T23:16:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-23:/leetcode-269-alien-dictionary-code-python-java-cpp/</id><summary type="html">&lt;p&gt;Master Leetcode 269: Alien Dictionary. Learn to implement this challenging graph problem using topological sort with code examples in Python, Java, and C++.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;strong&gt;Leetcode: 269 - Alien Dictionary Code in Python, Java, C++&lt;/strong&gt; is a renowned and challenging problem that often appears in technical interviews for software development roles. It's a fantastic exercise in applying graph theory, specifically &lt;strong&gt;topological sort&lt;/strong&gt;, to reconstruct a sequence from partial orderings. This tutorial will guide you through understanding the problem, building the necessary graph structures, and implementing the solution in three popular programming languages: Python, Java, and C++. By the end, you'll have a solid grasp of how to tackle similar graph-based ordering problems.&lt;/p&gt;
+&lt;h2&gt;Introduction to the Alien Dictionary Problem&lt;/h2&gt;
+&lt;p&gt;Imagine you've intercepted communications from an alien civilization, and you have a list of words from their dictionary, sorted lexicographically according to their unknown alphabet. Your task is to deduce the order of the letters in this alien alphabet. This is precisely what the &lt;strong&gt;Leetcode: 269 - Alien Dictionary&lt;/strong&gt; problem asks us to do. Given &lt;code&gt;words = ["wrt", "wrf", "er", "ett", "rftt"]&lt;/code&gt;, for example, we need to find an ordering like "wertf". This problem is considered hard because it requires not just recognizing the underlying graph structure but also correctly applying a topological sort algorithm to derive the final character order. Successfully solving this problem demonstrates a strong understanding of graph traversal and dependency management, crucial skills for any developer.&lt;/p&gt;
+&lt;h2&gt;Prerequisites for Solving Alien Dictionary&lt;/h2&gt;
+&lt;p&gt;Before diving into the solution for &lt;strong&gt;Leetcode: 269 - Alien Dictionary code in python java and c++&lt;/strong&gt;, ensure you have a foundational understanding of these core computer science concepts:&lt;/p&gt;
+&lt;h3&gt;Graph Theory Basics&lt;/h3&gt;
+&lt;p&gt;You should be familiar with what a graph is, including nodes (vertices) and edges. Understanding directed graphs (edges have a direction) and directed acyclic graphs (DAGs – directed graphs with no cycles) is crucial. The Alien Dictionary problem inherently translates into a DAG problem where characters are nodes and their orderings are directed edges.&lt;/p&gt;
+&lt;h3&gt;Adjacency List Representation&lt;/h3&gt;
+&lt;p&gt;Knowing how to represent a graph using an adjacency list is fundamental. This typically involves using a dictionary (hash map) where keys are nodes and values are lists of their direct neighbors. This representation is efficient for adding edges and iterating through neighbors.&lt;/p&gt;
+&lt;h3&gt;Breadth-First Search (BFS) or Depth-First Search (DFS)&lt;/h3&gt;
+&lt;p&gt;Familiarity with these graph traversal algorithms is important. While we'll be using topological sort, both BFS and DFS form the basis of most graph algorithms, including the two primary methods for topological sort. Kahn's algorithm, which we will use, is BFS-based. For a deeper dive into another BFS application, consider &lt;a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/"&gt;Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP&lt;/a&gt;. If you're interested in DFS, exploring &lt;a href="/mastering-depth-first-search/"&gt;Mastering Depth-First Search (DFS)&lt;/a&gt; can be beneficial.&lt;/p&gt;
+&lt;h3&gt;Basic Data Structures&lt;/h3&gt;
+&lt;p&gt;You'll need a good grasp of hash maps (dictionaries), sets, and queues. Hash maps are essential for storing graph nodes and their in-degrees, sets for keeping track of unique characters, and queues for implementing Kahn's algorithm.&lt;/p&gt;
+&lt;h3&gt;Programming Language Fundamentals&lt;/h3&gt;
+&lt;p&gt;Solid understanding of either Python, Java, or C++ syntax, data structures, and object-oriented concepts (if applicable) is necessary to follow the code examples and implement your own solution effectively. This includes handling strings, lists/arrays, and maps/dictionaries.&lt;/p&gt;
+&lt;h2&gt;Understanding the Problem: Alien Dictionary in Detail&lt;/h2&gt;
+&lt;p&gt;The input to the Alien Dictionary problem is a list of strings, &lt;code&gt;words&lt;/code&gt;, representing words in an alien language, sorted lexicographically. This means if &lt;code&gt;wordA&lt;/code&gt; comes before &lt;code&gt;wordB&lt;/code&gt; in the list, then &lt;code&gt;wordA&lt;/code&gt; is lexicographically smaller than &lt;code&gt;wordB&lt;/code&gt; according to the alien alphabet.&lt;/p&gt;
+&lt;p&gt;The goal is to return a string representing the alien alphabet's order. If no valid order can be determined (due to conflicting rules or cycles), an empty string should be returned.&lt;/p&gt;
+&lt;h3&gt;Key Observations:&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Pairwise Comparisons:&lt;/strong&gt; The ordering information comes from comparing adjacent words. If &lt;code&gt;word1&lt;/code&gt; and &lt;code&gt;word2&lt;/code&gt; are consecutive in the input list, and they differ at some character position &lt;code&gt;i&lt;/code&gt;, then the character &lt;code&gt;word1[i]&lt;/code&gt; must come before &lt;code&gt;word2[i]&lt;/code&gt; in the alien alphabet.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;First Difference Matters:&lt;/strong&gt; Once a difference is found between two words, say &lt;code&gt;word1[i]&lt;/code&gt; != &lt;code&gt;word2[i]&lt;/code&gt;, then &lt;code&gt;word1[i]&lt;/code&gt; must precede &lt;code&gt;word2[i]&lt;/code&gt;. Any characters after this first difference in these two words provide no &lt;em&gt;new&lt;/em&gt; ordering information relative to each other.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prefix Rule:&lt;/strong&gt; If &lt;code&gt;word1&lt;/code&gt; is a prefix of &lt;code&gt;word2&lt;/code&gt; (e.g., "abc", "ab"), but &lt;code&gt;word2&lt;/code&gt; appears &lt;em&gt;before&lt;/em&gt; &lt;code&gt;word1&lt;/code&gt; in the input list, it's an invalid ordering and implies a cycle. However, if &lt;code&gt;word1&lt;/code&gt; is a prefix of &lt;code&gt;word2&lt;/code&gt; and &lt;code&gt;word1&lt;/code&gt; appears &lt;em&gt;before&lt;/em&gt; &lt;code&gt;word2&lt;/code&gt;, this provides no ordering information between &lt;code&gt;word1&lt;/code&gt; and &lt;code&gt;word2&lt;/code&gt; themselves but confirms consistency. If &lt;code&gt;word2&lt;/code&gt; is a prefix of &lt;code&gt;word1&lt;/code&gt; (e.g., "ab", "abc") and &lt;code&gt;word1&lt;/code&gt; appears after &lt;code&gt;word2&lt;/code&gt;, it's valid. The problem states words are sorted lexicographically. If &lt;code&gt;word1 = "apple"&lt;/code&gt; and &lt;code&gt;word2 = "app"&lt;/code&gt;, and &lt;code&gt;word1&lt;/code&gt; comes &lt;em&gt;before&lt;/em&gt; &lt;code&gt;word2&lt;/code&gt;, it's an invalid input (as "app" should be smaller than "apple"). We must detect this.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;All Characters:&lt;/strong&gt; We need to consider all unique characters present across &lt;em&gt;all&lt;/em&gt; words, even if some characters don't directly form an ordering pair. They might be part of the alphabet and appear in the final sorted order.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Core Concepts: Graph Theory and Topological Sort&lt;/h2&gt;
+&lt;p&gt;The Alien Dictionary problem is a perfect fit for a graph-based solution using topological sort. Let's break down why.&lt;/p&gt;
+&lt;h3&gt;Building the Directed Graph&lt;/h3&gt;
+&lt;p&gt;Each unique character in the alien alphabet will be a &lt;strong&gt;node&lt;/strong&gt; (or vertex) in our graph. An ordering rule, such as 'a' must come before 'b', will be represented as a &lt;strong&gt;directed edge&lt;/strong&gt; from 'a' to 'b' (a -&amp;gt; b).&lt;/p&gt;
+&lt;p&gt;To construct this graph:
+1.  &lt;strong&gt;Initialize:&lt;/strong&gt; Create a set to store all unique characters seen across all words. Create an adjacency list (e.g., &lt;code&gt;Map&amp;lt;Character, List&amp;lt;Character&amp;gt;&amp;gt;&lt;/code&gt;) to represent the graph and a map (e.g., &lt;code&gt;Map&amp;lt;Character, Integer&amp;gt;&lt;/code&gt;) to store the in-degree of each character. The in-degree of a node is the number of incoming edges it has.
+2.  &lt;strong&gt;Populate All Characters:&lt;/strong&gt; Iterate through all words and all characters within those words. Add each unique character to your set and initialize its in-degree to 0 in the in-degree map. Also, ensure each character has an entry in the adjacency list, even if its list of neighbors is initially empty.
+3.  &lt;strong&gt;Find Orderings (Edges):&lt;/strong&gt; Iterate through the &lt;code&gt;words&lt;/code&gt; list, comparing &lt;code&gt;word[i]&lt;/code&gt; with &lt;code&gt;word[i+1]&lt;/code&gt;.
+    *   For each pair, iterate through their characters until you find the first position &lt;code&gt;j&lt;/code&gt; where &lt;code&gt;word[i][j]&lt;/code&gt; is different from &lt;code&gt;word[i+1][j]&lt;/code&gt;.
+    *   Once a difference is found, &lt;code&gt;word[i][j]&lt;/code&gt; must come before &lt;code&gt;word[i+1][j]&lt;/code&gt;. Add a directed edge from &lt;code&gt;word[i][j]&lt;/code&gt; to &lt;code&gt;word[i+1][j]&lt;/code&gt; in your adjacency list. Increment the in-degree of &lt;code&gt;word[i+1][j]&lt;/code&gt;.
+    *   &lt;strong&gt;Crucial Edge Case:&lt;/strong&gt; If &lt;code&gt;word[i+1]&lt;/code&gt; is a prefix of &lt;code&gt;word[i]&lt;/code&gt; (e.g., &lt;code&gt;words = ["abc", "ab"]&lt;/code&gt;), it implies an invalid lexicographical order, as "abc" should not precede "ab" if "ab" is a prefix of "abc". In this scenario, we must return an empty string, as a valid order cannot be determined. This check should occur &lt;em&gt;before&lt;/em&gt; finding any character differences if &lt;code&gt;word[i]&lt;/code&gt; is longer and &lt;code&gt;word[i+1]&lt;/code&gt; is its prefix.&lt;/p&gt;
+&lt;h3&gt;Topological Sort (Kahn's Algorithm)&lt;/h3&gt;
+&lt;p&gt;Once the graph is built, we apply topological sort. Kahn's algorithm (BFS-based) is particularly suitable here because it naturally handles cycle detection and produces a valid order efficiently.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Initialize Queue:&lt;/strong&gt; Add all characters (nodes) with an in-degree of 0 to a queue. These are the characters that have no dependencies (no characters must come before them).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Process Queue:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;While the queue is not empty:&lt;ul&gt;
+&lt;li&gt;Dequeue a character &lt;code&gt;u&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Append &lt;code&gt;u&lt;/code&gt; to your result string/list.&lt;/li&gt;
+&lt;li&gt;For each neighbor &lt;code&gt;v&lt;/code&gt; of &lt;code&gt;u&lt;/code&gt; (i.e., for every character &lt;code&gt;v&lt;/code&gt; that &lt;code&gt;u&lt;/code&gt; precedes):&lt;ul&gt;
+&lt;li&gt;Decrement the in-degree of &lt;code&gt;v&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;v&lt;/code&gt;'s in-degree becomes 0, enqueue &lt;code&gt;v&lt;/code&gt;. This means &lt;code&gt;v&lt;/code&gt; no longer has any preceding dependencies that haven't been processed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cycle Detection:&lt;/strong&gt; After the queue is empty, compare the length of your result string with the total number of unique characters initially present in the &lt;code&gt;words&lt;/code&gt;. If they are not equal, it means there was a cycle in the graph, and thus no valid topological order exists. In this case, return an empty string. Otherwise, return the constructed result string.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Step-by-Step Solution: Building the Graph&lt;/h2&gt;
+&lt;p&gt;Let's walk through the process of building the graph with an example: &lt;code&gt;words = ["wrt", "wrf", "er", "ett", "rftt"]&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;Step 1: Gather All Unique Characters and Initialize Data Structures&lt;/h3&gt;
+&lt;p&gt;First, we iterate through all words to identify every unique character.
+*   &lt;code&gt;'w'&lt;/code&gt;, &lt;code&gt;'r'&lt;/code&gt;, &lt;code&gt;'t'&lt;/code&gt;, &lt;code&gt;'f'&lt;/code&gt;, &lt;code&gt;'e'&lt;/code&gt;
+*   Initialize:
+    *   &lt;code&gt;adj = {}&lt;/code&gt; (adjacency list)
+    *   &lt;code&gt;in_degree = {}&lt;/code&gt; (in-degree map)
+    *   For each unique char &lt;code&gt;c&lt;/code&gt;: &lt;code&gt;adj[c] = []&lt;/code&gt;, &lt;code&gt;in_degree[c] = 0&lt;/code&gt;
+    *   &lt;code&gt;all_chars = {'w', 'r', 't', 'f', 'e'}&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;Step 2: Extract Ordering Rules (Edges)&lt;/h3&gt;
+&lt;p&gt;Now, compare adjacent words to find the first differing character.&lt;/p&gt;
+&lt;h4&gt;Compare "wrt" and "wrf":&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;'w'&lt;/code&gt; == &lt;code&gt;'w'&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;'r'&lt;/code&gt; == &lt;code&gt;'r'&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;'t'&lt;/code&gt; != &lt;code&gt;'f'&lt;/code&gt;. This implies &lt;code&gt;t&lt;/code&gt; comes before &lt;code&gt;f&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Add edge: &lt;code&gt;t -&amp;gt; f&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adj['t'].append('f')&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;in_degree['f'] += 1&lt;/code&gt; (Now &lt;code&gt;in_degree['f'] = 1&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Compare "wrf" and "er":&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;'w'&lt;/code&gt; != &lt;code&gt;'e'&lt;/code&gt;. This implies &lt;code&gt;w&lt;/code&gt; comes before &lt;code&gt;e&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Add edge: &lt;code&gt;w -&amp;gt; e&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adj['w'].append('e')&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;in_degree['e'] += 1&lt;/code&gt; (Now &lt;code&gt;in_degree['e'] = 1&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Compare "er" and "ett":&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;'e'&lt;/code&gt; == &lt;code&gt;'e'&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;'r'&lt;/code&gt; != &lt;code&gt;'t'&lt;/code&gt;. This implies &lt;code&gt;r&lt;/code&gt; comes before &lt;code&gt;t&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Add edge: &lt;code&gt;r -&amp;gt; t&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adj['r'].append('t')&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;in_degree['t'] += 1&lt;/code&gt; (Now &lt;code&gt;in_degree['t'] = 1&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Compare "ett" and "rftt":&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;'e'&lt;/code&gt; != &lt;code&gt;'r'&lt;/code&gt;. This implies &lt;code&gt;e&lt;/code&gt; comes before &lt;code&gt;r&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Add edge: &lt;code&gt;e -&amp;gt; r&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;adj['e'].append('r')&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;in_degree['r'] += 1&lt;/code&gt; (Now &lt;code&gt;in_degree['r'] = 1&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Current State of Graph&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;adj = { 'w': ['e'], 'r': ['t'], 't': ['f'], 'e': ['r'], 'f': [] }&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;in_degree = { 'w': 0, 'r': 1, 't': 1, 'f': 1, 'e': 1 }&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;all_chars = {'w', 'r', 't', 'f', 'e'}&lt;/code&gt; (total 5 unique characters)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Step-by-Step Solution: Performing Topological Sort&lt;/h2&gt;
+&lt;p&gt;Now, using Kahn's algorithm (BFS-based) for the topological sort.&lt;/p&gt;
+&lt;h3&gt;Step 1: Initialize Queue with Zero In-Degree Nodes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Scan &lt;code&gt;in_degree&lt;/code&gt;:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;'w'&lt;/code&gt; has &lt;code&gt;in_degree = 0&lt;/code&gt;. Add &lt;code&gt;'w'&lt;/code&gt; to queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;queue = ['w']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;result = []&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Step 2: Process Queue&lt;/h3&gt;
+&lt;h4&gt;Iteration 1:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Dequeue &lt;code&gt;'w'&lt;/code&gt;. &lt;code&gt;result = ['w']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;'w'&lt;/code&gt;: &lt;code&gt;['e']&lt;/code&gt;&lt;ul&gt;
+&lt;li&gt;Decrement &lt;code&gt;in_degree['e']&lt;/code&gt;. &lt;code&gt;in_degree['e']&lt;/code&gt; becomes 0.&lt;/li&gt;
+&lt;li&gt;Enqueue &lt;code&gt;'e'&lt;/code&gt;. &lt;code&gt;queue = ['e']&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Iteration 2:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Dequeue &lt;code&gt;'e'&lt;/code&gt;. &lt;code&gt;result = ['w', 'e']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;'e'&lt;/code&gt;: &lt;code&gt;['r']&lt;/code&gt;&lt;ul&gt;
+&lt;li&gt;Decrement &lt;code&gt;in_degree['r']&lt;/code&gt;. &lt;code&gt;in_degree['r']&lt;/code&gt; becomes 0.&lt;/li&gt;
+&lt;li&gt;Enqueue &lt;code&gt;'r'&lt;/code&gt;. &lt;code&gt;queue = ['r']&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Iteration 3:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Dequeue &lt;code&gt;'r'&lt;/code&gt;. &lt;code&gt;result = ['w', 'e', 'r']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;'r'&lt;/code&gt;: &lt;code&gt;['t']&lt;/code&gt;&lt;ul&gt;
+&lt;li&gt;Decrement &lt;code&gt;in_degree['t']&lt;/code&gt;. &lt;code&gt;in_degree['t']&lt;/code&gt; becomes 0.&lt;/li&gt;
+&lt;li&gt;Enqueue &lt;code&gt;'t'&lt;/code&gt;. &lt;code&gt;queue = ['t']&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Iteration 4:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Dequeue &lt;code&gt;'t'&lt;/code&gt;. &lt;code&gt;result = ['w', 'e', 'r', 't']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;'t'&lt;/code&gt;: &lt;code&gt;['f']&lt;/code&gt;&lt;ul&gt;
+&lt;li&gt;Decrement &lt;code&gt;in_degree['f']&lt;/code&gt;. &lt;code&gt;in_degree['f']&lt;/code&gt; becomes 0.&lt;/li&gt;
+&lt;li&gt;Enqueue &lt;code&gt;'f'&lt;/code&gt;. &lt;code&gt;queue = ['f']&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Iteration 5:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Dequeue &lt;code&gt;'f'&lt;/code&gt;. &lt;code&gt;result = ['w', 'e', 'r', 't', 'f']&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;'f'&lt;/code&gt;: &lt;code&gt;[]&lt;/code&gt; (none)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;queue = []&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Step 3: Check for Cycle&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;len(result)&lt;/code&gt; (which is 5) == &lt;code&gt;len(all_chars)&lt;/code&gt; (which is 5).&lt;/li&gt;
+&lt;li&gt;No cycle detected.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Step 4: Return Result&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Join &lt;code&gt;result&lt;/code&gt;: &lt;code&gt;"wertf"&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This detailed walkthrough illustrates how the graph is constructed and then traversed using Kahn's algorithm to obtain the correct alien alphabet order.&lt;/p&gt;
+&lt;h2&gt;Leetcode 269: Alien Dictionary Code in Python&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;alienOrder&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c1"&gt;# Step 1: Initialize data structures for graph and in-degrees&lt;/span&gt;
+        &lt;span class="c1"&gt;# all_chars: A set to store all unique characters encountered across all words.&lt;/span&gt;
+        &lt;span class="c1"&gt;# adj: An adjacency list (graph) where adj[u] is a list of characters that &amp;#39;u&amp;#39; must precede.&lt;/span&gt;
+        &lt;span class="c1"&gt;# in_degree: A map where in_degree[c] is the count of characters that must precede &amp;#39;c&amp;#39;.&lt;/span&gt;
+        &lt;span class="n"&gt;all_chars&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="n"&gt;adj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;in_degree&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Populate all_chars and initialize in_degrees for all characters to 0&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;word&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;char_code&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;all_chars&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char_code&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="n"&gt;in_degree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;char_code&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="c1"&gt;# Initialize all to 0, will be updated as edges are added&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Step 2: Build the graph by comparing adjacent words&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;word1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="n"&gt;word2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Critical Edge Case: If word2 is a prefix of word1 (e.g., [&amp;quot;abc&amp;quot;, &amp;quot;ab&amp;quot;]), it&amp;#39;s an invalid input.&lt;/span&gt;
+            &lt;span class="c1"&gt;# This indicates an inconsistent lexicographical order.&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Find the first differing character&lt;/span&gt;
+            &lt;span class="n"&gt;min_len&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;found_diff&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;min_len&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="n"&gt;char1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+                &lt;span class="n"&gt;char2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;char1&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="c1"&gt;# Found an ordering rule: char1 must come before char2&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;char2&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="c1"&gt;# Avoid duplicate edges&lt;/span&gt;
+                        &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                        &lt;span class="n"&gt;in_degree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+                    &lt;span class="n"&gt;found_diff&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+                    &lt;span class="k"&gt;break&lt;/span&gt;
+            &lt;span class="c1"&gt;# If no difference found until min_len, it means one word is a prefix of the other.&lt;/span&gt;
+            &lt;span class="c1"&gt;# The edge case check above handles word2 being a prefix of word1.&lt;/span&gt;
+            &lt;span class="c1"&gt;# If word1 is a prefix of word2 (e.g. &amp;quot;abc&amp;quot;, &amp;quot;abcd&amp;quot;), no ordering info is obtained from this pair,&lt;/span&gt;
+            &lt;span class="c1"&gt;# which is fine.&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Step 3: Perform Topological Sort using Kahn&amp;#39;s Algorithm (BFS)&lt;/span&gt;
+        &lt;span class="c1"&gt;# Queue for BFS, initially contains all characters with an in-degree of 0.&lt;/span&gt;
+        &lt;span class="n"&gt;queue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deque&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;char_code&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;char_code&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;all_chars&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;in_degree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;char_code&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="c1"&gt;# Stores the sorted characters&lt;/span&gt;
+
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;popleft&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+            &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# For each neighbor &amp;#39;v&amp;#39; of &amp;#39;u&amp;#39;:&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                &lt;span class="n"&gt;in_degree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="c1"&gt;# Decrement in-degree of &amp;#39;v&amp;#39;&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;in_degree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# If in-degree becomes 0, &amp;#39;v&amp;#39; has no more prerequisites, add to queue&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Step 4: Check for cycles&lt;/span&gt;
+        &lt;span class="c1"&gt;# If the length of the result string is less than the total number of unique characters,&lt;/span&gt;
+        &lt;span class="c1"&gt;# it means there was a cycle in the graph, and a valid topological order cannot be formed.&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;all_chars&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Python Code Explanation:&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Initialization:&lt;/strong&gt; &lt;code&gt;all_chars&lt;/code&gt; set gathers all unique characters. &lt;code&gt;adj&lt;/code&gt; is a &lt;code&gt;defaultdict(list)&lt;/code&gt; for the adjacency list (graph), and &lt;code&gt;in_degree&lt;/code&gt; is a &lt;code&gt;defaultdict(int)&lt;/code&gt; to store in-degrees. All characters are added to &lt;code&gt;all_chars&lt;/code&gt; and their &lt;code&gt;in_degree&lt;/code&gt; initialized to 0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Graph Construction:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;It iterates through adjacent pairs of words &lt;code&gt;(words[i], words[i+1])&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prefix Check:&lt;/strong&gt; A critical check ensures &lt;code&gt;word2&lt;/code&gt; is not a prefix of &lt;code&gt;word1&lt;/code&gt; if &lt;code&gt;len(word1) &amp;gt; len(word2)&lt;/code&gt;. This indicates an invalid input order, so we return &lt;code&gt;""&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;It finds the first differing character &lt;code&gt;char1&lt;/code&gt; from &lt;code&gt;word1&lt;/code&gt; and &lt;code&gt;char2&lt;/code&gt; from &lt;code&gt;word2&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;An edge &lt;code&gt;char1 -&amp;gt; char2&lt;/code&gt; is added to &lt;code&gt;adj&lt;/code&gt;, and &lt;code&gt;in_degree[char2]&lt;/code&gt; is incremented. &lt;code&gt;if char2 not in adj[char1]&lt;/code&gt; prevents duplicate edges, which is important for correct in-degree counts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Topological Sort (Kahn's):&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;A &lt;code&gt;deque&lt;/code&gt; (double-ended queue) is used for the BFS queue. It's initialized with all characters that have an &lt;code&gt;in_degree&lt;/code&gt; of 0.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;while queue&lt;/code&gt; loop processes characters. &lt;code&gt;u&lt;/code&gt; is dequeued, added to &lt;code&gt;result&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;For each neighbor &lt;code&gt;v&lt;/code&gt; of &lt;code&gt;u&lt;/code&gt;, &lt;code&gt;in_degree[v]&lt;/code&gt; is decremented. If &lt;code&gt;in_degree[v]&lt;/code&gt; becomes 0, &lt;code&gt;v&lt;/code&gt; is enqueued.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cycle Detection:&lt;/strong&gt; After the BFS, if &lt;code&gt;len(result)&lt;/code&gt; is not equal to &lt;code&gt;len(all_chars)&lt;/code&gt;, it implies a cycle was present, and an empty string is returned.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Return:&lt;/strong&gt; Finally, &lt;code&gt;"".join(result)&lt;/code&gt; constructs the alien alphabet string.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Leetcode 269: Alien Dictionary Code in Java&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;java.util.*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;alienOrder&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 1: Initialize data structures for graph and in-degrees&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// allChars: A set to store all unique characters encountered.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// adj: Adjacency list (graph) where adj.get(u) is a list of characters &amp;#39;u&amp;#39; must precede.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// inDegree: A map where inDegree.get(c) is the count of characters that must precede &amp;#39;c&amp;#39;.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;HashSet&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Populate allChars and initialize inDegrees for all characters to 0&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toCharArray&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;putIfAbsent&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Ensure all chars are graph nodes&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;putIfAbsent&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Initialize all to 0&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 2: Build the graph by comparing adjacent words&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// Critical Edge Case: If word2 is a prefix of word1 (e.g., [&amp;quot;abc&amp;quot;, &amp;quot;ab&amp;quot;]), it&amp;#39;s an invalid input.&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// This indicates an inconsistent lexicographical order.&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;startsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// Find the first differing character&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;minLen&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kt"&gt;boolean&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;foundDiff&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;minLen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;charAt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;charAt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// Found an ordering rule: char1 must come before char2&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// Add edge char1 -&amp;gt; char2 to adjacency list&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// Only add if not already present to avoid duplicate edges and incorrect in-degree counts&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;contains&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// This check can be slow for large graphs.&lt;/span&gt;
+&lt;span class="w"&gt;                                                            &lt;/span&gt;&lt;span class="c1"&gt;// A Set&amp;lt;Character&amp;gt; for values in adj.get(char1) would be faster&lt;/span&gt;
+&lt;span class="w"&gt;                                                            &lt;/span&gt;&lt;span class="c1"&gt;// or checking if inDegree count increased after adding.&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;put&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;foundDiff&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// If no difference found and word1 is a prefix of word2 (e.g. &amp;quot;abc&amp;quot;, &amp;quot;abcd&amp;quot;), no ordering info is obtained.&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// The edge case above handles word2 being a prefix of word1.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 3: Perform Topological Sort using Kahn&amp;#39;s Algorithm (BFS)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Queue&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;LinkedList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Add all characters with an in-degree of 0 to the queue&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;offer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;StringBuilder&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;StringBuilder&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Stores the sorted characters&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;isEmpty&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;poll&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// For each neighbor &amp;#39;v&amp;#39; of &amp;#39;u&amp;#39;:&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;put&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Decrement in-degree of &amp;#39;v&amp;#39;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;offer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// If in-degree becomes 0, add &amp;#39;v&amp;#39; to queue&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 4: Check for cycles&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// If the length of the result string is less than the total number of unique characters,&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// it means there was a cycle in the graph.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toString&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;Java Code Explanation:&lt;/h3&gt;
+&lt;p&gt;The Java implementation mirrors the Python logic very closely.
+1.  &lt;strong&gt;Initialization:&lt;/strong&gt; &lt;code&gt;HashSet&amp;lt;Character&amp;gt; allChars&lt;/code&gt;, &lt;code&gt;HashMap&amp;lt;Character, List&amp;lt;Character&amp;gt;&amp;gt; adj&lt;/code&gt;, &lt;code&gt;HashMap&amp;lt;Character, Integer&amp;gt; inDegree&lt;/code&gt;. &lt;code&gt;putIfAbsent&lt;/code&gt; is used to ensure all characters are initialized in the maps.
+2.  &lt;strong&gt;Graph Construction:&lt;/strong&gt;
+    *   Similar loop structure for adjacent words.
+    *   The prefix check &lt;code&gt;word1.length() &amp;gt; word2.length() &amp;amp;&amp;amp; word1.startsWith(word2)&lt;/code&gt; remains critical.
+    *   When adding an edge, &lt;code&gt;!adj.get(char1).contains(char2)&lt;/code&gt; is used to prevent duplicate edges. For very large graphs or high-degree nodes, using &lt;code&gt;HashSet&amp;lt;Character&amp;gt;&lt;/code&gt; as the value in &lt;code&gt;adj&lt;/code&gt; would be more performant than &lt;code&gt;List&amp;lt;Character&amp;gt;&lt;/code&gt; for the &lt;code&gt;contains&lt;/code&gt; check.
+3.  &lt;strong&gt;Topological Sort:&lt;/strong&gt;
+    *   &lt;code&gt;LinkedList&lt;/code&gt; is used to implement the &lt;code&gt;Queue&lt;/code&gt; interface for BFS.
+    *   &lt;code&gt;offer()&lt;/code&gt; and &lt;code&gt;poll()&lt;/code&gt; methods are used for adding and removing elements from the queue.
+    *   &lt;code&gt;StringBuilder&lt;/code&gt; is used for efficient string concatenation.
+4.  &lt;strong&gt;Cycle Detection:&lt;/strong&gt; Same logic: compare &lt;code&gt;result.length()&lt;/code&gt; with &lt;code&gt;allChars.size()&lt;/code&gt;.
+5.  &lt;strong&gt;Return:&lt;/strong&gt; &lt;code&gt;result.toString()&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Leetcode 269: Alien Dictionary Code in C++&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;unordered_map&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;unordered_set&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;queue&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span class="c1"&gt; // For std::min and std::find&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="k"&gt;public&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;alienOrder&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 1: Initialize data structures for graph and in-degrees&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// allChars: A set to store all unique characters encountered.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// adj: Adjacency list (graph) where adj[u] is a list of characters &amp;#39;u&amp;#39; must precede.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// inDegree: A map where inDegree[c] is the count of characters that must precede &amp;#39;c&amp;#39;.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;unordered_set&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;unordered_map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;vector&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;unordered_map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Populate allChars and initialize inDegrees for all characters to 0&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Ensure char is in adj map, creates empty vector if not present&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Initialize all to 0&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 2: Build the graph by comparing adjacent words&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;words&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// Critical Edge Case: If word2 is a prefix of word1 (e.g., {&amp;quot;abc&amp;quot;, &amp;quot;ab&amp;quot;}), it&amp;#39;s an invalid input.&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// This indicates an inconsistent lexicographical order.&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rfind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// rfind with 0 is like startsWith&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// Find the first differing character&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;minLen&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;foundDiff&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;minLen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word1&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;word2&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// Found an ordering rule: char1 must come before char2&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// Add edge char1 -&amp;gt; char2 to adjacency list&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// Only add if not already present to avoid duplicate edges and incorrect in-degree counts&lt;/span&gt;
+
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// Check if char2 is already a neighbor of char1.&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// This is O(N) where N is number of neighbors. For better performance&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// adj[char1] could be a std::unordered_set&amp;lt;char&amp;gt; instead of std::vector&amp;lt;char&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="c1"&gt;// or we could track added edges in a separate set.&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;neighbors&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;char1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;neighbors&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;neighbors&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;neighbors&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;neighbors&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push_back&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;char2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;foundDiff&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 3: Perform Topological Sort using Kahn&amp;#39;s Algorithm (BFS)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;queue&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Add all characters with an in-degree of 0 to the queue&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Stores the sorted characters&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;empty&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;front&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push_back&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="c1"&gt;// For each neighbor &amp;#39;v&amp;#39; of &amp;#39;u&amp;#39;:&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// Decrement in-degree of &amp;#39;v&amp;#39;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inDegree&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// If in-degree becomes 0, add &amp;#39;v&amp;#39; to queue&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// Step 4: Check for cycles&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// If the length of the result string is less than the total number of unique characters,&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// it means there was a cycle in the graph.&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;allChars&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;C++ Code Explanation:&lt;/h3&gt;
+&lt;p&gt;The C++ solution leverages standard library containers.
+1.  &lt;strong&gt;Initialization:&lt;/strong&gt; &lt;code&gt;std::unordered_set&amp;lt;char&amp;gt; allChars&lt;/code&gt;, &lt;code&gt;std::unordered_map&amp;lt;char, std::vector&amp;lt;char&amp;gt;&amp;gt; adj&lt;/code&gt;, &lt;code&gt;std::unordered_map&amp;lt;char, int&amp;gt; inDegree&lt;/code&gt;. Using &lt;code&gt;adj[c];&lt;/code&gt; automatically creates an empty &lt;code&gt;std::vector&amp;lt;char&amp;gt;&lt;/code&gt; if &lt;code&gt;c&lt;/code&gt; is not yet a key.
+2.  &lt;strong&gt;Graph Construction:&lt;/strong&gt;
+    *   The &lt;code&gt;word1.rfind(word2, 0) == 0&lt;/code&gt; is the C++ equivalent for checking if &lt;code&gt;word1&lt;/code&gt; starts with &lt;code&gt;word2&lt;/code&gt;.
+    *   When adding an edge, &lt;code&gt;std::find&lt;/code&gt; is used to check for duplicates in the adjacency list. As noted in the comments, for performance-critical scenarios, &lt;code&gt;std::unordered_set&amp;lt;char&amp;gt;&lt;/code&gt; could be used for the values in &lt;code&gt;adj&lt;/code&gt; to ensure &lt;code&gt;O(1)&lt;/code&gt; average time for duplicate checks.
+3.  &lt;strong&gt;Topological Sort:&lt;/strong&gt;
+    *   &lt;code&gt;std::queue&amp;lt;char&amp;gt;&lt;/code&gt; is used for the BFS queue.
+    *   &lt;code&gt;push()&lt;/code&gt; and &lt;code&gt;pop()&lt;/code&gt; (after &lt;code&gt;front()&lt;/code&gt;) are used for queue operations.
+    *   &lt;code&gt;std::string result&lt;/code&gt; uses &lt;code&gt;push_back(u)&lt;/code&gt; to append characters.
+4.  &lt;strong&gt;Cycle Detection:&lt;/strong&gt; Compares &lt;code&gt;result.length()&lt;/code&gt; with &lt;code&gt;allChars.size()&lt;/code&gt;.
+5.  &lt;strong&gt;Return:&lt;/strong&gt; The &lt;code&gt;std::string result&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Complexity Analysis&lt;/h2&gt;
+&lt;p&gt;Understanding the time and space complexity of the Alien Dictionary problem is crucial for evaluating its efficiency.&lt;/p&gt;
+&lt;h3&gt;Time Complexity&lt;/h3&gt;
+&lt;p&gt;Let &lt;code&gt;N&lt;/code&gt; be the number of words in the input list, &lt;code&gt;L&lt;/code&gt; be the average length of a word, and &lt;code&gt;C&lt;/code&gt; be the total number of unique characters across all words (at most 26 for English alphabet, but could be larger for general characters).&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Gathering All Unique Characters and Initializing Data Structures:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Iterating through all words and their characters takes &lt;code&gt;O(N * L)&lt;/code&gt; time.&lt;/li&gt;
+&lt;li&gt;Adding to &lt;code&gt;allChars&lt;/code&gt; set, &lt;code&gt;adj&lt;/code&gt; map, and &lt;code&gt;inDegree&lt;/code&gt; map: Each &lt;code&gt;insert&lt;/code&gt; or &lt;code&gt;put&lt;/code&gt; operation is &lt;code&gt;O(1)&lt;/code&gt; on average. Total &lt;code&gt;O(C)&lt;/code&gt; for initial setup for &lt;code&gt;C&lt;/code&gt; characters.&lt;/li&gt;
+&lt;li&gt;Overall for initialization: &lt;code&gt;O(N * L)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Building the Graph:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We iterate through &lt;code&gt;N-1&lt;/code&gt; pairs of adjacent words.&lt;/li&gt;
+&lt;li&gt;For each pair &lt;code&gt;(word1, word2)&lt;/code&gt;, we compare characters up to &lt;code&gt;min(len(word1), len(word2))&lt;/code&gt;, which is &lt;code&gt;O(L)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Adding an edge to the adjacency list and incrementing in-degree is &lt;code&gt;O(1)&lt;/code&gt; on average (assuming &lt;code&gt;std::vector::push_back&lt;/code&gt; or &lt;code&gt;List.add&lt;/code&gt; is amortized O(1)).&lt;/li&gt;
+&lt;li&gt;The duplicate edge check (e.g., &lt;code&gt;!adj.get(char1).contains(char2)&lt;/code&gt; in Java or &lt;code&gt;std::find&lt;/code&gt; in C++) can be &lt;code&gt;O(C)&lt;/code&gt; in the worst case if &lt;code&gt;adj[char1]&lt;/code&gt; contains many neighbors. If using &lt;code&gt;Set&lt;/code&gt; for neighbors, this becomes &lt;code&gt;O(1)&lt;/code&gt; on average.&lt;/li&gt;
+&lt;li&gt;In total, this step is &lt;code&gt;O(N * L)&lt;/code&gt; for comparing words. The graph can have at most &lt;code&gt;C&lt;/code&gt; nodes and &lt;code&gt;C*(C-1)&lt;/code&gt; edges in the worst case (though practically, usually much fewer distinct edges based on the input words). Let &lt;code&gt;E&lt;/code&gt; be the number of edges. Adding edges involves &lt;code&gt;N&lt;/code&gt; comparisons, each potentially adding one edge. Total for edges: &lt;code&gt;O(N*L + E)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Overall for building the graph: &lt;code&gt;O(N * L + E)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Topological Sort (Kahn's Algorithm):&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Initializing the queue: &lt;code&gt;O(C)&lt;/code&gt; to iterate through all characters.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;while&lt;/code&gt; loop runs &lt;code&gt;C&lt;/code&gt; times (each character is dequeued once).&lt;/li&gt;
+&lt;li&gt;Inside the loop:&lt;ul&gt;
+&lt;li&gt;Dequeueing: &lt;code&gt;O(1)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Iterating through neighbors: Sum of &lt;code&gt;len(adj[u])&lt;/code&gt; for all &lt;code&gt;u&lt;/code&gt; is &lt;code&gt;O(E)&lt;/code&gt; (each edge is traversed once).&lt;/li&gt;
+&lt;li&gt;Decrementing in-degree and enqueuing: &lt;code&gt;O(1)&lt;/code&gt; on average.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Overall for topological sort: &lt;code&gt;O(C + E)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Total Time Complexity:&lt;/strong&gt; &lt;code&gt;O(N * L + C + E)&lt;/code&gt;. Since &lt;code&gt;E&lt;/code&gt; is at most &lt;code&gt;N*L&lt;/code&gt; (we add at most one edge per word pair, bounded by length), and also &lt;code&gt;E&lt;/code&gt; is at most &lt;code&gt;C^2&lt;/code&gt;, it can be simplified. A tighter bound is &lt;code&gt;O(N * L + C^2)&lt;/code&gt; if &lt;code&gt;E&lt;/code&gt; is considered as the maximum number of unique edges. However, the most accurate is &lt;code&gt;O(N * L + E)&lt;/code&gt;, where &lt;code&gt;E&lt;/code&gt; is the number of distinct edges actually added. Given &lt;code&gt;C&lt;/code&gt; is at most 26, &lt;code&gt;C^2&lt;/code&gt; is small, so &lt;code&gt;O(N * L + E)&lt;/code&gt; effectively.&lt;/p&gt;
+&lt;h3&gt;Space Complexity&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;allChars&lt;/code&gt; set:&lt;/strong&gt; &lt;code&gt;O(C)&lt;/code&gt; to store all unique characters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;adj&lt;/code&gt; (adjacency list):&lt;/strong&gt; &lt;code&gt;O(C + E)&lt;/code&gt; to store &lt;code&gt;C&lt;/code&gt; nodes and &lt;code&gt;E&lt;/code&gt; edges.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;inDegree&lt;/code&gt; map:&lt;/strong&gt; &lt;code&gt;O(C)&lt;/code&gt; to store in-degrees for all characters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;queue&lt;/code&gt;:&lt;/strong&gt; In the worst case, the queue can hold all &lt;code&gt;C&lt;/code&gt; characters: &lt;code&gt;O(C)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;result&lt;/code&gt; string/StringBuilder:&lt;/strong&gt; &lt;code&gt;O(C)&lt;/code&gt; for the final alphabet order.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Total Space Complexity:&lt;/strong&gt; &lt;code&gt;O(C + E)&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Common Mistakes and Edge Cases&lt;/h2&gt;
+&lt;p&gt;Solving the Alien Dictionary problem requires careful attention to various scenarios. Missing these can lead to incorrect solutions or runtime errors.&lt;/p&gt;
+&lt;h3&gt;1. Incorrect Graph Construction&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Duplicate Edges:&lt;/strong&gt; If you add the same edge multiple times (e.g., &lt;code&gt;t -&amp;gt; f&lt;/code&gt; derived from &lt;code&gt;("wrt", "wrf")&lt;/code&gt; and again from &lt;code&gt;("ert", "erf")&lt;/code&gt;), the &lt;code&gt;in_degree&lt;/code&gt; count for &lt;code&gt;f&lt;/code&gt; will be inflated. This can prevent &lt;code&gt;f&lt;/code&gt; from ever reaching an in-degree of 0, leading to an incorrect result (e.g., &lt;code&gt;f&lt;/code&gt; might be omitted or a cycle might be falsely detected). Always check if an edge already exists before adding it and incrementing &lt;code&gt;in_degree&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Missing Characters:&lt;/strong&gt; Ensure &lt;em&gt;all&lt;/em&gt; unique characters from &lt;em&gt;all&lt;/em&gt; words are included in your graph and &lt;code&gt;in_degree&lt;/code&gt; map, even if they don't explicitly form an ordering pair. Some characters might be part of the alphabet but only appear in isolated words. Their in-degree should be initialized to 0.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2. Failure to Detect Invalid Input Orders (Prefix Rule)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Example:&lt;/strong&gt; &lt;code&gt;words = ["abc", "ab"]&lt;/code&gt;. If "abc" comes before "ab" in a lexicographically sorted list, it implies an invalid ordering in the alien dictionary. This specific case &lt;em&gt;must&lt;/em&gt; be handled by immediately returning an empty string. The logic should be: if &lt;code&gt;word1&lt;/code&gt; is longer than &lt;code&gt;word2&lt;/code&gt;, and &lt;code&gt;word1&lt;/code&gt; starts with &lt;code&gt;word2&lt;/code&gt; (i.e., &lt;code&gt;word2&lt;/code&gt; is a prefix of &lt;code&gt;word1&lt;/code&gt;), and &lt;code&gt;word1&lt;/code&gt; appears before &lt;code&gt;word2&lt;/code&gt;, it's an invalid input.&lt;/li&gt;
+&lt;li&gt;The check &lt;code&gt;if len(word1) &amp;gt; len(word2) and word1.startswith(word2): return ""&lt;/code&gt; in Python (and equivalents in Java/C++) addresses this directly before comparing characters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;3. Missing Cycle Detection&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A topological sort can only exist in a Directed Acyclic Graph (DAG). If the input words imply a cycle (e.g., &lt;code&gt;a &amp;lt; b&lt;/code&gt;, &lt;code&gt;b &amp;lt; c&lt;/code&gt;, and &lt;code&gt;c &amp;lt; a&lt;/code&gt;), no valid alphabet order exists.&lt;/li&gt;
+&lt;li&gt;Kahn's algorithm naturally detects cycles: if the number of characters processed in the topological sort (&lt;code&gt;len(result)&lt;/code&gt;) is less than the total number of unique characters (&lt;code&gt;len(all_chars)&lt;/code&gt;), a cycle is present. In this case, return an empty string.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4. Off-by-One Errors in Loop Boundaries&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;When comparing adjacent words, the loop should go from &lt;code&gt;i&lt;/code&gt; to &lt;code&gt;len(words) - 2&lt;/code&gt; (or &lt;code&gt;len(words) - 1&lt;/code&gt; with &lt;code&gt;&amp;lt;&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;When comparing characters within words, the loop should go up to &lt;code&gt;min(len(word1), len(word2)) - 1&lt;/code&gt; (or &lt;code&gt;&amp;lt; min_len&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;5. Handling Empty Input&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;words&lt;/code&gt; is empty, an empty string should be returned. The provided solutions will correctly return an empty string for this edge case.&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;words&lt;/code&gt; contains only one word (e.g., &lt;code&gt;["abc"]&lt;/code&gt;), all unique characters from that word should be returned in any order (usually lexicographical, but any order is valid). The current solution correctly handles this by putting all characters with in-degree 0 into the queue and returning them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;6. Performance Considerations for Adjacency List&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;In Java and C++, checking &lt;code&gt;adj.get(char1).contains(char2)&lt;/code&gt; or &lt;code&gt;std::find(neighbors.begin(), neighbors.end(), char2)&lt;/code&gt; can be &lt;code&gt;O(C)&lt;/code&gt; in the worst case if a node has many neighbors. If the number of unique characters &lt;code&gt;C&lt;/code&gt; is large, this could degrade performance. For alphabets larger than 26, consider using &lt;code&gt;HashSet&amp;lt;Character&amp;gt;&lt;/code&gt; or &lt;code&gt;unordered_set&amp;lt;char&amp;gt;&lt;/code&gt; for the values in your adjacency map to ensure &lt;code&gt;O(1)&lt;/code&gt; average time for duplicate checks. For &lt;code&gt;C=26&lt;/code&gt;, a &lt;code&gt;List&lt;/code&gt; or &lt;code&gt;vector&lt;/code&gt; is typically acceptable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By carefully considering these common pitfalls and edge cases, you can build a robust and correct solution for the Alien Dictionary problem.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The &lt;strong&gt;Leetcode: 269 - Alien Dictionary code in python java and c++&lt;/strong&gt; problem is a quintessential example of how real-world ordering problems can be modeled and solved using graph theory and topological sort. We've explored the core concepts, detailed the step-by-step process of constructing the graph and applying Kahn's algorithm, and provided comprehensive code implementations in Python, Java, and C++.&lt;/p&gt;
+&lt;p&gt;Mastering this problem not only enhances your understanding of graph algorithms but also sharpens your ability to translate abstract problem statements into concrete data structures and algorithms. The key takeaways include:
+*   Identifying partial orderings to build a directed graph.
+*   Using Kahn's algorithm (BFS-based topological sort) for efficient ordering.
+*   Detecting cycles in the graph to determine if a valid order exists.
+*   Handling critical edge cases like prefix rules and duplicate edges.&lt;/p&gt;
+&lt;p&gt;With the insights and code provided, you are now well-equipped to tackle similar graph-based challenges. Keep practicing with various graph problems to solidify your understanding and algorithmic intuition. For another challenging graph problem solved with BFS, check out &lt;a href="/leetcode-127-word-ladder-bfs-tutorial/"&gt;Leetcode 127 Word Ladder: Master the BFS Approach Easily&lt;/a&gt;. Happy coding!&lt;/p&gt;
+&lt;h2&gt;Frequently Asked Questions&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Q: Why is the Alien Dictionary problem considered a graph problem?&lt;/strong&gt;
+A: The problem involves deducing an unknown lexicographical order from a list of sorted words. This creates a set of directed dependencies between characters (e.g., 'a' must come before 'b'). These characters can be represented as nodes, and the dependencies as directed edges in a graph, making it a classic graph ordering problem.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: What is topological sort, and why is it crucial for solving Alien Dictionary?&lt;/strong&gt;
+A: Topological sort is an algorithm for ordering the vertices of a directed acyclic graph (DAG) such that for every directed edge from vertex 'u' to vertex 'v', 'u' comes before 'v' in the ordering. It's crucial for Alien Dictionary because it allows us to derive a valid sequence of characters based on the partial orderings extracted from the input words.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: How does the solution detect if a valid alien alphabet order cannot be determined?&lt;/strong&gt;
+A: A valid order cannot be determined if there's a cycle in the dependency graph (e.g., 'a' before 'b', 'b' before 'c', and 'c' before 'a'). Kahn's algorithm, used in the solution, detects cycles if the total number of characters successfully added to the sorted result is less than the total number of unique characters in the alphabet. This indicates that some characters were part of a cycle and could never reach an in-degree of zero.&lt;/p&gt;
+&lt;h2&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Topological_sorting"&gt;Wikipedia: Topological Sorting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.geeksforgeeks.org/topological-sorting-using-kahn-algorithm/"&gt;GeeksforGeeks: Kahn's Algorithm for Topological Sort&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://leetcode.com/problems/alien-dictionary/"&gt;LeetCode Problem 269: Alien Dictionary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.cs.princeton.edu/courses/archive/fall13/cos226/lectures/42DirectedGraphs.pdf"&gt;Princeton University: Directed Graphs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Algorithms"/><category term="Leetcode"/><category term="Alien Dictionary"/><category term="Topological Sort"/><category term="Graph Algorithms"/><category term="Python"/><category term="Java"/><category term="C++"/><media:content height="675" medium="image" type="image/webp" url="https://analyticsdrive.tech/images/leetcode-269-alien-dictionary-code-python-java-cpp-hero.webp" width="1200"/><media:title type="plain">Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</media:title><media:description type="plain">Master Leetcode 269: Alien Dictionary. Learn to implement this challenging graph problem using topological sort with code examples in Python, Java, and C++.</media:description></entry><entry><title>Shortest path in Directed Acyclic Graph: An In-Depth Guide</title><link href="https://analyticsdrive.tech/shortest-path-directed-acyclic-graph-guide/" rel="alternate"/><published>2026-02-23T14:52:00+00:00</published><updated>2026-02-23T14:52:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-23:/shortest-path-directed-acyclic-graph-guide/</id><summary type="html">&lt;p&gt;Master the efficient algorithm for finding the shortest path in Directed Acyclic Graphs (DAGs). This in-depth guide covers theory, applications, and performance.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Understanding and efficiently computing the &lt;strong&gt;shortest path in Directed Acyclic Graph&lt;/strong&gt; (DAG) structures is a cornerstone of modern computer science, a topic this in-depth guide will thoroughly explore. While graphs are fundamental data structures, modeling everything from social networks to logistical routes, and the problem of finding the shortest path stands as a critical challenge, specific graph types allow for highly optimized solutions. General graph algorithms like Dijkstra's or Bellman-Ford are powerful but often carry a computational overhead that can be significantly reduced when dealing with DAGs. This specialized algorithm not only unlocks superior performance for certain problems but also deepens one's grasp of dynamic programming and graph traversal.&lt;/p&gt;
 &lt;h2&gt;Unpacking Directed Acyclic Graphs (DAGs)&lt;/h2&gt;
 &lt;p&gt;Before we dissect the shortest path algorithm, it's essential to fully grasp the characteristics of a Directed Acyclic Graph (DAG). Imagine a network where connections have a specific one-way flow, and crucially, there are no closed loops.&lt;/p&gt;
 &lt;h3&gt;What is a Graph?&lt;/h3&gt;
@@ -3022,44 +3610,4 @@ That's 200 sextillion stars, or 2 x 10^23.&lt;/p&gt;
 &lt;p&gt;Google is committed to developing Gemini responsibly, with safety and ethical guidelines built into its core development process, continually refining the model to address these concerns.&lt;/p&gt;
 &lt;h3&gt;Conclusion: A Glimpse into an AI-Powered Future&lt;/h3&gt;
 &lt;p&gt;Google Gemini is not just an incremental improvement; it represents a foundational shift in artificial intelligence. Its multimodal capabilities, scalable architecture, and unprecedented power are set to unlock new frontiers across virtually every industry. From enhancing personal productivity and fostering creativity to accelerating scientific discovery, Gemini promises a future where AI works more intuitively and powerfully alongside humanity.&lt;/p&gt;
-&lt;p&gt;As Gemini continues to evolve and integrate into our daily lives, it will be fascinating to witness the innovations it sparks and the new possibilities it creates. The AI revolution is here, and Gemini is undoubtedly leading the charge into an exciting, AI-powered future.&lt;/p&gt;</content><category term="Artificial Intelligence"/><category term="Google AI"/><category term="Gemini"/><category term="Large Language Models"/><category term="Multimodal AI"/><category term="Future Tech"/><media:content height="675" medium="image" type="image/webp" url="https://analyticsdrive.tech/images/google-gemini-ai-masterpiece-future-reshaping.webp" width="1200"/><media:title type="plain">Gemini Unleashed: Google's AI Masterpiece Reshaping the Future</media:title><media:description type="plain">Dive deep into Google Gemini, the revolutionary multimodal AI. Discover its power, applications, and impact on tech and beyond.</media:description></entry><entry><title>Google Gemini: Unlocking the Next Generation of AI</title><link href="https://analyticsdrive.tech/google-gemini-next-generation-ai/" rel="alternate"/><published>2026-02-13T00:26:00+00:00</published><updated>2026-02-13T00:26:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-13:/google-gemini-next-generation-ai/</id><summary type="html">&lt;p&gt;Discover Google Gemini, the revolutionary multimodal AI redefining what's possible. Explore its power, features, and impact on our digital future.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Google Gemini: Unlocking the Next Generation of AI&lt;/h2&gt;
-&lt;p&gt;The world of Artificial Intelligence is evolving at an unprecedented pace, and at the forefront of this revolution is Google's groundbreaking creation: Gemini. More than just an incremental update, Gemini represents a fundamental shift in AI capabilities, aiming to be Google's most powerful and versatile model yet. It's designed to understand, operate across, and combine different types of information, heralding a new era of intelligent interaction.&lt;/p&gt;
-&lt;p&gt;But what exactly is Gemini, and why is it creating such a buzz? Let's dive deep into the technology poised to reshape how we interact with information, create, and innovate.&lt;/p&gt;
-&lt;h2&gt;What is Google Gemini?&lt;/h2&gt;
-&lt;p&gt;At its core, Google Gemini is a family of highly capable multimodal AI models. Unlike previous generations of AI that often specialized in one domain (like text generation or image recognition), Gemini is inherently designed to understand and operate across various modalities right from its initial training. This means it can seamlessly process and reason with text, images, audio, and video inputs, and generate outputs in multiple formats.&lt;/p&gt;
-&lt;p&gt;This "multimodality" is Gemini's defining feature, distinguishing it from many of its predecessors and competitors. It's not just stitching together different single-modality models; it's a unified architecture built from the ground up for holistic understanding.&lt;/p&gt;
-&lt;h2&gt;The Pillars of Gemini: Key Capabilities&lt;/h2&gt;
-&lt;p&gt;Gemini's immense power stems from several key capabilities that push the boundaries of current AI.&lt;/p&gt;
-&lt;h3&gt;True Multimodality&lt;/h3&gt;
-&lt;p&gt;Imagine an AI that can analyze a video of a science experiment, interpret the spoken narration, understand the visual cues, and then explain the scientific principles involved in detailed text. This is the promise of Gemini. It can take varied inputs simultaneously and weave them into a coherent understanding, leading to richer, more nuanced interactions.&lt;/p&gt;
-&lt;p&gt;For example, you could show &lt;code&gt;Gemini&lt;/code&gt; an image of a complex graph and ask it to explain the trends visible, while also having a conversation about potential future data points.&lt;/p&gt;
-&lt;h3&gt;Advanced Reasoning&lt;/h3&gt;
-&lt;p&gt;Gemini is engineered for sophisticated reasoning. It excels at complex problem-solving, understanding intricate details, and extracting insights from vast amounts of information. This includes mathematical reasoning, logical deduction, and strategic planning, making it a valuable tool for scientific discovery, engineering, and intricate data analysis.&lt;/p&gt;
-&lt;p&gt;Google has highlighted &lt;code&gt;Gemini&lt;/code&gt;'s ability to tackle advanced physics problems and understand nuances in complex datasets, suggesting a leap forward in AI's analytical prowess.&lt;/p&gt;
-&lt;h3&gt;Superior Code Generation&lt;/h3&gt;
-&lt;p&gt;For developers and engineers, &lt;code&gt;Gemini&lt;/code&gt; offers robust capabilities in understanding, generating, and explaining code in multiple programming languages. It can assist with everything from brainstorming new functions to debugging complex applications, potentially accelerating development cycles significantly.&lt;/p&gt;
-&lt;p&gt;This extends beyond just writing code; &lt;code&gt;Gemini&lt;/code&gt; can also translate code between languages or optimize existing code for better performance.&lt;/p&gt;
-&lt;h3&gt;Efficiency and Scale&lt;/h3&gt;
-&lt;p&gt;Google designed &lt;code&gt;Gemini&lt;/code&gt; to be highly efficient, capable of running on everything from data centers to mobile devices. This scalability is crucial for widespread adoption and means that advanced AI capabilities can be integrated into a much broader range of products and services.&lt;/p&gt;
-&lt;h2&gt;The Gemini Family: Ultra, Pro, and Nano&lt;/h2&gt;
-&lt;p&gt;To cater to diverse needs and deployment environments, Google has released Gemini in different sizes.&lt;/p&gt;
-&lt;h3&gt;Gemini Ultra&lt;/h3&gt;
-&lt;p&gt;This is the largest and most capable model in the Gemini family, designed for highly complex tasks and demanding applications. &lt;code&gt;Gemini Ultra&lt;/code&gt; is the flagship model, showcasing the peak of its multimodal reasoning and understanding. It's typically deployed in powerful cloud environments.&lt;/p&gt;
-&lt;h3&gt;Gemini Pro&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Gemini Pro&lt;/code&gt; is optimized for a wide range of tasks and applications, offering a balance of performance and efficiency. It powers many current Google products, including the &lt;code&gt;Gemini&lt;/code&gt; chat experience (formerly Bard). This version is designed for scalability and accessibility across various use cases.&lt;/p&gt;
-&lt;h3&gt;Gemini Nano&lt;/h3&gt;
-&lt;p&gt;The smallest and most efficient version, &lt;code&gt;Gemini Nano&lt;/code&gt; is specifically engineered to run on-device. This allows for AI capabilities to be integrated directly into smartphones (like the Pixel 8 Pro) and other edge devices, enabling features like on-device summarization, smarter suggestions, and enhanced privacy, as data doesn't need to leave the device.&lt;/p&gt;
-&lt;h2&gt;Gemini in Action: Real-World Applications&lt;/h2&gt;
-&lt;p&gt;Gemini's versatility means it's already making its way into numerous applications, transforming user experiences across Google's ecosystem and beyond.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Enhanced Chatbots:&lt;/strong&gt; The &lt;code&gt;Gemini&lt;/code&gt; chat experience (formerly Bard) is powered by &lt;code&gt;Gemini Pro&lt;/code&gt;, offering more sophisticated conversations, better understanding of context, and the ability to process diverse inputs.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Creative Tools:&lt;/strong&gt; From generating creative text formats (poems, code, scripts, musical pieces, email, letters, etc.) to assisting with brainstorming ideas, &lt;code&gt;Gemini&lt;/code&gt; can act as a powerful creative partner.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Productivity Boosters:&lt;/strong&gt; Summarizing lengthy documents, drafting emails, organizing information, and even generating presentations can all be streamlined with &lt;code&gt;Gemini&lt;/code&gt;'s help.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Developer Assistance:&lt;/strong&gt; Developers can leverage &lt;code&gt;Gemini&lt;/code&gt; for code completion, debugging, generating documentation, and exploring new architectural patterns.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Pixel Features:&lt;/strong&gt; &lt;code&gt;Gemini Nano&lt;/code&gt; enhances features on devices like the Pixel 8 Pro, enabling smarter voice recorder summaries and improved Gboard smart replies directly on the phone.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;The Future with Gemini: What's Next?&lt;/h2&gt;
-&lt;p&gt;Google Gemini is not just a technological feat; it's a strategic move by Google to solidify its position in the rapidly evolving AI landscape. Its multimodal capabilities lay the groundwork for a future where AI assistants are far more intuitive and capable, understanding the world around us in a more human-like way.&lt;/p&gt;
-&lt;p&gt;The ongoing development of &lt;code&gt;Gemini&lt;/code&gt; will focus on further enhancing its reasoning, expanding its multimodal understanding, and addressing critical ethical considerations like fairness, bias, and transparency. As &lt;code&gt;Gemini&lt;/code&gt; continues to integrate across more products and industries, we can expect to see entirely new applications emerge that we can barely imagine today.&lt;/p&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Google Gemini represents a significant leap forward in Artificial Intelligence. With its native multimodality, advanced reasoning, and scalable architecture, it promises to unlock unprecedented possibilities across personal computing, professional productivity, and scientific discovery. While the journey of AI development continues to pose complex challenges, &lt;code&gt;Gemini&lt;/code&gt; stands as a powerful testament to human ingenuity, pushing us closer to a future where AI truly understands and interacts with the richness of our world. The era of truly intelligent, multimodal AI is here, and Google Gemini is leading the charge.&lt;/p&gt;</content><category term="Generative AI"/><category term="Google Gemini"/><category term="Generative AI"/><category term="Multimodal AI"/><category term="Large Language Model"/><category term="Google AI"/><category term="Bard"/><media:content height="675" medium="image" type="image/webp" url="https://analyticsdrive.tech/images/google-gemini-next-generation-ai.webp" width="1200"/><media:title type="plain">Google Gemini: Unlocking the Next Generation of AI</media:title><media:description type="plain">Discover Google Gemini, the revolutionary multimodal AI redefining what's possible. Explore its power, features, and impact on our digital future.</media:description></entry></feed>
+&lt;p&gt;As Gemini continues to evolve and integrate into our daily lives, it will be fascinating to witness the innovations it sparks and the new possibilities it creates. The AI revolution is here, and Gemini is undoubtedly leading the charge into an exciting, AI-powered future.&lt;/p&gt;</content><category term="Artificial Intelligence"/><category term="Google AI"/><category term="Gemini"/><category term="Large Language Models"/><category term="Multimodal AI"/><category term="Future Tech"/><media:content height="675" medium="image" type="image/webp" url="https://analyticsdrive.tech/images/google-gemini-ai-masterpiece-future-reshaping.webp" width="1200"/><media:title type="plain">Gemini Unleashed: Google's AI Masterpiece Reshaping the Future</media:title><media:description type="plain">Dive deep into Google Gemini, the revolutionary multimodal AI. Discover its power, applications, and impact on tech and beyond.</media:description></entry></feed>

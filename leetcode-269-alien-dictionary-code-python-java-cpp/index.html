@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leetcode: 269 - Alien Dictionary Code in Python, Java, C++
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master Leetcode 269: Alien Dictionary. Learn to implement this challenging graph problem using topological sort with code examples in Python, Java, and C++." />
+    <meta name="keywords" content="Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive" />
+    <meta name="author" content="Analytics Drive" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Leetcode: 269 - Alien Dictionary Code in Python, Java, C++" />
+    <meta property="og:description"
+        content="Master Leetcode 269: Alien Dictionary. Learn to implement this challenging graph problem using topological sort with code examples in Python, Java, and C++." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/leetcode-269-alien-dictionary-code-python-java-cpp-hero.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Leetcode: 269 - Alien Dictionary Code in Python, Java, C++" />
+    <meta name="twitter:description" content="Master Leetcode 269: Alien Dictionary. Learn to implement this challenging graph problem using topological sort with code examples in Python, Java, and C++." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/leetcode-269-alien-dictionary-code-python-java-cpp-hero.webp" />
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive",        "https://www.reddit.com/r/Analyticsdrive/"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* Code Blocks (Light Mode) */
+        .post-content pre {
+            background: #f4f4f4;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .post-content code {
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            /* Pink/Red for inline code */
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .post-content pre code {
+            background: transparent;
+            color: #333;
+            padding: 0;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+
+            /* Mobile Nav Fix */
+            .main-nav {
+                display: flex;
+                justify-content: center;
+                /* Center links only */
+                align-items: center;
+                padding: 0.5rem 1rem;
+                position: static;
+                /* Let absolute children be relative to .site-header */
+            }
+
+            .main-nav ul {
+                flex: 1;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                /* Relative to .site-header */
+                top: 1rem;
+                right: 1rem;
+                transform: none;
+                margin-left: 0;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg);
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+                <li><a href="https://analyticsdrive.tech/about/">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/"
+  },
+  "headline": "Leetcode: 269 - Alien Dictionary Code in Python, Java, C++",
+  "description": "Master Leetcode 269: Alien Dictionary. Learn to implement this challenging graph problem using topological sort with code examples in Python, Java, and C++.",
+  "image": [
+    "https://analyticsdrive.tech/images/leetcode-269-alien-dictionary-code-python-java-cpp-hero.webp"
+  ],
+  "datePublished": "2026-02-23T23:16:00+00:00",
+  "dateModified": "2026-02-23T23:16:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+<div class="post-layout">
+
+  <!-- Floating Sticky Share Sidebar (desktop only) -->
+  <aside class="share-sidebar" aria-label="Share this article">
+    <span class="share-sidebar__label">Share</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/&text=Leetcode%3A%20269%20-%20Alien%20Dictionary%20Code%20in%20Python%2C%20Java%2C%20C%2B%2B"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+      aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/&title=Leetcode%3A%20269%20-%20Alien%20Dictionary%20Code%20in%20Python%2C%20Java%2C%20C%2B%2B"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+      aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Leetcode%3A%20269%20-%20Alien%20Dictionary%20Code%20in%20Python%2C%20Java%2C%20C%2B%2B%20https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </aside>
+
+  <article class="single-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2026-02-23T23:16:00+00:00">Mon 23 February 2026</time>
+      </div>
+      <h1>Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</h1>
+    </header>
+
+    <div class="featured-image">
+      <img src="https://analyticsdrive.tech/images/leetcode-269-alien-dictionary-code-python-java-cpp-hero.webp" alt="Leetcode: 269 - Alien Dictionary Code in Python, Java, C++" loading="lazy" />
+    </div>
+
+    <div class="post-content">
+      <p><strong>Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</strong> is a renowned and challenging problem that often appears in technical interviews for software development roles. It's a fantastic exercise in applying graph theory, specifically <strong>topological sort</strong>, to reconstruct a sequence from partial orderings. This tutorial will guide you through understanding the problem, building the necessary graph structures, and implementing the solution in three popular programming languages: Python, Java, and C++. By the end, you'll have a solid grasp of how to tackle similar graph-based ordering problems.</p>
+<h2>Introduction to the Alien Dictionary Problem</h2>
+<p>Imagine you've intercepted communications from an alien civilization, and you have a list of words from their dictionary, sorted lexicographically according to their unknown alphabet. Your task is to deduce the order of the letters in this alien alphabet. This is precisely what the <strong>Leetcode: 269 - Alien Dictionary</strong> problem asks us to do. Given <code>words = ["wrt", "wrf", "er", "ett", "rftt"]</code>, for example, we need to find an ordering like "wertf". This problem is considered hard because it requires not just recognizing the underlying graph structure but also correctly applying a topological sort algorithm to derive the final character order. Successfully solving this problem demonstrates a strong understanding of graph traversal and dependency management, crucial skills for any developer.</p>
+<h2>Prerequisites for Solving Alien Dictionary</h2>
+<p>Before diving into the solution for <strong>Leetcode: 269 - Alien Dictionary code in python java and c++</strong>, ensure you have a foundational understanding of these core computer science concepts:</p>
+<h3>Graph Theory Basics</h3>
+<p>You should be familiar with what a graph is, including nodes (vertices) and edges. Understanding directed graphs (edges have a direction) and directed acyclic graphs (DAGs – directed graphs with no cycles) is crucial. The Alien Dictionary problem inherently translates into a DAG problem where characters are nodes and their orderings are directed edges.</p>
+<h3>Adjacency List Representation</h3>
+<p>Knowing how to represent a graph using an adjacency list is fundamental. This typically involves using a dictionary (hash map) where keys are nodes and values are lists of their direct neighbors. This representation is efficient for adding edges and iterating through neighbors.</p>
+<h3>Breadth-First Search (BFS) or Depth-First Search (DFS)</h3>
+<p>Familiarity with these graph traversal algorithms is important. While we'll be using topological sort, both BFS and DFS form the basis of most graph algorithms, including the two primary methods for topological sort. Kahn's algorithm, which we will use, is BFS-based. For a deeper dive into another BFS application, consider <a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/">Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</a>. If you're interested in DFS, exploring <a href="/mastering-depth-first-search/">Mastering Depth-First Search (DFS)</a> can be beneficial.</p>
+<h3>Basic Data Structures</h3>
+<p>You'll need a good grasp of hash maps (dictionaries), sets, and queues. Hash maps are essential for storing graph nodes and their in-degrees, sets for keeping track of unique characters, and queues for implementing Kahn's algorithm.</p>
+<h3>Programming Language Fundamentals</h3>
+<p>Solid understanding of either Python, Java, or C++ syntax, data structures, and object-oriented concepts (if applicable) is necessary to follow the code examples and implement your own solution effectively. This includes handling strings, lists/arrays, and maps/dictionaries.</p>
+<h2>Understanding the Problem: Alien Dictionary in Detail</h2>
+<p>The input to the Alien Dictionary problem is a list of strings, <code>words</code>, representing words in an alien language, sorted lexicographically. This means if <code>wordA</code> comes before <code>wordB</code> in the list, then <code>wordA</code> is lexicographically smaller than <code>wordB</code> according to the alien alphabet.</p>
+<p>The goal is to return a string representing the alien alphabet's order. If no valid order can be determined (due to conflicting rules or cycles), an empty string should be returned.</p>
+<h3>Key Observations:</h3>
+<ol>
+<li><strong>Pairwise Comparisons:</strong> The ordering information comes from comparing adjacent words. If <code>word1</code> and <code>word2</code> are consecutive in the input list, and they differ at some character position <code>i</code>, then the character <code>word1[i]</code> must come before <code>word2[i]</code> in the alien alphabet.</li>
+<li><strong>First Difference Matters:</strong> Once a difference is found between two words, say <code>word1[i]</code> != <code>word2[i]</code>, then <code>word1[i]</code> must precede <code>word2[i]</code>. Any characters after this first difference in these two words provide no <em>new</em> ordering information relative to each other.</li>
+<li><strong>Prefix Rule:</strong> If <code>word1</code> is a prefix of <code>word2</code> (e.g., "abc", "ab"), but <code>word2</code> appears <em>before</em> <code>word1</code> in the input list, it's an invalid ordering and implies a cycle. However, if <code>word1</code> is a prefix of <code>word2</code> and <code>word1</code> appears <em>before</em> <code>word2</code>, this provides no ordering information between <code>word1</code> and <code>word2</code> themselves but confirms consistency. If <code>word2</code> is a prefix of <code>word1</code> (e.g., "ab", "abc") and <code>word1</code> appears after <code>word2</code>, it's valid. The problem states words are sorted lexicographically. If <code>word1 = "apple"</code> and <code>word2 = "app"</code>, and <code>word1</code> comes <em>before</em> <code>word2</code>, it's an invalid input (as "app" should be smaller than "apple"). We must detect this.</li>
+<li><strong>All Characters:</strong> We need to consider all unique characters present across <em>all</em> words, even if some characters don't directly form an ordering pair. They might be part of the alphabet and appear in the final sorted order.</li>
+</ol>
+<h2>Core Concepts: Graph Theory and Topological Sort</h2>
+<p>The Alien Dictionary problem is a perfect fit for a graph-based solution using topological sort. Let's break down why.</p>
+<h3>Building the Directed Graph</h3>
+<p>Each unique character in the alien alphabet will be a <strong>node</strong> (or vertex) in our graph. An ordering rule, such as 'a' must come before 'b', will be represented as a <strong>directed edge</strong> from 'a' to 'b' (a -&gt; b).</p>
+<p>To construct this graph:
+1.  <strong>Initialize:</strong> Create a set to store all unique characters seen across all words. Create an adjacency list (e.g., <code>Map&lt;Character, List&lt;Character&gt;&gt;</code>) to represent the graph and a map (e.g., <code>Map&lt;Character, Integer&gt;</code>) to store the in-degree of each character. The in-degree of a node is the number of incoming edges it has.
+2.  <strong>Populate All Characters:</strong> Iterate through all words and all characters within those words. Add each unique character to your set and initialize its in-degree to 0 in the in-degree map. Also, ensure each character has an entry in the adjacency list, even if its list of neighbors is initially empty.
+3.  <strong>Find Orderings (Edges):</strong> Iterate through the <code>words</code> list, comparing <code>word[i]</code> with <code>word[i+1]</code>.
+    *   For each pair, iterate through their characters until you find the first position <code>j</code> where <code>word[i][j]</code> is different from <code>word[i+1][j]</code>.
+    *   Once a difference is found, <code>word[i][j]</code> must come before <code>word[i+1][j]</code>. Add a directed edge from <code>word[i][j]</code> to <code>word[i+1][j]</code> in your adjacency list. Increment the in-degree of <code>word[i+1][j]</code>.
+    *   <strong>Crucial Edge Case:</strong> If <code>word[i+1]</code> is a prefix of <code>word[i]</code> (e.g., <code>words = ["abc", "ab"]</code>), it implies an invalid lexicographical order, as "abc" should not precede "ab" if "ab" is a prefix of "abc". In this scenario, we must return an empty string, as a valid order cannot be determined. This check should occur <em>before</em> finding any character differences if <code>word[i]</code> is longer and <code>word[i+1]</code> is its prefix.</p>
+<h3>Topological Sort (Kahn's Algorithm)</h3>
+<p>Once the graph is built, we apply topological sort. Kahn's algorithm (BFS-based) is particularly suitable here because it naturally handles cycle detection and produces a valid order efficiently.</p>
+<ol>
+<li><strong>Initialize Queue:</strong> Add all characters (nodes) with an in-degree of 0 to a queue. These are the characters that have no dependencies (no characters must come before them).</li>
+<li><strong>Process Queue:</strong><ul>
+<li>While the queue is not empty:<ul>
+<li>Dequeue a character <code>u</code>.</li>
+<li>Append <code>u</code> to your result string/list.</li>
+<li>For each neighbor <code>v</code> of <code>u</code> (i.e., for every character <code>v</code> that <code>u</code> precedes):<ul>
+<li>Decrement the in-degree of <code>v</code>.</li>
+<li>If <code>v</code>'s in-degree becomes 0, enqueue <code>v</code>. This means <code>v</code> no longer has any preceding dependencies that haven't been processed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Cycle Detection:</strong> After the queue is empty, compare the length of your result string with the total number of unique characters initially present in the <code>words</code>. If they are not equal, it means there was a cycle in the graph, and thus no valid topological order exists. In this case, return an empty string. Otherwise, return the constructed result string.</li>
+</ol>
+<h2>Step-by-Step Solution: Building the Graph</h2>
+<p>Let's walk through the process of building the graph with an example: <code>words = ["wrt", "wrf", "er", "ett", "rftt"]</code>.</p>
+<h3>Step 1: Gather All Unique Characters and Initialize Data Structures</h3>
+<p>First, we iterate through all words to identify every unique character.
+*   <code>'w'</code>, <code>'r'</code>, <code>'t'</code>, <code>'f'</code>, <code>'e'</code>
+*   Initialize:
+    *   <code>adj = {}</code> (adjacency list)
+    *   <code>in_degree = {}</code> (in-degree map)
+    *   For each unique char <code>c</code>: <code>adj[c] = []</code>, <code>in_degree[c] = 0</code>
+    *   <code>all_chars = {'w', 'r', 't', 'f', 'e'}</code></p>
+<h3>Step 2: Extract Ordering Rules (Edges)</h3>
+<p>Now, compare adjacent words to find the first differing character.</p>
+<h4>Compare "wrt" and "wrf":</h4>
+<ul>
+<li><code>'w'</code> == <code>'w'</code></li>
+<li><code>'r'</code> == <code>'r'</code></li>
+<li><code>'t'</code> != <code>'f'</code>. This implies <code>t</code> comes before <code>f</code>.<ul>
+<li>Add edge: <code>t -&gt; f</code></li>
+<li><code>adj['t'].append('f')</code></li>
+<li><code>in_degree['f'] += 1</code> (Now <code>in_degree['f'] = 1</code>)</li>
+</ul>
+</li>
+</ul>
+<h4>Compare "wrf" and "er":</h4>
+<ul>
+<li><code>'w'</code> != <code>'e'</code>. This implies <code>w</code> comes before <code>e</code>.<ul>
+<li>Add edge: <code>w -&gt; e</code></li>
+<li><code>adj['w'].append('e')</code></li>
+<li><code>in_degree['e'] += 1</code> (Now <code>in_degree['e'] = 1</code>)</li>
+</ul>
+</li>
+</ul>
+<h4>Compare "er" and "ett":</h4>
+<ul>
+<li><code>'e'</code> == <code>'e'</code></li>
+<li><code>'r'</code> != <code>'t'</code>. This implies <code>r</code> comes before <code>t</code>.<ul>
+<li>Add edge: <code>r -&gt; t</code></li>
+<li><code>adj['r'].append('t')</code></li>
+<li><code>in_degree['t'] += 1</code> (Now <code>in_degree['t'] = 1</code>)</li>
+</ul>
+</li>
+</ul>
+<h4>Compare "ett" and "rftt":</h4>
+<ul>
+<li><code>'e'</code> != <code>'r'</code>. This implies <code>e</code> comes before <code>r</code>.<ul>
+<li>Add edge: <code>e -&gt; r</code></li>
+<li><code>adj['e'].append('r')</code></li>
+<li><code>in_degree['r'] += 1</code> (Now <code>in_degree['r'] = 1</code>)</li>
+</ul>
+</li>
+</ul>
+<h3>Current State of Graph</h3>
+<ul>
+<li><code>adj = { 'w': ['e'], 'r': ['t'], 't': ['f'], 'e': ['r'], 'f': [] }</code></li>
+<li><code>in_degree = { 'w': 0, 'r': 1, 't': 1, 'f': 1, 'e': 1 }</code></li>
+<li><code>all_chars = {'w', 'r', 't', 'f', 'e'}</code> (total 5 unique characters)</li>
+</ul>
+<h2>Step-by-Step Solution: Performing Topological Sort</h2>
+<p>Now, using Kahn's algorithm (BFS-based) for the topological sort.</p>
+<h3>Step 1: Initialize Queue with Zero In-Degree Nodes</h3>
+<ul>
+<li>Scan <code>in_degree</code>:<ul>
+<li><code>'w'</code> has <code>in_degree = 0</code>. Add <code>'w'</code> to queue.</li>
+</ul>
+</li>
+<li><code>queue = ['w']</code></li>
+<li><code>result = []</code></li>
+</ul>
+<h3>Step 2: Process Queue</h3>
+<h4>Iteration 1:</h4>
+<ul>
+<li>Dequeue <code>'w'</code>. <code>result = ['w']</code></li>
+<li>Neighbors of <code>'w'</code>: <code>['e']</code><ul>
+<li>Decrement <code>in_degree['e']</code>. <code>in_degree['e']</code> becomes 0.</li>
+<li>Enqueue <code>'e'</code>. <code>queue = ['e']</code></li>
+</ul>
+</li>
+</ul>
+<h4>Iteration 2:</h4>
+<ul>
+<li>Dequeue <code>'e'</code>. <code>result = ['w', 'e']</code></li>
+<li>Neighbors of <code>'e'</code>: <code>['r']</code><ul>
+<li>Decrement <code>in_degree['r']</code>. <code>in_degree['r']</code> becomes 0.</li>
+<li>Enqueue <code>'r'</code>. <code>queue = ['r']</code></li>
+</ul>
+</li>
+</ul>
+<h4>Iteration 3:</h4>
+<ul>
+<li>Dequeue <code>'r'</code>. <code>result = ['w', 'e', 'r']</code></li>
+<li>Neighbors of <code>'r'</code>: <code>['t']</code><ul>
+<li>Decrement <code>in_degree['t']</code>. <code>in_degree['t']</code> becomes 0.</li>
+<li>Enqueue <code>'t'</code>. <code>queue = ['t']</code></li>
+</ul>
+</li>
+</ul>
+<h4>Iteration 4:</h4>
+<ul>
+<li>Dequeue <code>'t'</code>. <code>result = ['w', 'e', 'r', 't']</code></li>
+<li>Neighbors of <code>'t'</code>: <code>['f']</code><ul>
+<li>Decrement <code>in_degree['f']</code>. <code>in_degree['f']</code> becomes 0.</li>
+<li>Enqueue <code>'f'</code>. <code>queue = ['f']</code></li>
+</ul>
+</li>
+</ul>
+<h4>Iteration 5:</h4>
+<ul>
+<li>Dequeue <code>'f'</code>. <code>result = ['w', 'e', 'r', 't', 'f']</code></li>
+<li>Neighbors of <code>'f'</code>: <code>[]</code> (none)</li>
+<li><code>queue = []</code></li>
+</ul>
+<h3>Step 3: Check for Cycle</h3>
+<ul>
+<li><code>len(result)</code> (which is 5) == <code>len(all_chars)</code> (which is 5).</li>
+<li>No cycle detected.</li>
+</ul>
+<h3>Step 4: Return Result</h3>
+<ul>
+<li>Join <code>result</code>: <code>"wertf"</code></li>
+</ul>
+<p>This detailed walkthrough illustrates how the graph is constructed and then traversed using Kahn's algorithm to obtain the correct alien alphabet order.</p>
+<h2>Leetcode 269: Alien Dictionary Code in Python</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">alienOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># Step 1: Initialize data structures for graph and in-degrees</span>
+        <span class="c1"># all_chars: A set to store all unique characters encountered across all words.</span>
+        <span class="c1"># adj: An adjacency list (graph) where adj[u] is a list of characters that &#39;u&#39; must precede.</span>
+        <span class="c1"># in_degree: A map where in_degree[c] is the count of characters that must precede &#39;c&#39;.</span>
+        <span class="n">all_chars</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">adj</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="n">in_degree</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="c1"># Populate all_chars and initialize in_degrees for all characters to 0</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">char_code</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+                <span class="n">all_chars</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">char_code</span><span class="p">)</span>
+                <span class="n">in_degree</span><span class="p">[</span><span class="n">char_code</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Initialize all to 0, will be updated as edges are added</span>
+
+        <span class="c1"># Step 2: Build the graph by comparing adjacent words</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">word1</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">word2</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Critical Edge Case: If word2 is a prefix of word1 (e.g., [&quot;abc&quot;, &quot;ab&quot;]), it&#39;s an invalid input.</span>
+            <span class="c1"># This indicates an inconsistent lexicographical order.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">word1</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">word2</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+            <span class="c1"># Find the first differing character</span>
+            <span class="n">min_len</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">word2</span><span class="p">))</span>
+            <span class="n">found_diff</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_len</span><span class="p">):</span>
+                <span class="n">char1</span> <span class="o">=</span> <span class="n">word1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">char2</span> <span class="o">=</span> <span class="n">word2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">char1</span> <span class="o">!=</span> <span class="n">char2</span><span class="p">:</span>
+                    <span class="c1"># Found an ordering rule: char1 must come before char2</span>
+                    <span class="k">if</span> <span class="n">char2</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">char1</span><span class="p">]:</span> <span class="c1"># Avoid duplicate edges</span>
+                        <span class="n">adj</span><span class="p">[</span><span class="n">char1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">char2</span><span class="p">)</span>
+                        <span class="n">in_degree</span><span class="p">[</span><span class="n">char2</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">found_diff</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="c1"># If no difference found until min_len, it means one word is a prefix of the other.</span>
+            <span class="c1"># The edge case check above handles word2 being a prefix of word1.</span>
+            <span class="c1"># If word1 is a prefix of word2 (e.g. &quot;abc&quot;, &quot;abcd&quot;), no ordering info is obtained from this pair,</span>
+            <span class="c1"># which is fine.</span>
+
+        <span class="c1"># Step 3: Perform Topological Sort using Kahn&#39;s Algorithm (BFS)</span>
+        <span class="c1"># Queue for BFS, initially contains all characters with an in-degree of 0.</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">([</span><span class="n">char_code</span> <span class="k">for</span> <span class="n">char_code</span> <span class="ow">in</span> <span class="n">all_chars</span> <span class="k">if</span> <span class="n">in_degree</span><span class="p">[</span><span class="n">char_code</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Stores the sorted characters</span>
+
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+            <span class="c1"># For each neighbor &#39;v&#39; of &#39;u&#39;:</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="n">in_degree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span> <span class="c1"># Decrement in-degree of &#39;v&#39;</span>
+                <span class="k">if</span> <span class="n">in_degree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="c1"># If in-degree becomes 0, &#39;v&#39; has no more prerequisites, add to queue</span>
+
+        <span class="c1"># Step 4: Check for cycles</span>
+        <span class="c1"># If the length of the result string is less than the total number of unique characters,</span>
+        <span class="c1"># it means there was a cycle in the graph, and a valid topological order cannot be formed.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_chars</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
+<h3>Python Code Explanation:</h3>
+<ol>
+<li><strong>Initialization:</strong> <code>all_chars</code> set gathers all unique characters. <code>adj</code> is a <code>defaultdict(list)</code> for the adjacency list (graph), and <code>in_degree</code> is a <code>defaultdict(int)</code> to store in-degrees. All characters are added to <code>all_chars</code> and their <code>in_degree</code> initialized to 0.</li>
+<li><strong>Graph Construction:</strong><ul>
+<li>It iterates through adjacent pairs of words <code>(words[i], words[i+1])</code>.</li>
+<li><strong>Prefix Check:</strong> A critical check ensures <code>word2</code> is not a prefix of <code>word1</code> if <code>len(word1) &gt; len(word2)</code>. This indicates an invalid input order, so we return <code>""</code>.</li>
+<li>It finds the first differing character <code>char1</code> from <code>word1</code> and <code>char2</code> from <code>word2</code>.</li>
+<li>An edge <code>char1 -&gt; char2</code> is added to <code>adj</code>, and <code>in_degree[char2]</code> is incremented. <code>if char2 not in adj[char1]</code> prevents duplicate edges, which is important for correct in-degree counts.</li>
+</ul>
+</li>
+<li><strong>Topological Sort (Kahn's):</strong><ul>
+<li>A <code>deque</code> (double-ended queue) is used for the BFS queue. It's initialized with all characters that have an <code>in_degree</code> of 0.</li>
+<li>The <code>while queue</code> loop processes characters. <code>u</code> is dequeued, added to <code>result</code>.</li>
+<li>For each neighbor <code>v</code> of <code>u</code>, <code>in_degree[v]</code> is decremented. If <code>in_degree[v]</code> becomes 0, <code>v</code> is enqueued.</li>
+</ul>
+</li>
+<li><strong>Cycle Detection:</strong> After the BFS, if <code>len(result)</code> is not equal to <code>len(all_chars)</code>, it implies a cycle was present, and an empty string is returned.</li>
+<li><strong>Return:</strong> Finally, <code>"".join(result)</code> constructs the alien alphabet string.</li>
+</ol>
+<h2>Leetcode 269: Alien Dictionary Code in Java</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">alienOrder</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Step 1: Initialize data structures for graph and in-degrees</span>
+<span class="w">        </span><span class="c1">// allChars: A set to store all unique characters encountered.</span>
+<span class="w">        </span><span class="c1">// adj: Adjacency list (graph) where adj.get(u) is a list of characters &#39;u&#39; must precede.</span>
+<span class="w">        </span><span class="c1">// inDegree: A map where inDegree.get(c) is the count of characters that must precede &#39;c&#39;.</span>
+<span class="w">        </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allChars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">inDegree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Populate allChars and initialize inDegrees for all characters to 0</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">word</span><span class="p">.</span><span class="na">toCharArray</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">allChars</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">                </span><span class="n">adj</span><span class="p">.</span><span class="na">putIfAbsent</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span><span class="w"> </span><span class="c1">// Ensure all chars are graph nodes</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="p">.</span><span class="na">putIfAbsent</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Initialize all to 0</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 2: Build the graph by comparing adjacent words</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">words</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">word1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">words</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">word2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">words</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Critical Edge Case: If word2 is a prefix of word1 (e.g., [&quot;abc&quot;, &quot;ab&quot;]), it&#39;s an invalid input.</span>
+<span class="w">            </span><span class="c1">// This indicates an inconsistent lexicographical order.</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">word1</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">word2</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">word1</span><span class="p">.</span><span class="na">startsWith</span><span class="p">(</span><span class="n">word2</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="c1">// Find the first differing character</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">minLen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">min</span><span class="p">(</span><span class="n">word1</span><span class="p">.</span><span class="na">length</span><span class="p">(),</span><span class="w"> </span><span class="n">word2</span><span class="p">.</span><span class="na">length</span><span class="p">());</span>
+<span class="w">            </span><span class="kt">boolean</span><span class="w"> </span><span class="n">foundDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">minLen</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">char</span><span class="w"> </span><span class="n">char1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word1</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+<span class="w">                </span><span class="kt">char</span><span class="w"> </span><span class="n">char2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word2</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">char1</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">char2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="c1">// Found an ordering rule: char1 must come before char2</span>
+<span class="w">                    </span><span class="c1">// Add edge char1 -&gt; char2 to adjacency list</span>
+<span class="w">                    </span><span class="c1">// Only add if not already present to avoid duplicate edges and incorrect in-degree counts</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">char1</span><span class="p">).</span><span class="na">contains</span><span class="p">(</span><span class="n">char2</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// This check can be slow for large graphs.</span>
+<span class="w">                                                            </span><span class="c1">// A Set&lt;Character&gt; for values in adj.get(char1) would be faster</span>
+<span class="w">                                                            </span><span class="c1">// or checking if inDegree count increased after adding.</span>
+<span class="w">                        </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">char1</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="n">char2</span><span class="p">);</span>
+<span class="w">                        </span><span class="n">inDegree</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">char2</span><span class="p">,</span><span class="w"> </span><span class="n">inDegree</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">char2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                    </span><span class="n">foundDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="c1">// If no difference found and word1 is a prefix of word2 (e.g. &quot;abc&quot;, &quot;abcd&quot;), no ordering info is obtained.</span>
+<span class="w">            </span><span class="c1">// The edge case above handles word2 being a prefix of word1.</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 3: Perform Topological Sort using Kahn&#39;s Algorithm (BFS)</span>
+<span class="w">        </span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">queue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// Add all characters with an in-degree of 0 to the queue</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">allChars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">queue</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span><span class="w"> </span><span class="c1">// Stores the sorted characters</span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">queue</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">queue</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span>
+<span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="w">            </span><span class="c1">// For each neighbor &#39;v&#39; of &#39;u&#39;:</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">inDegree</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Decrement in-degree of &#39;v&#39;</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">queue</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"> </span><span class="c1">// If in-degree becomes 0, add &#39;v&#39; to queue</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 4: Check for cycles</span>
+<span class="w">        </span><span class="c1">// If the length of the result string is less than the total number of unique characters,</span>
+<span class="w">        </span><span class="c1">// it means there was a cycle in the graph.</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">allChars</span><span class="p">.</span><span class="na">size</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Java Code Explanation:</h3>
+<p>The Java implementation mirrors the Python logic very closely.
+1.  <strong>Initialization:</strong> <code>HashSet&lt;Character&gt; allChars</code>, <code>HashMap&lt;Character, List&lt;Character&gt;&gt; adj</code>, <code>HashMap&lt;Character, Integer&gt; inDegree</code>. <code>putIfAbsent</code> is used to ensure all characters are initialized in the maps.
+2.  <strong>Graph Construction:</strong>
+    *   Similar loop structure for adjacent words.
+    *   The prefix check <code>word1.length() &gt; word2.length() &amp;&amp; word1.startsWith(word2)</code> remains critical.
+    *   When adding an edge, <code>!adj.get(char1).contains(char2)</code> is used to prevent duplicate edges. For very large graphs or high-degree nodes, using <code>HashSet&lt;Character&gt;</code> as the value in <code>adj</code> would be more performant than <code>List&lt;Character&gt;</code> for the <code>contains</code> check.
+3.  <strong>Topological Sort:</strong>
+    *   <code>LinkedList</code> is used to implement the <code>Queue</code> interface for BFS.
+    *   <code>offer()</code> and <code>poll()</code> methods are used for adding and removing elements from the queue.
+    *   <code>StringBuilder</code> is used for efficient string concatenation.
+4.  <strong>Cycle Detection:</strong> Same logic: compare <code>result.length()</code> with <code>allChars.size()</code>.
+5.  <strong>Return:</strong> <code>result.toString()</code>.</p>
+<h2>Leetcode 269: Alien Dictionary Code in C++</h2>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unordered_map&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unordered_set&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span><span class="c1"> // For std::min and std::find</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">alienOrder</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Step 1: Initialize data structures for graph and in-degrees</span>
+<span class="w">        </span><span class="c1">// allChars: A set to store all unique characters encountered.</span>
+<span class="w">        </span><span class="c1">// adj: Adjacency list (graph) where adj[u] is a list of characters &#39;u&#39; must precede.</span>
+<span class="w">        </span><span class="c1">// inDegree: A map where inDegree[c] is the count of characters that must precede &#39;c&#39;.</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_set</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allChars</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">;</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">inDegree</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Populate allChars and initialize inDegrees for all characters to 0</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">words</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">word</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">allChars</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">                </span><span class="n">adj</span><span class="p">[</span><span class="n">c</span><span class="p">];</span><span class="w"> </span><span class="c1">// Ensure char is in adj map, creates empty vector if not present</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Initialize all to 0</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 2: Build the graph by comparing adjacent words</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">words</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">word1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">word2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">            </span><span class="c1">// Critical Edge Case: If word2 is a prefix of word1 (e.g., {&quot;abc&quot;, &quot;ab&quot;}), it&#39;s an invalid input.</span>
+<span class="w">            </span><span class="c1">// This indicates an inconsistent lexicographical order.</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">word1</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">word2</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">word1</span><span class="p">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">word2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// rfind with 0 is like startsWith</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="c1">// Find the first differing character</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">minLen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">word1</span><span class="p">.</span><span class="n">length</span><span class="p">(),</span><span class="w"> </span><span class="n">word2</span><span class="p">.</span><span class="n">length</span><span class="p">());</span>
+<span class="w">            </span><span class="kt">bool</span><span class="w"> </span><span class="n">foundDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">minLen</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">char</span><span class="w"> </span><span class="n">char1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word1</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+<span class="w">                </span><span class="kt">char</span><span class="w"> </span><span class="n">char2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word2</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">char1</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">char2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="c1">// Found an ordering rule: char1 must come before char2</span>
+<span class="w">                    </span><span class="c1">// Add edge char1 -&gt; char2 to adjacency list</span>
+<span class="w">                    </span><span class="c1">// Only add if not already present to avoid duplicate edges and incorrect in-degree counts</span>
+
+<span class="w">                    </span><span class="c1">// Check if char2 is already a neighbor of char1.</span>
+<span class="w">                    </span><span class="c1">// This is O(N) where N is number of neighbors. For better performance</span>
+<span class="w">                    </span><span class="c1">// adj[char1] could be a std::unordered_set&lt;char&gt; instead of std::vector&lt;char&gt;</span>
+<span class="w">                    </span><span class="c1">// or we could track added edges in a separate set.</span>
+<span class="w">                    </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">neighbors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adj</span><span class="p">[</span><span class="n">char1</span><span class="p">];</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">neighbors</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">neighbors</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="n">char2</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">neighbors</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">neighbors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">char2</span><span class="p">);</span>
+<span class="w">                        </span><span class="n">inDegree</span><span class="p">[</span><span class="n">char2</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                    </span><span class="n">foundDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 3: Perform Topological Sort using Kahn&#39;s Algorithm (BFS)</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Add all characters with an in-degree of 0 to the queue</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">allChars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Stores the sorted characters</span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+<span class="w">            </span><span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+
+<span class="w">            </span><span class="c1">// For each neighbor &#39;v&#39; of &#39;u&#39;:</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">--</span><span class="p">;</span><span class="w"> </span><span class="c1">// Decrement in-degree of &#39;v&#39;</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"> </span><span class="c1">// If in-degree becomes 0, add &#39;v&#39; to queue</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 4: Check for cycles</span>
+<span class="w">        </span><span class="c1">// If the length of the result string is less than the total number of unique characters,</span>
+<span class="w">        </span><span class="c1">// it means there was a cycle in the graph.</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">allChars</span><span class="p">.</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<h3>C++ Code Explanation:</h3>
+<p>The C++ solution leverages standard library containers.
+1.  <strong>Initialization:</strong> <code>std::unordered_set&lt;char&gt; allChars</code>, <code>std::unordered_map&lt;char, std::vector&lt;char&gt;&gt; adj</code>, <code>std::unordered_map&lt;char, int&gt; inDegree</code>. Using <code>adj[c];</code> automatically creates an empty <code>std::vector&lt;char&gt;</code> if <code>c</code> is not yet a key.
+2.  <strong>Graph Construction:</strong>
+    *   The <code>word1.rfind(word2, 0) == 0</code> is the C++ equivalent for checking if <code>word1</code> starts with <code>word2</code>.
+    *   When adding an edge, <code>std::find</code> is used to check for duplicates in the adjacency list. As noted in the comments, for performance-critical scenarios, <code>std::unordered_set&lt;char&gt;</code> could be used for the values in <code>adj</code> to ensure <code>O(1)</code> average time for duplicate checks.
+3.  <strong>Topological Sort:</strong>
+    *   <code>std::queue&lt;char&gt;</code> is used for the BFS queue.
+    *   <code>push()</code> and <code>pop()</code> (after <code>front()</code>) are used for queue operations.
+    *   <code>std::string result</code> uses <code>push_back(u)</code> to append characters.
+4.  <strong>Cycle Detection:</strong> Compares <code>result.length()</code> with <code>allChars.size()</code>.
+5.  <strong>Return:</strong> The <code>std::string result</code>.</p>
+<h2>Complexity Analysis</h2>
+<p>Understanding the time and space complexity of the Alien Dictionary problem is crucial for evaluating its efficiency.</p>
+<h3>Time Complexity</h3>
+<p>Let <code>N</code> be the number of words in the input list, <code>L</code> be the average length of a word, and <code>C</code> be the total number of unique characters across all words (at most 26 for English alphabet, but could be larger for general characters).</p>
+<ol>
+<li>
+<p><strong>Gathering All Unique Characters and Initializing Data Structures:</strong></p>
+<ul>
+<li>Iterating through all words and their characters takes <code>O(N * L)</code> time.</li>
+<li>Adding to <code>allChars</code> set, <code>adj</code> map, and <code>inDegree</code> map: Each <code>insert</code> or <code>put</code> operation is <code>O(1)</code> on average. Total <code>O(C)</code> for initial setup for <code>C</code> characters.</li>
+<li>Overall for initialization: <code>O(N * L)</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Building the Graph:</strong></p>
+<ul>
+<li>We iterate through <code>N-1</code> pairs of adjacent words.</li>
+<li>For each pair <code>(word1, word2)</code>, we compare characters up to <code>min(len(word1), len(word2))</code>, which is <code>O(L)</code>.</li>
+<li>Adding an edge to the adjacency list and incrementing in-degree is <code>O(1)</code> on average (assuming <code>std::vector::push_back</code> or <code>List.add</code> is amortized O(1)).</li>
+<li>The duplicate edge check (e.g., <code>!adj.get(char1).contains(char2)</code> in Java or <code>std::find</code> in C++) can be <code>O(C)</code> in the worst case if <code>adj[char1]</code> contains many neighbors. If using <code>Set</code> for neighbors, this becomes <code>O(1)</code> on average.</li>
+<li>In total, this step is <code>O(N * L)</code> for comparing words. The graph can have at most <code>C</code> nodes and <code>C*(C-1)</code> edges in the worst case (though practically, usually much fewer distinct edges based on the input words). Let <code>E</code> be the number of edges. Adding edges involves <code>N</code> comparisons, each potentially adding one edge. Total for edges: <code>O(N*L + E)</code>.</li>
+<li>Overall for building the graph: <code>O(N * L + E)</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Topological Sort (Kahn's Algorithm):</strong></p>
+<ul>
+<li>Initializing the queue: <code>O(C)</code> to iterate through all characters.</li>
+<li>The <code>while</code> loop runs <code>C</code> times (each character is dequeued once).</li>
+<li>Inside the loop:<ul>
+<li>Dequeueing: <code>O(1)</code>.</li>
+<li>Iterating through neighbors: Sum of <code>len(adj[u])</code> for all <code>u</code> is <code>O(E)</code> (each edge is traversed once).</li>
+<li>Decrementing in-degree and enqueuing: <code>O(1)</code> on average.</li>
+</ul>
+</li>
+<li>Overall for topological sort: <code>O(C + E)</code>.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Total Time Complexity:</strong> <code>O(N * L + C + E)</code>. Since <code>E</code> is at most <code>N*L</code> (we add at most one edge per word pair, bounded by length), and also <code>E</code> is at most <code>C^2</code>, it can be simplified. A tighter bound is <code>O(N * L + C^2)</code> if <code>E</code> is considered as the maximum number of unique edges. However, the most accurate is <code>O(N * L + E)</code>, where <code>E</code> is the number of distinct edges actually added. Given <code>C</code> is at most 26, <code>C^2</code> is small, so <code>O(N * L + E)</code> effectively.</p>
+<h3>Space Complexity</h3>
+<ol>
+<li><strong><code>allChars</code> set:</strong> <code>O(C)</code> to store all unique characters.</li>
+<li><strong><code>adj</code> (adjacency list):</strong> <code>O(C + E)</code> to store <code>C</code> nodes and <code>E</code> edges.</li>
+<li><strong><code>inDegree</code> map:</strong> <code>O(C)</code> to store in-degrees for all characters.</li>
+<li><strong><code>queue</code>:</strong> In the worst case, the queue can hold all <code>C</code> characters: <code>O(C)</code>.</li>
+<li><strong><code>result</code> string/StringBuilder:</strong> <code>O(C)</code> for the final alphabet order.</li>
+</ol>
+<p><strong>Total Space Complexity:</strong> <code>O(C + E)</code>.</p>
+<h2>Common Mistakes and Edge Cases</h2>
+<p>Solving the Alien Dictionary problem requires careful attention to various scenarios. Missing these can lead to incorrect solutions or runtime errors.</p>
+<h3>1. Incorrect Graph Construction</h3>
+<ul>
+<li><strong>Duplicate Edges:</strong> If you add the same edge multiple times (e.g., <code>t -&gt; f</code> derived from <code>("wrt", "wrf")</code> and again from <code>("ert", "erf")</code>), the <code>in_degree</code> count for <code>f</code> will be inflated. This can prevent <code>f</code> from ever reaching an in-degree of 0, leading to an incorrect result (e.g., <code>f</code> might be omitted or a cycle might be falsely detected). Always check if an edge already exists before adding it and incrementing <code>in_degree</code>.</li>
+<li><strong>Missing Characters:</strong> Ensure <em>all</em> unique characters from <em>all</em> words are included in your graph and <code>in_degree</code> map, even if they don't explicitly form an ordering pair. Some characters might be part of the alphabet but only appear in isolated words. Their in-degree should be initialized to 0.</li>
+</ul>
+<h3>2. Failure to Detect Invalid Input Orders (Prefix Rule)</h3>
+<ul>
+<li><strong>Example:</strong> <code>words = ["abc", "ab"]</code>. If "abc" comes before "ab" in a lexicographically sorted list, it implies an invalid ordering in the alien dictionary. This specific case <em>must</em> be handled by immediately returning an empty string. The logic should be: if <code>word1</code> is longer than <code>word2</code>, and <code>word1</code> starts with <code>word2</code> (i.e., <code>word2</code> is a prefix of <code>word1</code>), and <code>word1</code> appears before <code>word2</code>, it's an invalid input.</li>
+<li>The check <code>if len(word1) &gt; len(word2) and word1.startswith(word2): return ""</code> in Python (and equivalents in Java/C++) addresses this directly before comparing characters.</li>
+</ul>
+<h3>3. Missing Cycle Detection</h3>
+<ul>
+<li>A topological sort can only exist in a Directed Acyclic Graph (DAG). If the input words imply a cycle (e.g., <code>a &lt; b</code>, <code>b &lt; c</code>, and <code>c &lt; a</code>), no valid alphabet order exists.</li>
+<li>Kahn's algorithm naturally detects cycles: if the number of characters processed in the topological sort (<code>len(result)</code>) is less than the total number of unique characters (<code>len(all_chars)</code>), a cycle is present. In this case, return an empty string.</li>
+</ul>
+<h3>4. Off-by-One Errors in Loop Boundaries</h3>
+<ul>
+<li>When comparing adjacent words, the loop should go from <code>i</code> to <code>len(words) - 2</code> (or <code>len(words) - 1</code> with <code>&lt;</code>).</li>
+<li>When comparing characters within words, the loop should go up to <code>min(len(word1), len(word2)) - 1</code> (or <code>&lt; min_len</code>).</li>
+</ul>
+<h3>5. Handling Empty Input</h3>
+<ul>
+<li>If <code>words</code> is empty, an empty string should be returned. The provided solutions will correctly return an empty string for this edge case.</li>
+<li>If <code>words</code> contains only one word (e.g., <code>["abc"]</code>), all unique characters from that word should be returned in any order (usually lexicographical, but any order is valid). The current solution correctly handles this by putting all characters with in-degree 0 into the queue and returning them.</li>
+</ul>
+<h3>6. Performance Considerations for Adjacency List</h3>
+<ul>
+<li>In Java and C++, checking <code>adj.get(char1).contains(char2)</code> or <code>std::find(neighbors.begin(), neighbors.end(), char2)</code> can be <code>O(C)</code> in the worst case if a node has many neighbors. If the number of unique characters <code>C</code> is large, this could degrade performance. For alphabets larger than 26, consider using <code>HashSet&lt;Character&gt;</code> or <code>unordered_set&lt;char&gt;</code> for the values in your adjacency map to ensure <code>O(1)</code> average time for duplicate checks. For <code>C=26</code>, a <code>List</code> or <code>vector</code> is typically acceptable.</li>
+</ul>
+<p>By carefully considering these common pitfalls and edge cases, you can build a robust and correct solution for the Alien Dictionary problem.</p>
+<h2>Conclusion</h2>
+<p>The <strong>Leetcode: 269 - Alien Dictionary code in python java and c++</strong> problem is a quintessential example of how real-world ordering problems can be modeled and solved using graph theory and topological sort. We've explored the core concepts, detailed the step-by-step process of constructing the graph and applying Kahn's algorithm, and provided comprehensive code implementations in Python, Java, and C++.</p>
+<p>Mastering this problem not only enhances your understanding of graph algorithms but also sharpens your ability to translate abstract problem statements into concrete data structures and algorithms. The key takeaways include:
+*   Identifying partial orderings to build a directed graph.
+*   Using Kahn's algorithm (BFS-based topological sort) for efficient ordering.
+*   Detecting cycles in the graph to determine if a valid order exists.
+*   Handling critical edge cases like prefix rules and duplicate edges.</p>
+<p>With the insights and code provided, you are now well-equipped to tackle similar graph-based challenges. Keep practicing with various graph problems to solidify your understanding and algorithmic intuition. For another challenging graph problem solved with BFS, check out <a href="/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a>. Happy coding!</p>
+<h2>Frequently Asked Questions</h2>
+<p><strong>Q: Why is the Alien Dictionary problem considered a graph problem?</strong>
+A: The problem involves deducing an unknown lexicographical order from a list of sorted words. This creates a set of directed dependencies between characters (e.g., 'a' must come before 'b'). These characters can be represented as nodes, and the dependencies as directed edges in a graph, making it a classic graph ordering problem.</p>
+<p><strong>Q: What is topological sort, and why is it crucial for solving Alien Dictionary?</strong>
+A: Topological sort is an algorithm for ordering the vertices of a directed acyclic graph (DAG) such that for every directed edge from vertex 'u' to vertex 'v', 'u' comes before 'v' in the ordering. It's crucial for Alien Dictionary because it allows us to derive a valid sequence of characters based on the partial orderings extracted from the input words.</p>
+<p><strong>Q: How does the solution detect if a valid alien alphabet order cannot be determined?</strong>
+A: A valid order cannot be determined if there's a cycle in the dependency graph (e.g., 'a' before 'b', 'b' before 'c', and 'c' before 'a'). Kahn's algorithm, used in the solution, detects cycles if the total number of characters successfully added to the sorted result is less than the total number of unique characters in the alphabet. This indicates that some characters were part of a cycle and could never reach an in-degree of zero.</p>
+<h2>Further Reading &amp; Resources</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Topological_sorting">Wikipedia: Topological Sorting</a></li>
+<li><a href="https://www.geeksforgeeks.org/topological-sorting-using-kahn-algorithm/">GeeksforGeeks: Kahn's Algorithm for Topological Sort</a></li>
+<li><a href="https://leetcode.com/problems/alien-dictionary/">LeetCode Problem 269: Alien Dictionary</a></li>
+<li><a href="https://www.cs.princeton.edu/courses/archive/fall13/cos226/lectures/42DirectedGraphs.pdf">Princeton University: Directed Graphs</a></li>
+</ul>
+    </div>
+
+    <!-- Social Share Buttons -->
+    <div class="share-buttons">
+      <span class="share-label">Share:</span>
+
+      <!-- X (Twitter) -->
+      <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/&text=Leetcode%3A%20269%20-%20Alien%20Dictionary%20Code%20in%20Python%2C%20Java%2C%20C%2B%2B"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/&title=Leetcode%3A%20269%20-%20Alien%20Dictionary%20Code%20in%20Python%2C%20Java%2C%20C%2B%2B"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=Leetcode%3A%20269%20-%20Alien%20Dictionary%20Code%20in%20Python%2C%20Java%2C%20C%2B%2B%20https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="article-footer-meta">
+      <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/algorithms.html">Algorithms</a></p>
+      <div class="tags-list">
+        <strong>Tags:</strong>
+        <span class="tag">#Leetcode</span>
+        <span class="tag">#Alien Dictionary</span>
+        <span class="tag">#Topological Sort</span>
+        <span class="tag">#Graph Algorithms</span>
+        <span class="tag">#Python</span>
+        <span class="tag">#Java</span>
+        <span class="tag">#C++</span>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <ul>
+        <li><a href="https://analyticsdrive.tech/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a></li>
+        <li><a href="https://analyticsdrive.tech/01-matrix-problem-shortest-distance-bfs-dp-explained/">Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</a></li>
+        <li><a href="https://analyticsdrive.tech/leetcode-417-pacific-atlantic-water-flow-dfs-solution/">Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS</a></li>
+      </ul>
+    </div>
+
+    <div class="post-footer">
+      <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Analytics Drive.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
