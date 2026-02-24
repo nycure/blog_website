@@ -443,29 +443,226 @@
             color: var(--text-ink);
         }
 
-        /* Code Blocks (Light Mode) */
+        /* =============================================
+           SYNTAX HIGHLIGHTING — One Dark (Pygments)
+           ============================================= */
+
+        /* Dark code block — works with or without .highlight wrapper */
         .post-content pre {
-            background: #f4f4f4;
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            overflow-x: auto;
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
             margin: 2rem 0;
-            font-size: 0.95rem;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ABB2BF;
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
         }
 
-        .post-content code {
-            font-family: 'Courier New', monospace;
-            color: #d63384;
-            /* Pink/Red for inline code */
-            background: rgba(0, 0, 0, 0.05);
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-
+        /* Reset code inside pre — don't let inline-code styles bleed in */
         .post-content pre code {
             background: transparent;
-            color: #333;
+            color: #ABB2BF;
             padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        /* Inline code (not in a block) */
+        .post-content code {
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+            color: #E06C75;
+            background: rgba(40, 44, 52, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        /* Dark mode: inline code */
+        [data-theme="dark"] .post-content code {
+            background: rgba(97, 175, 239, 0.1);
+            color: #E06C75;
+        }
+
+        /* Also support .highlight wrapper if Pygments generates it */
+        .post-content .highlight {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .post-content .highlight pre {
+            background: transparent;
+            border: none;
+            margin: 0;
+        }
+
+        /* ── Pygments One Dark Token Colors ──
+           Targets spans directly inside pre (Pelican 4.x structure)
+           AND inside .highlight wrapper (fallback) */
+
+        /* Comments — grey */
+        .post-content pre .c,
+        .post-content pre .ch,
+        .post-content pre .cm,
+        .post-content pre .cp,
+        .post-content pre .c1,
+        .post-content pre .cs,
+        .post-content pre .cpf,
+        .highlight .c,
+        .highlight .ch,
+        .highlight .cm,
+        .highlight .cp,
+        .highlight .c1,
+        .highlight .cs {
+            color: #7F848E;
+        }
+
+        /* Keywords — purple */
+        .post-content pre .k,
+        .post-content pre .kd,
+        .post-content pre .kn,
+        .post-content pre .kp,
+        .post-content pre .kr,
+        .highlight .k,
+        .highlight .kd,
+        .highlight .kn,
+        .highlight .kp,
+        .highlight .kr {
+            color: #C678DD;
+        }
+
+        /* Keyword constants & types — yellow */
+        .post-content pre .kc,
+        .post-content pre .kt,
+        .post-content pre .nb,
+        .post-content pre .nc,
+        .post-content pre .bp,
+        .highlight .kc,
+        .highlight .kt,
+        .highlight .nb,
+        .highlight .nc,
+        .highlight .bp {
+            color: #E5C07B;
+        }
+
+        /* Strings — green */
+        .post-content pre .s,
+        .post-content pre .s1,
+        .post-content pre .s2,
+        .post-content pre .sa,
+        .post-content pre .sb,
+        .post-content pre .sc,
+        .post-content pre .sd,
+        .post-content pre .se,
+        .post-content pre .sh,
+        .post-content pre .si,
+        .post-content pre .sr,
+        .post-content pre .ss,
+        .post-content pre .sx,
+        .highlight .s,
+        .highlight .s1,
+        .highlight .s2,
+        .highlight .sa,
+        .highlight .sb,
+        .highlight .sc,
+        .highlight .sd,
+        .highlight .se,
+        .highlight .sh,
+        .highlight .si,
+        .highlight .sr,
+        .highlight .ss,
+        .highlight .sx {
+            color: #98C379;
+        }
+
+        /* Numbers — orange */
+        .post-content pre .m,
+        .post-content pre .mb,
+        .post-content pre .mf,
+        .post-content pre .mh,
+        .post-content pre .mi,
+        .post-content pre .mo,
+        .post-content pre .il,
+        .highlight .m,
+        .highlight .mb,
+        .highlight .mf,
+        .highlight .mh,
+        .highlight .mi,
+        .highlight .mo,
+        .highlight .il {
+            color: #D19A66;
+        }
+
+        /* Functions & decorators — blue */
+        .post-content pre .nf,
+        .post-content pre .nd,
+        .post-content pre .fm,
+        .highlight .nf,
+        .highlight .nd,
+        .highlight .fm {
+            color: #61AFEF;
+            font-weight: bold;
+        }
+
+        /* Operators — cyan */
+        .post-content pre .o,
+        .post-content pre .ow,
+        .highlight .o,
+        .highlight .ow {
+            color: #56B6C2;
+        }
+
+        /* Names / variables / tags — red-pink */
+        .post-content pre .n,
+        .post-content pre .na,
+        .post-content pre .ni,
+        .post-content pre .nl,
+        .post-content pre .nn,
+        .post-content pre .no,
+        .post-content pre .nt,
+        .post-content pre .nv,
+        .post-content pre .nx,
+        .post-content pre .ne,
+        .post-content pre .vc,
+        .post-content pre .vg,
+        .post-content pre .vi,
+        .post-content pre .vm,
+        .highlight .na,
+        .highlight .ni,
+        .highlight .no,
+        .highlight .nt,
+        .highlight .nv,
+        .highlight .ne,
+        .highlight .vc,
+        .highlight .vg,
+        .highlight .vi {
+            color: #E06C75;
+        }
+
+        /* Punctuation & whitespace — default text color */
+        .post-content pre .p,
+        .post-content pre .w,
+        .highlight .p,
+        .highlight .w {
+            color: #ABB2BF;
+        }
+
+        /* Highlighted line background */
+        .post-content pre .hll,
+        .highlight .hll {
+            background-color: #3E4451;
+        }
+
+        /* Errors */
+        .post-content pre .err,
+        .highlight .err {
+            color: #ABB2BF;
         }
 
         /* Footer Meta */
