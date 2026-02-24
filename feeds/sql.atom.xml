@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive - SQL</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/sql.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-18T10:50:00+00:00</updated><entry><title>Cracking LeetCode 1251: Average Selling Price SQL</title><link href="https://analyticsdrive.tech/leetcode-1251-average-selling-price-sql-solution/" rel="alternate"/><published>2026-02-18T10:50:00+00:00</published><updated>2026-02-18T10:50:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-18:/leetcode-1251-average-selling-price-sql-solution/</id><summary type="html">&lt;p&gt;Master LeetCode 1251: Average Selling Price. Learn to calculate average product prices using SQL JOINS, GROUP BY, and handling date-based conditions for effective database problem-solving.&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Unlocking Database Puzzles: LeetCode 1251 Explained&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive - SQL</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/sql.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-18T10:50:00+00:00</updated><entry><title>Cracking LeetCode 1251: Average Selling Price SQL</title><link href="https://analyticsdrive.tech/leetcode-1251-average-selling-price-sql-solution/" rel="alternate"/><published>2026-02-18T10:50:00+00:00</published><updated>2026-02-18T10:50:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-18:/leetcode-1251-average-selling-price-sql-solution/</id><summary type="html">&lt;p&gt;Master LeetCode 1251: Average Selling Price. Learn to calculate average product prices using SQL JOINS, GROUP BY, and handling date-based conditions for effective database problem-solving.&lt;/p&gt;</summary><content type="html">&lt;h2 id="unlocking-database-puzzles-leetcode-1251-explained"&gt;Unlocking Database Puzzles: LeetCode 1251 Explained&lt;/h2&gt;
 &lt;p&gt;Welcome to another deep dive into the world of SQL challenges! LeetCode problems aren't just for coding interviews; they're fantastic for honing your database skills. Today, we're tackling LeetCode problem 1251: "Average Selling Price."&lt;/p&gt;
 &lt;p&gt;This problem is a quintessential example of how real-world business logic translates into SQL queries, requiring a solid understanding of &lt;code&gt;JOIN&lt;/code&gt; operations, date range comparisons, and aggregate functions. Let's break it down!&lt;/p&gt;
-&lt;h3&gt;The Challenge: Average Selling Price&lt;/h3&gt;
+&lt;h3 id="the-challenge-average-selling-price"&gt;The Challenge: Average Selling Price&lt;/h3&gt;
 &lt;p&gt;The goal of this problem is to calculate the average selling price for each product. Sounds simple, right? The twist lies in how product prices can change over time. Each unit of a product might be sold at a different price depending on the date of purchase.&lt;/p&gt;
 &lt;p&gt;You are provided with two tables:&lt;/p&gt;
 &lt;ol&gt;
@@ -27,10 +27,10 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Your task is to return a table with &lt;code&gt;product_id&lt;/code&gt; and &lt;code&gt;average_price&lt;/code&gt; for each product. The &lt;code&gt;average_price&lt;/code&gt; should be rounded to two decimal places.&lt;/p&gt;
-&lt;h3&gt;Decoding the Logic: Strategy Breakdown&lt;/h3&gt;
+&lt;h3 id="decoding-the-logic-strategy-breakdown"&gt;Decoding the Logic: Strategy Breakdown&lt;/h3&gt;
 &lt;p&gt;To solve this, we need to correctly link each sale (from &lt;code&gt;UnitsSold&lt;/code&gt;) to its corresponding price (from &lt;code&gt;Prices&lt;/code&gt;) based on the sale date. Then, we can calculate the total revenue and total units sold for each product to find the average.&lt;/p&gt;
 &lt;p&gt;Here's the step-by-step strategy:&lt;/p&gt;
-&lt;h4&gt;1. Joining Tables: The Crucial Link&lt;/h4&gt;
+&lt;h4 id="1-joining-tables-the-crucial-link"&gt;1. Joining Tables: The Crucial Link&lt;/h4&gt;
 &lt;p&gt;The first step is to combine information from &lt;code&gt;UnitsSold&lt;/code&gt; and &lt;code&gt;Prices&lt;/code&gt;. We need to join them based on &lt;code&gt;product_id&lt;/code&gt;. However, a simple &lt;code&gt;JOIN&lt;/code&gt; on &lt;code&gt;product_id&lt;/code&gt; isn't enough. We also need to ensure that the &lt;code&gt;purchase_date&lt;/code&gt; from &lt;code&gt;UnitsSold&lt;/code&gt; falls within the &lt;code&gt;start_date&lt;/code&gt; and &lt;code&gt;end_date&lt;/code&gt; range defined in the &lt;code&gt;Prices&lt;/code&gt; table for that specific product.&lt;/p&gt;
 &lt;p&gt;We'll use an &lt;code&gt;INNER JOIN&lt;/code&gt; because we only care about sales for which a valid price exists within the given date ranges.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;
@@ -48,16 +48,16 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This query will give us a combined view, showing each sale transaction with its matching price at the time of purchase.&lt;/p&gt;
-&lt;h4&gt;2. Calculating Total Revenue and Units&lt;/h4&gt;
+&lt;h4 id="2-calculating-total-revenue-and-units"&gt;2. Calculating Total Revenue and Units&lt;/h4&gt;
 &lt;p&gt;Once we have the price for each individual sale, we can calculate the revenue generated by that sale (&lt;code&gt;price * units&lt;/code&gt;). To find the average selling price for a product, we need:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Total Revenue for a Product&lt;/strong&gt;: &lt;code&gt;SUM(price * units)&lt;/code&gt; for all its sales.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Total Units Sold for a Product&lt;/strong&gt;: &lt;code&gt;SUM(units)&lt;/code&gt; for all its sales.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The average selling price is then &lt;code&gt;(Total Revenue) / (Total Units Sold)&lt;/code&gt;.&lt;/p&gt;
-&lt;h4&gt;3. Grouping by Product&lt;/h4&gt;
+&lt;h4 id="3-grouping-by-product"&gt;3. Grouping by Product&lt;/h4&gt;
 &lt;p&gt;Since we need the average selling price &lt;em&gt;for each product&lt;/em&gt;, we'll use the &lt;code&gt;GROUP BY product_id&lt;/code&gt; clause. This aggregates all sales data for a particular product, allowing us to apply our &lt;code&gt;SUM&lt;/code&gt; calculations correctly.&lt;/p&gt;
-&lt;h3&gt;The Complete SQL Solution&lt;/h3&gt;
+&lt;h3 id="the-complete-sql-solution"&gt;The Complete SQL Solution&lt;/h3&gt;
 &lt;p&gt;Combining these steps, here's the final SQL query:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;product_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -74,7 +74,7 @@
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;product_id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h4&gt;Code Explanation:&lt;/h4&gt;
+&lt;h4 id="code-explanation"&gt;Code Explanation:&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;&lt;code&gt;FROM Prices p INNER JOIN UnitsSold us&lt;/code&gt;&lt;/strong&gt;: We start by joining &lt;code&gt;Prices&lt;/code&gt; and &lt;code&gt;UnitsSold&lt;/code&gt; tables. We use aliases &lt;code&gt;p&lt;/code&gt; and &lt;code&gt;us&lt;/code&gt; for brevity.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;code&gt;ON p.product_id = us.product_id AND us.purchase_date BETWEEN p.start_date AND p.end_date&lt;/code&gt;&lt;/strong&gt;: This is the core of our join condition. It matches products by their &lt;code&gt;product_id&lt;/code&gt; AND ensures that the &lt;code&gt;purchase_date&lt;/code&gt; of a unit sold falls within the valid &lt;code&gt;start_date&lt;/code&gt; and &lt;code&gt;end_date&lt;/code&gt; for that specific product's price.&lt;/li&gt;
@@ -84,7 +84,7 @@
 &lt;li&gt;&lt;strong&gt;&lt;code&gt;* 1.0&lt;/code&gt;&lt;/strong&gt;: This is a common trick in many SQL dialects to ensure that the division performs floating-point arithmetic rather than integer division, preventing truncation of decimal values.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;code&gt;ROUND(..., 2) AS average_price&lt;/code&gt;&lt;/strong&gt;: Finally, we divide the total revenue by the total units to get the average price and &lt;code&gt;ROUND&lt;/code&gt; it to two decimal places as required by the problem, aliasing the result as &lt;code&gt;average_price&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Why This Matters: Real-World Applications&lt;/h3&gt;
+&lt;h3 id="why-this-matters-real-world-applications"&gt;Why This Matters: Real-World Applications&lt;/h3&gt;
 &lt;p&gt;Solving problems like LeetCode 1251 isn't just an academic exercise. This exact logic is used in various real-world scenarios:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Inventory Valuation&lt;/strong&gt;: Calculating the average cost or selling price of inventory over time.&lt;/li&gt;
@@ -92,10 +92,10 @@
 &lt;li&gt;&lt;strong&gt;Financial Reporting&lt;/strong&gt;: Aggregating sales data for revenue recognition.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Dynamic Pricing Models&lt;/strong&gt;: Feeding historical average prices into algorithms that predict future pricing strategies.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Conclusion: Master Your SQL Joins!&lt;/h3&gt;
+&lt;h3 id="conclusion-master-your-sql-joins"&gt;Conclusion: Master Your SQL Joins!&lt;/h3&gt;
 &lt;p&gt;LeetCode 1251 is a fantastic problem for reinforcing your understanding of &lt;code&gt;INNER JOIN&lt;/code&gt; with multiple conditions, date range comparisons, and aggregate functions. The ability to accurately combine and summarize data from different tables based on specific criteria is a fundamental skill for any data professional.&lt;/p&gt;
 &lt;p&gt;Keep practicing these types of problems, and you'll build a strong foundation for tackling complex database challenges in any environment! Happy coding!&lt;/p&gt;
-&lt;h2&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
+&lt;h2 id="further-reading-resources"&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;LeetCode Problem 1251: Average Selling Price&lt;/strong&gt;: &lt;a href="https://leetcode.com/problems/average-selling-price/"&gt;https://leetcode.com/problems/average-selling-price/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;SQL &lt;code&gt;INNER JOIN&lt;/code&gt; Clause&lt;/strong&gt;: &lt;a href="https://www.w3schools.com/sql/sql_join_inner.asp"&gt;https://www.w3schools.com/sql/sql_join_inner.asp&lt;/a&gt;&lt;/li&gt;

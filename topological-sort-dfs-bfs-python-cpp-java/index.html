@@ -683,27 +683,27 @@
     <div class="post-content">
       <p>Directed Acyclic Graphs (DAGs) are fundamental in computer science, modeling everything from task dependencies to course prerequisites. At the heart of effectively managing these structures lies the <strong>Topological Sort</strong>, an algorithm that linearizes the vertices of a DAG such that for every directed edge from vertex <code>u</code> to vertex <code>v</code>, <code>u</code> comes before <code>v</code> in the ordering. This comprehensive guide will walk you through implementing <strong>Topological Sort using DFS &amp; BFS in Python, C++, Java</strong>, equipping you with the skills to tackle complex dependency problems. We'll explore both Depth-First Search (DFS) and Breadth-First Search (BFS) based approaches, providing detailed explanations and ready-to-use code examples in each language.</p>
 <hr>
-<h2>Prerequisites for Mastering Topological Sort</h2>
+<h2 id="prerequisites-for-mastering-topological-sort">Prerequisites for Mastering Topological Sort</h2>
 <p>Before diving into the intricacies of topological sort, a solid foundation in certain computer science concepts is highly recommended. These prerequisites will ensure you can fully grasp the algorithms and their implementations without getting bogged down by basic concepts.</p>
-<h3>Basic Graph Theory Knowledge</h3>
+<h3 id="basic-graph-theory-knowledge">Basic Graph Theory Knowledge</h3>
 <p>A fundamental understanding of <a href="/cses-labyrinth-problem-python-java-cpp-guide/">graph theory</a> is essential. This includes knowing what a graph is, the difference between directed and undirected graphs, and what edges and vertices represent. Familiarity with graph representations, specifically adjacency lists, will be particularly helpful as most implementations rely on this structure.</p>
-<h3>Understanding Depth-First Search (DFS)</h3>
+<h3 id="understanding-depth-first-search-dfs">Understanding Depth-First Search (DFS)</h3>
 <p>DFS is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It's often implemented recursively or using an explicit stack. A good grasp of how <a href="/leetcode-417-pacific-atlantic-water-flow-dfs-solution/">DFS works</a>, its recursive nature, and its applications (like cycle detection) will be crucial for understanding the DFS-based topological sort.</p>
-<h3>Understanding Breadth-First Search (BFS)</h3>
+<h3 id="understanding-breadth-first-search-bfs">Understanding Breadth-First Search (BFS)</h3>
 <p>BFS is another graph traversal algorithm that explores all the neighbor nodes at the present depth before moving on to the nodes at the next depth level. It's typically implemented using a queue. Understanding how <a href="/leetcode-127-word-ladder-bfs-tutorial/">BFS explores a graph</a> layer by layer and its uses (like finding the shortest path in unweighted graphs) is vital for the BFS-based topological sort.</p>
-<h3>Familiarity with Python, C++, and Java</h3>
+<h3 id="familiarity-with-python-c-and-java">Familiarity with Python, C++, and Java</h3>
 <p>This tutorial provides code examples in Python, C++, and Java. While you don't need to be an expert in all three, a basic understanding of programming concepts in at least one of these languages (data structures, functions/methods, loops, conditional statements) is necessary to follow the code and adapt it to your needs. Concepts like lists/vectors, dictionaries/maps, and queues will be heavily utilized.</p>
 <hr>
-<h2>What is Topological Sort?</h2>
+<h2 id="what-is-topological-sort">What is Topological Sort?</h2>
 <p>Topological sort is a linear ordering of vertices in a directed acyclic graph (DAG) such that for every directed edge <code>(u, v)</code>, vertex <code>u</code> comes before vertex <code>v</code> in the ordering. It's important to reiterate that a topological sort is only possible for DAGs; graphs containing cycles cannot be topologically sorted.</p>
-<h3>Key Characteristics of Topological Sort</h3>
+<h3 id="key-characteristics-of-topological-sort">Key Characteristics of Topological Sort</h3>
 <p>A topological sort holds several important characteristics that define its utility and behavior:</p>
 <ul>
 <li><strong>Applicable Only to DAGs:</strong> The most crucial characteristic is that topological sort can only be performed on a Directed Acyclic Graph. If a graph contains a cycle, no linear ordering can satisfy the condition that <code>u</code> comes before <code>v</code> for every edge <code>(u, v)</code> within the cycle. Detecting cycles is often an implicit part of topological sort algorithms.</li>
 <li><strong>Not Necessarily Unique:</strong> For a given DAG, there might be multiple valid topological sorts. If a graph has two vertices <code>u</code> and <code>v</code> with no directed path between them, their relative order in a topological sort can vary. For example, in a graph with edges <code>(A, B)</code> and <code>(A, C)</code> but no edge between <code>B</code> and <code>C</code>, both <code>A, B, C</code> and <code>A, C, B</code> could be valid sorts.</li>
 <li><strong>Dependency Resolution:</strong> The primary utility of topological sort lies in resolving dependencies. Tasks that must be completed before others are naturally ordered. This makes it invaluable in scheduling, build systems, and course sequencing.</li>
 </ul>
-<h3>Real-world Applications of Topological Sort</h3>
+<h3 id="real-world-applications-of-topological-sort">Real-world Applications of Topological Sort</h3>
 <p>The practical applications of topological sort are extensive, making it a highly relevant algorithm for various computational problems.</p>
 <ul>
 <li><strong>Task Scheduling:</strong> In project management, some tasks must be completed before others can begin. A topological sort can determine a valid sequence for completing all tasks. For instance, compiling code, linking libraries, and then running tests form a dependency chain where a topological sort dictates the build order.</li>
@@ -713,31 +713,31 @@
 <li><strong>Pipeline Processing:</strong> In data processing pipelines or workflow management, different stages might depend on the output of previous stages. Topological sort helps in orchestrating these stages in the correct sequence.</li>
 </ul>
 <hr>
-<h2>Implementing Topological Sort using DFS in Python, C++, and Java</h2>
+<h2 id="implementing-topological-sort-using-dfs-in-python-c-and-java">Implementing Topological Sort using DFS in Python, C++, and Java</h2>
 <p>The DFS-based approach to topological sort relies on the property that in a DAG, if we perform a DFS traversal, a vertex <code>u</code> will only finish its traversal after all vertices reachable from <code>u</code> have finished their traversal. This implies that if we add vertices to a list or stack <em>after</em> all their descendants have been visited, we will get a reverse topological order. Reversing this list or popping from the stack yields a valid topological sort.</p>
-<h3>Understanding the DFS Algorithm for Topological Sort</h3>
+<h3 id="understanding-the-dfs-algorithm-for-topological-sort">Understanding the DFS Algorithm for Topological Sort</h3>
 <p>The core idea is to use a recursive DFS traversal. When a node's exploration is complete (meaning all its neighbors and their descendants have been visited), that node is added to the topological order. This ensures that any node <code>u</code> is added to the order only after all nodes <code>v</code> for which there's a path <code>u -&gt; ... -&gt; v</code> have been processed.</p>
 <p>We typically use three states for nodes during DFS:
 1.  <strong>Unvisited:</strong> The node has not been visited yet.
 2.  <strong>Visiting (Grey):</strong> The node is currently in the recursion stack, being explored. This state is crucial for cycle detection. If we encounter a 'visiting' node again, it means a cycle exists.
 3.  <strong>Visited (Black):</strong> The node and all its descendants have been fully explored.</p>
-<h3>Steps for DFS-based Topological Sort</h3>
+<h3 id="steps-for-dfs-based-topological-sort">Steps for DFS-based Topological Sort</h3>
 <p>Here’s a step-by-step breakdown of how to implement topological sort using DFS:</p>
-<h3>1. Initialize Data Structures</h3>
+<h3 id="1-initialize-data-structures">1. Initialize Data Structures</h3>
 <p>You'll need an adjacency list to represent the graph, a <code>visited</code> set/array to track node states (unvisited, visiting, visited), and a list or stack to store the topological order.</p>
-<h3>2. Implement the DFS Helper Function</h3>
+<h3 id="2-implement-the-dfs-helper-function">2. Implement the DFS Helper Function</h3>
 <p>Create a recursive <code>dfs</code> function that takes a node, the adjacency list, the <code>visited</code> tracker, and the result list/stack as arguments.</p>
-<h3>3. Mark Node as Visiting</h3>
+<h3 id="3-mark-node-as-visiting">3. Mark Node as Visiting</h3>
 <p>When <code>dfs</code> is called for a node <code>u</code>, mark <code>u</code> as <code>visiting</code> (e.g., <code>grey</code>). This state is vital for detecting cycles.</p>
-<h3>4. Traverse Neighbors</h3>
+<h3 id="4-traverse-neighbors">4. Traverse Neighbors</h3>
 <p>Iterate through all neighbors <code>v</code> of <code>u</code>.
     *   If <code>v</code> is <code>unvisited</code>, recursively call <code>dfs(v)</code>.
     *   If <code>v</code> is <code>visiting</code>, a cycle is detected. Since topological sort is only for DAGs, you can throw an error or handle it as per requirements.</p>
-<h3>5. Mark Node as Visited and Add to Result</h3>
+<h3 id="5-mark-node-as-visited-and-add-to-result">5. Mark Node as Visited and Add to Result</h3>
 <p>After visiting all neighbors of <code>u</code> and their subgraphs, mark <code>u</code> as <code>visited</code> (e.g., <code>black</code>). Then, add <code>u</code> to the <em>front</em> of your result list or <em>push</em> it onto a stack. This ensures the correct order.</p>
-<h3>6. Iterate Through All Nodes</h3>
+<h3 id="6-iterate-through-all-nodes">6. Iterate Through All Nodes</h3>
 <p>In your main function, loop through all nodes in the graph. If a node is <code>unvisited</code>, start a DFS traversal from that node. This handles disconnected components of the graph.</p>
-<h3>Python Implementation (DFS)</h3>
+<h3 id="python-implementation-dfs">Python Implementation (DFS)</h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
@@ -811,9 +811,9 @@
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python DFS Topological Sort with cycle: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: []</span>
 </code></pre></div>
 
-<h3>Explanation of Python DFS Code</h3>
+<h3 id="explanation-of-python-dfs-code">Explanation of Python DFS Code</h3>
 <p>The Python implementation uses a <code>visited_state</code> list to track the three states (0: unvisited, 1: visiting, 2: visited). The <code>_dfs</code> helper function recursively traverses the graph. When a node is fully explored (all its children and their descendants), it's appended to <code>result_stack</code>. This stack will hold nodes in reverse topological order. Finally, <code>result_stack[::-1]</code> reverses it to give the correct topological sort. Cycle detection is handled by checking <code>visited_state[v] == 1</code>; if a node currently being visited (<code>visiting</code> state) is encountered again, a cycle exists, and an empty list is returned.</p>
-<h3>C++ Implementation (DFS)</h3>
+<h3 id="c-implementation-dfs">C++ Implementation (DFS)</h3>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;list&gt;</span>
@@ -923,9 +923,9 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<h3>Explanation of C++ DFS Code</h3>
+<h3 id="explanation-of-c-dfs-code">Explanation of C++ DFS Code</h3>
 <p>The C++ code uses <code>std::vector&lt;std::list&lt;int&gt;&gt;</code> for the adjacency list and <code>std::vector&lt;State&gt;</code> for tracking visited states (using an <code>enum</code> for clarity). The <code>dfs</code> function is similar to Python's, marking nodes as <code>VISITING</code> upon entry and <code>VISITED</code> upon exit, pushing them to <code>resultStack</code>. Cycle detection logic is identical. Finally, <code>std::reverse</code> is used on <code>resultStack</code> to obtain the correct topological order.</p>
-<h3>Java Implementation (DFS)</h3>
+<h3 id="java-implementation-dfs">Java Implementation (DFS)</h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
 
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
@@ -1018,12 +1018,12 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<h3>Explanation of Java DFS Code</h3>
+<h3 id="explanation-of-java-dfs-code">Explanation of Java DFS Code</h3>
 <p>The Java implementation mirrors the C++ and Python logic. It uses <code>List&lt;List&lt;Integer&gt;&gt;</code> for the adjacency list and an array of <code>State</code> enums for visited tracking. A <code>java.util.Stack</code> is used to store the nodes. After the DFS traversal, elements are popped from the stack and added to an <code>ArrayList</code> to obtain the final topological order. Cycle detection is handled identically to the other language examples.</p>
 <hr>
-<h2>Implementing Topological Sort using BFS (Kahn's Algorithm) in Python, C++, and Java</h2>
+<h2 id="implementing-topological-sort-using-bfs-kahns-algorithm-in-python-c-and-java">Implementing Topological Sort using BFS (Kahn's Algorithm) in Python, C++, and Java</h2>
 <p>The BFS-based approach for topological sort, often known as Kahn's Algorithm, works on a different principle. It iteratively removes nodes that have no incoming edges (an in-degree of zero) and adds them to the topological order. When a node is removed, its outgoing edges are also "removed," which may reduce the in-degree of its neighbors to zero, making them eligible for the next step.</p>
-<h3>Understanding Kahn's Algorithm</h3>
+<h3 id="understanding-kahns-algorithm">Understanding Kahn's Algorithm</h3>
 <p>Kahn's algorithm starts by finding all nodes that have an in-degree of zero. These nodes can be the first nodes in a topological sort because they don't depend on any other tasks. These nodes are added to a queue. The algorithm then proceeds as follows:</p>
 <ol>
 <li>Dequeue a node <code>u</code> from the queue and add it to the topological sort result.</li>
@@ -1034,22 +1034,22 @@
 </li>
 </ol>
 <p>This process continues until the queue is empty. If the number of nodes in the topological sort result is less than the total number of nodes in the graph, it implies that the graph contains a cycle.</p>
-<h3>Steps for BFS-based Topological Sort (Kahn's Algorithm)</h3>
+<h3 id="steps-for-bfs-based-topological-sort-kahns-algorithm">Steps for BFS-based Topological Sort (Kahn's Algorithm)</h3>
 <p>Here’s a step-by-step breakdown of how to implement topological sort using BFS:</p>
-<h3>1. Compute In-degrees</h3>
+<h3 id="1-compute-in-degrees">1. Compute In-degrees</h3>
 <p>First, calculate the in-degree for every node in the graph. The in-degree of a node is the number of incoming edges it has.</p>
-<h3>2. Initialize Queue with Zero In-degree Nodes</h3>
+<h3 id="2-initialize-queue-with-zero-in-degree-nodes">2. Initialize Queue with Zero In-degree Nodes</h3>
 <p>Create a queue and add all nodes with an in-degree of zero to it. These are the starting points for the topological sort.</p>
-<h3>3. Process Queue</h3>
+<h3 id="3-process-queue">3. Process Queue</h3>
 <p>While the queue is not empty:
     *   Dequeue a node <code>u</code>.
     *   Add <code>u</code> to your topological sort result list.
     *   For each neighbor <code>v</code> of <code>u</code>:
         *   Decrement the in-degree of <code>v</code>.
         *   If the in-degree of <code>v</code> becomes zero, enqueue <code>v</code>.</p>
-<h3>4. Check for Cycles</h3>
+<h3 id="4-check-for-cycles">4. Check for Cycles</h3>
 <p>After the loop finishes, compare the count of nodes in your result list with the total number of nodes in the graph. If they are not equal, it means there was a cycle in the graph, and a topological sort is not possible.</p>
-<h3>Python Implementation (BFS - Kahn's Algorithm)</h3>
+<h3 id="python-implementation-bfs-kahns-algorithm">Python Implementation (BFS - Kahn's Algorithm)</h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">deque</span>
 
 <span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
@@ -1116,9 +1116,9 @@
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python BFS Topological Sort with cycle: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: []</span>
 </code></pre></div>
 
-<h3>Explanation of Python BFS Code</h3>
+<h3 id="explanation-of-python-bfs-code">Explanation of Python BFS Code</h3>
 <p>The Python code first initializes an <code>in_degree</code> list for all vertices by iterating through the adjacency list. It then populates a <code>deque</code> (which acts as a queue) with all vertices having an in-degree of 0. The main <code>while</code> loop processes nodes from the queue, adding them to the <code>result</code> list and decrementing the in-degree of their neighbors. If a neighbor's in-degree drops to 0, it's enqueued. Finally, <code>count_visited_nodes</code> is compared with <code>numVertices</code> to detect cycles.</p>
-<h3>C++ Implementation (BFS - Kahn's Algorithm)</h3>
+<h3 id="c-implementation-bfs-kahns-algorithm">C++ Implementation (BFS - Kahn's Algorithm)</h3>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;list&gt;</span>
@@ -1225,9 +1225,9 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<h3>Explanation of C++ BFS Code</h3>
+<h3 id="explanation-of-c-bfs-code">Explanation of C++ BFS Code</h3>
 <p>The C++ code uses <code>std::vector&lt;int&gt;</code> for <code>inDegree</code> and <code>std::queue&lt;int&gt;</code> for the BFS queue. The logic for calculating in-degrees, populating the initial queue, and processing nodes is identical to the Python version. It also checks <code>countVisitedNodes</code> against <code>numVertices</code> to determine if a cycle was present. If a cycle exists, an empty <code>std::vector</code> is returned.</p>
-<h3>Java Implementation (BFS - Kahn's Algorithm)</h3>
+<h3 id="java-implementation-bfs-kahns-algorithm">Java Implementation (BFS - Kahn's Algorithm)</h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
 
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
@@ -1311,19 +1311,19 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<h3>Explanation of Java BFS Code</h3>
+<h3 id="explanation-of-java-bfs-code">Explanation of Java BFS Code</h3>
 <p>The Java implementation uses <code>int[]</code> for <code>inDegree</code> and <code>java.util.Queue</code> implemented by <code>java.util.LinkedList</code> for the BFS queue. The overall structure and logic are identical to the Python and C++ versions, ensuring consistency across all three language examples. Cycle detection is performed by checking if <code>countVisitedNodes</code> equals <code>numVertices</code>.</p>
 <hr>
-<h2>Comparing DFS and BFS Approaches for Topological Sort</h2>
+<h2 id="comparing-dfs-and-bfs-approaches-for-topological-sort">Comparing DFS and BFS Approaches for Topological Sort</h2>
 <p>Both DFS and BFS offer valid ways to compute a topological sort, but they approach the problem differently and have distinct characteristics. Understanding these differences can help you choose the most suitable algorithm for a given scenario.</p>
-<h3>Similarities</h3>
+<h3 id="similarities">Similarities</h3>
 <ul>
 <li><strong>Result Validity:</strong> Both algorithms produce a valid topological ordering if one exists.</li>
 <li><strong>Cycle Detection:</strong> Both inherently detect cycles within the graph, returning an indication that a topological sort is not possible.</li>
 <li><strong>Time Complexity:</strong> Generally, both have the same time complexity of O(V + E), where V is the number of vertices and E is the number of edges, as they visit each vertex and edge once.</li>
 <li><strong>Space Complexity:</strong> Both typically require O(V + E) space for graph representation, plus O(V) for visited states/in-degrees and the result list/stack/queue.</li>
 </ul>
-<h3>Differences</h3>
+<h3 id="differences">Differences</h3>
 <ul>
 <li><strong>Algorithm Paradigm:</strong><ul>
 <li><strong>DFS-based:</strong> A recursive approach that explores deeply into paths before backtracking. It relies on the post-order traversal property.</li>
@@ -1346,7 +1346,7 @@
 </ul>
 </li>
 </ul>
-<h3>When to Use Which?</h3>
+<h3 id="when-to-use-which">When to Use Which?</h3>
 <ul>
 <li><strong>DFS-based (Post-order Traversal):</strong><ul>
 <li>Often preferred when recursion is natural for the problem or when you need to process nodes <em>after</em> all their children.</li>
@@ -1363,9 +1363,9 @@
 </ul>
 <p>Ultimately, the choice often comes down to personal preference or specific requirements where one approach might offer a slight performance edge in certain edge cases, though their asymptotic complexities are the same. Both are excellent tools for solving problems involving directed acyclic graphs.</p>
 <hr>
-<h2>Time and Space Complexity Analysis</h2>
+<h2 id="time-and-space-complexity-analysis">Time and Space Complexity Analysis</h2>
 <p>Understanding the performance characteristics of algorithms is crucial for writing efficient code. Both DFS and BFS approaches for topological sort share similar complexities.</p>
-<h3>Time Complexity: O(V + E)</h3>
+<h3 id="time-complexity-ov-e">Time Complexity: O(V + E)</h3>
 <ul>
 <li><strong>V:</strong> Number of vertices (nodes) in the graph.</li>
 <li><strong>E:</strong> Number of edges in the graph.</li>
@@ -1379,7 +1379,7 @@
 *   <strong>Initializing the queue:</strong> Iterates through all vertices once to find those with zero in-degree, taking O(V) time.
 *   <strong>Main <code>while</code> loop:</strong> Each vertex is enqueued and dequeued exactly once. When a vertex <code>u</code> is dequeued, we iterate through its outgoing edges. This means each edge is processed once (when we decrement the in-degree of <code>v</code> for an edge <code>(u, v)</code>).
 *   Therefore, the total time spent is O(E) + O(V) + O(V + E) = O(V + E).</p>
-<h3>Space Complexity: O(V + E)</h3>
+<h3 id="space-complexity-ov-e">Space Complexity: O(V + E)</h3>
 <ul>
 <li><strong>V:</strong> Number of vertices.</li>
 <li><strong>E:</strong> Number of edges.</li>
@@ -1398,38 +1398,38 @@
 *   Total: O(V + E).</p>
 <p>In summary, both methods are efficient for topological sorting, demonstrating linear time and space complexity relative to the size of the graph.</p>
 <hr>
-<h2>Common Mistakes and How to Avoid Them</h2>
+<h2 id="common-mistakes-and-how-to-avoid-them">Common Mistakes and How to Avoid Them</h2>
 <p>Implementing graph algorithms like topological sort can be tricky. Here are some common pitfalls and strategies to avoid them:</p>
-<h3>1. Forgetting Cycle Detection</h3>
+<h3 id="1-forgetting-cycle-detection">1. Forgetting Cycle Detection</h3>
 <p><strong>Mistake:</strong> Assuming the input graph is always a DAG and not implementing a mechanism to detect cycles. If a cycle exists, a topological sort is impossible, and your algorithm might enter an infinite loop (DFS) or produce an incomplete result (BFS).
 <strong>Solution:</strong>
 *   <strong>DFS:</strong> Use three states for nodes (unvisited, visiting, visited). If you encounter a <code>visiting</code> node during traversal, a cycle is detected. Return an empty list or throw an error.
 *   <strong>BFS (Kahn's):</strong> Keep a count of the nodes added to the topological sort. If this count is less than the total number of nodes at the end, a cycle exists. Return an empty list or throw an error.</p>
-<h3>2. Incorrect In-degree Calculation (BFS)</h3>
+<h3 id="2-incorrect-in-degree-calculation-bfs">2. Incorrect In-degree Calculation (BFS)</h3>
 <p><strong>Mistake:</strong> Miscalculating the in-degrees, especially in graphs with disconnected components or multiple edges between nodes.
 <strong>Solution:</strong> Ensure you iterate through all nodes and their adjacency lists correctly to precisely sum up incoming edges for each vertex. A dedicated loop to populate the <code>in_degree</code> array at the beginning is crucial. Double-check your graph representation and how edges are defined.</p>
-<h3>3. Not Handling Disconnected Components</h3>
+<h3 id="3-not-handling-disconnected-components">3. Not Handling Disconnected Components</h3>
 <p><strong>Mistake:</strong> Only starting the DFS or BFS from node 0 and assuming the graph is connected. If the graph has multiple disconnected components, some nodes might be missed.
 <strong>Solution:</strong> In the main calling function, iterate through all possible nodes from <code>0</code> to <code>numVertices-1</code>. If a node hasn't been visited (for DFS) or processed (for BFS as part of in-degree calculations), initiate a traversal from it. This ensures all parts of the graph are covered.</p>
-<h3>4. Graph Representation Errors</h3>
+<h3 id="4-graph-representation-errors">4. Graph Representation Errors</h3>
 <p><strong>Mistake:</strong> Incorrectly building the adjacency list, leading to missed edges or erroneous connections. Forgetting that a directed edge <code>(u, v)</code> means <code>u</code> points to <code>v</code>, and <code>v</code> is a neighbor of <code>u</code> (not vice-versa).
 <strong>Solution:</strong> Carefully construct your adjacency list based on the problem's definition of directed edges. Remember that for an edge <code>u -&gt; v</code>, <code>v</code> should be added to <code>adj[u]</code>. For BFS, also ensure <code>in_degree[v]</code> is incremented.</p>
-<h3>5. Off-by-One Errors in Indexing</h3>
+<h3 id="5-off-by-one-errors-in-indexing">5. Off-by-One Errors in Indexing</h3>
 <p><strong>Mistake:</strong> Common in languages like C++ and Java, misusing array sizes or loop boundaries, especially when dealing with <code>numVertices</code> and 0-indexed arrays.
 <strong>Solution:</strong> Always be mindful of whether nodes are 0-indexed or 1-indexed and adjust array sizes and loop conditions accordingly. For <code>numVertices</code> nodes (0 to <code>numVertices-1</code>), arrays should be of size <code>numVertices</code>.</p>
-<h3>6. Incorrect DFS Post-order Processing</h3>
+<h3 id="6-incorrect-dfs-post-order-processing">6. Incorrect DFS Post-order Processing</h3>
 <p><strong>Mistake (DFS):</strong> Adding a node to the result list <em>before</em> visiting all its children. This will lead to an incorrect topological order.
 <strong>Solution:</strong> In the DFS approach, a node should only be added to the result (or pushed onto the stack) <em>after</em> the recursive calls for all its neighbors have returned and those subgraphs are fully explored. This is the definition of post-order traversal.</p>
 <p>By paying attention to these common issues and following the structured steps provided in this tutorial, you can confidently implement topological sort and avoid frustrating debugging sessions.</p>
 <hr>
-<h2>Frequently Asked Questions</h2>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Q: Is the topological sort unique?</strong>
 A: No, for a given Directed Acyclic Graph (DAG), there can be multiple valid topological sorts. If two vertices have no direct path between them, their relative order in the sort can vary while still satisfying all dependency constraints.</p>
 <p><strong>Q: Can topological sort be performed on a graph with cycles?</strong>
 A: No, topological sort is strictly defined for Directed Acyclic Graphs (DAGs). If a graph contains a cycle, no linear ordering can be found where all dependencies are satisfied, as a cycle implies a circular dependency.</p>
 <p><strong>Q: When should I use the DFS-based approach versus the BFS-based (Kahn's) approach?</strong>
 A: Both approaches have the same time complexity and produce a valid sort. The DFS-based method (post-order traversal) is often intuitive for its recursive nature, while Kahn's Algorithm (BFS-based) explicitly tracks in-degrees and can be easier to conceptualize for dependency resolution, as it starts with tasks that have no prerequisites. The choice often comes down to personal preference or specific requirements.</p>
-<h2>Further Reading &amp; Resources</h2>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Topological_sorting">Wikipedia: Topological sorting</a></li>
 <li><a href="https://www.geeksforgeeks.org/topological-sorting/">GeeksforGeeks: Topological Sort</a></li>

@@ -682,33 +682,33 @@
 
     <div class="post-content">
       <p><strong>Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</strong> is a renowned and challenging problem that often appears in technical interviews for software development roles. It's a fantastic exercise in applying graph theory, specifically <strong>topological sort</strong>, to reconstruct a sequence from partial orderings. This tutorial will guide you through understanding the problem, building the necessary graph structures, and implementing the solution in three popular programming languages: Python, Java, and C++. By the end, you'll have a solid grasp of how to tackle similar graph-based ordering problems.</p>
-<h2>Introduction to the Alien Dictionary Problem</h2>
+<h2 id="introduction-to-the-alien-dictionary-problem">Introduction to the Alien Dictionary Problem</h2>
 <p>Imagine you've intercepted communications from an alien civilization, and you have a list of words from their dictionary, sorted lexicographically according to their unknown alphabet. Your task is to deduce the order of the letters in this alien alphabet. This is precisely what the <strong>Leetcode: 269 - Alien Dictionary</strong> problem asks us to do. Given <code>words = ["wrt", "wrf", "er", "ett", "rftt"]</code>, for example, we need to find an ordering like "wertf". This problem is considered hard because it requires not just recognizing the underlying graph structure but also correctly applying a topological sort algorithm to derive the final character order. Successfully solving this problem demonstrates a strong understanding of graph traversal and dependency management, crucial skills for any developer.</p>
-<h2>Prerequisites for Solving Alien Dictionary</h2>
+<h2 id="prerequisites-for-solving-alien-dictionary">Prerequisites for Solving Alien Dictionary</h2>
 <p>Before diving into the solution for <strong>Leetcode: 269 - Alien Dictionary code in python java and c++</strong>, ensure you have a foundational understanding of these core computer science concepts:</p>
-<h3>Graph Theory Basics</h3>
+<h3 id="graph-theory-basics">Graph Theory Basics</h3>
 <p>You should be familiar with what a graph is, including nodes (vertices) and edges. Understanding directed graphs (edges have a direction) and directed acyclic graphs (DAGs – directed graphs with no cycles) is crucial. The Alien Dictionary problem inherently translates into a DAG problem where characters are nodes and their orderings are directed edges.</p>
-<h3>Adjacency List Representation</h3>
+<h3 id="adjacency-list-representation">Adjacency List Representation</h3>
 <p>Knowing how to represent a graph using an adjacency list is fundamental. This typically involves using a dictionary (hash map) where keys are nodes and values are lists of their direct neighbors. This representation is efficient for adding edges and iterating through neighbors.</p>
-<h3>Breadth-First Search (BFS) or Depth-First Search (DFS)</h3>
+<h3 id="breadth-first-search-bfs-or-depth-first-search-dfs">Breadth-First Search (BFS) or Depth-First Search (DFS)</h3>
 <p>Familiarity with these graph traversal algorithms is important. While we'll be using topological sort, both BFS and DFS form the basis of most graph algorithms, including the two primary methods for topological sort. Kahn's algorithm, which we will use, is BFS-based. For a deeper dive into another BFS application, consider <a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/">Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</a>. If you're interested in DFS, exploring <a href="/mastering-depth-first-search/">Mastering Depth-First Search (DFS)</a> can be beneficial.</p>
-<h3>Basic Data Structures</h3>
+<h3 id="basic-data-structures">Basic Data Structures</h3>
 <p>You'll need a good grasp of hash maps (dictionaries), sets, and queues. Hash maps are essential for storing graph nodes and their in-degrees, sets for keeping track of unique characters, and queues for implementing Kahn's algorithm.</p>
-<h3>Programming Language Fundamentals</h3>
+<h3 id="programming-language-fundamentals">Programming Language Fundamentals</h3>
 <p>Solid understanding of either Python, Java, or C++ syntax, data structures, and object-oriented concepts (if applicable) is necessary to follow the code examples and implement your own solution effectively. This includes handling strings, lists/arrays, and maps/dictionaries.</p>
-<h2>Understanding the Problem: Alien Dictionary in Detail</h2>
+<h2 id="understanding-the-problem-alien-dictionary-in-detail">Understanding the Problem: Alien Dictionary in Detail</h2>
 <p>The input to the Alien Dictionary problem is a list of strings, <code>words</code>, representing words in an alien language, sorted lexicographically. This means if <code>wordA</code> comes before <code>wordB</code> in the list, then <code>wordA</code> is lexicographically smaller than <code>wordB</code> according to the alien alphabet.</p>
 <p>The goal is to return a string representing the alien alphabet's order. If no valid order can be determined (due to conflicting rules or cycles), an empty string should be returned.</p>
-<h3>Key Observations:</h3>
+<h3 id="key-observations">Key Observations:</h3>
 <ol>
 <li><strong>Pairwise Comparisons:</strong> The ordering information comes from comparing adjacent words. If <code>word1</code> and <code>word2</code> are consecutive in the input list, and they differ at some character position <code>i</code>, then the character <code>word1[i]</code> must come before <code>word2[i]</code> in the alien alphabet.</li>
 <li><strong>First Difference Matters:</strong> Once a difference is found between two words, say <code>word1[i]</code> != <code>word2[i]</code>, then <code>word1[i]</code> must precede <code>word2[i]</code>. Any characters after this first difference in these two words provide no <em>new</em> ordering information relative to each other.</li>
 <li><strong>Prefix Rule:</strong> If <code>word1</code> is a prefix of <code>word2</code> (e.g., "abc", "ab"), but <code>word2</code> appears <em>before</em> <code>word1</code> in the input list, it's an invalid ordering and implies a cycle. However, if <code>word1</code> is a prefix of <code>word2</code> and <code>word1</code> appears <em>before</em> <code>word2</code>, this provides no ordering information between <code>word1</code> and <code>word2</code> themselves but confirms consistency. If <code>word2</code> is a prefix of <code>word1</code> (e.g., "ab", "abc") and <code>word1</code> appears after <code>word2</code>, it's valid. The problem states words are sorted lexicographically. If <code>word1 = "apple"</code> and <code>word2 = "app"</code>, and <code>word1</code> comes <em>before</em> <code>word2</code>, it's an invalid input (as "app" should be smaller than "apple"). We must detect this.</li>
 <li><strong>All Characters:</strong> We need to consider all unique characters present across <em>all</em> words, even if some characters don't directly form an ordering pair. They might be part of the alphabet and appear in the final sorted order.</li>
 </ol>
-<h2>Core Concepts: Graph Theory and Topological Sort</h2>
+<h2 id="core-concepts-graph-theory-and-topological-sort">Core Concepts: Graph Theory and Topological Sort</h2>
 <p>The Alien Dictionary problem is a perfect fit for a graph-based solution using topological sort. Let's break down why.</p>
-<h3>Building the Directed Graph</h3>
+<h3 id="building-the-directed-graph">Building the Directed Graph</h3>
 <p>Each unique character in the alien alphabet will be a <strong>node</strong> (or vertex) in our graph. An ordering rule, such as 'a' must come before 'b', will be represented as a <strong>directed edge</strong> from 'a' to 'b' (a -&gt; b).</p>
 <p>To construct this graph:
 1.  <strong>Initialize:</strong> Create a set to store all unique characters seen across all words. Create an adjacency list (e.g., <code>Map&lt;Character, List&lt;Character&gt;&gt;</code>) to represent the graph and a map (e.g., <code>Map&lt;Character, Integer&gt;</code>) to store the in-degree of each character. The in-degree of a node is the number of incoming edges it has.
@@ -717,7 +717,7 @@
     *   For each pair, iterate through their characters until you find the first position <code>j</code> where <code>word[i][j]</code> is different from <code>word[i+1][j]</code>.
     *   Once a difference is found, <code>word[i][j]</code> must come before <code>word[i+1][j]</code>. Add a directed edge from <code>word[i][j]</code> to <code>word[i+1][j]</code> in your adjacency list. Increment the in-degree of <code>word[i+1][j]</code>.
     *   <strong>Crucial Edge Case:</strong> If <code>word[i+1]</code> is a prefix of <code>word[i]</code> (e.g., <code>words = ["abc", "ab"]</code>), it implies an invalid lexicographical order, as "abc" should not precede "ab" if "ab" is a prefix of "abc". In this scenario, we must return an empty string, as a valid order cannot be determined. This check should occur <em>before</em> finding any character differences if <code>word[i]</code> is longer and <code>word[i+1]</code> is its prefix.</p>
-<h3>Topological Sort (Kahn's Algorithm)</h3>
+<h3 id="topological-sort-kahns-algorithm">Topological Sort (Kahn's Algorithm)</h3>
 <p>Once the graph is built, we apply topological sort. Kahn's algorithm (BFS-based) is particularly suitable here because it naturally handles cycle detection and produces a valid order efficiently.</p>
 <ol>
 <li><strong>Initialize Queue:</strong> Add all characters (nodes) with an in-degree of 0 to a queue. These are the characters that have no dependencies (no characters must come before them).</li>
@@ -736,9 +736,9 @@
 </li>
 <li><strong>Cycle Detection:</strong> After the queue is empty, compare the length of your result string with the total number of unique characters initially present in the <code>words</code>. If they are not equal, it means there was a cycle in the graph, and thus no valid topological order exists. In this case, return an empty string. Otherwise, return the constructed result string.</li>
 </ol>
-<h2>Step-by-Step Solution: Building the Graph</h2>
+<h2 id="step-by-step-solution-building-the-graph">Step-by-Step Solution: Building the Graph</h2>
 <p>Let's walk through the process of building the graph with an example: <code>words = ["wrt", "wrf", "er", "ett", "rftt"]</code>.</p>
-<h3>Step 1: Gather All Unique Characters and Initialize Data Structures</h3>
+<h3 id="step-1-gather-all-unique-characters-and-initialize-data-structures">Step 1: Gather All Unique Characters and Initialize Data Structures</h3>
 <p>First, we iterate through all words to identify every unique character.
 *   <code>'w'</code>, <code>'r'</code>, <code>'t'</code>, <code>'f'</code>, <code>'e'</code>
 *   Initialize:
@@ -746,9 +746,9 @@
     *   <code>in_degree = {}</code> (in-degree map)
     *   For each unique char <code>c</code>: <code>adj[c] = []</code>, <code>in_degree[c] = 0</code>
     *   <code>all_chars = {'w', 'r', 't', 'f', 'e'}</code></p>
-<h3>Step 2: Extract Ordering Rules (Edges)</h3>
+<h3 id="step-2-extract-ordering-rules-edges">Step 2: Extract Ordering Rules (Edges)</h3>
 <p>Now, compare adjacent words to find the first differing character.</p>
-<h4>Compare "wrt" and "wrf":</h4>
+<h4 id="compare-wrt-and-wrf">Compare "wrt" and "wrf":</h4>
 <ul>
 <li><code>'w'</code> == <code>'w'</code></li>
 <li><code>'r'</code> == <code>'r'</code></li>
@@ -759,7 +759,7 @@
 </ul>
 </li>
 </ul>
-<h4>Compare "wrf" and "er":</h4>
+<h4 id="compare-wrf-and-er">Compare "wrf" and "er":</h4>
 <ul>
 <li><code>'w'</code> != <code>'e'</code>. This implies <code>w</code> comes before <code>e</code>.<ul>
 <li>Add edge: <code>w -&gt; e</code></li>
@@ -768,7 +768,7 @@
 </ul>
 </li>
 </ul>
-<h4>Compare "er" and "ett":</h4>
+<h4 id="compare-er-and-ett">Compare "er" and "ett":</h4>
 <ul>
 <li><code>'e'</code> == <code>'e'</code></li>
 <li><code>'r'</code> != <code>'t'</code>. This implies <code>r</code> comes before <code>t</code>.<ul>
@@ -778,7 +778,7 @@
 </ul>
 </li>
 </ul>
-<h4>Compare "ett" and "rftt":</h4>
+<h4 id="compare-ett-and-rftt">Compare "ett" and "rftt":</h4>
 <ul>
 <li><code>'e'</code> != <code>'r'</code>. This implies <code>e</code> comes before <code>r</code>.<ul>
 <li>Add edge: <code>e -&gt; r</code></li>
@@ -787,15 +787,15 @@
 </ul>
 </li>
 </ul>
-<h3>Current State of Graph</h3>
+<h3 id="current-state-of-graph">Current State of Graph</h3>
 <ul>
 <li><code>adj = { 'w': ['e'], 'r': ['t'], 't': ['f'], 'e': ['r'], 'f': [] }</code></li>
 <li><code>in_degree = { 'w': 0, 'r': 1, 't': 1, 'f': 1, 'e': 1 }</code></li>
 <li><code>all_chars = {'w', 'r', 't', 'f', 'e'}</code> (total 5 unique characters)</li>
 </ul>
-<h2>Step-by-Step Solution: Performing Topological Sort</h2>
+<h2 id="step-by-step-solution-performing-topological-sort">Step-by-Step Solution: Performing Topological Sort</h2>
 <p>Now, using Kahn's algorithm (BFS-based) for the topological sort.</p>
-<h3>Step 1: Initialize Queue with Zero In-Degree Nodes</h3>
+<h3 id="step-1-initialize-queue-with-zero-in-degree-nodes">Step 1: Initialize Queue with Zero In-Degree Nodes</h3>
 <ul>
 <li>Scan <code>in_degree</code>:<ul>
 <li><code>'w'</code> has <code>in_degree = 0</code>. Add <code>'w'</code> to queue.</li>
@@ -804,8 +804,8 @@
 <li><code>queue = ['w']</code></li>
 <li><code>result = []</code></li>
 </ul>
-<h3>Step 2: Process Queue</h3>
-<h4>Iteration 1:</h4>
+<h3 id="step-2-process-queue">Step 2: Process Queue</h3>
+<h4 id="iteration-1">Iteration 1:</h4>
 <ul>
 <li>Dequeue <code>'w'</code>. <code>result = ['w']</code></li>
 <li>Neighbors of <code>'w'</code>: <code>['e']</code><ul>
@@ -814,7 +814,7 @@
 </ul>
 </li>
 </ul>
-<h4>Iteration 2:</h4>
+<h4 id="iteration-2">Iteration 2:</h4>
 <ul>
 <li>Dequeue <code>'e'</code>. <code>result = ['w', 'e']</code></li>
 <li>Neighbors of <code>'e'</code>: <code>['r']</code><ul>
@@ -823,7 +823,7 @@
 </ul>
 </li>
 </ul>
-<h4>Iteration 3:</h4>
+<h4 id="iteration-3">Iteration 3:</h4>
 <ul>
 <li>Dequeue <code>'r'</code>. <code>result = ['w', 'e', 'r']</code></li>
 <li>Neighbors of <code>'r'</code>: <code>['t']</code><ul>
@@ -832,7 +832,7 @@
 </ul>
 </li>
 </ul>
-<h4>Iteration 4:</h4>
+<h4 id="iteration-4">Iteration 4:</h4>
 <ul>
 <li>Dequeue <code>'t'</code>. <code>result = ['w', 'e', 'r', 't']</code></li>
 <li>Neighbors of <code>'t'</code>: <code>['f']</code><ul>
@@ -841,23 +841,23 @@
 </ul>
 </li>
 </ul>
-<h4>Iteration 5:</h4>
+<h4 id="iteration-5">Iteration 5:</h4>
 <ul>
 <li>Dequeue <code>'f'</code>. <code>result = ['w', 'e', 'r', 't', 'f']</code></li>
 <li>Neighbors of <code>'f'</code>: <code>[]</code> (none)</li>
 <li><code>queue = []</code></li>
 </ul>
-<h3>Step 3: Check for Cycle</h3>
+<h3 id="step-3-check-for-cycle">Step 3: Check for Cycle</h3>
 <ul>
 <li><code>len(result)</code> (which is 5) == <code>len(all_chars)</code> (which is 5).</li>
 <li>No cycle detected.</li>
 </ul>
-<h3>Step 4: Return Result</h3>
+<h3 id="step-4-return-result">Step 4: Return Result</h3>
 <ul>
 <li>Join <code>result</code>: <code>"wertf"</code></li>
 </ul>
 <p>This detailed walkthrough illustrates how the graph is constructed and then traversed using Kahn's algorithm to obtain the correct alien alphabet order.</p>
-<h2>Leetcode 269: Alien Dictionary Code in Python</h2>
+<h2 id="leetcode-269-alien-dictionary-code-in-python">Leetcode 269: Alien Dictionary Code in Python</h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">collections</span>
 
 <span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
@@ -928,7 +928,7 @@
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div>
 
-<h3>Python Code Explanation:</h3>
+<h3 id="python-code-explanation">Python Code Explanation:</h3>
 <ol>
 <li><strong>Initialization:</strong> <code>all_chars</code> set gathers all unique characters. <code>adj</code> is a <code>defaultdict(list)</code> for the adjacency list (graph), and <code>in_degree</code> is a <code>defaultdict(int)</code> to store in-degrees. All characters are added to <code>all_chars</code> and their <code>in_degree</code> initialized to 0.</li>
 <li><strong>Graph Construction:</strong><ul>
@@ -947,7 +947,7 @@
 <li><strong>Cycle Detection:</strong> After the BFS, if <code>len(result)</code> is not equal to <code>len(all_chars)</code>, it implies a cycle was present, and an empty string is returned.</li>
 <li><strong>Return:</strong> Finally, <code>"".join(result)</code> constructs the alien alphabet string.</li>
 </ol>
-<h2>Leetcode 269: Alien Dictionary Code in Java</h2>
+<h2 id="leetcode-269-alien-dictionary-code-in-java">Leetcode 269: Alien Dictionary Code in Java</h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
@@ -1040,7 +1040,7 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<h3>Java Code Explanation:</h3>
+<h3 id="java-code-explanation">Java Code Explanation:</h3>
 <p>The Java implementation mirrors the Python logic very closely.
 1.  <strong>Initialization:</strong> <code>HashSet&lt;Character&gt; allChars</code>, <code>HashMap&lt;Character, List&lt;Character&gt;&gt; adj</code>, <code>HashMap&lt;Character, Integer&gt; inDegree</code>. <code>putIfAbsent</code> is used to ensure all characters are initialized in the maps.
 2.  <strong>Graph Construction:</strong>
@@ -1053,7 +1053,7 @@
     *   <code>StringBuilder</code> is used for efficient string concatenation.
 4.  <strong>Cycle Detection:</strong> Same logic: compare <code>result.length()</code> with <code>allChars.size()</code>.
 5.  <strong>Return:</strong> <code>result.toString()</code>.</p>
-<h2>Leetcode 269: Alien Dictionary Code in C++</h2>
+<h2 id="leetcode-269-alien-dictionary-code-in-c">Leetcode 269: Alien Dictionary Code in C++</h2>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unordered_map&gt;</span>
@@ -1155,7 +1155,7 @@
 <span class="p">};</span>
 </code></pre></div>
 
-<h3>C++ Code Explanation:</h3>
+<h3 id="c-code-explanation">C++ Code Explanation:</h3>
 <p>The C++ solution leverages standard library containers.
 1.  <strong>Initialization:</strong> <code>std::unordered_set&lt;char&gt; allChars</code>, <code>std::unordered_map&lt;char, std::vector&lt;char&gt;&gt; adj</code>, <code>std::unordered_map&lt;char, int&gt; inDegree</code>. Using <code>adj[c];</code> automatically creates an empty <code>std::vector&lt;char&gt;</code> if <code>c</code> is not yet a key.
 2.  <strong>Graph Construction:</strong>
@@ -1167,9 +1167,9 @@
     *   <code>std::string result</code> uses <code>push_back(u)</code> to append characters.
 4.  <strong>Cycle Detection:</strong> Compares <code>result.length()</code> with <code>allChars.size()</code>.
 5.  <strong>Return:</strong> The <code>std::string result</code>.</p>
-<h2>Complexity Analysis</h2>
+<h2 id="complexity-analysis">Complexity Analysis</h2>
 <p>Understanding the time and space complexity of the Alien Dictionary problem is crucial for evaluating its efficiency.</p>
-<h3>Time Complexity</h3>
+<h3 id="time-complexity">Time Complexity</h3>
 <p>Let <code>N</code> be the number of words in the input list, <code>L</code> be the average length of a word, and <code>C</code> be the total number of unique characters across all words (at most 26 for English alphabet, but could be larger for general characters).</p>
 <ol>
 <li>
@@ -1207,7 +1207,7 @@
 </li>
 </ol>
 <p><strong>Total Time Complexity:</strong> <code>O(N * L + C + E)</code>. Since <code>E</code> is at most <code>N*L</code> (we add at most one edge per word pair, bounded by length), and also <code>E</code> is at most <code>C^2</code>, it can be simplified. A tighter bound is <code>O(N * L + C^2)</code> if <code>E</code> is considered as the maximum number of unique edges. However, the most accurate is <code>O(N * L + E)</code>, where <code>E</code> is the number of distinct edges actually added. Given <code>C</code> is at most 26, <code>C^2</code> is small, so <code>O(N * L + E)</code> effectively.</p>
-<h3>Space Complexity</h3>
+<h3 id="space-complexity">Space Complexity</h3>
 <ol>
 <li><strong><code>allChars</code> set:</strong> <code>O(C)</code> to store all unique characters.</li>
 <li><strong><code>adj</code> (adjacency list):</strong> <code>O(C + E)</code> to store <code>C</code> nodes and <code>E</code> edges.</li>
@@ -1216,39 +1216,39 @@
 <li><strong><code>result</code> string/StringBuilder:</strong> <code>O(C)</code> for the final alphabet order.</li>
 </ol>
 <p><strong>Total Space Complexity:</strong> <code>O(C + E)</code>.</p>
-<h2>Common Mistakes and Edge Cases</h2>
+<h2 id="common-mistakes-and-edge-cases">Common Mistakes and Edge Cases</h2>
 <p>Solving the Alien Dictionary problem requires careful attention to various scenarios. Missing these can lead to incorrect solutions or runtime errors.</p>
-<h3>1. Incorrect Graph Construction</h3>
+<h3 id="1-incorrect-graph-construction">1. Incorrect Graph Construction</h3>
 <ul>
 <li><strong>Duplicate Edges:</strong> If you add the same edge multiple times (e.g., <code>t -&gt; f</code> derived from <code>("wrt", "wrf")</code> and again from <code>("ert", "erf")</code>), the <code>in_degree</code> count for <code>f</code> will be inflated. This can prevent <code>f</code> from ever reaching an in-degree of 0, leading to an incorrect result (e.g., <code>f</code> might be omitted or a cycle might be falsely detected). Always check if an edge already exists before adding it and incrementing <code>in_degree</code>.</li>
 <li><strong>Missing Characters:</strong> Ensure <em>all</em> unique characters from <em>all</em> words are included in your graph and <code>in_degree</code> map, even if they don't explicitly form an ordering pair. Some characters might be part of the alphabet but only appear in isolated words. Their in-degree should be initialized to 0.</li>
 </ul>
-<h3>2. Failure to Detect Invalid Input Orders (Prefix Rule)</h3>
+<h3 id="2-failure-to-detect-invalid-input-orders-prefix-rule">2. Failure to Detect Invalid Input Orders (Prefix Rule)</h3>
 <ul>
 <li><strong>Example:</strong> <code>words = ["abc", "ab"]</code>. If "abc" comes before "ab" in a lexicographically sorted list, it implies an invalid ordering in the alien dictionary. This specific case <em>must</em> be handled by immediately returning an empty string. The logic should be: if <code>word1</code> is longer than <code>word2</code>, and <code>word1</code> starts with <code>word2</code> (i.e., <code>word2</code> is a prefix of <code>word1</code>), and <code>word1</code> appears before <code>word2</code>, it's an invalid input.</li>
 <li>The check <code>if len(word1) &gt; len(word2) and word1.startswith(word2): return ""</code> in Python (and equivalents in Java/C++) addresses this directly before comparing characters.</li>
 </ul>
-<h3>3. Missing Cycle Detection</h3>
+<h3 id="3-missing-cycle-detection">3. Missing Cycle Detection</h3>
 <ul>
 <li>A topological sort can only exist in a Directed Acyclic Graph (DAG). If the input words imply a cycle (e.g., <code>a &lt; b</code>, <code>b &lt; c</code>, and <code>c &lt; a</code>), no valid alphabet order exists.</li>
 <li>Kahn's algorithm naturally detects cycles: if the number of characters processed in the topological sort (<code>len(result)</code>) is less than the total number of unique characters (<code>len(all_chars)</code>), a cycle is present. In this case, return an empty string.</li>
 </ul>
-<h3>4. Off-by-One Errors in Loop Boundaries</h3>
+<h3 id="4-off-by-one-errors-in-loop-boundaries">4. Off-by-One Errors in Loop Boundaries</h3>
 <ul>
 <li>When comparing adjacent words, the loop should go from <code>i</code> to <code>len(words) - 2</code> (or <code>len(words) - 1</code> with <code>&lt;</code>).</li>
 <li>When comparing characters within words, the loop should go up to <code>min(len(word1), len(word2)) - 1</code> (or <code>&lt; min_len</code>).</li>
 </ul>
-<h3>5. Handling Empty Input</h3>
+<h3 id="5-handling-empty-input">5. Handling Empty Input</h3>
 <ul>
 <li>If <code>words</code> is empty, an empty string should be returned. The provided solutions will correctly return an empty string for this edge case.</li>
 <li>If <code>words</code> contains only one word (e.g., <code>["abc"]</code>), all unique characters from that word should be returned in any order (usually lexicographical, but any order is valid). The current solution correctly handles this by putting all characters with in-degree 0 into the queue and returning them.</li>
 </ul>
-<h3>6. Performance Considerations for Adjacency List</h3>
+<h3 id="6-performance-considerations-for-adjacency-list">6. Performance Considerations for Adjacency List</h3>
 <ul>
 <li>In Java and C++, checking <code>adj.get(char1).contains(char2)</code> or <code>std::find(neighbors.begin(), neighbors.end(), char2)</code> can be <code>O(C)</code> in the worst case if a node has many neighbors. If the number of unique characters <code>C</code> is large, this could degrade performance. For alphabets larger than 26, consider using <code>HashSet&lt;Character&gt;</code> or <code>unordered_set&lt;char&gt;</code> for the values in your adjacency map to ensure <code>O(1)</code> average time for duplicate checks. For <code>C=26</code>, a <code>List</code> or <code>vector</code> is typically acceptable.</li>
 </ul>
 <p>By carefully considering these common pitfalls and edge cases, you can build a robust and correct solution for the Alien Dictionary problem.</p>
-<h2>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>The <strong>Leetcode: 269 - Alien Dictionary code in python java and c++</strong> problem is a quintessential example of how real-world ordering problems can be modeled and solved using graph theory and topological sort. We've explored the core concepts, detailed the step-by-step process of constructing the graph and applying Kahn's algorithm, and provided comprehensive code implementations in Python, Java, and C++.</p>
 <p>Mastering this problem not only enhances your understanding of graph algorithms but also sharpens your ability to translate abstract problem statements into concrete data structures and algorithms. The key takeaways include:
 *   Identifying partial orderings to build a directed graph.
@@ -1256,14 +1256,14 @@
 *   Detecting cycles in the graph to determine if a valid order exists.
 *   Handling critical edge cases like prefix rules and duplicate edges.</p>
 <p>With the insights and code provided, you are now well-equipped to tackle similar graph-based challenges. Keep practicing with various graph problems to solidify your understanding and algorithmic intuition. For another challenging graph problem solved with BFS, check out <a href="/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a>. Happy coding!</p>
-<h2>Frequently Asked Questions</h2>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Q: Why is the Alien Dictionary problem considered a graph problem?</strong>
 A: The problem involves deducing an unknown lexicographical order from a list of sorted words. This creates a set of directed dependencies between characters (e.g., 'a' must come before 'b'). These characters can be represented as nodes, and the dependencies as directed edges in a graph, making it a classic graph ordering problem.</p>
 <p><strong>Q: What is topological sort, and why is it crucial for solving Alien Dictionary?</strong>
 A: Topological sort is an algorithm for ordering the vertices of a directed acyclic graph (DAG) such that for every directed edge from vertex 'u' to vertex 'v', 'u' comes before 'v' in the ordering. It's crucial for Alien Dictionary because it allows us to derive a valid sequence of characters based on the partial orderings extracted from the input words.</p>
 <p><strong>Q: How does the solution detect if a valid alien alphabet order cannot be determined?</strong>
 A: A valid order cannot be determined if there's a cycle in the dependency graph (e.g., 'a' before 'b', 'b' before 'c', and 'c' before 'a'). Kahn's algorithm, used in the solution, detects cycles if the total number of characters successfully added to the sorted result is less than the total number of unique characters in the alphabet. This indicates that some characters were part of a cycle and could never reach an in-degree of zero.</p>
-<h2>Further Reading &amp; Resources</h2>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Topological_sorting">Wikipedia: Topological Sorting</a></li>
 <li><a href="https://www.geeksforgeeks.org/topological-sorting-using-kahn-algorithm/">GeeksforGeeks: Kahn's Algorithm for Topological Sort</a></li>

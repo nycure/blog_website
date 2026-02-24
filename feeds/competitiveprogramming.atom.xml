@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive - CompetitiveProgramming</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/competitiveprogramming.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-24T10:45:00+00:00</updated><entry><title>CSES Labyrinth Problem in Python, Java &amp; C++: A Complete Guide</title><link href="https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/" rel="alternate"/><published>2026-02-24T10:45:00+00:00</published><updated>2026-02-24T10:45:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-24:/cses-labyrinth-problem-python-java-cpp-guide/</id><summary type="html">&lt;p&gt;Master the CSES Labyrinth Problem in Python, Java, and C++ with this complete guide. Learn BFS, path reconstruction, and avoid common pitfalls.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Mastering the &lt;strong&gt;CSES Labyrinth Problem&lt;/strong&gt; in &lt;strong&gt;Python, Java&lt;/strong&gt;, and &lt;strong&gt;C++&lt;/strong&gt; is a fundamental step for competitive programmers, presenting a classic graph traversal challenge that often stumps beginners. It requires navigating a grid-based maze to find the shortest path from a starting point to an ending point and then reconstructing that path. This complete guide will walk you through solving the &lt;strong&gt;CSES Labyrinth Problem in Python, Java, and C++&lt;/strong&gt;, detailing the logic, necessary data structures, and providing robust code examples. By the end, you'll have a solid understanding of Breadth-First Search (BFS) and how to apply it effectively to maze-solving tasks.&lt;/p&gt;
-&lt;h2&gt;Understanding the CSES Labyrinth Problem&lt;/h2&gt;
+&lt;h2 id="understanding-the-cses-labyrinth-problem"&gt;Understanding the CSES Labyrinth Problem&lt;/h2&gt;
 &lt;p&gt;The CSES Labyrinth Problem tasks you with navigating a grid-based maze. The maze consists of empty cells ('.'), walls ('#'), a starting point ('A'), and an ending point ('B'). Your goal is to find if a path exists from 'A' to 'B' and, if so, determine the shortest possible path length and reconstruct the sequence of moves (Up, Down, Left, Right) to get there.&lt;/p&gt;
 &lt;p&gt;The input typically provides the dimensions of the grid (N rows, M columns), followed by N lines representing the maze layout. Movement is restricted to adjacent cells (up, down, left, right) and you cannot move through walls or outside the grid boundaries.&lt;/p&gt;
 &lt;p&gt;Consider a small example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;3&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;3&lt;/span&gt;
-&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;
-&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;
-&lt;span class="mf"&gt;..&lt;/span&gt;&lt;span class="n"&gt;B&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;3 3
+A.#
+.#.
+..B
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Here, 'A' is at (0,0) and 'B' is at (2,2). A possible shortest path could be: A -&amp;gt; (1,0) -&amp;gt; (2,0) -&amp;gt; (2,1) -&amp;gt; (2,2) (B). The path length would be 4, and the moves would be DLRD.&lt;/p&gt;
 &lt;p&gt;This problem is a quintessential application of Breadth-First Search (BFS) because BFS naturally explores all possible paths layer by layer, guaranteeing that the first time it reaches the target cell, it has found the shortest path in terms of the number of moves. This characteristic makes BFS ideal for unweighted shortest path problems on a grid.&lt;/p&gt;
-&lt;h2&gt;Prerequisites for Solving the CSES Labyrinth Problem&lt;/h2&gt;
+&lt;h2 id="prerequisites-for-solving-the-cses-labyrinth-problem"&gt;Prerequisites for Solving the CSES Labyrinth Problem&lt;/h2&gt;
 &lt;p&gt;Before diving into the solution, ensure you have a firm grasp of a few fundamental concepts:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;Breadth-First Search (BFS):&lt;/strong&gt; You should understand how BFS works, its use of a queue, and its layer-by-layer exploration strategy. This is the core algorithm for finding the shortest path in unweighted graphs. For another great example of BFS in action, check out &lt;a href="/leetcode-127-word-ladder-bfs-tutorial/"&gt;Leetcode 127 Word Ladder: Master the BFS Approach Easily&lt;/a&gt;. Familiarity with marking visited nodes to prevent cycles and redundant computations is crucial.&lt;/li&gt;
@@ -26,7 +26,7 @@
 &lt;li&gt;&lt;strong&gt;Competitive Programming I/O:&lt;/strong&gt; For Java and C++, understanding fast I/O methods can be beneficial, as standard I/O might be too slow for larger test cases. Python's default I/O is generally sufficient.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Meeting these prerequisites will ensure you can fully follow the step-by-step solution and apply the concepts effectively to competitive programming problems. If any of these areas feel unfamiliar, consider reviewing them before proceeding.&lt;/p&gt;
-&lt;h2&gt;Core Algorithm: Breadth-First Search (BFS) for Mazes&lt;/h2&gt;
+&lt;h2 id="core-algorithm-breadth-first-search-bfs-for-mazes"&gt;Core Algorithm: Breadth-First Search (BFS) for Mazes&lt;/h2&gt;
 &lt;p&gt;The &lt;strong&gt;CSES Labyrinth Problem in Python, Java and C++&lt;/strong&gt; is a classic application of Breadth-First Search (BFS). BFS is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph, sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.&lt;/p&gt;
 &lt;p&gt;Why is BFS ideal for maze solving, especially when seeking the shortest path? BFS explores all nodes at a given "distance" (number of steps) from the source before moving on to nodes at a greater distance. This means that the first time the target node 'B' is encountered, it is guaranteed to be via the path with the minimum number of steps. This characteristic makes BFS ideal for unweighted shortest path problems on a grid, similar to how it's used in &lt;a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/"&gt;Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP&lt;/a&gt;. In contrast, Depth-First Search (DFS) might stumble upon a very long path to the target before exploring shorter alternatives.&lt;/p&gt;
 &lt;p&gt;To implement BFS for a maze:&lt;/p&gt;
@@ -57,11 +57,11 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;By systematically exploring the grid in this manner, BFS ensures that every reachable cell is visited exactly once via its shortest path from the source, making it highly efficient for this type of problem.&lt;/p&gt;
-&lt;h2&gt;Step-by-Step Solution: CSES Labyrinth Problem in Python, Java and C++&lt;/h2&gt;
+&lt;h2 id="step-by-step-solution-cses-labyrinth-problem-in-python-java-and-c"&gt;Step-by-Step Solution: CSES Labyrinth Problem in Python, Java and C++&lt;/h2&gt;
 &lt;p&gt;This section provides a detailed, step-by-step guide to solving the &lt;strong&gt;CSES Labyrinth Problem in Python, Java and C++&lt;/strong&gt;, complete with code examples for each language. We will cover input parsing, BFS implementation, and path reconstruction.&lt;/p&gt;
-&lt;h3&gt;1. Parsing Input and Initializing Data Structures&lt;/h3&gt;
+&lt;h3 id="1-parsing-input-and-initializing-data-structures"&gt;1. Parsing Input and Initializing Data Structures&lt;/h3&gt;
 &lt;p&gt;The first step is to read the grid dimensions, parse the maze layout, and set up the necessary data structures. We'll need a 2D array to represent the maze, another 2D array to track visited cells, and a third 2D array to store the "parent" direction for path reconstruction. We also need to find the start ('A') and end ('B') coordinates.&lt;/p&gt;
-&lt;h4&gt;Python Implementation&lt;/h4&gt;
+&lt;h4 id="python-implementation"&gt;Python Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;deque&lt;/span&gt;
 
@@ -95,7 +95,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Python uses &lt;code&gt;collections.deque&lt;/code&gt; for an efficient queue. We initialize &lt;code&gt;parent&lt;/code&gt;, &lt;code&gt;dist&lt;/code&gt;, and &lt;code&gt;move_dir&lt;/code&gt; arrays. &lt;code&gt;parent&lt;/code&gt; stores the coordinates of the cell from which the current cell was reached, &lt;code&gt;dist&lt;/code&gt; stores the shortest distance, and &lt;code&gt;move_dir&lt;/code&gt; stores the character representing the move. &lt;code&gt;dr&lt;/code&gt;, &lt;code&gt;dc&lt;/code&gt;, &lt;code&gt;dir_chars&lt;/code&gt; arrays are set up for easy neighbor traversal.&lt;/p&gt;
-&lt;h4&gt;Java Implementation&lt;/h4&gt;
+&lt;h4 id="java-implementation"&gt;Java Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;java.util.*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;java.io.*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -149,7 +149,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;In Java, we use &lt;code&gt;BufferedReader&lt;/code&gt; and &lt;code&gt;StringTokenizer&lt;/code&gt; for faster I/O. A &lt;code&gt;Cell&lt;/code&gt; class helps manage coordinates. The &lt;code&gt;grid&lt;/code&gt;, &lt;code&gt;dist&lt;/code&gt;, and &lt;code&gt;moveDir&lt;/code&gt; arrays are initialized, and start/end coordinates are found during input parsing. &lt;code&gt;dist&lt;/code&gt; is initialized with -1 to signify unvisited cells.&lt;/p&gt;
-&lt;h4&gt;C++ Implementation&lt;/h4&gt;
+&lt;h4 id="c-implementation"&gt;C++ Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;
 &lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;
 &lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;queue&amp;gt;&lt;/span&gt;
@@ -197,9 +197,9 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;C++ uses &lt;code&gt;iostream&lt;/code&gt; for I/O, with &lt;code&gt;ios_base::sync_with_stdio(false)&lt;/code&gt; and &lt;code&gt;cin.tie(NULL)&lt;/code&gt; for performance. &lt;code&gt;vector&amp;lt;string&amp;gt;&lt;/code&gt; is used for the grid, and &lt;code&gt;vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt;&lt;/code&gt; and &lt;code&gt;vector&amp;lt;vector&amp;lt;char&amp;gt;&amp;gt;&lt;/code&gt; for &lt;code&gt;dist&lt;/code&gt; and &lt;code&gt;moveDir&lt;/code&gt; respectively. Distances are initialized to -1, and move directions to ' '.&lt;/p&gt;
-&lt;h3&gt;2. Implementing the BFS Algorithm&lt;/h3&gt;
+&lt;h3 id="2-implementing-the-bfs-algorithm"&gt;2. Implementing the BFS Algorithm&lt;/h3&gt;
 &lt;p&gt;Once the data structures are initialized and the start/end points are identified, the core BFS algorithm can be implemented. The BFS will use a queue to manage cells to visit. When a cell is popped from the queue, its neighbors are explored.&lt;/p&gt;
-&lt;h4&gt;Python Implementation&lt;/h4&gt;
+&lt;h4 id="python-implementation_1"&gt;Python Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    &lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;deque&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
     &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;start_pos&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;start_pos&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]][&lt;/span&gt;&lt;span class="n"&gt;start_pos&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
@@ -226,7 +226,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Python's &lt;code&gt;deque&lt;/code&gt; is used as the queue. The &lt;code&gt;dist&lt;/code&gt; array acts as a visited tracker (if &lt;code&gt;dist[nr][nc] == -1&lt;/code&gt;, it's unvisited). For each valid neighbor, we update its distance, store its parent coordinates, and store the specific move character that led to it.&lt;/p&gt;
-&lt;h4&gt;Java Implementation&lt;/h4&gt;
+&lt;h4 id="java-implementation_1"&gt;Java Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;static&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;throws&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// ... (input parsing as above) ...&lt;/span&gt;
 
@@ -262,7 +262,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Java uses &lt;code&gt;LinkedList&lt;/code&gt; as its &lt;code&gt;Queue&lt;/code&gt; implementation. The logic is identical: add start to queue, set its distance, then loop. For each neighbor, check validity, update distance, store the &lt;code&gt;moveDir&lt;/code&gt; character, and enqueue.&lt;/p&gt;
-&lt;h4&gt;C++ Implementation&lt;/h4&gt;
+&lt;h4 id="c-implementation_1"&gt;C++ Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;// ... (input parsing as above) ...&lt;/span&gt;
 
@@ -300,9 +300,9 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;C++ utilizes &lt;code&gt;std::queue&lt;/code&gt; with &lt;code&gt;std::pair&amp;lt;int, int&amp;gt;&lt;/code&gt; to store coordinates. The &lt;code&gt;dist&lt;/code&gt; array serves as the visited tracker. The &lt;code&gt;moveDir&lt;/code&gt; array stores the character that represents the move from the parent cell.&lt;/p&gt;
-&lt;h3&gt;3. Reconstructing the Path&lt;/h3&gt;
+&lt;h3 id="3-reconstructing-the-path"&gt;3. Reconstructing the Path&lt;/h3&gt;
 &lt;p&gt;After BFS completes and (if a path is found) &lt;code&gt;found_B&lt;/code&gt; is true, we need to reconstruct the actual path. This is done by backtracking from the &lt;code&gt;end_pos&lt;/code&gt; to the &lt;code&gt;start_pos&lt;/code&gt; using the &lt;code&gt;move_dir&lt;/code&gt; (or &lt;code&gt;parent&lt;/code&gt;) array. Since we stored the character move &lt;em&gt;to&lt;/em&gt; the current cell, we can reverse this process. We add the current cell's &lt;code&gt;move_dir&lt;/code&gt; to a list, then move to its parent, and repeat until we reach the start. Finally, reverse the collected path.&lt;/p&gt;
-&lt;h4&gt;Python Implementation&lt;/h4&gt;
+&lt;h4 id="python-implementation_2"&gt;Python Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;found_B&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;NO&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -333,7 +333,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Python reconstructs the path by iterating backward from &lt;code&gt;end_pos&lt;/code&gt; until &lt;code&gt;start_pos&lt;/code&gt; is reached. It appends the &lt;code&gt;move_dir&lt;/code&gt; character to a list and then updates &lt;code&gt;curr_r, curr_c&lt;/code&gt; to what its parent must have been based on the stored move. The path is then reversed and printed.&lt;/p&gt;
-&lt;h4&gt;Java Implementation&lt;/h4&gt;
+&lt;h4 id="java-implementation_2"&gt;Java Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;public&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;static&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;throws&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;// ... (BFS logic as above) ...&lt;/span&gt;
 
@@ -374,7 +374,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Java's path reconstruction is similar to Python. &lt;code&gt;StringBuilder&lt;/code&gt; is used for efficient string manipulation. The path is built in reverse and then reversed again before printing. &lt;code&gt;PrintWriter&lt;/code&gt; is used for faster output.&lt;/p&gt;
-&lt;h4&gt;C++ Implementation&lt;/h4&gt;
+&lt;h4 id="c-implementation_2"&gt;C++ Implementation&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;// ... (BFS logic as above) ...&lt;/span&gt;
 
@@ -412,7 +412,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;C++ path reconstruction uses &lt;code&gt;std::string&lt;/code&gt; to build the path. The logic for backtracking and reversing is identical. &lt;code&gt;std::reverse&lt;/code&gt; from &lt;code&gt;&amp;lt;algorithm&amp;gt;&lt;/code&gt; is used to reverse the path string.&lt;/p&gt;
-&lt;h3&gt;4. Outputting the Result&lt;/h3&gt;
+&lt;h3 id="4-outputting-the-result"&gt;4. Outputting the Result&lt;/h3&gt;
 &lt;p&gt;The final step is to print the required output: "YES" or "NO", followed by the length of the shortest path, and then the path itself as a string of characters.&lt;/p&gt;
 &lt;p&gt;All the code examples above integrate the output logic within the path reconstruction steps. Ensure that your output matches the exact format specified by CSES:
 1.  "YES" if a path exists, "NO" otherwise.
@@ -425,25 +425,25 @@ DLRD
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This comprehensive step-by-step approach ensures that you handle all aspects of the &lt;strong&gt;CSES Labyrinth Problem in Python, Java and C++&lt;/strong&gt;, from reading input to finding the shortest path and reconstructing the moves.&lt;/p&gt;
-&lt;h2&gt;Common Mistakes and How to Avoid Them&lt;/h2&gt;
+&lt;h2 id="common-mistakes-and-how-to-avoid-them"&gt;Common Mistakes and How to Avoid Them&lt;/h2&gt;
 &lt;p&gt;Solving the CSES Labyrinth Problem, while straightforward conceptually with BFS, often involves subtle implementation errors. Being aware of these common pitfalls can save significant debugging time.&lt;/p&gt;
-&lt;h3&gt;1. Forgetting to Mark Visited Cells&lt;/h3&gt;
+&lt;h3 id="1-forgetting-to-mark-visited-cells"&gt;1. Forgetting to Mark Visited Cells&lt;/h3&gt;
 &lt;p&gt;One of the most frequent errors in BFS (and DFS) is failing to mark cells as visited. If a cell is not marked, the algorithm might:
 *   &lt;strong&gt;Enter an infinite loop:&lt;/strong&gt; Repeatedly adding the same cell to the queue, especially in grids with cycles.
 *   &lt;strong&gt;Recompute paths:&lt;/strong&gt; Explore longer paths to cells already visited via a shorter route, making the algorithm inefficient and potentially leading to Time Limit Exceeded (TLE).
 *   &lt;strong&gt;Incorrect path reconstruction:&lt;/strong&gt; If multiple paths to the same cell are explored, the parent pointer might be overwritten by a non-optimal path.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Solution:&lt;/strong&gt; Always mark a cell as visited (e.g., by setting &lt;code&gt;dist[r][c] = 0&lt;/code&gt; or similar for the start, and &lt;code&gt;dist[nr][nc] = dist[r][c] + 1&lt;/code&gt; for neighbors) &lt;em&gt;immediately&lt;/em&gt; when it is added to the queue. This ensures each cell is processed only once, and its &lt;code&gt;dist&lt;/code&gt; and &lt;code&gt;move_dir&lt;/code&gt; values are set by the shortest path.&lt;/p&gt;
-&lt;h3&gt;2. Incorrect Path Reconstruction Logic&lt;/h3&gt;
+&lt;h3 id="2-incorrect-path-reconstruction-logic"&gt;2. Incorrect Path Reconstruction Logic&lt;/h3&gt;
 &lt;p&gt;Reconstructing the path often causes confusion. It's easy to mix up the direction of movement. Remember:
 *   If &lt;code&gt;move_dir[nr][nc]&lt;/code&gt; stores the direction 'D' (Down), it means we moved &lt;code&gt;Down&lt;/code&gt; from &lt;code&gt;(nr-1, nc)&lt;/code&gt; to reach &lt;code&gt;(nr, nc)&lt;/code&gt;.
 *   So, to backtrack from &lt;code&gt;(nr, nc)&lt;/code&gt;, we need to move &lt;code&gt;Up&lt;/code&gt; to reach its parent &lt;code&gt;(nr-1, nc)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Solution:&lt;/strong&gt; When backtracking from the &lt;code&gt;end_pos&lt;/code&gt;, if the &lt;code&gt;move_dir&lt;/code&gt; at &lt;code&gt;(currR, currC)&lt;/code&gt; indicates 'U' (meaning we moved Up to &lt;em&gt;reach&lt;/em&gt; this cell), then the parent was &lt;code&gt;(currR + 1, currC)&lt;/code&gt;. Carefully map each recorded direction to its inverse to find the parent cell. Build the path by appending to a list/string and then &lt;code&gt;reverse()&lt;/code&gt; it at the end, as the path is constructed from 'B' back to 'A'.&lt;/p&gt;
-&lt;h3&gt;3. Off-by-One Errors in Grid Traversal and Boundary Checks&lt;/h3&gt;
+&lt;h3 id="3-off-by-one-errors-in-grid-traversal-and-boundary-checks"&gt;3. Off-by-One Errors in Grid Traversal and Boundary Checks&lt;/h3&gt;
 &lt;p&gt;Grid problems are notorious for off-by-one errors.
 *   &lt;strong&gt;Boundary checks:&lt;/strong&gt; Failing to correctly check &lt;code&gt;0 &amp;lt;= nr &amp;lt; N&lt;/code&gt; and &lt;code&gt;0 &amp;lt;= nc &amp;lt; M&lt;/code&gt; can lead to &lt;code&gt;IndexOutOfBoundsException&lt;/code&gt; (Java) or segmentation faults (C++).
 *   &lt;strong&gt;Neighbor loops:&lt;/strong&gt; Ensure your &lt;code&gt;dr&lt;/code&gt; and &lt;code&gt;dc&lt;/code&gt; arrays correctly cover all four cardinal directions (Up, Down, Left, Right) and that your loop iterates exactly four times.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Solution:&lt;/strong&gt; Double-check your boundary conditions, especially for &lt;code&gt;0&lt;/code&gt; and &lt;code&gt;N-1&lt;/code&gt;/&lt;code&gt;M-1&lt;/code&gt;. It's a good practice to encapsulate the boundary check into a helper function or a clear conditional statement. Test with small grids (1x1, 1x2, 2x1) to catch these errors early.&lt;/p&gt;
-&lt;h3&gt;4. Time Limit Exceeded (TLE) Due to Inefficient I/O&lt;/h3&gt;
+&lt;h3 id="4-time-limit-exceeded-tle-due-to-inefficient-io"&gt;4. Time Limit Exceeded (TLE) Due to Inefficient I/O&lt;/h3&gt;
 &lt;p&gt;For larger grids, especially in Java and C++, standard input/output operations can be slow, causing your solution to exceed the time limit even if the algorithm is correct.
 *   &lt;strong&gt;Java:&lt;/strong&gt; Using &lt;code&gt;Scanner&lt;/code&gt; and &lt;code&gt;System.out.println&lt;/code&gt; can be slow.
 *   &lt;strong&gt;C++:&lt;/strong&gt; Using &lt;code&gt;cin&lt;/code&gt; and &lt;code&gt;cout&lt;/code&gt; without optimizations.&lt;/p&gt;
@@ -451,19 +451,19 @@ DLRD
 *   &lt;strong&gt;Java:&lt;/strong&gt; Use &lt;code&gt;BufferedReader&lt;/code&gt; for input and &lt;code&gt;PrintWriter&lt;/code&gt; for output.
 *   &lt;strong&gt;C++:&lt;/strong&gt; Add &lt;code&gt;ios_base::sync_with_stdio(false);&lt;/code&gt; and &lt;code&gt;cin.tie(NULL);&lt;/code&gt; at the beginning of your &lt;code&gt;main&lt;/code&gt; function.
 *   &lt;strong&gt;Python:&lt;/strong&gt; &lt;code&gt;sys.stdin.readline&lt;/code&gt; is generally fast enough.&lt;/p&gt;
-&lt;h3&gt;5. Using DFS Instead of BFS for Shortest Path&lt;/h3&gt;
+&lt;h3 id="5-using-dfs-instead-of-bfs-for-shortest-path"&gt;5. Using DFS Instead of BFS for Shortest Path&lt;/h3&gt;
 &lt;p&gt;While DFS can also traverse a maze, it does &lt;em&gt;not&lt;/em&gt; guarantee finding the shortest path in an unweighted graph. DFS explores deeply before backtracking, meaning it might find a very long path to the target before ever considering a shorter one. For problems requiring shortest paths, BFS is generally preferred over algorithms like those used in &lt;a href="/leetcode-417-pacific-atlantic-water-flow-dfs-solution/"&gt;Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS&lt;/a&gt;, which might use DFS for connectivity.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Solution:&lt;/strong&gt; For problems that explicitly ask for the &lt;em&gt;shortest&lt;/em&gt; path in an unweighted grid or graph, BFS is almost always the correct choice. Stick to BFS for the CSES Labyrinth Problem.&lt;/p&gt;
 &lt;p&gt;By paying close attention to these common mistakes and adopting the suggested solutions, you can significantly improve your chances of correctly solving the &lt;strong&gt;CSES Labyrinth Problem in Python, Java and C++&lt;/strong&gt; and similar competitive programming challenges.&lt;/p&gt;
-&lt;h2&gt;Optimizations and Advanced Tips&lt;/h2&gt;
+&lt;h2 id="optimizations-and-advanced-tips"&gt;Optimizations and Advanced Tips&lt;/h2&gt;
 &lt;p&gt;While the basic BFS approach is sufficient for the CSES Labyrinth Problem, understanding potential optimizations and advanced considerations can further enhance your competitive programming skills.&lt;/p&gt;
-&lt;h3&gt;1. Fast I/O (Reiteration)&lt;/h3&gt;
+&lt;h3 id="1-fast-io-reiteration"&gt;1. Fast I/O (Reiteration)&lt;/h3&gt;
 &lt;p&gt;As mentioned in common mistakes, fast I/O is crucial for performance-critical problems, especially in Java and C++.
 *   &lt;strong&gt;Java:&lt;/strong&gt; Using &lt;code&gt;BufferedReader&lt;/code&gt; and &lt;code&gt;PrintWriter&lt;/code&gt; is non-negotiable for large inputs.
 *   &lt;strong&gt;C++:&lt;/strong&gt; &lt;code&gt;ios_base::sync_with_stdio(false); cin.tie(NULL);&lt;/code&gt; should be a standard habit for competitive programming in C++.
 *   &lt;strong&gt;Python:&lt;/strong&gt; &lt;code&gt;sys.stdin.readline()&lt;/code&gt; for input and &lt;code&gt;print()&lt;/code&gt; are usually adequate, but for extremely large outputs, consider &lt;code&gt;sys.stdout.write()&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;These practices often prevent TLE errors even when your algorithm is asymptotically optimal.&lt;/p&gt;
-&lt;h3&gt;2. Representing Directions More Concisely&lt;/h3&gt;
+&lt;h3 id="2-representing-directions-more-concisely"&gt;2. Representing Directions More Concisely&lt;/h3&gt;
 &lt;p&gt;Instead of separate &lt;code&gt;dr&lt;/code&gt;, &lt;code&gt;dc&lt;/code&gt;, and &lt;code&gt;dirChars&lt;/code&gt; arrays, some competitive programmers might use a struct or class for directions, or even a single 2D array:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Example C++&lt;/span&gt;
 &lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Direction&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
@@ -480,10 +480,10 @@ DLRD
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This can make the code slightly cleaner by associating the delta coordinates directly with their character representation, reducing potential indexing errors.&lt;/p&gt;
-&lt;h3&gt;3. Space Optimization for Path Reconstruction (Advanced)&lt;/h3&gt;
+&lt;h3 id="3-space-optimization-for-path-reconstruction-advanced"&gt;3. Space Optimization for Path Reconstruction (Advanced)&lt;/h3&gt;
 &lt;p&gt;For this specific problem, storing &lt;code&gt;moveDir&lt;/code&gt; (or &lt;code&gt;parent&lt;/code&gt; coordinates) for every cell is necessary and generally acceptable within memory limits. However, for extremely large grids where memory is a concern, one might consider alternative path reconstruction. For instance, if only the path &lt;em&gt;length&lt;/em&gt; is needed, &lt;code&gt;dist&lt;/code&gt; array is sufficient. If the path itself is required, usually &lt;code&gt;parent&lt;/code&gt; or &lt;code&gt;moveDir&lt;/code&gt; array is the most straightforward.&lt;/p&gt;
 &lt;p&gt;A highly advanced technique, if applicable, could be to run a bidirectional BFS from both 'A' and 'B' simultaneously. When the two BFS frontiers meet, a path is found. Path reconstruction from a bidirectional BFS is more complex, but it can significantly reduce the search space for extremely large grids, potentially halving the time complexity in the best-case scenario. However, for the CSES Labyrinth problem, a single BFS is generally sufficient and simpler to implement.&lt;/p&gt;
-&lt;h3&gt;4. Edge Cases and Constraints&lt;/h3&gt;
+&lt;h3 id="4-edge-cases-and-constraints"&gt;4. Edge Cases and Constraints&lt;/h3&gt;
 &lt;p&gt;Always consider edge cases:
 *   &lt;strong&gt;1x1 grid:&lt;/strong&gt; If 'A' is 'B', path length is 0 (or 1 depending on problem definition, usually 0 moves).
 *   &lt;strong&gt;No path:&lt;/strong&gt; The BFS will complete without ever reaching 'B'. Ensure your code correctly outputs "NO" in this scenario.
@@ -491,18 +491,18 @@ DLRD
 *   &lt;strong&gt;Grid full of walls:&lt;/strong&gt; No path exists.&lt;/p&gt;
 &lt;p&gt;The constraints (N, M up to 1000) mean that an O(N&lt;em&gt;M) solution like BFS is perfectly acceptable, as N&lt;/em&gt;M = 10^6, and operations per cell are constant.&lt;/p&gt;
 &lt;p&gt;By keeping these optimizations and advanced considerations in mind, you can not only solve the &lt;strong&gt;CSES Labyrinth Problem in Python, Java and C++&lt;/strong&gt; efficiently but also build a stronger foundation for tackling more complex graph and grid-based challenges.&lt;/p&gt;
-&lt;h2&gt;Conclusion: Mastering the CSES Labyrinth Problem&lt;/h2&gt;
+&lt;h2 id="conclusion-mastering-the-cses-labyrinth-problem"&gt;Conclusion: Mastering the CSES Labyrinth Problem&lt;/h2&gt;
 &lt;p&gt;Congratulations! By following this comprehensive tutorial, you've gained a deep understanding of how to tackle the &lt;strong&gt;CSES Labyrinth Problem in Python, Java and C++&lt;/strong&gt;. We've covered the crucial role of Breadth-First Search (BFS) in finding the shortest path in unweighted grids, detailed the necessary data structures, and provided complete, runnable code examples in three popular programming languages.&lt;/p&gt;
 &lt;p&gt;You've learned to parse maze input, efficiently implement the BFS algorithm using a queue, and most importantly, reconstruct the actual path of moves from the start to the end. We also addressed common pitfalls such as forgotten visited checks, incorrect path reconstruction logic, and critical I/O performance considerations.&lt;/p&gt;
 &lt;p&gt;Mastering the CSES Labyrinth Problem is a significant milestone in your competitive programming journey. It solidifies your understanding of graph traversal algorithms and their practical applications. Remember that practice is key. Try variations of this problem, or apply BFS to other grid-based challenges. The principles learned here are fundamental and will serve as a strong foundation for more complex algorithmic problems. Keep practicing, and happy coding!&lt;/p&gt;
-&lt;h2&gt;Frequently Asked Questions&lt;/h2&gt;
+&lt;h2 id="frequently-asked-questions"&gt;Frequently Asked Questions&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Q: Why is BFS preferred over DFS for the CSES Labyrinth Problem?&lt;/strong&gt;
 A: BFS guarantees finding the shortest path in terms of the number of moves because it explores the grid layer by layer, always visiting closer cells before moving to farther ones. DFS, in contrast, explores deeply first and might find a longer path before exploring shorter alternatives.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: How is the path reconstructed after BFS finds the target 'B'?&lt;/strong&gt;
 A: Path reconstruction involves backtracking from the target cell ('B') to the starting cell ('A'). During the BFS, for each cell, we store the direction taken from its parent to reach it. By reversing these recorded moves, we can reconstruct the sequence of steps from 'A' to 'B'.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Q: What are the time and space complexity of the BFS solution for the CSES Labyrinth Problem?&lt;/strong&gt;
 A: The time complexity is O(N&lt;em&gt;M), where N is the number of rows and M is the number of columns, as each cell is visited and processed at most once. The space complexity is also O(N&lt;/em&gt;M) due to storing the grid, visited status, distances, and parent/direction information for all cells, as well as the queue which can hold up to O(N*M) cells in the worst case.&lt;/p&gt;
-&lt;h2&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
+&lt;h2 id="further-reading-resources"&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://cses.fi/problemset/task/1192/"&gt;CSES Labyrinth Problem (Official)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Breadth-first_search"&gt;Breadth-First Search (BFS) on Wikipedia&lt;/a&gt;&lt;/li&gt;

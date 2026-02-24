@@ -683,10 +683,10 @@
     <div class="post-content">
       <p>Graphs are powerful tools for modeling relationships, from social networks to intricate computer systems. To make sense of these complex structures, we need efficient ways to explore them. Enter Depth-First Search (DFS), a fundamental algorithm that allows us to systematically traverse a graph.</p>
 <p>If you've ever gotten lost in a maze, always choosing to go as far as possible down one path before backtracking, you've intuitively performed a depth-first search! In this post, we'll unravel the mysteries of DFS, understanding how it works, how to implement it, and its vast applications.</p>
-<h2>What is Depth-First Search (DFS)?</h2>
+<h2 id="what-is-depth-first-search-dfs">What is Depth-First Search (DFS)?</h2>
 <p>Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root (or an arbitrary node) and explores as far as possible along each branch before backtracking. It's like exploring a labyrinth: you pick a path and follow it until you hit a dead end, then you retrace your steps to find an alternative route.</p>
 <p>This "go deep first" strategy contrasts with Breadth-First Search (BFS), which explores all immediate neighbors before moving to the next level of nodes. DFS prioritizes depth over breadth.</p>
-<h2>How DFS Works: The Core Mechanic</h2>
+<h2 id="how-dfs-works-the-core-mechanic">How DFS Works: The Core Mechanic</h2>
 <p>The fundamental idea behind DFS is quite simple:</p>
 <ol>
 <li><strong>Visit a node:</strong> Start at an unvisited node.</li>
@@ -695,7 +695,7 @@
 <li><strong>Backtrack:</strong> If all neighbors have been visited or there are no unvisited neighbors, backtrack to the previous node and explore other branches.</li>
 </ol>
 <p>This process continues until all reachable nodes from the starting point have been visited.</p>
-<h3>A Walkthrough Example</h3>
+<h3 id="a-walkthrough-example">A Walkthrough Example</h3>
 <p>Imagine a simple graph with nodes A, B, C, D, E.
 Edges: (A, B), (A, C), (B, D), (C, E)</p>
 <p>Starting DFS from A:
@@ -714,9 +714,9 @@ Edges: (A, B), (A, C), (B, D), (C, E)</p>
 13. All neighbors of C (E) visited. Backtrack to A.
 14. All neighbors of A (B, C) visited. DFS complete.</p>
 <p>The order of traversal could be A -&gt; B -&gt; D -&gt; C -&gt; E. (Note: Order depends on neighbor processing order).</p>
-<h2>Implementing DFS</h2>
+<h2 id="implementing-dfs">Implementing DFS</h2>
 <p>DFS can be implemented in two primary ways: recursively or iteratively using a stack. Both achieve the same result.</p>
-<h3>1. Recursive Implementation</h3>
+<h3 id="1-recursive-implementation">1. Recursive Implementation</h3>
 <p>The recursive approach is often more intuitive for DFS, directly mirroring the "explore deeply" principle.</p>
 <div class="highlight"><pre><span></span><code><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
@@ -740,7 +740,7 @@ Edges: (A, B), (A, C), (B, D), (C, E)</p>
 <span class="c1"># Expected output: A B D C E</span>
 </code></pre></div>
 
-<h3>2. Iterative Implementation (using a Stack)</h3>
+<h3 id="2-iterative-implementation-using-a-stack">2. Iterative Implementation (using a Stack)</h3>
 <p>Since recursion uses the call stack, we can manually manage a stack to achieve an iterative DFS.</p>
 <div class="highlight"><pre><span></span><code><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
@@ -770,28 +770,28 @@ Edges: (A, B), (A, C), (B, D), (C, E)</p>
 <span class="c1"># Expected output: A C E B D (order might vary slightly based on neighbor pushing)</span>
 </code></pre></div>
 
-<h2>Characteristics of DFS</h2>
+<h2 id="characteristics-of-dfs">Characteristics of DFS</h2>
 <ul>
 <li><strong>Time Complexity</strong>: For a graph with <code>V</code> vertices and <code>E</code> edges, DFS has a time complexity of O(V + E) because it visits each vertex and edge at most once.</li>
 <li><strong>Space Complexity</strong>: O(V) in the worst case (for the recursion stack or explicit stack), as it might need to store all vertices on the current path.</li>
 <li><strong>Completeness</strong>: DFS is complete for finite graphs, meaning it will find a path to a goal state if one exists.</li>
 <li><strong>Optimality</strong>: DFS is not optimal in general; it might find a longer path to a target simply because it explores one branch fully before exploring others.</li>
 </ul>
-<h2>Powerful Applications of DFS</h2>
+<h2 id="powerful-applications-of-dfs">Powerful Applications of DFS</h2>
 <p>DFS is more than just a traversal algorithm; it's a versatile tool used to solve a wide range of problems in computer science.</p>
-<h3>1. Finding Connected Components</h3>
+<h3 id="1-finding-connected-components">1. Finding Connected Components</h3>
 <p>In an undirected graph, DFS can easily identify all nodes belonging to the same connected component. If you start DFS from an unvisited node, all nodes reachable from it form a connected component.</p>
-<h3>2. Topological Sorting</h3>
+<h3 id="2-topological-sorting">2. Topological Sorting</h3>
 <p>For Directed Acyclic Graphs (DAGs), DFS can be used to produce a topological sort, which is a linear ordering of vertices such that for every directed edge U -&gt; V, vertex U comes before V in the ordering. This is crucial for task scheduling.</p>
-<h3>3. Cycle Detection</h3>
+<h3 id="3-cycle-detection">3. Cycle Detection</h3>
 <p>DFS can detect cycles in both directed and undirected graphs. In an undirected graph, if DFS encounters a visited node that is not its immediate parent, a cycle exists. In a directed graph, a cycle is detected if DFS encounters a visited node that is currently in the recursion stack (i.e., an ancestor).</p>
-<h3>4. Pathfinding (Maze Solving)</h3>
+<h3 id="4-pathfinding-maze-solving">4. Pathfinding (Maze Solving)</h3>
 <p>DFS is a natural fit for solving mazes. By treating the maze as a graph where junctions are nodes and passages are edges, DFS can explore paths until it finds the exit.</p>
-<h3>5. Strongly Connected Components (Tarjan's, Kosaraju's Algorithms)</h3>
+<h3 id="5-strongly-connected-components-tarjans-kosarajus-algorithms">5. Strongly Connected Components (Tarjan's, Kosaraju's Algorithms)</h3>
 <p>More advanced algorithms like Tarjan's or Kosaraju's for finding strongly connected components in directed graphs rely heavily on DFS.</p>
-<h3>6. Biconnectivity and Cut Vertices</h3>
+<h3 id="6-biconnectivity-and-cut-vertices">6. Biconnectivity and Cut Vertices</h3>
 <p>DFS can identify articulation points (cut vertices) and bridges in a graph, which are critical for network reliability analysis.</p>
-<h2>DFS vs. BFS: When to Use Which?</h2>
+<h2 id="dfs-vs-bfs-when-to-use-which">DFS vs. BFS: When to Use Which?</h2>
 <p>While both DFS and BFS are fundamental graph traversal algorithms, their different strategies make them suitable for different scenarios:</p>
 <ul>
 <li>
@@ -813,9 +813,9 @@ Edges: (A, B), (A, C), (B, D), (C, E)</p>
 </ul>
 </li>
 </ul>
-<h2>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>Depth-First Search is a cornerstone algorithm in computer science, offering a powerful and elegant way to explore graph structures. Its "go deep" approach, whether implemented recursively or iteratively, provides solutions to a myriad of problems, from detecting cycles to orchestrating task dependencies. Understanding DFS not only sharpens your algorithmic thinking but also equips you with a versatile tool for tackling complex data relationships. So, the next time you encounter a graph problem, remember the deep dive power of DFS!</p>
-<h2>Further Reading &amp; Resources</h2>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
 <ul>
 <li><strong>Depth-First Search (Wikipedia)</strong>: <a href="https://en.wikipedia.org/wiki/Depth-first_search">https://en.wikipedia.org/wiki/Depth-first_search</a></li>
 <li><strong>Graph Theory (Wikipedia)</strong>: <a href="https://en.wikipedia.org/wiki/Graph_theory">https://en.wikipedia.org/wiki/Graph_theory</a></li>
