@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSES Labyrinth Problem in Python, Java & C++: A Complete Guide
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master the CSES Labyrinth Problem in Python, Java, and C++ with this complete guide. Learn BFS, path reconstruction, and avoid common pitfalls." />
+    <meta name="keywords" content="Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive" />
+    <meta name="author" content="Analytics Drive" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="CSES Labyrinth Problem in Python, Java & C++: A Complete Guide" />
+    <meta property="og:description"
+        content="Master the CSES Labyrinth Problem in Python, Java, and C++ with this complete guide. Learn BFS, path reconstruction, and avoid common pitfalls." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/cses-labyrinth-problem-python-java-cpp-guide.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="CSES Labyrinth Problem in Python, Java & C++: A Complete Guide" />
+    <meta name="twitter:description" content="Master the CSES Labyrinth Problem in Python, Java, and C++ with this complete guide. Learn BFS, path reconstruction, and avoid common pitfalls." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/cses-labyrinth-problem-python-java-cpp-guide.webp" />
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive",        "https://www.reddit.com/r/Analyticsdrive/"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* Code Blocks (Light Mode) */
+        .post-content pre {
+            background: #f4f4f4;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .post-content code {
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            /* Pink/Red for inline code */
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .post-content pre code {
+            background: transparent;
+            color: #333;
+            padding: 0;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+
+            /* Mobile Nav Fix */
+            .main-nav {
+                display: flex;
+                justify-content: center;
+                /* Center links only */
+                align-items: center;
+                padding: 0.5rem 1rem;
+                position: static;
+                /* Let absolute children be relative to .site-header */
+            }
+
+            .main-nav ul {
+                flex: 1;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                /* Relative to .site-header */
+                top: 1rem;
+                right: 1rem;
+                transform: none;
+                margin-left: 0;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg);
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+                <li><a href="https://analyticsdrive.tech/about/">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/"
+  },
+  "headline": "CSES Labyrinth Problem in Python, Java & C++: A Complete Guide",
+  "description": "Master the CSES Labyrinth Problem in Python, Java, and C++ with this complete guide. Learn BFS, path reconstruction, and avoid common pitfalls.",
+  "image": [
+    "https://analyticsdrive.tech/images/cses-labyrinth-problem-python-java-cpp-guide.webp"
+  ],
+  "datePublished": "2026-02-24T10:45:00+00:00",
+  "dateModified": "2026-02-24T10:45:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+<div class="post-layout">
+
+  <!-- Floating Sticky Share Sidebar (desktop only) -->
+  <aside class="share-sidebar" aria-label="Share this article">
+    <span class="share-sidebar__label">Share</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/&text=CSES%20Labyrinth%20Problem%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Complete%20Guide"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+      aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/&title=CSES%20Labyrinth%20Problem%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Complete%20Guide"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+      aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=CSES%20Labyrinth%20Problem%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Complete%20Guide%20https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </aside>
+
+  <article class="single-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2026-02-24T10:45:00+00:00">Tue 24 February 2026</time>
+      </div>
+      <h1>CSES Labyrinth Problem in Python, Java & C++: A Complete Guide</h1>
+    </header>
+
+    <div class="featured-image">
+      <img src="https://analyticsdrive.tech/images/cses-labyrinth-problem-python-java-cpp-guide.webp" alt="CSES Labyrinth Problem in Python, Java & C++: A Complete Guide" loading="lazy" />
+    </div>
+
+    <div class="post-content">
+      <p>Mastering the <strong>CSES Labyrinth Problem</strong> in <strong>Python, Java</strong>, and <strong>C++</strong> is a fundamental step for competitive programmers, presenting a classic graph traversal challenge that often stumps beginners. It requires navigating a grid-based maze to find the shortest path from a starting point to an ending point and then reconstructing that path. This complete guide will walk you through solving the <strong>CSES Labyrinth Problem in Python, Java, and C++</strong>, detailing the logic, necessary data structures, and providing robust code examples. By the end, you'll have a solid understanding of Breadth-First Search (BFS) and how to apply it effectively to maze-solving tasks.</p>
+<h2>Understanding the CSES Labyrinth Problem</h2>
+<p>The CSES Labyrinth Problem tasks you with navigating a grid-based maze. The maze consists of empty cells ('.'), walls ('#'), a starting point ('A'), and an ending point ('B'). Your goal is to find if a path exists from 'A' to 'B' and, if so, determine the shortest possible path length and reconstruct the sequence of moves (Up, Down, Left, Right) to get there.</p>
+<p>The input typically provides the dimensions of the grid (N rows, M columns), followed by N lines representing the maze layout. Movement is restricted to adjacent cells (up, down, left, right) and you cannot move through walls or outside the grid boundaries.</p>
+<p>Consider a small example:</p>
+<div class="highlight"><pre><span></span><code><span class="mf">3</span><span class="w"> </span><span class="mf">3</span>
+<span class="n">A</span><span class="mf">.</span><span class="err">#</span>
+<span class="mf">.</span><span class="err">#</span><span class="mf">.</span>
+<span class="mf">..</span><span class="n">B</span>
+</code></pre></div>
+
+<p>Here, 'A' is at (0,0) and 'B' is at (2,2). A possible shortest path could be: A -&gt; (1,0) -&gt; (2,0) -&gt; (2,1) -&gt; (2,2) (B). The path length would be 4, and the moves would be DLRD.</p>
+<p>This problem is a quintessential application of Breadth-First Search (BFS) because BFS naturally explores all possible paths layer by layer, guaranteeing that the first time it reaches the target cell, it has found the shortest path in terms of the number of moves. This characteristic makes BFS ideal for unweighted shortest path problems on a grid.</p>
+<h2>Prerequisites for Solving the CSES Labyrinth Problem</h2>
+<p>Before diving into the solution, ensure you have a firm grasp of a few fundamental concepts:</p>
+<ol>
+<li><strong>Breadth-First Search (BFS):</strong> You should understand how BFS works, its use of a queue, and its layer-by-layer exploration strategy. This is the core algorithm for finding the shortest path in unweighted graphs. For another great example of BFS in action, check out <a href="/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a>. Familiarity with marking visited nodes to prevent cycles and redundant computations is crucial.</li>
+<li><strong>2D Arrays/Grids:</strong> The labyrinth is represented as a 2D grid. You should be comfortable with indexing, iterating, and manipulating elements within a 2D array or list of lists in your chosen programming language. This includes understanding row and column coordinates.</li>
+<li><strong>Basic Data Structures:</strong><ul>
+<li><strong>Queue:</strong> Essential for BFS to manage the cells to visit next.</li>
+<li><strong>Arrays/Matrices for State Tracking:</strong> You'll need additional 2D arrays to keep track of visited cells and, critically, to store parent pointers (or directions) for path reconstruction.</li>
+</ul>
+</li>
+<li><strong>Programming Language Fundamentals:</strong> Proficiency in Python, Java, or C++ is necessary. This includes input/output operations, declaring variables, control flow (loops, conditionals), and working with standard library collections (e.g., <code>collections.deque</code> in Python, <code>java.util.Queue</code> in Java, <code>std::queue</code> in C++).</li>
+<li><strong>Competitive Programming I/O:</strong> For Java and C++, understanding fast I/O methods can be beneficial, as standard I/O might be too slow for larger test cases. Python's default I/O is generally sufficient.</li>
+</ol>
+<p>Meeting these prerequisites will ensure you can fully follow the step-by-step solution and apply the concepts effectively to competitive programming problems. If any of these areas feel unfamiliar, consider reviewing them before proceeding.</p>
+<h2>Core Algorithm: Breadth-First Search (BFS) for Mazes</h2>
+<p>The <strong>CSES Labyrinth Problem in Python, Java and C++</strong> is a classic application of Breadth-First Search (BFS). BFS is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph, sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.</p>
+<p>Why is BFS ideal for maze solving, especially when seeking the shortest path? BFS explores all nodes at a given "distance" (number of steps) from the source before moving on to nodes at a greater distance. This means that the first time the target node 'B' is encountered, it is guaranteed to be via the path with the minimum number of steps. This characteristic makes BFS ideal for unweighted shortest path problems on a grid, similar to how it's used in <a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/">Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</a>. In contrast, Depth-First Search (DFS) might stumble upon a very long path to the target before exploring shorter alternatives.</p>
+<p>To implement BFS for a maze:</p>
+<ol>
+<li><strong>Initialization:</strong><ul>
+<li>Start with a queue containing the initial position ('A').</li>
+<li>Mark the starting position as visited.</li>
+<li>Initialize a 2D array (e.g., <code>dist</code> or <code>parent</code>) to store information about the path. <code>dist</code> can store the shortest distance to each cell, while <code>parent</code> can store the direction taken to reach a cell, which is crucial for path reconstruction.</li>
+</ul>
+</li>
+<li><strong>Exploration:</strong><ul>
+<li>While the queue is not empty:<ul>
+<li>Dequeue a cell (current row, current column).</li>
+<li>If this cell is the target 'B', we've found the shortest path.</li>
+<li>For each of the four possible neighbors (up, down, left, right):<ul>
+<li>Check if the neighbor is within grid boundaries, is not a wall ('#'), and has not been visited yet.</li>
+<li>If all conditions are met:<ul>
+<li>Mark the neighbor as visited.</li>
+<li>Enqueue the neighbor.</li>
+<li>Update its distance (current cell's distance + 1) and, most importantly, store the direction taken from the current cell to reach this neighbor. This "parent pointer" is key for path reconstruction.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>By systematically exploring the grid in this manner, BFS ensures that every reachable cell is visited exactly once via its shortest path from the source, making it highly efficient for this type of problem.</p>
+<h2>Step-by-Step Solution: CSES Labyrinth Problem in Python, Java and C++</h2>
+<p>This section provides a detailed, step-by-step guide to solving the <strong>CSES Labyrinth Problem in Python, Java and C++</strong>, complete with code examples for each language. We will cover input parsing, BFS implementation, and path reconstruction.</p>
+<h3>1. Parsing Input and Initializing Data Structures</h3>
+<p>The first step is to read the grid dimensions, parse the maze layout, and set up the necessary data structures. We'll need a 2D array to represent the maze, another 2D array to track visited cells, and a third 2D array to store the "parent" direction for path reconstruction. We also need to find the start ('A') and end ('B') coordinates.</p>
+<h4>Python Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="k">def</span> <span class="nf">solve</span><span class="p">():</span>
+    <span class="n">N</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">start_pos</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">end_pos</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span>
+                <span class="n">start_pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">row</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span>
+                <span class="n">end_pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+    <span class="c1"># Stores (row, col) of previous cell to reconstruct path</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+    <span class="c1"># Stores distance from &#39;A&#39; to (row, col)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+    <span class="c1"># Stores the direction character (&#39;U&#39;, &#39;D&#39;, &#39;L&#39;, &#39;R&#39;) to reach this cell from its parent</span>
+    <span class="n">move_dir</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+    <span class="c1"># Directions: (dr, dc, char_move)</span>
+    <span class="c1"># Up, Down, Left, Right</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">dc</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">dir_chars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>Python uses <code>collections.deque</code> for an efficient queue. We initialize <code>parent</code>, <code>dist</code>, and <code>move_dir</code> arrays. <code>parent</code> stores the coordinates of the cell from which the current cell was reached, <code>dist</code> stores the shortest distance, and <code>move_dir</code> stores the character representing the move. <code>dr</code>, <code>dc</code>, <code>dir_chars</code> arrays are set up for easy neighbor traversal.</p>
+<h4>Java Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Labyrinth</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">M</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">char</span><span class="o">[][]</span><span class="w"> </span><span class="n">grid</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">char</span><span class="o">[][]</span><span class="w"> </span><span class="n">moveDir</span><span class="p">;</span><span class="w"> </span><span class="c1">// Stores the direction char (&#39;U&#39;, &#39;D&#39;, &#39;L&#39;, &#39;R&#39;)</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">startR</span><span class="p">,</span><span class="w"> </span><span class="n">startC</span><span class="p">,</span><span class="w"> </span><span class="n">endR</span><span class="p">,</span><span class="w"> </span><span class="n">endC</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Directions: Up, Down, Left, Right</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">dc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">};</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">dirChars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;D&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;R&#39;</span><span class="p">};</span>
+
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Cell</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Cell</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">BufferedReader</span><span class="w"> </span><span class="n">br</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InputStreamReader</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">in</span><span class="p">));</span>
+<span class="w">        </span><span class="n">StringTokenizer</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringTokenizer</span><span class="p">(</span><span class="n">br</span><span class="p">.</span><span class="na">readLine</span><span class="p">());</span>
+<span class="w">        </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="na">nextToken</span><span class="p">());</span>
+<span class="w">        </span><span class="n">M</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="na">nextToken</span><span class="p">());</span>
+
+<span class="w">        </span><span class="n">grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="o">[</span><span class="n">N</span><span class="o">][</span><span class="n">M</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">][</span><span class="n">M</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="n">moveDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">char</span><span class="o">[</span><span class="n">N</span><span class="o">][</span><span class="n">M</span><span class="o">]</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">br</span><span class="p">.</span><span class="na">readLine</span><span class="p">();</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">grid</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">charAt</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">                </span><span class="n">dist</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// Initialize distance to -1 (unvisited)</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">grid</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;A&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">startR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">startC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">grid</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;B&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">endR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">endC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// ... BFS logic will go here</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>In Java, we use <code>BufferedReader</code> and <code>StringTokenizer</code> for faster I/O. A <code>Cell</code> class helps manage coordinates. The <code>grid</code>, <code>dist</code>, and <code>moveDir</code> arrays are initialized, and start/end coordinates are found during input parsing. <code>dist</code> is initialized with -1 to signify unvisited cells.</p>
+<h4>C++ Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tuple&gt;</span><span class="c1"> // For parent tracking if needed, though char for direction is simpler</span>
+
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">M</span><span class="p">;</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">grid</span><span class="p">;</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span><span class="w"> </span><span class="c1">// Stores distance, -1 for unvisited</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">moveDir</span><span class="p">;</span><span class="w"> </span><span class="c1">// Stores &#39;U&#39;, &#39;D&#39;, &#39;L&#39;, &#39;R&#39; to reconstruct path</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">startR</span><span class="p">,</span><span class="w"> </span><span class="n">startC</span><span class="p">,</span><span class="w"> </span><span class="n">endR</span><span class="p">,</span><span class="w"> </span><span class="n">endC</span><span class="p">;</span>
+
+<span class="c1">// Directions: Up, Down, Left, Right</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">dr</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">};</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">dc</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">};</span>
+<span class="kt">char</span><span class="w"> </span><span class="n">dirChars</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;D&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;R&#39;</span><span class="p">};</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ios_base</span><span class="o">::</span><span class="n">sync_with_stdio</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span><span class="w"> </span><span class="c1">// Fast I/O</span>
+<span class="w">    </span><span class="n">cin</span><span class="p">.</span><span class="n">tie</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span><span class="w">                   </span><span class="c1">// Fast I/O</span>
+
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">grid</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">N</span><span class="p">);</span>
+<span class="w">    </span><span class="n">dist</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">));</span><span class="w"> </span><span class="c1">// Initialize all distances to -1</span>
+<span class="w">    </span><span class="n">moveDir</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">));</span><span class="w"> </span><span class="c1">// Initialize with space</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">];</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;A&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">startR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">                </span><span class="n">startC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;B&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">endR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">;</span>
+<span class="w">                </span><span class="n">endC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// ... BFS logic will go here</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>C++ uses <code>iostream</code> for I/O, with <code>ios_base::sync_with_stdio(false)</code> and <code>cin.tie(NULL)</code> for performance. <code>vector&lt;string&gt;</code> is used for the grid, and <code>vector&lt;vector&lt;int&gt;&gt;</code> and <code>vector&lt;vector&lt;char&gt;&gt;</code> for <code>dist</code> and <code>moveDir</code> respectively. Distances are initialized to -1, and move directions to ' '.</p>
+<h3>2. Implementing the BFS Algorithm</h3>
+<p>Once the data structures are initialized and the start/end points are identified, the core BFS algorithm can be implemented. The BFS will use a queue to manage cells to visit. When a cell is popped from the queue, its neighbors are explored.</p>
+<h4>Python Implementation</h4>
+<div class="highlight"><pre><span></span><code>    <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_pos</span><span class="p">)</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">start_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">start_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">found_B</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">end_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">==</span> <span class="n">end_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">found_B</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">break</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="c1"># Check boundaries, wall, and visited status</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">M</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span> <span class="ow">and</span> <span class="n">dist</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">dist</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">parent</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="c1"># Store parent coordinates</span>
+                <span class="n">move_dir</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">=</span> <span class="n">dir_chars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="c1"># Store move character</span>
+                <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">))</span>
+
+    <span class="c1"># ... Path reconstruction logic will go here</span>
+</code></pre></div>
+
+<p>Python's <code>deque</code> is used as the queue. The <code>dist</code> array acts as a visited tracker (if <code>dist[nr][nc] == -1</code>, it's unvisited). For each valid neighbor, we update its distance, store its parent coordinates, and store the specific move character that led to it.</p>
+<h4>Java Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ... (input parsing as above) ...</span>
+
+<span class="w">        </span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Cell</span><span class="o">&gt;</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Cell</span><span class="p">(</span><span class="n">startR</span><span class="p">,</span><span class="w"> </span><span class="n">startC</span><span class="p">));</span>
+<span class="w">        </span><span class="n">dist</span><span class="o">[</span><span class="n">startR</span><span class="o">][</span><span class="n">startC</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">foundB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Cell</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="na">r</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="na">c</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">endR</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">endC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">foundB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">nr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dc</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+
+<span class="w">                </span><span class="c1">// Check boundaries, wall, and visited status</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nr</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nr</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">grid</span><span class="o">[</span><span class="n">nr</span><span class="o">][</span><span class="n">nc</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;#&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">nr</span><span class="o">][</span><span class="n">nc</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">dist</span><span class="o">[</span><span class="n">nr</span><span class="o">][</span><span class="n">nc</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">moveDir</span><span class="o">[</span><span class="n">nr</span><span class="o">][</span><span class="n">nc</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dirChars</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// Store the character move</span>
+<span class="w">                    </span><span class="n">q</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Cell</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="p">));</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// ... Path reconstruction logic will go here</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+
+<p>Java uses <code>LinkedList</code> as its <code>Queue</code> implementation. The logic is identical: add start to queue, set its distance, then loop. For each neighbor, check validity, update distance, store the <code>moveDir</code> character, and enqueue.</p>
+<h4>C++ Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ... (input parsing as above) ...</span>
+
+<span class="w">    </span><span class="n">queue</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="w">    </span><span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">startR</span><span class="p">,</span><span class="w"> </span><span class="n">startC</span><span class="p">});</span>
+<span class="w">    </span><span class="n">dist</span><span class="p">[</span><span class="n">startR</span><span class="p">][</span><span class="n">startC</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">foundB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+<span class="w">        </span><span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">endR</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">endC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">foundB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">nr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dc</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+<span class="w">            </span><span class="c1">// Check boundaries, wall, and visited status</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nr</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nr</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">grid</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;#&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">dist</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">                </span><span class="n">moveDir</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dirChars</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"> </span><span class="c1">// Store the character move</span>
+<span class="w">                </span><span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">nr</span><span class="p">,</span><span class="w"> </span><span class="n">nc</span><span class="p">});</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// ... Path reconstruction logic will go here</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>C++ utilizes <code>std::queue</code> with <code>std::pair&lt;int, int&gt;</code> to store coordinates. The <code>dist</code> array serves as the visited tracker. The <code>moveDir</code> array stores the character that represents the move from the parent cell.</p>
+<h3>3. Reconstructing the Path</h3>
+<p>After BFS completes and (if a path is found) <code>found_B</code> is true, we need to reconstruct the actual path. This is done by backtracking from the <code>end_pos</code> to the <code>start_pos</code> using the <code>move_dir</code> (or <code>parent</code>) array. Since we stored the character move <em>to</em> the current cell, we can reverse this process. We add the current cell's <code>move_dir</code> to a list, then move to its parent, and repeat until we reach the start. Finally, reverse the collected path.</p>
+<h4>Python Implementation</h4>
+<div class="highlight"><pre><span></span><code>    <span class="k">if</span> <span class="ow">not</span> <span class="n">found_B</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NO&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;YES&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">curr_r</span><span class="p">,</span> <span class="n">curr_c</span> <span class="o">=</span> <span class="n">end_pos</span>
+        <span class="c1"># Backtrack from B to A</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">curr_r</span><span class="p">,</span> <span class="n">curr_c</span><span class="p">)</span> <span class="o">!=</span> <span class="n">start_pos</span><span class="p">:</span>
+            <span class="n">move</span> <span class="o">=</span> <span class="n">move_dir</span><span class="p">[</span><span class="n">curr_r</span><span class="p">][</span><span class="n">curr_c</span><span class="p">]</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
+
+            <span class="c1"># Determine parent coordinates based on the move</span>
+            <span class="k">if</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;U&#39;</span><span class="p">:</span>
+                <span class="n">curr_r</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span>
+                <span class="n">curr_r</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+                <span class="n">curr_c</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span>
+                <span class="n">curr_c</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="n">path</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span> <span class="c1"># Path was built from B to A, so reverse for A to B</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+<span class="c1"># Call the solve function</span>
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Python reconstructs the path by iterating backward from <code>end_pos</code> until <code>start_pos</code> is reached. It appends the <code>move_dir</code> character to a list and then updates <code>curr_r, curr_c</code> to what its parent must have been based on the stored move. The path is then reversed and printed.</p>
+<h4>Java Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// ... (BFS logic as above) ...</span>
+
+<span class="w">        </span><span class="n">PrintWriter</span><span class="w"> </span><span class="n">pw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PrintWriter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">BufferedWriter</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OutputStreamWriter</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">)));</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">foundB</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">pw</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;NO&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">pw</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;YES&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">currR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">endR</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">currC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">endC</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Backtrack from B to A</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">currR</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">startR</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">currC</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">startC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">char</span><span class="w"> </span><span class="n">move</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">moveDir</span><span class="o">[</span><span class="n">currR</span><span class="o">][</span><span class="n">currC</span><span class="o">]</span><span class="p">;</span>
+<span class="w">                </span><span class="n">path</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">move</span><span class="p">);</span>
+
+<span class="w">                </span><span class="c1">// Determine parent coordinates based on the move</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached currR,currC by moving Up, so parent was (currR+1, currC)</span>
+<span class="w">                    </span><span class="n">currR</span><span class="o">++</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;D&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached by moving Down, so parent was (currR-1, currC)</span>
+<span class="w">                    </span><span class="n">currR</span><span class="o">--</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached by moving Left, so parent was (currR, currC+1)</span>
+<span class="w">                    </span><span class="n">currC</span><span class="o">++</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;R&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached by moving Right, so parent was (currR, currC-1)</span>
+<span class="w">                    </span><span class="n">currC</span><span class="o">--</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">pw</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="na">length</span><span class="p">());</span>
+<span class="w">            </span><span class="n">pw</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="na">reverse</span><span class="p">().</span><span class="na">toString</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">pw</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+<span class="w">        </span><span class="n">br</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">        </span><span class="n">pw</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+
+<p>Java's path reconstruction is similar to Python. <code>StringBuilder</code> is used for efficient string manipulation. The path is built in reverse and then reversed again before printing. <code>PrintWriter</code> is used for faster output.</p>
+<h4>C++ Implementation</h4>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ... (BFS logic as above) ...</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">foundB</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;NO</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;YES</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">string</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">currR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">endR</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">currC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">endC</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Backtrack from B to A</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">currR</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">startR</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">currC</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">startC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="n">move</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">moveDir</span><span class="p">[</span><span class="n">currR</span><span class="p">][</span><span class="n">currC</span><span class="p">];</span>
+<span class="w">            </span><span class="n">path</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">move</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Determine parent coordinates based on the move</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached (currR,currC) by moving Up, parent was (currR+1, currC)</span>
+<span class="w">                </span><span class="n">currR</span><span class="o">++</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;D&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached by moving Down, parent was (currR-1, currC)</span>
+<span class="w">                </span><span class="n">currR</span><span class="o">--</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached by moving Left, parent was (currR, currC+1)</span>
+<span class="w">                </span><span class="n">currC</span><span class="o">++</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">move</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;R&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Reached by moving Right, parent was (currR, currC-1)</span>
+<span class="w">                </span><span class="n">currC</span><span class="o">--</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">reverse</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">end</span><span class="p">());</span><span class="w"> </span><span class="c1">// Reverse the path</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>C++ path reconstruction uses <code>std::string</code> to build the path. The logic for backtracking and reversing is identical. <code>std::reverse</code> from <code>&lt;algorithm&gt;</code> is used to reverse the path string.</p>
+<h3>4. Outputting the Result</h3>
+<p>The final step is to print the required output: "YES" or "NO", followed by the length of the shortest path, and then the path itself as a string of characters.</p>
+<p>All the code examples above integrate the output logic within the path reconstruction steps. Ensure that your output matches the exact format specified by CSES:
+1.  "YES" if a path exists, "NO" otherwise.
+2.  If "YES", print the length of the shortest path.
+3.  If "YES", print the sequence of moves ('U', 'D', 'L', 'R').</p>
+<p>For example, if the path length is 4 and the moves are DLRD:</p>
+<div class="highlight"><pre><span></span><code>YES
+4
+DLRD
+</code></pre></div>
+
+<p>This comprehensive step-by-step approach ensures that you handle all aspects of the <strong>CSES Labyrinth Problem in Python, Java and C++</strong>, from reading input to finding the shortest path and reconstructing the moves.</p>
+<h2>Common Mistakes and How to Avoid Them</h2>
+<p>Solving the CSES Labyrinth Problem, while straightforward conceptually with BFS, often involves subtle implementation errors. Being aware of these common pitfalls can save significant debugging time.</p>
+<h3>1. Forgetting to Mark Visited Cells</h3>
+<p>One of the most frequent errors in BFS (and DFS) is failing to mark cells as visited. If a cell is not marked, the algorithm might:
+*   <strong>Enter an infinite loop:</strong> Repeatedly adding the same cell to the queue, especially in grids with cycles.
+*   <strong>Recompute paths:</strong> Explore longer paths to cells already visited via a shorter route, making the algorithm inefficient and potentially leading to Time Limit Exceeded (TLE).
+*   <strong>Incorrect path reconstruction:</strong> If multiple paths to the same cell are explored, the parent pointer might be overwritten by a non-optimal path.</p>
+<p><strong>Solution:</strong> Always mark a cell as visited (e.g., by setting <code>dist[r][c] = 0</code> or similar for the start, and <code>dist[nr][nc] = dist[r][c] + 1</code> for neighbors) <em>immediately</em> when it is added to the queue. This ensures each cell is processed only once, and its <code>dist</code> and <code>move_dir</code> values are set by the shortest path.</p>
+<h3>2. Incorrect Path Reconstruction Logic</h3>
+<p>Reconstructing the path often causes confusion. It's easy to mix up the direction of movement. Remember:
+*   If <code>move_dir[nr][nc]</code> stores the direction 'D' (Down), it means we moved <code>Down</code> from <code>(nr-1, nc)</code> to reach <code>(nr, nc)</code>.
+*   So, to backtrack from <code>(nr, nc)</code>, we need to move <code>Up</code> to reach its parent <code>(nr-1, nc)</code>.</p>
+<p><strong>Solution:</strong> When backtracking from the <code>end_pos</code>, if the <code>move_dir</code> at <code>(currR, currC)</code> indicates 'U' (meaning we moved Up to <em>reach</em> this cell), then the parent was <code>(currR + 1, currC)</code>. Carefully map each recorded direction to its inverse to find the parent cell. Build the path by appending to a list/string and then <code>reverse()</code> it at the end, as the path is constructed from 'B' back to 'A'.</p>
+<h3>3. Off-by-One Errors in Grid Traversal and Boundary Checks</h3>
+<p>Grid problems are notorious for off-by-one errors.
+*   <strong>Boundary checks:</strong> Failing to correctly check <code>0 &lt;= nr &lt; N</code> and <code>0 &lt;= nc &lt; M</code> can lead to <code>IndexOutOfBoundsException</code> (Java) or segmentation faults (C++).
+*   <strong>Neighbor loops:</strong> Ensure your <code>dr</code> and <code>dc</code> arrays correctly cover all four cardinal directions (Up, Down, Left, Right) and that your loop iterates exactly four times.</p>
+<p><strong>Solution:</strong> Double-check your boundary conditions, especially for <code>0</code> and <code>N-1</code>/<code>M-1</code>. It's a good practice to encapsulate the boundary check into a helper function or a clear conditional statement. Test with small grids (1x1, 1x2, 2x1) to catch these errors early.</p>
+<h3>4. Time Limit Exceeded (TLE) Due to Inefficient I/O</h3>
+<p>For larger grids, especially in Java and C++, standard input/output operations can be slow, causing your solution to exceed the time limit even if the algorithm is correct.
+*   <strong>Java:</strong> Using <code>Scanner</code> and <code>System.out.println</code> can be slow.
+*   <strong>C++:</strong> Using <code>cin</code> and <code>cout</code> without optimizations.</p>
+<p><strong>Solution:</strong>
+*   <strong>Java:</strong> Use <code>BufferedReader</code> for input and <code>PrintWriter</code> for output.
+*   <strong>C++:</strong> Add <code>ios_base::sync_with_stdio(false);</code> and <code>cin.tie(NULL);</code> at the beginning of your <code>main</code> function.
+*   <strong>Python:</strong> <code>sys.stdin.readline</code> is generally fast enough.</p>
+<h3>5. Using DFS Instead of BFS for Shortest Path</h3>
+<p>While DFS can also traverse a maze, it does <em>not</em> guarantee finding the shortest path in an unweighted graph. DFS explores deeply before backtracking, meaning it might find a very long path to the target before ever considering a shorter one. For problems requiring shortest paths, BFS is generally preferred over algorithms like those used in <a href="/leetcode-417-pacific-atlantic-water-flow-dfs-solution/">Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS</a>, which might use DFS for connectivity.</p>
+<p><strong>Solution:</strong> For problems that explicitly ask for the <em>shortest</em> path in an unweighted grid or graph, BFS is almost always the correct choice. Stick to BFS for the CSES Labyrinth Problem.</p>
+<p>By paying close attention to these common mistakes and adopting the suggested solutions, you can significantly improve your chances of correctly solving the <strong>CSES Labyrinth Problem in Python, Java and C++</strong> and similar competitive programming challenges.</p>
+<h2>Optimizations and Advanced Tips</h2>
+<p>While the basic BFS approach is sufficient for the CSES Labyrinth Problem, understanding potential optimizations and advanced considerations can further enhance your competitive programming skills.</p>
+<h3>1. Fast I/O (Reiteration)</h3>
+<p>As mentioned in common mistakes, fast I/O is crucial for performance-critical problems, especially in Java and C++.
+*   <strong>Java:</strong> Using <code>BufferedReader</code> and <code>PrintWriter</code> is non-negotiable for large inputs.
+*   <strong>C++:</strong> <code>ios_base::sync_with_stdio(false); cin.tie(NULL);</code> should be a standard habit for competitive programming in C++.
+*   <strong>Python:</strong> <code>sys.stdin.readline()</code> for input and <code>print()</code> are usually adequate, but for extremely large outputs, consider <code>sys.stdout.write()</code>.</p>
+<p>These practices often prevent TLE errors even when your algorithm is asymptotically optimal.</p>
+<h3>2. Representing Directions More Concisely</h3>
+<p>Instead of separate <code>dr</code>, <code>dc</code>, and <code>dirChars</code> arrays, some competitive programmers might use a struct or class for directions, or even a single 2D array:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Example C++</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Direction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">dr</span><span class="p">,</span><span class="w"> </span><span class="n">dc</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">moveChar</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">Direction</span><span class="w"> </span><span class="n">moves</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;D&#39;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;R&#39;</span><span class="p">}</span><span class="w"> </span><span class="p">};</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">move</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">moves</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">nr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">move</span><span class="p">.</span><span class="n">dr</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">nc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">move</span><span class="p">.</span><span class="n">dc</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// ... use move.moveChar</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This can make the code slightly cleaner by associating the delta coordinates directly with their character representation, reducing potential indexing errors.</p>
+<h3>3. Space Optimization for Path Reconstruction (Advanced)</h3>
+<p>For this specific problem, storing <code>moveDir</code> (or <code>parent</code> coordinates) for every cell is necessary and generally acceptable within memory limits. However, for extremely large grids where memory is a concern, one might consider alternative path reconstruction. For instance, if only the path <em>length</em> is needed, <code>dist</code> array is sufficient. If the path itself is required, usually <code>parent</code> or <code>moveDir</code> array is the most straightforward.</p>
+<p>A highly advanced technique, if applicable, could be to run a bidirectional BFS from both 'A' and 'B' simultaneously. When the two BFS frontiers meet, a path is found. Path reconstruction from a bidirectional BFS is more complex, but it can significantly reduce the search space for extremely large grids, potentially halving the time complexity in the best-case scenario. However, for the CSES Labyrinth problem, a single BFS is generally sufficient and simpler to implement.</p>
+<h3>4. Edge Cases and Constraints</h3>
+<p>Always consider edge cases:
+*   <strong>1x1 grid:</strong> If 'A' is 'B', path length is 0 (or 1 depending on problem definition, usually 0 moves).
+*   <strong>No path:</strong> The BFS will complete without ever reaching 'B'. Ensure your code correctly outputs "NO" in this scenario.
+*   <strong>Start/End on a wall:</strong> The problem statement implies 'A' and 'B' are always on empty cells. If not, this would be an instant "NO".
+*   <strong>Grid full of walls:</strong> No path exists.</p>
+<p>The constraints (N, M up to 1000) mean that an O(N<em>M) solution like BFS is perfectly acceptable, as N</em>M = 10^6, and operations per cell are constant.</p>
+<p>By keeping these optimizations and advanced considerations in mind, you can not only solve the <strong>CSES Labyrinth Problem in Python, Java and C++</strong> efficiently but also build a stronger foundation for tackling more complex graph and grid-based challenges.</p>
+<h2>Conclusion: Mastering the CSES Labyrinth Problem</h2>
+<p>Congratulations! By following this comprehensive tutorial, you've gained a deep understanding of how to tackle the <strong>CSES Labyrinth Problem in Python, Java and C++</strong>. We've covered the crucial role of Breadth-First Search (BFS) in finding the shortest path in unweighted grids, detailed the necessary data structures, and provided complete, runnable code examples in three popular programming languages.</p>
+<p>You've learned to parse maze input, efficiently implement the BFS algorithm using a queue, and most importantly, reconstruct the actual path of moves from the start to the end. We also addressed common pitfalls such as forgotten visited checks, incorrect path reconstruction logic, and critical I/O performance considerations.</p>
+<p>Mastering the CSES Labyrinth Problem is a significant milestone in your competitive programming journey. It solidifies your understanding of graph traversal algorithms and their practical applications. Remember that practice is key. Try variations of this problem, or apply BFS to other grid-based challenges. The principles learned here are fundamental and will serve as a strong foundation for more complex algorithmic problems. Keep practicing, and happy coding!</p>
+<h2>Frequently Asked Questions</h2>
+<p><strong>Q: Why is BFS preferred over DFS for the CSES Labyrinth Problem?</strong>
+A: BFS guarantees finding the shortest path in terms of the number of moves because it explores the grid layer by layer, always visiting closer cells before moving to farther ones. DFS, in contrast, explores deeply first and might find a longer path before exploring shorter alternatives.</p>
+<p><strong>Q: How is the path reconstructed after BFS finds the target 'B'?</strong>
+A: Path reconstruction involves backtracking from the target cell ('B') to the starting cell ('A'). During the BFS, for each cell, we store the direction taken from its parent to reach it. By reversing these recorded moves, we can reconstruct the sequence of steps from 'A' to 'B'.</p>
+<p><strong>Q: What are the time and space complexity of the BFS solution for the CSES Labyrinth Problem?</strong>
+A: The time complexity is O(N<em>M), where N is the number of rows and M is the number of columns, as each cell is visited and processed at most once. The space complexity is also O(N</em>M) due to storing the grid, visited status, distances, and parent/direction information for all cells, as well as the queue which can hold up to O(N*M) cells in the worst case.</p>
+<h2>Further Reading &amp; Resources</h2>
+<ul>
+<li><a href="https://cses.fi/problemset/task/1192/">CSES Labyrinth Problem (Official)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Breadth-first_search">Breadth-First Search (BFS) on Wikipedia</a></li>
+<li><a href="https://www.geeksforgeeks.org/breadth-first-search-bfs-for-a-graph/">BFS Algorithm Tutorial on GeeksforGeeks</a></li>
+<li><a href="https://cp-algorithms.com/graph/bfs.html">BFS for Graphs (CP-Algorithms)</a></li>
+</ul>
+    </div>
+
+    <!-- Social Share Buttons -->
+    <div class="share-buttons">
+      <span class="share-label">Share:</span>
+
+      <!-- X (Twitter) -->
+      <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/&text=CSES%20Labyrinth%20Problem%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Complete%20Guide"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/&title=CSES%20Labyrinth%20Problem%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Complete%20Guide"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=CSES%20Labyrinth%20Problem%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Complete%20Guide%20https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="article-footer-meta">
+      <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/competitiveprogramming.html">CompetitiveProgramming</a></p>
+      <div class="tags-list">
+        <strong>Tags:</strong>
+        <span class="tag">#CSES</span>
+        <span class="tag">#Labyrinth</span>
+        <span class="tag">#BFS</span>
+        <span class="tag">#Python</span>
+        <span class="tag">#Java</span>
+        <span class="tag">#C++</span>
+        <span class="tag">#Algorithms</span>
+        <span class="tag">#GraphTheory</span>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <ul>
+        <li><a href="https://analyticsdrive.tech/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a></li>
+        <li><a href="https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/">Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</a></li>
+        <li><a href="https://analyticsdrive.tech/leetcode-417-pacific-atlantic-water-flow-dfs-solution/">Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS</a></li>
+      </ul>
+    </div>
+
+    <div class="post-footer">
+      <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Analytics Drive.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
