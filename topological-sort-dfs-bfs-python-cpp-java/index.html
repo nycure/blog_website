@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Topological Sort using DFS & BFS in Python, C++, Java
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn to implement topological sort using DFS and BFS algorithms across Python, C++, and Java. Master this critical graph algorithm for DAGs." />
+    <meta name="keywords" content="Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive" />
+    <meta name="author" content="Analytics Drive" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Topological Sort using DFS & BFS in Python, C++, Java" />
+    <meta property="og:description"
+        content="Learn to implement topological sort using DFS and BFS algorithms across Python, C++, and Java. Master this critical graph algorithm for DAGs." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/topological-sort-dfs-bfs-python-cpp-java.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Topological Sort using DFS & BFS in Python, C++, Java" />
+    <meta name="twitter:description" content="Learn to implement topological sort using DFS and BFS algorithms across Python, C++, and Java. Master this critical graph algorithm for DAGs." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/topological-sort-dfs-bfs-python-cpp-java.webp" />
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive",        "https://www.reddit.com/r/Analyticsdrive/"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* Code Blocks (Light Mode) */
+        .post-content pre {
+            background: #f4f4f4;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .post-content code {
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            /* Pink/Red for inline code */
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .post-content pre code {
+            background: transparent;
+            color: #333;
+            padding: 0;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+
+            /* Mobile Nav Fix */
+            .main-nav {
+                display: flex;
+                justify-content: center;
+                /* Center links only */
+                align-items: center;
+                padding: 0.5rem 1rem;
+                position: static;
+                /* Let absolute children be relative to .site-header */
+            }
+
+            .main-nav ul {
+                flex: 1;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                /* Relative to .site-header */
+                top: 1rem;
+                right: 1rem;
+                transform: none;
+                margin-left: 0;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg);
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+                <li><a href="https://analyticsdrive.tech/about/">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/"
+  },
+  "headline": "Topological Sort using DFS & BFS in Python, C++, Java",
+  "description": "Learn to implement topological sort using DFS and BFS algorithms across Python, C++, and Java. Master this critical graph algorithm for DAGs.",
+  "image": [
+    "https://analyticsdrive.tech/images/topological-sort-dfs-bfs-python-cpp-java.webp"
+  ],
+  "datePublished": "2026-02-24T13:59:00+00:00",
+  "dateModified": "2026-02-24T13:59:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+<div class="post-layout">
+
+  <!-- Floating Sticky Share Sidebar (desktop only) -->
+  <aside class="share-sidebar" aria-label="Share this article">
+    <span class="share-sidebar__label">Share</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/&text=Topological%20Sort%20using%20DFS%20%26%20BFS%20in%20Python%2C%20C%2B%2B%2C%20Java"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+      aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/&title=Topological%20Sort%20using%20DFS%20%26%20BFS%20in%20Python%2C%20C%2B%2B%2C%20Java"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+      aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Topological%20Sort%20using%20DFS%20%26%20BFS%20in%20Python%2C%20C%2B%2B%2C%20Java%20https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </aside>
+
+  <article class="single-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2026-02-24T13:59:00+00:00">Tue 24 February 2026</time>
+      </div>
+      <h1>Topological Sort using DFS & BFS in Python, C++, Java</h1>
+    </header>
+
+    <div class="featured-image">
+      <img src="https://analyticsdrive.tech/images/topological-sort-dfs-bfs-python-cpp-java.webp" alt="Topological Sort using DFS & BFS in Python, C++, Java" loading="lazy" />
+    </div>
+
+    <div class="post-content">
+      <p>Directed Acyclic Graphs (DAGs) are fundamental in computer science, modeling everything from task dependencies to course prerequisites. At the heart of effectively managing these structures lies the <strong>Topological Sort</strong>, an algorithm that linearizes the vertices of a DAG such that for every directed edge from vertex <code>u</code> to vertex <code>v</code>, <code>u</code> comes before <code>v</code> in the ordering. This comprehensive guide will walk you through implementing <strong>Topological Sort using DFS &amp; BFS in Python, C++, Java</strong>, equipping you with the skills to tackle complex dependency problems. We'll explore both Depth-First Search (DFS) and Breadth-First Search (BFS) based approaches, providing detailed explanations and ready-to-use code examples in each language.</p>
+<hr>
+<h2>Prerequisites for Mastering Topological Sort</h2>
+<p>Before diving into the intricacies of topological sort, a solid foundation in certain computer science concepts is highly recommended. These prerequisites will ensure you can fully grasp the algorithms and their implementations without getting bogged down by basic concepts.</p>
+<h3>Basic Graph Theory Knowledge</h3>
+<p>A fundamental understanding of <a href="/cses-labyrinth-problem-python-java-cpp-guide/">graph theory</a> is essential. This includes knowing what a graph is, the difference between directed and undirected graphs, and what edges and vertices represent. Familiarity with graph representations, specifically adjacency lists, will be particularly helpful as most implementations rely on this structure.</p>
+<h3>Understanding Depth-First Search (DFS)</h3>
+<p>DFS is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It's often implemented recursively or using an explicit stack. A good grasp of how <a href="/leetcode-417-pacific-atlantic-water-flow-dfs-solution/">DFS works</a>, its recursive nature, and its applications (like cycle detection) will be crucial for understanding the DFS-based topological sort.</p>
+<h3>Understanding Breadth-First Search (BFS)</h3>
+<p>BFS is another graph traversal algorithm that explores all the neighbor nodes at the present depth before moving on to the nodes at the next depth level. It's typically implemented using a queue. Understanding how <a href="/leetcode-127-word-ladder-bfs-tutorial/">BFS explores a graph</a> layer by layer and its uses (like finding the shortest path in unweighted graphs) is vital for the BFS-based topological sort.</p>
+<h3>Familiarity with Python, C++, and Java</h3>
+<p>This tutorial provides code examples in Python, C++, and Java. While you don't need to be an expert in all three, a basic understanding of programming concepts in at least one of these languages (data structures, functions/methods, loops, conditional statements) is necessary to follow the code and adapt it to your needs. Concepts like lists/vectors, dictionaries/maps, and queues will be heavily utilized.</p>
+<hr>
+<h2>What is Topological Sort?</h2>
+<p>Topological sort is a linear ordering of vertices in a directed acyclic graph (DAG) such that for every directed edge <code>(u, v)</code>, vertex <code>u</code> comes before vertex <code>v</code> in the ordering. It's important to reiterate that a topological sort is only possible for DAGs; graphs containing cycles cannot be topologically sorted.</p>
+<h3>Key Characteristics of Topological Sort</h3>
+<p>A topological sort holds several important characteristics that define its utility and behavior:</p>
+<ul>
+<li><strong>Applicable Only to DAGs:</strong> The most crucial characteristic is that topological sort can only be performed on a Directed Acyclic Graph. If a graph contains a cycle, no linear ordering can satisfy the condition that <code>u</code> comes before <code>v</code> for every edge <code>(u, v)</code> within the cycle. Detecting cycles is often an implicit part of topological sort algorithms.</li>
+<li><strong>Not Necessarily Unique:</strong> For a given DAG, there might be multiple valid topological sorts. If a graph has two vertices <code>u</code> and <code>v</code> with no directed path between them, their relative order in a topological sort can vary. For example, in a graph with edges <code>(A, B)</code> and <code>(A, C)</code> but no edge between <code>B</code> and <code>C</code>, both <code>A, B, C</code> and <code>A, C, B</code> could be valid sorts.</li>
+<li><strong>Dependency Resolution:</strong> The primary utility of topological sort lies in resolving dependencies. Tasks that must be completed before others are naturally ordered. This makes it invaluable in scheduling, build systems, and course sequencing.</li>
+</ul>
+<h3>Real-world Applications of Topological Sort</h3>
+<p>The practical applications of topological sort are extensive, making it a highly relevant algorithm for various computational problems.</p>
+<ul>
+<li><strong>Task Scheduling:</strong> In project management, some tasks must be completed before others can begin. A topological sort can determine a valid sequence for completing all tasks. For instance, compiling code, linking libraries, and then running tests form a dependency chain where a topological sort dictates the build order.</li>
+<li><strong>Course Scheduling/Prerequisites:</strong> University courses often have prerequisites. To graduate, a student must take courses in an order that satisfies all prerequisites. A topological sort can help determine a valid sequence of courses.</li>
+<li><strong>Dependency Resolution in Software Builds:</strong> Compilers and build systems (like <code>make</code> or Maven) use topological sort to determine the order in which files or modules need to be compiled or built, ensuring that <a href="/leetcode-269-alien-dictionary-code-python-java-cpp/">dependencies are satisfied first</a>.</li>
+<li><strong>Data Serialization:</strong> In some serialization formats or database systems, objects might depend on other objects. A topological sort can provide an order for saving or loading objects to maintain referential integrity.</li>
+<li><strong>Pipeline Processing:</strong> In data processing pipelines or workflow management, different stages might depend on the output of previous stages. Topological sort helps in orchestrating these stages in the correct sequence.</li>
+</ul>
+<hr>
+<h2>Implementing Topological Sort using DFS in Python, C++, and Java</h2>
+<p>The DFS-based approach to topological sort relies on the property that in a DAG, if we perform a DFS traversal, a vertex <code>u</code> will only finish its traversal after all vertices reachable from <code>u</code> have finished their traversal. This implies that if we add vertices to a list or stack <em>after</em> all their descendants have been visited, we will get a reverse topological order. Reversing this list or popping from the stack yields a valid topological sort.</p>
+<h3>Understanding the DFS Algorithm for Topological Sort</h3>
+<p>The core idea is to use a recursive DFS traversal. When a node's exploration is complete (meaning all its neighbors and their descendants have been visited), that node is added to the topological order. This ensures that any node <code>u</code> is added to the order only after all nodes <code>v</code> for which there's a path <code>u -&gt; ... -&gt; v</code> have been processed.</p>
+<p>We typically use three states for nodes during DFS:
+1.  <strong>Unvisited:</strong> The node has not been visited yet.
+2.  <strong>Visiting (Grey):</strong> The node is currently in the recursion stack, being explored. This state is crucial for cycle detection. If we encounter a 'visiting' node again, it means a cycle exists.
+3.  <strong>Visited (Black):</strong> The node and all its descendants have been fully explored.</p>
+<h3>Steps for DFS-based Topological Sort</h3>
+<p>Here’s a step-by-step breakdown of how to implement topological sort using DFS:</p>
+<h3>1. Initialize Data Structures</h3>
+<p>You'll need an adjacency list to represent the graph, a <code>visited</code> set/array to track node states (unvisited, visiting, visited), and a list or stack to store the topological order.</p>
+<h3>2. Implement the DFS Helper Function</h3>
+<p>Create a recursive <code>dfs</code> function that takes a node, the adjacency list, the <code>visited</code> tracker, and the result list/stack as arguments.</p>
+<h3>3. Mark Node as Visiting</h3>
+<p>When <code>dfs</code> is called for a node <code>u</code>, mark <code>u</code> as <code>visiting</code> (e.g., <code>grey</code>). This state is vital for detecting cycles.</p>
+<h3>4. Traverse Neighbors</h3>
+<p>Iterate through all neighbors <code>v</code> of <code>u</code>.
+    *   If <code>v</code> is <code>unvisited</code>, recursively call <code>dfs(v)</code>.
+    *   If <code>v</code> is <code>visiting</code>, a cycle is detected. Since topological sort is only for DAGs, you can throw an error or handle it as per requirements.</p>
+<h3>5. Mark Node as Visited and Add to Result</h3>
+<p>After visiting all neighbors of <code>u</code> and their subgraphs, mark <code>u</code> as <code>visited</code> (e.g., <code>black</code>). Then, add <code>u</code> to the <em>front</em> of your result list or <em>push</em> it onto a stack. This ensures the correct order.</p>
+<h3>6. Iterate Through All Nodes</h3>
+<p>In your main function, loop through all nodes in the graph. If a node is <code>unvisited</code>, start a DFS traversal from that node. This handles disconnected components of the graph.</p>
+<h3>Python Implementation (DFS)</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">topologicalSortDFS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numVertices</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">adj</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="c1"># 0: unvisited, 1: visiting (grey), 2: visited (black)</span>
+        <span class="n">visited_state</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">numVertices</span>
+        <span class="n">result_stack</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Using a list as a stack and then reversing</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numVertices</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">visited_state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">visited_state</span><span class="p">,</span> <span class="n">result_stack</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">[]</span> <span class="c1"># Cycle detected, topological sort not possible</span>
+
+        <span class="c1"># The result_stack has elements in reverse topological order, so reverse it</span>
+        <span class="k">return</span> <span class="n">result_stack</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">adj</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">visited_state</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">result_stack</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">visited_state</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Mark as visiting</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">visited_state</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Unvisited</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dfs</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">visited_state</span><span class="p">,</span> <span class="n">result_stack</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span> <span class="c1"># Propagate cycle detection</span>
+            <span class="k">elif</span> <span class="n">visited_state</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Visiting, implies a cycle</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">visited_state</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># Mark as visited</span>
+        <span class="n">result_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="c1"># Add to stack after all descendants are visited</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># Example Usage</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+
+    <span class="c1"># Example 1: Simple DAG</span>
+    <span class="c1"># 0 -&gt; 1</span>
+    <span class="c1"># 0 -&gt; 2</span>
+    <span class="c1"># 1 -&gt; 3</span>
+    <span class="c1"># 2 -&gt; 3</span>
+    <span class="c1"># numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]</span>
+    <span class="c1"># adj: {0: [1, 2], 1: [3], 2: [3], 3: []}</span>
+    <span class="n">numVertices1</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">adj1</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python DFS Topological Sort 1: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">,</span><span class="w"> </span><span class="n">adj1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: e.g., [0, 2, 1, 3] or [0, 1, 2, 3]</span>
+
+    <span class="c1"># Example 2: More complex DAG</span>
+    <span class="c1"># 5 -&gt; 0, 5 -&gt; 2</span>
+    <span class="c1"># 4 -&gt; 0, 4 -&gt; 1</span>
+    <span class="c1"># 2 -&gt; 3</span>
+    <span class="c1"># 3 -&gt; 1</span>
+    <span class="n">numVertices2</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">adj2</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python DFS Topological Sort 2: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">,</span><span class="w"> </span><span class="n">adj2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: e.g., [4, 5, 2, 3, 1, 0]</span>
+
+    <span class="c1"># Example 3: Graph with a cycle (0 -&gt; 1 -&gt; 2 -&gt; 0)</span>
+    <span class="n">numVertices3</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">adj3</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">adj3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj3</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">adj3</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python DFS Topological Sort with cycle: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: []</span>
+</code></pre></div>
+
+<h3>Explanation of Python DFS Code</h3>
+<p>The Python implementation uses a <code>visited_state</code> list to track the three states (0: unvisited, 1: visiting, 2: visited). The <code>_dfs</code> helper function recursively traverses the graph. When a node is fully explored (all its children and their descendants), it's appended to <code>result_stack</code>. This stack will hold nodes in reverse topological order. Finally, <code>result_stack[::-1]</code> reverses it to give the correct topological sort. Cycle detection is handled by checking <code>visited_state[v] == 1</code>; if a node currently being visited (<code>visiting</code> state) is encountered again, a cycle exists, and an empty list is returned.</p>
+<h3>C++ Implementation (DFS)</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;list&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span><span class="c1"> // For std::reverse</span>
+
+<span class="c1">// Using enum for visited states for clarity</span>
+<span class="k">enum</span><span class="w"> </span><span class="nc">State</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">UNVISITED</span><span class="p">,</span><span class="w"> </span><span class="n">VISITING</span><span class="p">,</span><span class="w"> </span><span class="n">VISITED</span><span class="w"> </span><span class="p">};</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">adj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">State</span><span class="o">&gt;</span><span class="w"> </span><span class="n">visitedState</span><span class="p">(</span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="n">UNVISITED</span><span class="p">);</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">resultStack</span><span class="p">;</span><span class="w"> </span><span class="c1">// Acts as a stack for nodes</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visitedState</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">UNVISITED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">visitedState</span><span class="p">,</span><span class="w"> </span><span class="n">resultStack</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span><span class="w"> </span><span class="c1">// Cycle detected, return empty vector</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">reverse</span><span class="p">(</span><span class="n">resultStack</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">resultStack</span><span class="p">.</span><span class="n">end</span><span class="p">());</span><span class="w"> </span><span class="c1">// Reverse to get topological order</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">resultStack</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">State</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">visitedState</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">resultStack</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">visitedState</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VISITING</span><span class="p">;</span><span class="w"> </span><span class="c1">// Mark as visiting</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visitedState</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">UNVISITED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">visitedState</span><span class="p">,</span><span class="w"> </span><span class="n">resultStack</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// Propagate cycle detection</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visitedState</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">VISITING</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// Cycle detected</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">visitedState</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VISITED</span><span class="p">;</span><span class="w"> </span><span class="c1">// Mark as visited</span>
+<span class="w">        </span><span class="n">resultStack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w">   </span><span class="c1">// Add to stack after all descendants are visited</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Example Usage</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Solution</span><span class="w"> </span><span class="n">solver</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Example 1: Simple DAG</span>
+<span class="w">    </span><span class="c1">// 0 -&gt; 1</span>
+<span class="w">    </span><span class="c1">// 0 -&gt; 2</span>
+<span class="w">    </span><span class="c1">// 1 -&gt; 3</span>
+<span class="w">    </span><span class="c1">// 2 -&gt; 3</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj1</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">,</span><span class="w"> </span><span class="n">adj1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;C++ DFS Topological Sort 1: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">res1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Expected: e.g., 0 2 1 3 or 0 1 2 3</span>
+
+<span class="w">    </span><span class="c1">// Example 2: More complex DAG</span>
+<span class="w">    </span><span class="c1">// 5 -&gt; 0, 5 -&gt; 2</span>
+<span class="w">    </span><span class="c1">// 4 -&gt; 0, 4 -&gt; 1</span>
+<span class="w">    </span><span class="c1">// 2 -&gt; 3</span>
+<span class="w">    </span><span class="c1">// 3 -&gt; 1</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj2</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">,</span><span class="w"> </span><span class="n">adj2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;C++ DFS Topological Sort 2: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">res2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Expected: e.g., 4 5 2 3 1 0</span>
+
+<span class="w">    </span><span class="c1">// Example 3: Graph with a cycle (0 -&gt; 1 -&gt; 2 -&gt; 0)</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj3</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj3</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj3</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj3</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="n">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;C++ DFS Topological Sort with cycle: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">res3</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Cycle detected, no topological sort.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">res3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Expected: Cycle detected</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Explanation of C++ DFS Code</h3>
+<p>The C++ code uses <code>std::vector&lt;std::list&lt;int&gt;&gt;</code> for the adjacency list and <code>std::vector&lt;State&gt;</code> for tracking visited states (using an <code>enum</code> for clarity). The <code>dfs</code> function is similar to Python's, marking nodes as <code>VISITING</code> upon entry and <code>VISITED</code> upon exit, pushing them to <code>resultStack</code>. Cycle detection logic is identical. Finally, <code>std::reverse</code> is used on <code>resultStack</code> to obtain the correct topological order.</p>
+<h3>Java Implementation (DFS)</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// Using enum for visited states for clarity</span>
+<span class="w">    </span><span class="kd">enum</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">UNVISITED</span><span class="p">,</span><span class="w"> </span><span class="n">VISITING</span><span class="p">,</span><span class="w"> </span><span class="n">VISITED</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">topologicalSortDFS</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">State</span><span class="o">[]</span><span class="w"> </span><span class="n">visitedState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">State</span><span class="o">[</span><span class="n">numVertices</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">visitedState</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="p">.</span><span class="na">UNVISITED</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Stack</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">resultStack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Stack</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// Stack for nodes</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visitedState</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">State</span><span class="p">.</span><span class="na">UNVISITED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">visitedState</span><span class="p">,</span><span class="w"> </span><span class="n">resultStack</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// Cycle detected, return empty list</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Pop elements from stack to get topological order</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">resultStack</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">resultStack</span><span class="p">.</span><span class="na">pop</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="o">[]</span><span class="w"> </span><span class="n">visitedState</span><span class="p">,</span><span class="w"> </span><span class="n">Stack</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">resultStack</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">visitedState</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span><span class="p">.</span><span class="na">VISITING</span><span class="p">;</span><span class="w"> </span><span class="c1">// Mark as visiting</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visitedState</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">State</span><span class="p">.</span><span class="na">UNVISITED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">visitedState</span><span class="p">,</span><span class="w"> </span><span class="n">resultStack</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// Propagate cycle detection</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visitedState</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">State</span><span class="p">.</span><span class="na">VISITING</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// Cycle detected</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">visitedState</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span><span class="p">.</span><span class="na">VISITED</span><span class="p">;</span><span class="w"> </span><span class="c1">// Mark as visited</span>
+<span class="w">        </span><span class="n">resultStack</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="n">u</span><span class="p">);</span><span class="w"> </span><span class="c1">// Add to stack after all descendants are visited</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Example Usage</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Solution</span><span class="w"> </span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Solution</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Example 1: Simple DAG</span>
+<span class="w">        </span><span class="c1">// 0 -&gt; 1</span>
+<span class="w">        </span><span class="c1">// 0 -&gt; 2</span>
+<span class="w">        </span><span class="c1">// 1 -&gt; 3</span>
+<span class="w">        </span><span class="c1">// 2 -&gt; 3</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj1</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Java DFS Topological Sort 1: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="na">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">,</span><span class="w"> </span><span class="n">adj1</span><span class="p">));</span><span class="w"> </span><span class="c1">// Expected: e.g., [0, 2, 1, 3] or [0, 1, 2, 3]</span>
+
+<span class="w">        </span><span class="c1">// Example 2: More complex DAG</span>
+<span class="w">        </span><span class="c1">// 5 -&gt; 0, 5 -&gt; 2</span>
+<span class="w">        </span><span class="c1">// 4 -&gt; 0, 4 -&gt; 1</span>
+<span class="w">        </span><span class="c1">// 2 -&gt; 3</span>
+<span class="w">        </span><span class="c1">// 3 -&gt; 1</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj2</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">5</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">5</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Java DFS Topological Sort 2: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="na">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">,</span><span class="w"> </span><span class="n">adj2</span><span class="p">));</span><span class="w"> </span><span class="c1">// Expected: e.g., [4, 5, 2, 3, 1, 0]</span>
+
+<span class="w">        </span><span class="c1">// Example 3: Graph with a cycle (0 -&gt; 1 -&gt; 2 -&gt; 0)</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj3</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="n">adj3</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj3</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj3</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Java DFS Topological Sort with cycle: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="na">topologicalSortDFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">));</span><span class="w"> </span><span class="c1">// Expected: []</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Explanation of Java DFS Code</h3>
+<p>The Java implementation mirrors the C++ and Python logic. It uses <code>List&lt;List&lt;Integer&gt;&gt;</code> for the adjacency list and an array of <code>State</code> enums for visited tracking. A <code>java.util.Stack</code> is used to store the nodes. After the DFS traversal, elements are popped from the stack and added to an <code>ArrayList</code> to obtain the final topological order. Cycle detection is handled identically to the other language examples.</p>
+<hr>
+<h2>Implementing Topological Sort using BFS (Kahn's Algorithm) in Python, C++, and Java</h2>
+<p>The BFS-based approach for topological sort, often known as Kahn's Algorithm, works on a different principle. It iteratively removes nodes that have no incoming edges (an in-degree of zero) and adds them to the topological order. When a node is removed, its outgoing edges are also "removed," which may reduce the in-degree of its neighbors to zero, making them eligible for the next step.</p>
+<h3>Understanding Kahn's Algorithm</h3>
+<p>Kahn's algorithm starts by finding all nodes that have an in-degree of zero. These nodes can be the first nodes in a topological sort because they don't depend on any other tasks. These nodes are added to a queue. The algorithm then proceeds as follows:</p>
+<ol>
+<li>Dequeue a node <code>u</code> from the queue and add it to the topological sort result.</li>
+<li>For each neighbor <code>v</code> of <code>u</code>:<ul>
+<li>Decrement the in-degree of <code>v</code>.</li>
+<li>If the in-degree of <code>v</code> becomes zero, enqueue <code>v</code>.</li>
+</ul>
+</li>
+</ol>
+<p>This process continues until the queue is empty. If the number of nodes in the topological sort result is less than the total number of nodes in the graph, it implies that the graph contains a cycle.</p>
+<h3>Steps for BFS-based Topological Sort (Kahn's Algorithm)</h3>
+<p>Here’s a step-by-step breakdown of how to implement topological sort using BFS:</p>
+<h3>1. Compute In-degrees</h3>
+<p>First, calculate the in-degree for every node in the graph. The in-degree of a node is the number of incoming edges it has.</p>
+<h3>2. Initialize Queue with Zero In-degree Nodes</h3>
+<p>Create a queue and add all nodes with an in-degree of zero to it. These are the starting points for the topological sort.</p>
+<h3>3. Process Queue</h3>
+<p>While the queue is not empty:
+    *   Dequeue a node <code>u</code>.
+    *   Add <code>u</code> to your topological sort result list.
+    *   For each neighbor <code>v</code> of <code>u</code>:
+        *   Decrement the in-degree of <code>v</code>.
+        *   If the in-degree of <code>v</code> becomes zero, enqueue <code>v</code>.</p>
+<h3>4. Check for Cycles</h3>
+<p>After the loop finishes, compare the count of nodes in your result list with the total number of nodes in the graph. If they are not equal, it means there was a cycle in the graph, and a topological sort is not possible.</p>
+<h3>Python Implementation (BFS - Kahn's Algorithm)</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">deque</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">topologicalSortBFS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numVertices</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">adj</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="n">in_degree</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">numVertices</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="n">in_degree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numVertices</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">in_degree</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">count_visited_nodes</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+            <span class="n">count_visited_nodes</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="n">in_degree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">in_degree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="c1"># If count_visited_nodes is not equal to numVertices, a cycle exists</span>
+        <span class="k">if</span> <span class="n">count_visited_nodes</span> <span class="o">!=</span> <span class="n">numVertices</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span> <span class="c1"># Cycle detected</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># Example Usage</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+
+    <span class="c1"># Example 1: Simple DAG</span>
+    <span class="n">numVertices1</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">adj1</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">adj1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python BFS Topological Sort 1: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">,</span><span class="w"> </span><span class="n">adj1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: e.g., [0, 1, 2, 3] or [0, 2, 1, 3]</span>
+
+    <span class="c1"># Example 2: More complex DAG</span>
+    <span class="n">numVertices2</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">adj2</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">adj2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python BFS Topological Sort 2: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">,</span><span class="w"> </span><span class="n">adj2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: e.g., [4, 5, 0, 2, 3, 1]</span>
+
+    <span class="c1"># Example 3: Graph with a cycle (0 -&gt; 1 -&gt; 2 -&gt; 0)</span>
+    <span class="n">numVertices3</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">adj3</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">adj3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj3</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">adj3</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python BFS Topological Sort with cycle: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Expected: []</span>
+</code></pre></div>
+
+<h3>Explanation of Python BFS Code</h3>
+<p>The Python code first initializes an <code>in_degree</code> list for all vertices by iterating through the adjacency list. It then populates a <code>deque</code> (which acts as a queue) with all vertices having an in-degree of 0. The main <code>while</code> loop processes nodes from the queue, adding them to the <code>result</code> list and decrementing the in-degree of their neighbors. If a neighbor's in-degree drops to 0, it's enqueued. Finally, <code>count_visited_nodes</code> is compared with <code>numVertices</code> to detect cycles.</p>
+<h3>C++ Implementation (BFS - Kahn's Algorithm)</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;list&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;numeric&gt;</span><span class="c1"> // For std::iota (not used here, but good for range)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">adj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">inDegree</span><span class="p">(</span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Calculate in-degrees for all vertices</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">u</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">countVisitedNodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+<span class="w">            </span><span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">            </span><span class="n">countVisitedNodes</span><span class="o">++</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// If countVisitedNodes is not equal to numVertices, a cycle exists</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">countVisitedNodes</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">numVertices</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span><span class="w"> </span><span class="c1">// Cycle detected</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Example Usage</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Solution</span><span class="w"> </span><span class="n">solver</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Example 1: Simple DAG</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj1</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj1</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">,</span><span class="w"> </span><span class="n">adj1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;C++ BFS Topological Sort 1: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">res1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Expected: e.g., 0 1 2 3 or 0 2 1 3</span>
+
+<span class="w">    </span><span class="c1">// Example 2: More complex DAG</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj2</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj2</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">,</span><span class="w"> </span><span class="n">adj2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;C++ BFS Topological Sort 2: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">res2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Expected: e.g., 4 5 0 2 3 1</span>
+
+<span class="w">    </span><span class="c1">// Example 3: Graph with a cycle (0 -&gt; 1 -&gt; 2 -&gt; 0)</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj3</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj3</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj3</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">adj3</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="n">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;C++ BFS Topological Sort with cycle: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">res3</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Cycle detected, no topological sort.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">res3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Expected: Cycle detected</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Explanation of C++ BFS Code</h3>
+<p>The C++ code uses <code>std::vector&lt;int&gt;</code> for <code>inDegree</code> and <code>std::queue&lt;int&gt;</code> for the BFS queue. The logic for calculating in-degrees, populating the initial queue, and processing nodes is identical to the Python version. It also checks <code>countVisitedNodes</code> against <code>numVertices</code> to determine if a cycle was present. If a cycle exists, an empty <code>std::vector</code> is returned.</p>
+<h3>Java Implementation (BFS - Kahn's Algorithm)</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">topologicalSortBFS</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">inDegree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">numVertices</span><span class="o">]</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Calculate in-degrees for all vertices</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">u</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="o">[</span><span class="n">v</span><span class="o">]++</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">q</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">countVisitedNodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span>
+<span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">            </span><span class="n">countVisitedNodes</span><span class="o">++</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">u</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">inDegree</span><span class="o">[</span><span class="n">v</span><span class="o">]--</span><span class="p">;</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inDegree</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">q</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// If countVisitedNodes is not equal to numVertices, a cycle exists</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">countVisitedNodes</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">numVertices</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// Cycle detected</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Example Usage</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Solution</span><span class="w"> </span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Solution</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Example 1: Simple DAG</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj1</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Java BFS Topological Sort 1: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="na">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices1</span><span class="p">,</span><span class="w"> </span><span class="n">adj1</span><span class="p">));</span><span class="w"> </span><span class="c1">// Expected: e.g., [0, 1, 2, 3] or [0, 2, 1, 3]</span>
+
+<span class="w">        </span><span class="c1">// Example 2: More complex DAG</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj2</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">5</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">5</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Java BFS Topological Sort 2: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="na">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices2</span><span class="p">,</span><span class="w"> </span><span class="n">adj2</span><span class="p">));</span><span class="w"> </span><span class="c1">// Expected: e.g., [4, 5, 0, 2, 3, 1]</span>
+
+<span class="w">        </span><span class="c1">// Example 3: Graph with a cycle (0 -&gt; 1 -&gt; 2 -&gt; 0)</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">adj3</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="n">adj3</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj3</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj3</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Java BFS Topological Sort with cycle: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">solver</span><span class="p">.</span><span class="na">topologicalSortBFS</span><span class="p">(</span><span class="n">numVertices3</span><span class="p">,</span><span class="w"> </span><span class="n">adj3</span><span class="p">));</span><span class="w"> </span><span class="c1">// Expected: []</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Explanation of Java BFS Code</h3>
+<p>The Java implementation uses <code>int[]</code> for <code>inDegree</code> and <code>java.util.Queue</code> implemented by <code>java.util.LinkedList</code> for the BFS queue. The overall structure and logic are identical to the Python and C++ versions, ensuring consistency across all three language examples. Cycle detection is performed by checking if <code>countVisitedNodes</code> equals <code>numVertices</code>.</p>
+<hr>
+<h2>Comparing DFS and BFS Approaches for Topological Sort</h2>
+<p>Both DFS and BFS offer valid ways to compute a topological sort, but they approach the problem differently and have distinct characteristics. Understanding these differences can help you choose the most suitable algorithm for a given scenario.</p>
+<h3>Similarities</h3>
+<ul>
+<li><strong>Result Validity:</strong> Both algorithms produce a valid topological ordering if one exists.</li>
+<li><strong>Cycle Detection:</strong> Both inherently detect cycles within the graph, returning an indication that a topological sort is not possible.</li>
+<li><strong>Time Complexity:</strong> Generally, both have the same time complexity of O(V + E), where V is the number of vertices and E is the number of edges, as they visit each vertex and edge once.</li>
+<li><strong>Space Complexity:</strong> Both typically require O(V + E) space for graph representation, plus O(V) for visited states/in-degrees and the result list/stack/queue.</li>
+</ul>
+<h3>Differences</h3>
+<ul>
+<li><strong>Algorithm Paradigm:</strong><ul>
+<li><strong>DFS-based:</strong> A recursive approach that explores deeply into paths before backtracking. It relies on the post-order traversal property.</li>
+<li><strong>BFS-based (Kahn's):</strong> An iterative approach that works layer by layer, starting with nodes that have no prerequisites. It relies on in-degree counts.</li>
+</ul>
+</li>
+<li><strong>Order of Output:</strong><ul>
+<li><strong>DFS-based:</strong> Produces a valid topological order by adding nodes to a stack <em>after</em> all their dependents have been visited. The final list is then reversed. The specific order can depend on the order of adjacency list iteration.</li>
+<li><strong>BFS-based:</strong> Directly produces a valid topological order by processing nodes in increasing order of dependencies. The specific order can depend on the order in which nodes with zero in-degree are added to the queue.</li>
+</ul>
+</li>
+<li><strong>Ease of Implementation (Subjective):</strong><ul>
+<li>DFS can feel more natural for some due to its recursive nature.</li>
+<li>BFS (Kahn's) can feel more intuitive for dependency resolution as it explicitly tracks prerequisites via in-degrees.</li>
+</ul>
+</li>
+<li><strong>Dependency on Stack/Queue:</strong><ul>
+<li>DFS-based uses a recursion stack (implicit) or an explicit stack.</li>
+<li>BFS-based uses an explicit queue.</li>
+</ul>
+</li>
+</ul>
+<h3>When to Use Which?</h3>
+<ul>
+<li><strong>DFS-based (Post-order Traversal):</strong><ul>
+<li>Often preferred when recursion is natural for the problem or when you need to process nodes <em>after</em> all their children.</li>
+<li>Can be slightly simpler to write for some experienced programmers due to its recursive elegance.</li>
+</ul>
+</li>
+<li><strong>BFS-based (Kahn's Algorithm):</strong><ul>
+<li>Highly intuitive for "task scheduling" or "prerequisite solving" problems because it starts with tasks that have no dependencies.</li>
+<li>Can be more straightforward for beginners to reason about as it's less abstract than recursion.</li>
+<li>Explicitly provides an ordering that respects immediate dependencies without requiring reversal.</li>
+<li>Can be used to find <em>all</em> possible topological sorts by branching whenever multiple nodes have an in-degree of zero.</li>
+</ul>
+</li>
+</ul>
+<p>Ultimately, the choice often comes down to personal preference or specific requirements where one approach might offer a slight performance edge in certain edge cases, though their asymptotic complexities are the same. Both are excellent tools for solving problems involving directed acyclic graphs.</p>
+<hr>
+<h2>Time and Space Complexity Analysis</h2>
+<p>Understanding the performance characteristics of algorithms is crucial for writing efficient code. Both DFS and BFS approaches for topological sort share similar complexities.</p>
+<h3>Time Complexity: O(V + E)</h3>
+<ul>
+<li><strong>V:</strong> Number of vertices (nodes) in the graph.</li>
+<li><strong>E:</strong> Number of edges in the graph.</li>
+</ul>
+<p><strong>DFS-based Approach:</strong>
+*   Each vertex is visited exactly once.
+*   For each vertex, we iterate through its adjacency list to visit its neighbors. This means each edge is traversed exactly once.
+*   Therefore, the total time spent is proportional to the sum of vertices and edges.</p>
+<p><strong>BFS-based Approach (Kahn's Algorithm):</strong>
+*   <strong>Calculating in-degrees:</strong> Requires iterating through all edges, which takes O(E) time.
+*   <strong>Initializing the queue:</strong> Iterates through all vertices once to find those with zero in-degree, taking O(V) time.
+*   <strong>Main <code>while</code> loop:</strong> Each vertex is enqueued and dequeued exactly once. When a vertex <code>u</code> is dequeued, we iterate through its outgoing edges. This means each edge is processed once (when we decrement the in-degree of <code>v</code> for an edge <code>(u, v)</code>).
+*   Therefore, the total time spent is O(E) + O(V) + O(V + E) = O(V + E).</p>
+<h3>Space Complexity: O(V + E)</h3>
+<ul>
+<li><strong>V:</strong> Number of vertices.</li>
+<li><strong>E:</strong> Number of edges.</li>
+</ul>
+<p><strong>DFS-based Approach:</strong>
+*   <strong>Adjacency List:</strong> O(V + E) to store the graph.
+*   <strong><code>visited</code> array/set:</strong> O(V) to store the state of each vertex.
+*   <strong>Recursion Stack:</strong> In the worst case (a long linear graph), the recursion stack depth can be O(V).
+*   <strong>Result Stack/List:</strong> O(V) to store the topological order.
+*   Total: O(V + E).</p>
+<p><strong>BFS-based Approach (Kahn's Algorithm):</strong>
+*   <strong>Adjacency List:</strong> O(V + E) to store the graph.
+*   <strong><code>in_degree</code> array:</strong> O(V) to store the in-degree of each vertex.
+*   <strong>Queue:</strong> In the worst case, all vertices might be in the queue simultaneously, requiring O(V) space.
+*   <strong>Result List:</strong> O(V) to store the topological order.
+*   Total: O(V + E).</p>
+<p>In summary, both methods are efficient for topological sorting, demonstrating linear time and space complexity relative to the size of the graph.</p>
+<hr>
+<h2>Common Mistakes and How to Avoid Them</h2>
+<p>Implementing graph algorithms like topological sort can be tricky. Here are some common pitfalls and strategies to avoid them:</p>
+<h3>1. Forgetting Cycle Detection</h3>
+<p><strong>Mistake:</strong> Assuming the input graph is always a DAG and not implementing a mechanism to detect cycles. If a cycle exists, a topological sort is impossible, and your algorithm might enter an infinite loop (DFS) or produce an incomplete result (BFS).
+<strong>Solution:</strong>
+*   <strong>DFS:</strong> Use three states for nodes (unvisited, visiting, visited). If you encounter a <code>visiting</code> node during traversal, a cycle is detected. Return an empty list or throw an error.
+*   <strong>BFS (Kahn's):</strong> Keep a count of the nodes added to the topological sort. If this count is less than the total number of nodes at the end, a cycle exists. Return an empty list or throw an error.</p>
+<h3>2. Incorrect In-degree Calculation (BFS)</h3>
+<p><strong>Mistake:</strong> Miscalculating the in-degrees, especially in graphs with disconnected components or multiple edges between nodes.
+<strong>Solution:</strong> Ensure you iterate through all nodes and their adjacency lists correctly to precisely sum up incoming edges for each vertex. A dedicated loop to populate the <code>in_degree</code> array at the beginning is crucial. Double-check your graph representation and how edges are defined.</p>
+<h3>3. Not Handling Disconnected Components</h3>
+<p><strong>Mistake:</strong> Only starting the DFS or BFS from node 0 and assuming the graph is connected. If the graph has multiple disconnected components, some nodes might be missed.
+<strong>Solution:</strong> In the main calling function, iterate through all possible nodes from <code>0</code> to <code>numVertices-1</code>. If a node hasn't been visited (for DFS) or processed (for BFS as part of in-degree calculations), initiate a traversal from it. This ensures all parts of the graph are covered.</p>
+<h3>4. Graph Representation Errors</h3>
+<p><strong>Mistake:</strong> Incorrectly building the adjacency list, leading to missed edges or erroneous connections. Forgetting that a directed edge <code>(u, v)</code> means <code>u</code> points to <code>v</code>, and <code>v</code> is a neighbor of <code>u</code> (not vice-versa).
+<strong>Solution:</strong> Carefully construct your adjacency list based on the problem's definition of directed edges. Remember that for an edge <code>u -&gt; v</code>, <code>v</code> should be added to <code>adj[u]</code>. For BFS, also ensure <code>in_degree[v]</code> is incremented.</p>
+<h3>5. Off-by-One Errors in Indexing</h3>
+<p><strong>Mistake:</strong> Common in languages like C++ and Java, misusing array sizes or loop boundaries, especially when dealing with <code>numVertices</code> and 0-indexed arrays.
+<strong>Solution:</strong> Always be mindful of whether nodes are 0-indexed or 1-indexed and adjust array sizes and loop conditions accordingly. For <code>numVertices</code> nodes (0 to <code>numVertices-1</code>), arrays should be of size <code>numVertices</code>.</p>
+<h3>6. Incorrect DFS Post-order Processing</h3>
+<p><strong>Mistake (DFS):</strong> Adding a node to the result list <em>before</em> visiting all its children. This will lead to an incorrect topological order.
+<strong>Solution:</strong> In the DFS approach, a node should only be added to the result (or pushed onto the stack) <em>after</em> the recursive calls for all its neighbors have returned and those subgraphs are fully explored. This is the definition of post-order traversal.</p>
+<p>By paying attention to these common issues and following the structured steps provided in this tutorial, you can confidently implement topological sort and avoid frustrating debugging sessions.</p>
+<hr>
+<h2>Frequently Asked Questions</h2>
+<p><strong>Q: Is the topological sort unique?</strong>
+A: No, for a given Directed Acyclic Graph (DAG), there can be multiple valid topological sorts. If two vertices have no direct path between them, their relative order in the sort can vary while still satisfying all dependency constraints.</p>
+<p><strong>Q: Can topological sort be performed on a graph with cycles?</strong>
+A: No, topological sort is strictly defined for Directed Acyclic Graphs (DAGs). If a graph contains a cycle, no linear ordering can be found where all dependencies are satisfied, as a cycle implies a circular dependency.</p>
+<p><strong>Q: When should I use the DFS-based approach versus the BFS-based (Kahn's) approach?</strong>
+A: Both approaches have the same time complexity and produce a valid sort. The DFS-based method (post-order traversal) is often intuitive for its recursive nature, while Kahn's Algorithm (BFS-based) explicitly tracks in-degrees and can be easier to conceptualize for dependency resolution, as it starts with tasks that have no prerequisites. The choice often comes down to personal preference or specific requirements.</p>
+<h2>Further Reading &amp; Resources</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Topological_sorting">Wikipedia: Topological sorting</a></li>
+<li><a href="https://www.geeksforgeeks.org/topological-sorting/">GeeksforGeeks: Topological Sort</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Depth-first_search">Wikipedia: Depth-first search</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Breadth-first_search">Wikipedia: Breadth-first search</a></li>
+</ul>
+<hr>
+    </div>
+
+    <!-- Social Share Buttons -->
+    <div class="share-buttons">
+      <span class="share-label">Share:</span>
+
+      <!-- X (Twitter) -->
+      <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/&text=Topological%20Sort%20using%20DFS%20%26%20BFS%20in%20Python%2C%20C%2B%2B%2C%20Java"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/&title=Topological%20Sort%20using%20DFS%20%26%20BFS%20in%20Python%2C%20C%2B%2B%2C%20Java"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=Topological%20Sort%20using%20DFS%20%26%20BFS%20in%20Python%2C%20C%2B%2B%2C%20Java%20https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="article-footer-meta">
+      <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/algorithms.html">Algorithms</a></p>
+      <div class="tags-list">
+        <strong>Tags:</strong>
+        <span class="tag">#topological sort</span>
+        <span class="tag">#DFS</span>
+        <span class="tag">#BFS</span>
+        <span class="tag">#Python</span>
+        <span class="tag">#C++</span>
+        <span class="tag">#Java</span>
+        <span class="tag">#graph algorithms</span>
+        <span class="tag">#directed acyclic graph</span>
+        <span class="tag">#DAG</span>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <ul>
+        <li><a href="https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/">Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</a></li>
+        <li><a href="https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/">CSES Labyrinth Problem in Python, Java & C++: A Complete Guide</a></li>
+        <li><a href="https://analyticsdrive.tech/leetcode-417-pacific-atlantic-water-flow-dfs-solution/">Conquering LeetCode 417: A Deep Dive into Pacific Atlantic Water Flow with DFS</a></li>
+      </ul>
+    </div>
+
+    <div class="post-footer">
+      <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Analytics Drive.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
