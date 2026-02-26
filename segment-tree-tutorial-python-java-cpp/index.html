@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Segment Tree in Python, Java & C++: A Comprehensive Guide
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master the Segment Tree data structure in Python, Java, and C++ with this comprehensive guide. Learn its operations, applications, and efficient implementations." />
+    <meta name="keywords" content="Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive" />
+    <meta name="author" content="Analytics Drive" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Segment Tree in Python, Java & C++: A Comprehensive Guide" />
+    <meta property="og:description"
+        content="Master the Segment Tree data structure in Python, Java, and C++ with this comprehensive guide. Learn its operations, applications, and efficient implementations." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/segment-tree-tutorial-python-java-cpp-hero.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Segment Tree in Python, Java & C++: A Comprehensive Guide" />
+    <meta name="twitter:description" content="Master the Segment Tree data structure in Python, Java, and C++ with this comprehensive guide. Learn its operations, applications, and efficient implementations." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/segment-tree-tutorial-python-java-cpp-hero.webp" />
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive",        "https://www.reddit.com/r/Analyticsdrive/"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* =============================================
+           SYNTAX HIGHLIGHTING — One Dark (Pygments)
+           ============================================= */
+
+        /* Dark code block — works with or without .highlight wrapper */
+        .post-content pre {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ABB2BF;
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+        }
+
+        /* Reset code inside pre — don't let inline-code styles bleed in */
+        .post-content pre code {
+            background: transparent;
+            color: #ABB2BF;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        /* Inline code (not in a block) */
+        .post-content code {
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+            color: #E06C75;
+            background: rgba(40, 44, 52, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        /* Dark mode: inline code */
+        [data-theme="dark"] .post-content code {
+            background: rgba(97, 175, 239, 0.1);
+            color: #E06C75;
+        }
+
+        /* Also support .highlight wrapper if Pygments generates it */
+        .post-content .highlight {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .post-content .highlight pre {
+            background: transparent;
+            border: none;
+            margin: 0;
+        }
+
+        /* ── Pygments One Dark Token Colors ──
+           Targets spans directly inside pre (Pelican 4.x structure)
+           AND inside .highlight wrapper (fallback) */
+
+        /* Comments — grey */
+        .post-content pre .c,
+        .post-content pre .ch,
+        .post-content pre .cm,
+        .post-content pre .cp,
+        .post-content pre .c1,
+        .post-content pre .cs,
+        .post-content pre .cpf,
+        .highlight .c,
+        .highlight .ch,
+        .highlight .cm,
+        .highlight .cp,
+        .highlight .c1,
+        .highlight .cs {
+            color: #7F848E;
+        }
+
+        /* Keywords — purple */
+        .post-content pre .k,
+        .post-content pre .kd,
+        .post-content pre .kn,
+        .post-content pre .kp,
+        .post-content pre .kr,
+        .highlight .k,
+        .highlight .kd,
+        .highlight .kn,
+        .highlight .kp,
+        .highlight .kr {
+            color: #C678DD;
+        }
+
+        /* Keyword constants & types — yellow */
+        .post-content pre .kc,
+        .post-content pre .kt,
+        .post-content pre .nb,
+        .post-content pre .nc,
+        .post-content pre .bp,
+        .highlight .kc,
+        .highlight .kt,
+        .highlight .nb,
+        .highlight .nc,
+        .highlight .bp {
+            color: #E5C07B;
+        }
+
+        /* Strings — green */
+        .post-content pre .s,
+        .post-content pre .s1,
+        .post-content pre .s2,
+        .post-content pre .sa,
+        .post-content pre .sb,
+        .post-content pre .sc,
+        .post-content pre .sd,
+        .post-content pre .se,
+        .post-content pre .sh,
+        .post-content pre .si,
+        .post-content pre .sr,
+        .post-content pre .ss,
+        .post-content pre .sx,
+        .highlight .s,
+        .highlight .s1,
+        .highlight .s2,
+        .highlight .sa,
+        .highlight .sb,
+        .highlight .sc,
+        .highlight .sd,
+        .highlight .se,
+        .highlight .sh,
+        .highlight .si,
+        .highlight .sr,
+        .highlight .ss,
+        .highlight .sx {
+            color: #98C379;
+        }
+
+        /* Numbers — orange */
+        .post-content pre .m,
+        .post-content pre .mb,
+        .post-content pre .mf,
+        .post-content pre .mh,
+        .post-content pre .mi,
+        .post-content pre .mo,
+        .post-content pre .il,
+        .highlight .m,
+        .highlight .mb,
+        .highlight .mf,
+        .highlight .mh,
+        .highlight .mi,
+        .highlight .mo,
+        .highlight .il {
+            color: #D19A66;
+        }
+
+        /* Functions & decorators — blue */
+        .post-content pre .nf,
+        .post-content pre .nd,
+        .post-content pre .fm,
+        .highlight .nf,
+        .highlight .nd,
+        .highlight .fm {
+            color: #61AFEF;
+            font-weight: bold;
+        }
+
+        /* Operators — cyan */
+        .post-content pre .o,
+        .post-content pre .ow,
+        .highlight .o,
+        .highlight .ow {
+            color: #56B6C2;
+        }
+
+        /* Names / variables / tags — red-pink */
+        .post-content pre .n,
+        .post-content pre .na,
+        .post-content pre .ni,
+        .post-content pre .nl,
+        .post-content pre .nn,
+        .post-content pre .no,
+        .post-content pre .nt,
+        .post-content pre .nv,
+        .post-content pre .nx,
+        .post-content pre .ne,
+        .post-content pre .vc,
+        .post-content pre .vg,
+        .post-content pre .vi,
+        .post-content pre .vm,
+        .highlight .na,
+        .highlight .ni,
+        .highlight .no,
+        .highlight .nt,
+        .highlight .nv,
+        .highlight .ne,
+        .highlight .vc,
+        .highlight .vg,
+        .highlight .vi {
+            color: #E06C75;
+        }
+
+        /* Punctuation & whitespace — default text color */
+        .post-content pre .p,
+        .post-content pre .w,
+        .highlight .p,
+        .highlight .w {
+            color: #ABB2BF;
+        }
+
+        /* Highlighted line background */
+        .post-content pre .hll,
+        .highlight .hll {
+            background-color: #3E4451;
+        }
+
+        /* Errors */
+        .post-content pre .err,
+        .highlight .err {
+            color: #ABB2BF;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+
+            /* Mobile Nav Fix */
+            .main-nav {
+                display: flex;
+                justify-content: center;
+                /* Center links only */
+                align-items: center;
+                padding: 0.5rem 1rem;
+                position: static;
+                /* Let absolute children be relative to .site-header */
+            }
+
+            .main-nav ul {
+                flex: 1;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                /* Relative to .site-header */
+                top: 1rem;
+                right: 1rem;
+                transform: none;
+                margin-left: 0;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg);
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+                <li><a href="https://analyticsdrive.tech/about/">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/"
+  },
+  "headline": "Segment Tree in Python, Java & C++: A Comprehensive Guide",
+  "description": "Master the Segment Tree data structure in Python, Java, and C++ with this comprehensive guide. Learn its operations, applications, and efficient implementations.",
+  "image": [
+    "https://analyticsdrive.tech/images/segment-tree-tutorial-python-java-cpp-hero.webp"
+  ],
+  "datePublished": "2026-02-26T15:39:00+00:00",
+  "dateModified": "2026-02-26T15:39:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+<div class="post-layout">
+
+  <!-- Floating Sticky Share Sidebar (desktop only) -->
+  <aside class="share-sidebar" aria-label="Share this article">
+    <span class="share-sidebar__label">Share</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/&text=Segment%20Tree%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Comprehensive%20Guide"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+      aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/&title=Segment%20Tree%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Comprehensive%20Guide"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+      aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Segment%20Tree%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Comprehensive%20Guide%20https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </aside>
+
+  <article class="single-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2026-02-26T15:39:00+00:00">Thu 26 February 2026</time>
+      </div>
+      <h1>Segment Tree in Python, Java & C++: A Comprehensive Guide</h1>
+    </header>
+
+    <div class="featured-image">
+      <img src="https://analyticsdrive.tech/images/segment-tree-tutorial-python-java-cpp-hero.webp" alt="Segment Tree in Python, Java & C++: A Comprehensive Guide" loading="lazy" />
+    </div>
+
+    <div class="post-content">
+      <p>In the realm of algorithms and data structures, efficiently handling range queries and updates is a common challenge that developers and students frequently encounter. Whether you're tackling competitive programming problems, designing performant systems, or optimizing database operations, the ability to quickly retrieve information from a range or modify elements within it can be crucial. This is precisely where the <strong>Segment Tree in Python, Java &amp; C++</strong> emerges as an indispensable tool, offering a powerful and elegant solution. This comprehensive guide will walk you through the intricacies of Segment Trees, detailing their core concepts, fundamental operations, and practical implementations across these three popular programming languages.</p>
+<p>A Segment Tree is a versatile data structure that allows for two primary operations on an array: querying for a range sum, minimum, maximum, or other aggregate values, and updating individual elements or entire ranges. Unlike simpler approaches like prefix sums, which excel at range queries but struggle with updates, or plain arrays, which are slow for both, a Segment Tree strikes an impressive balance, performing both in logarithmic time complexity. This makes it a preferred choice for scenarios demanding high performance in both aspects. We will delve deep into its recursive construction, efficient query mechanisms, and point-update procedures, ensuring you gain a solid understanding that extends beyond mere theoretical knowledge into practical application. By the end of this tutorial, you will be well-equipped to implement and utilize Segment Trees effectively in your coding endeavors, mastering a technique essential for robust algorithm design.</p>
+<h2 id="understanding-the-segment-tree-what-is-it">Understanding the Segment Tree: What Is It?</h2>
+<p>At its core, a Segment Tree is a binary tree designed specifically for storing information about intervals or segments. Each node in the tree represents an interval, with the root representing the entire array or segment of interest. Its children then represent sub-intervals, effectively dividing the original segment into two halves. This recursive division continues until the leaf nodes are reached, each representing a single element from the original array.</p>
+<p>Consider an array <code>A = [1, 3, 5, 7, 9, 11]</code>. A Segment Tree built upon this array would have its root node representing the interval <code>[0, 5]</code> (the entire array). Its left child might represent <code>[0, 2]</code> and its right child <code>[3, 5]</code>. This pattern repeats, with nodes storing an aggregate value (like sum, minimum, or maximum) for their respective intervals. For example, if we're building a sum Segment Tree, the root node would store <code>1 + 3 + 5 + 7 + 9 + 11 = 36</code>, while its left child <code>[0, 2]</code> would store <code>1 + 3 + 5 = 9</code>.</p>
+<p>The power of the Segment Tree lies in this hierarchical structure. When you need to query a range, say <code>[1, 4]</code>, the tree can efficiently combine pre-computed results from relevant nodes without needing to iterate through every element in the original array. Similarly, when an element is updated, only the nodes whose segments contain that element need to have their aggregate values recomputed, which, due to the tree's structure, only affects a logarithmic number of nodes. This contrasts sharply with a naive approach that might iterate <code>O(N)</code> elements for queries or updates, or a prefix sum array that requires <code>O(N)</code> updates after each element change.</p>
+<h2 id="why-master-segment-trees-advantages-and-use-cases">Why Master Segment Trees? Advantages and Use Cases</h2>
+<p>Mastering Segment Trees is a significant step towards becoming a more proficient problem-solver and engineer. Their unique properties make them invaluable in various computational scenarios.</p>
+<h3 id="advantages-of-segment-trees">Advantages of Segment Trees</h3>
+<p>Segment Trees offer several distinct advantages over other data structures when dealing with range-based operations:</p>
+<ul>
+<li><strong>Efficient Range Queries:</strong> They can answer queries such as range sum, range minimum, range maximum, range product, range GCD, etc., in <code>O(log N)</code> time. This is a significant improvement over <code>O(N)</code> for naive array traversal.</li>
+<li><strong>Efficient Point and Range Updates:</strong> Updating a single element or a range of elements (with lazy propagation) also takes <code>O(log N)</code> time. This rapid update capability maintains the tree's utility even in dynamic scenarios.</li>
+<li><strong>Versatility:</strong> The underlying structure is adaptable to various operations. By changing how child results are combined, a Segment Tree can support a wide array of aggregate functions, not just sums.</li>
+<li><strong>Space Efficiency:</strong> While it uses more space than the original array, typically <code>O(4N)</code> or <code>O(2*2^ceil(log2(N)))</code>, it's still a practical and manageable amount for most problem sizes. This slight overhead is often a worthwhile trade-off for the time complexity gains.</li>
+<li><strong>Foundation for Advanced Techniques:</strong> Understanding basic Segment Trees is a prerequisite for more advanced data structures like Lazy Propagation Segment Trees, Persistent Segment Trees, and Merge Sort Trees, which extend their capabilities even further.</li>
+</ul>
+<h3 id="common-use-cases">Common Use Cases</h3>
+<p>The practical applications of Segment Trees span across various domains:</p>
+<ul>
+<li><strong>Competitive Programming:</strong> This is perhaps the most common arena where Segment Trees shine. Many problems involve optimizing queries and updates on ranges, and Segment Trees frequently provide the optimal solution, similar to how other fundamental algorithms like the <a href="/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra Algorithm in Python, C++, Java</a> are crucial for competitive programming. Examples include finding the maximum element in a subarray, counting inversions, or solving complex interval-scheduling problems.</li>
+<li><strong>Real-time Analytics:</strong> In systems where data streams are constantly changing and aggregate statistics for specific time windows or data ranges are needed instantly, Segment Trees can maintain these aggregates efficiently.</li>
+<li><strong>Game Development:</strong> Spatial queries, collision detection, and managing dynamic game elements that occupy regions can benefit from Segment Tree-like structures, although often more specialized spatial indexing structures are used (like Quadtrees or Octrees). The underlying principle of dividing space and querying sub-regions holds.</li>
+<li><strong>Database Management Systems (DBMS):</strong> While not directly used as the primary indexing structure (B-trees and B+ trees are common), the conceptual idea of efficiently querying and updating data over intervals is central to how many query optimizers and data warehouses function. Segment Trees provide an excellent model for understanding these mechanisms.</li>
+<li><strong>Geographical Information Systems (GIS):</strong> Similar to game development, querying geographical regions for specific features or properties can be optimized using structures that partition space hierarchically.</li>
+</ul>
+<h2 id="prerequisites-for-learning-segment-trees">Prerequisites for Learning Segment Trees</h2>
+<p>Before diving into the implementation details of Segment Trees, it's beneficial to have a solid grasp of a few foundational concepts. These prerequisites will ensure you can fully comprehend the logic and structure involved:</p>
+<ul>
+<li><strong>Basic Understanding of Arrays:</strong> Segment Trees are fundamentally built upon arrays. You should be comfortable with array indexing, traversing arrays, and basic array operations.</li>
+<li><strong>Binary Trees:</strong> A Segment Tree is, as its name suggests, a binary tree. Familiarity with binary tree terminology (root, node, parent, child, leaf, height, depth), basic properties (at most two children per node), and common traversals (in-order, pre-order, post-order) is crucial.</li>
+<li><strong>Recursion:</strong> The build, query, and update operations of a Segment Tree are inherently recursive. A strong understanding of recursion, including base cases, recursive calls, and how results are combined, is absolutely essential. If you're new to recursion, practicing problems like calculating factorials or traversing simple trees will be helpful.</li>
+<li><strong>Divide and Conquer Paradigm:</strong> Segment Trees exemplify the divide and conquer approach. Understanding how a problem can be broken down into smaller, similar subproblems, solved independently, and then combined to form the final solution is key to grasping the Segment Tree's operational philosophy.</li>
+<li><strong>Basic Data Structures:</strong> General familiarity with common data structures like lists, stacks, and queues will help put Segment Trees into context within the broader landscape of algorithms.</li>
+</ul>
+<p>With these prerequisites in place, including a good grasp of concepts fundamental to algorithmic problem-solving such as those explored in the <a href="/cses-labyrinth-problem-python-java-cpp-guide/">CSES Labyrinth Problem in Python, Java &amp; C++</a>, you'll find the journey of learning and implementing Segment Trees much smoother and more rewarding.</p>
+<h2 id="core-operations-of-a-segment-tree">Core Operations of a Segment Tree</h2>
+<p>A Segment Tree supports three primary operations: building the tree, querying a range, and updating an element. Each of these operations leverages the tree's recursive, divide-and-conquer nature to achieve logarithmic time complexity.</p>
+<h3 id="1-building-the-segment-tree-on-complexity">1. Building the Segment Tree (O(N) Complexity)</h3>
+<p>The construction of a Segment Tree is typically a recursive process. It starts with the root node, representing the entire input array.</p>
+<ul>
+<li><strong>Base Case:</strong> If the current segment consists of a single element (i.e., <code>start == end</code>), the current node is a leaf node. Its value is simply the value of that element from the original array.</li>
+<li><strong>Recursive Step:</strong> If the segment has more than one element (<code>start &lt; end</code>):<ol>
+<li>Divide the current segment <code>[start, end]</code> into two halves: <code>[start, mid]</code> and <code>[mid+1, end]</code>, where <code>mid = (start + end) // 2</code>.</li>
+<li>Recursively build the left child for <code>[start, mid]</code>.</li>
+<li>Recursively build the right child for <code>[mid+1, end]</code>.</li>
+<li>The value of the current node is then computed by combining the values of its left and right children. For a sum Segment Tree, this would be <code>node.value = left_child.value + right_child.value</code>. For a minimum Segment Tree, <code>node.value = min(left_child.value, right_child.value)</code>, and so on.</li>
+</ol>
+</li>
+</ul>
+<p>This process ensures that every node correctly stores the aggregate value for its corresponding segment. Since each element in the original array is visited once to become a leaf, and each internal node is created by combining two children, the total time complexity for building the tree is <code>O(N)</code>.</p>
+<h3 id="2-querying-a-range-olog-n-complexity">2. Querying a Range (O(log N) Complexity)</h3>
+<p>To query for an aggregate value within a specific range <code>[query_L, query_R]</code>, the Segment Tree employs a recursive search. The function typically takes the current node's segment <code>[node_start, node_end]</code> and the target query range <code>[query_L, query_R]</code> as parameters.</p>
+<ul>
+<li><strong>Case 1: No Overlap:</strong> If the current node's segment <code>[node_start, node_end]</code> is completely outside the query range <code>[query_L, query_R]</code> (e.g., <code>node_end &lt; query_L</code> or <code>node_start &gt; query_R</code>), then this node contributes nothing to the query. Return an identity value (e.g., 0 for sum, infinity for min, negative infinity for max).</li>
+<li><strong>Case 2: Complete Overlap:</strong> If the current node's segment <code>[node_start, node_end]</code> is entirely contained within the query range <code>[query_L, query_R]</code> (e.g., <code>query_L &lt;= node_start</code> and <code>node_end &lt;= query_R</code>), then the value stored in this node is exactly what's needed. Return <code>node.value</code>.</li>
+<li><strong>Case 3: Partial Overlap:</strong> If there's a partial overlap, the query needs to be resolved by recursively querying the children.<ol>
+<li>Calculate <code>mid = (node_start + node_end) // 2</code>.</li>
+<li>Recursively query the left child for the range <code>[query_L, query_R]</code> over its segment <code>[node_start, mid]</code>.</li>
+<li>Recursively query the right child for the range <code>[query_L, query_R]</code> over its segment <code>[mid+1, node_end]</code>.</li>
+<li>Combine the results from the left and right child queries. For a sum query, <code>result = left_query_result + right_query_result</code>.</li>
+</ol>
+</li>
+</ul>
+<p>Because each step either returns a value or recurses into at most two children, and the tree has a height of <code>O(log N)</code>, the query operation takes <code>O(log N)</code> time.</p>
+<h3 id="3-updating-an-element-olog-n-complexity">3. Updating an Element (O(log N) Complexity)</h3>
+<p>Updating a single element at a specific index <code>idx</code> to a new <code>value</code> also follows a recursive path, starting from the root.</p>
+<ul>
+<li><strong>Base Case:</strong> If the current node's segment is a leaf node (i.e., <code>node_start == node_end == idx</code>), then this is the node corresponding to the element to be updated. Update its stored value to <code>new_value</code>.</li>
+<li><strong>Recursive Step:</strong> If the current node is not a leaf node:<ol>
+<li>Calculate <code>mid = (node_start + node_end) // 2</code>.</li>
+<li>Determine which child's segment contains <code>idx</code>:<ul>
+<li>If <code>idx &lt;= mid</code>, recursively call update on the left child.</li>
+<li>If <code>idx &gt; mid</code>, recursively call update on the right child.</li>
+</ul>
+</li>
+<li>After the recursive call returns (meaning the child's value has been updated), recompute the current node's value by combining the (potentially updated) values of its left and right children. This ensures the aggregate values are correct all the way up to the root.</li>
+</ol>
+</li>
+</ul>
+<p>Similar to queries, an update operation traverses a single path from the root to a leaf, and then updates values back up the same path. Therefore, it also takes <code>O(log N)</code> time. For range updates, a more advanced technique called "Lazy Propagation" is used, which extends these concepts but is beyond the scope of a basic Segment Tree tutorial.</p>
+<h2 id="implementing-a-segment-tree-in-python-java-and-c">Implementing a Segment Tree in Python, Java and C++</h2>
+<p>This section provides comprehensive implementations of the <strong>Segment Tree in Python, Java and C++</strong>, focusing on a sum query example. Each implementation will include the <code>build</code>, <code>query</code>, and <code>update</code> operations.</p>
+<h3 id="segment-tree-implementation-in-python">Segment Tree Implementation in Python</h3>
+<p>Python's flexibility makes Segment Tree implementation concise and readable. We'll use a list to represent the tree nodes, where <code>tree[i]</code> stores the aggregate value for a segment. Node <code>i</code> has left child <code>2*i + 1</code> and right child <code>2*i + 2</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SegmentTree</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        <span class="c1"># Tree array size is usually 4*N for worst-case,</span>
+        <span class="c1"># but 2*2^ceil(log2(N)) is more precise.</span>
+        <span class="c1"># For competitive programming, 4*N is standard and safe.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursively builds the segment tree.</span>
+<span class="sd">        node_idx: current node&#39;s index in self.tree</span>
+<span class="sd">        start, end: interval represented by current node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
+            <span class="c1"># Leaf node: store array element</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arr</span><span class="p">[</span><span class="n">start</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="c1"># Build left child</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">mid</span><span class="p">)</span>
+            <span class="c1"># Build right child</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+            <span class="c1"># Current node value is sum of children</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the value at a specific index in the original array and</span>
+<span class="sd">        propagates changes up the tree.</span>
+<span class="sd">        idx: index in original array to update</span>
+<span class="sd">        val: new value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span> <span class="c1"># Update original array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursive helper for update.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
+            <span class="c1"># Leaf node, update its value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">idx</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="p">:</span>
+                <span class="c1"># idx is in the left child&#39;s segment</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># idx is in the right child&#39;s segment</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="c1"># Update current node after children are updated</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Queries the sum of elements in a given range [L, R].</span>
+<span class="sd">        L, R: query range (inclusive)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_idx</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursive helper for query.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Case 1: No overlap</span>
+        <span class="k">if</span> <span class="n">R</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">L</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Return identity for sum (0)</span>
+        <span class="c1"># Case 2: Complete overlap</span>
+        <span class="k">if</span> <span class="n">L</span> <span class="o">&lt;=</span> <span class="n">start</span> <span class="ow">and</span> <span class="n">end</span> <span class="o">&lt;=</span> <span class="n">R</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span>
+        <span class="c1"># Case 3: Partial overlap</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">node_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span>
+
+<span class="c1"># Example Usage in Python:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">]</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">SegmentTree</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original array: </span><span class="si">{</span><span class="n">arr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sum of range [1, 4]: </span><span class="si">{</span><span class="n">st</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Should be 3 + 5 + 7 + 9 = 24</span>
+
+    <span class="n">st</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># Update arr[2] from 5 to 10</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Array after update at index 2 to 10: </span><span class="si">{</span><span class="n">st</span><span class="o">.</span><span class="n">arr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># arr becomes [1, 3, 10, 7, 9, 11]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sum of range [1, 4] after update: </span><span class="si">{</span><span class="n">st</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Should be 3 + 10 + 7 + 9 = 29</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sum of full array [0, 5]: </span><span class="si">{</span><span class="n">st</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Should be 1 + 3 + 10 + 7 + 9 + 11 = 41</span>
+</code></pre></div>
+
+<p><strong>Explanation for Python Implementation:</strong>
+1.  <strong><code>__init__(self, arr)</code>:</strong> Initializes the SegmentTree. <code>self.n</code> stores the size of the input array. <code>self.tree</code> is an array that will store the Segment Tree nodes. It's allocated <code>4 * self.n</code> space to safely accommodate any tree size up to <code>N</code>. The <code>_build</code> method is called to construct the tree.
+2.  <strong><code>_build(self, node_idx, start, end)</code>:</strong> This recursive function builds the tree.
+    *   The <code>node_idx</code> refers to the current node's position in <code>self.tree</code>.
+    *   <code>start</code> and <code>end</code> define the segment of the original <code>arr</code> that <code>self.tree[node_idx]</code> represents.
+    *   If <code>start == end</code>, it's a leaf node, and its value is taken directly from <code>arr[start]</code>.
+    *   Otherwise, it recursively builds left and right children, then computes <code>self.tree[node_idx]</code> as the sum of its children's values.
+3.  <strong><code>update(self, idx, val)</code>:</strong> This is the public interface for updating an element. It first updates the <code>self.arr</code> (the original array) and then calls the private <code>_update</code> helper.
+4.  <strong><code>_update(self, node_idx, start, end, idx, val)</code>:</strong> This recursive helper updates the tree.
+    *   It traverses down to the leaf node corresponding to <code>idx</code>.
+    *   Once the leaf is found (<code>start == end</code>), its value in <code>self.tree</code> is updated.
+    *   As the recursion unwinds, parent nodes' values are recomputed based on their children.
+5.  <strong><code>query(self, L, R)</code>:</strong> The public interface for querying a range. It calls the private <code>_query</code> helper.
+6.  <strong><code>_query(self, node_idx, start, end, L, R)</code>:</strong> This recursive helper performs the range query.
+    *   It checks for three cases: no overlap, complete overlap, or partial overlap with the query range <code>[L, R]</code>.
+    *   If no overlap, it returns 0 (the identity element for sum).
+    *   If complete overlap, it returns the node's stored value.
+    *   If partial overlap, it recursively queries both children and sums their results.</p>
+<h3 id="segment-tree-implementation-in-java">Segment Tree Implementation in Java</h3>
+<p>Java requires explicit class definitions for nodes or a clear indexing scheme. We'll use an array-based approach similar to Python, but with explicit method signatures and type declarations.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SegmentTree</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">tree</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">SegmentTree</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// Max size for segment tree</span>
+<span class="w">        </span><span class="n">build</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">nodeIdx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">tree</span><span class="o">[</span><span class="n">nodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="o">[</span><span class="n">start</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">            </span><span class="n">build</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span>
+<span class="w">            </span><span class="n">build</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">);</span>
+<span class="w">            </span><span class="n">tree</span><span class="o">[</span><span class="n">nodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="o">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tree</span><span class="o">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IndexOutOfBoundsException</span><span class="p">(</span><span class="s">&quot;Index &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; is out of bounds for array of size &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">arr</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="c1">// Update original array</span>
+<span class="w">        </span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">nodeIdx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">tree</span><span class="o">[</span><span class="n">nodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">mid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">update</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">update</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">tree</span><span class="o">[</span><span class="n">nodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="o">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tree</span><span class="o">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">query</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Invalid query range [&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;] for array of size &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">query</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">query</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">nodeIdx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Case 1: No overlap</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">L</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Identity for sum</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Case 2: Complete overlap</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">tree</span><span class="o">[</span><span class="n">nodeIdx</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Case 3: Partial overlap</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">query</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">query</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">nodeIdx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p2</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Example Usage in Java:</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">};</span>
+<span class="w">        </span><span class="n">SegmentTree</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SegmentTree</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Original array: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">Arrays</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">arr</span><span class="p">));</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Sum of range [1, 4]: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="na">query</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span><span class="w"> </span><span class="c1">// Should be 24</span>
+
+<span class="w">        </span><span class="n">st</span><span class="p">.</span><span class="na">update</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// Update arr[2] from 5 to 10</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Array after update at index 2 to 10: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">Arrays</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="na">arr</span><span class="p">));</span><span class="w"> </span><span class="c1">// arr becomes [1, 3, 10, 7, 9, 11]</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Sum of range [1, 4] after update: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="na">query</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span><span class="w"> </span><span class="c1">// Should be 29</span>
+
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Sum of full array [0, 5]: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="na">query</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">));</span><span class="w"> </span><span class="c1">// Should be 41</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Explanation for Java Implementation:</strong>
+The Java implementation mirrors the Python one closely in logic.
+1.  <strong>Class <code>SegmentTree</code>:</strong> Contains <code>arr</code> (original array), <code>tree</code> (segment tree array), and <code>n</code> (array size).
+2.  <strong>Constructor <code>SegmentTree(int[] arr)</code>:</strong> Initializes these fields and calls the <code>build</code> method.
+3.  <strong><code>build(int nodeIdx, int start, int end)</code>:</strong> Recursive method to construct the tree. Identical logic to Python.
+4.  <strong><code>update(int idx, int val)</code> (public &amp; private):</strong> The public <code>update</code> method handles basic validation and updates the original <code>arr</code>, then calls the private recursive <code>update</code> helper. The recursive helper finds the leaf node and propagates changes upwards.
+5.  <strong><code>query(int L, int R)</code> (public &amp; private):</strong> The public <code>query</code> method validates input range and then calls the private recursive <code>query</code> helper. The recursive helper uses the same three-case logic (no overlap, complete overlap, partial overlap) to efficiently sum the range.</p>
+<h3 id="segment-tree-implementation-in-c">Segment Tree Implementation in C++</h3>
+<p>C++ offers performance benefits and explicit memory management. We'll use <code>std::vector</code> for the array-based tree implementation.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;numeric&gt;</span><span class="c1"> // For std::accumulate (optional, for verification)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SegmentTree</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">arr</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tree</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node_idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">start</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="c1">// Avoids potential overflow</span>
+<span class="w">            </span><span class="n">build</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span>
+<span class="w">            </span><span class="n">build</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">);</span>
+<span class="w">            </span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">update_helper</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node_idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">mid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">update_helper</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">update_helper</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tree</span><span class="p">[</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="nf">query_helper</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">node_idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Case 1: No overlap</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">R</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">L</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Identity for sum</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Case 2: Complete overlap</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">tree</span><span class="p">[</span><span class="n">node_idx</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Case 3: Partial overlap</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">query_helper</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">query_helper</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">node_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p2</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">SegmentTree</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">input_arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_arr</span><span class="p">;</span><span class="w"> </span><span class="c1">// Copy the input array</span>
+<span class="w">        </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="w">        </span><span class="n">tree</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Allocate memory for the tree, initialize with 0</span>
+<span class="w">        </span><span class="n">build</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">update</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Error: Index &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; out of bounds.&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">arr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="c1">// Update original array</span>
+<span class="w">        </span><span class="n">update_helper</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">query</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">L</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">R</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Error: Invalid query range [&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;].&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Return identity in case of error</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">query_helper</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Example Usage in C++:</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">};</span>
+<span class="w">    </span><span class="n">SegmentTree</span><span class="w"> </span><span class="n">st</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Original array: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">arr</span><span class="p">)</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Sum of range [1, 4]: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Should be 24</span>
+
+<span class="w">    </span><span class="n">st</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// Update arr[2] from 5 to 10</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Array after update at index 2 to 10: &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="c1">// Manually update for consistent print as `st.arr` is a copy</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">arr</span><span class="p">)</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Sum of range [1, 4] after update: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Should be 29</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Sum of full array [0, 5]: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"> </span><span class="c1">// Should be 41</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Explanation for C++ Implementation:</strong>
+The C++ implementation closely follows the Java and Python logic.
+1.  <strong>Class <code>SegmentTree</code>:</strong> Uses <code>std::vector&lt;int&gt;</code> for <code>arr</code> and <code>tree</code>. <code>n</code> stores the size.
+2.  <strong><code>build</code> method:</strong> A private recursive helper to construct the tree. The <code>mid</code> calculation <code>start + (end - start) / 2</code> is a common C++ idiom to prevent integer overflow that <code>(start + end) / 2</code> might cause with very large <code>start</code> and <code>end</code> values.
+3.  <strong><code>update_helper</code> and <code>query_helper</code>:</strong> Private recursive methods implementing the update and query logic, respectively.
+4.  <strong>Constructor <code>SegmentTree(const std::vector&lt;int&gt;&amp; input_arr)</code>:</strong> Takes a constant reference to the input array, copies it to <code>this-&gt;arr</code>, sets <code>n</code>, and resizes <code>tree</code> to <code>4 * n</code> before calling <code>build</code>.
+5.  <strong>Public <code>update(int idx, int val)</code> and <code>query(int L, int R)</code>:</strong> These methods provide user-friendly interfaces, including basic bounds checking and error messages using <code>std::cerr</code>.
+6.  <strong><code>main</code> function:</strong> Demonstrates usage with an example array, performing queries and an update, then re-querying. Note that <code>arr[2] = 10;</code> is explicitly added in <code>main</code> to reflect the updated value when printing the "original array" after the update, as the <code>SegmentTree</code> class holds its own copy of the array.</p>
+<h2 id="common-pitfalls-and-how-to-avoid-them">Common Pitfalls and How to Avoid Them</h2>
+<p>Implementing a Segment Tree can be tricky, and several common mistakes often trip up beginners. Awareness of these pitfalls can save significant debugging time.</p>
+<ul>
+<li><strong>Off-by-One Errors in Indexing:</strong> This is perhaps the most frequent issue.<ul>
+<li><strong>Problem:</strong> Confusion between 0-based and 1-based indexing for arrays and tree nodes. Miscalculation of <code>mid</code> (e.g., <code>(start + end) / 2</code> vs. <code>start + (end - start) / 2</code>).</li>
+<li><strong>Solution:</strong> Stick consistently to either 0-based or 1-based indexing for <em>all</em> operations (array, tree, query ranges). The provided examples use 0-based indexing for the original array and tree nodes. For <code>mid</code>, <code>start + (end - start) / 2</code> is generally safer, especially in C++/Java. Always double-check boundary conditions: <code>start &lt;= idx &lt;= mid</code> vs. <code>mid + 1 &lt;= idx &lt;= end</code>.</li>
+</ul>
+</li>
+<li><strong>Incorrect Base Cases in Recursion:</strong><ul>
+<li><strong>Problem:</strong> The base case for <code>build</code>, <code>query</code>, and <code>update</code> (when <code>start == end</code>) might be handled incorrectly, leading to infinite recursion or incorrect leaf values.</li>
+<li><strong>Solution:</strong> For <code>build</code> and <code>update</code>, when <code>start == end</code>, the node's value should directly correspond to <code>arr[start]</code> (or the updated value). For <code>query</code>, if <code>start == end</code> and it falls within the query range, return <code>tree[node_idx]</code>.</li>
+</ul>
+</li>
+<li><strong>Forgetting to Update Parent Nodes:</strong><ul>
+<li><strong>Problem:</strong> In the <code>update</code> operation, after a child node's value is changed, it's crucial to recompute the parent node's value by combining its children. Forgetting this step results in an inconsistent tree.</li>
+<li><strong>Solution:</strong> Ensure that after every recursive call to <code>update</code> (for both left and right children), there's a line like <code>tree[node_idx] = tree[2*node_idx + 1] + tree[2*node_idx + 2]</code> (or equivalent for other operations) to propagate the changes upwards.</li>
+</ul>
+</li>
+<li><strong>Incorrect Identity Element for Queries:</strong><ul>
+<li><strong>Problem:</strong> When a query range falls completely outside a node's segment, the function must return an "identity" value that doesn't affect the final result. For sum, it's 0. For minimum, it's positive infinity. For maximum, it's negative infinity. Using the wrong identity can lead to incorrect query results.</li>
+<li><strong>Solution:</strong> Always define and use the correct identity element specific to the aggregate operation (e.g., <code>0</code> for sum, <code>Integer.MAX_VALUE</code> or <code>LLONG_MAX</code> for minimum, <code>Integer.MIN_VALUE</code> or <code>LLONG_MIN</code> for maximum).</li>
+</ul>
+</li>
+<li><strong>Integer Overflow:</strong><ul>
+<li><strong>Problem:</strong> Especially in C++ and Java, if you are summing a large number of integers, the sum might exceed the maximum value of <code>int</code>, leading to incorrect results or unexpected behavior.</li>
+<li><strong>Solution:</strong> If there's a possibility of large sums, use <code>long</code> (Java) or <code>long long</code> (C++) for the array elements and the <code>tree</code> array.</li>
+</ul>
+</li>
+<li><strong>Stack Overflow with Very Large Arrays:</strong><ul>
+<li><strong>Problem:</strong> Although rare for typical competitive programming constraints (N &lt;= 10^5 to 10^6), extremely large arrays could theoretically cause a stack overflow due to deep recursion.</li>
+<li><strong>Solution:</strong> In practice, this is seldom an issue with Segment Trees due to their <code>log N</code> depth. For truly massive <code>N</code>, an iterative Segment Tree (often built on similar principles to Fenwick trees) might be considered, but generally recursion is fine.</li>
+</ul>
+</li>
+<li><strong>Memory Usage:</strong><ul>
+<li><strong>Problem:</strong> The <code>4 * N</code> memory allocation for the <code>tree</code> array can be substantial for very large <code>N</code>.</li>
+<li><strong>Solution:</strong> Be mindful of memory limits. While <code>4*N</code> is typical, if <code>N</code> is extremely large (e.g., <code>10^7</code>), <code>4 * 10^7</code> integers might exceed memory limits. In such cases, alternative solutions or sparse Segment Tree variants might be necessary, but for <code>N</code> up to <code>10^6</code>, it's usually acceptable (e.g., <code>4 * 10^6 * 4 bytes/int = 16MB</code>).</li>
+</ul>
+</li>
+</ul>
+<p>By carefully reviewing your code against these common pitfalls, you can significantly reduce debugging time and build more robust Segment Tree implementations.</p>
+<h2 id="expanding-your-knowledge-advanced-segment-tree-concepts">Expanding Your Knowledge: Advanced Segment Tree Concepts</h2>
+<p>Once you have a firm grasp of the basic Segment Tree operations, you can explore more advanced concepts that extend its capabilities:</p>
+<ul>
+<li><strong>Lazy Propagation Segment Trees:</strong> This is a crucial extension that allows for efficient <strong>range updates</strong> (e.g., "add X to all elements in range <code>[L, R]</code>" or "set all elements in range <code>[L, R]</code> to X"). Instead of updating every single node in the range, changes are "lazily" propagated down the tree only when necessary. This maintains <code>O(log N)</code> complexity for range updates.</li>
+<li><strong>Persistent Segment Trees:</strong> These data structures allow you to query previous versions of the tree after updates. Each update creates a new version of the tree without destroying previous ones. This is achieved by creating new nodes only on the path from the updated leaf to the root, sharing unchanged subtrees with previous versions.</li>
+<li><strong>Merge Sort Trees:</strong> Essentially a Segment Tree where each node stores a sorted list (or another Segment Tree/Fenwick Tree) of elements within its range. They are powerful for answering queries like "count elements less than X in range <code>[L, R]</code>" or "find k-th smallest element in range <code>[L, R]</code>".</li>
+<li><strong>Segment Trees with Custom Operations:</strong> The core structure is adaptable. Instead of sum, you could implement Segment Trees for GCD (Greatest Common Divisor), LCM (Least Common Multiple), matrix multiplication, or even more complex associative operations. The key is that the operation <code>op(a, op(b, c))</code> must be equivalent to <code>op(op(a, b), c)</code> (associativity).</li>
+</ul>
+<p>These advanced topics build directly on the fundamental Segment Tree, showcasing its versatility and power in solving highly complex algorithmic challenges, often requiring a mastery of various techniques, much like solving advanced problems such as <a href="/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder</a> which leverages BFS.</p>
+<h2 id="conclusion-mastering-segment-trees-for-data-efficiency">Conclusion: Mastering Segment Trees for Data Efficiency</h2>
+<p>The journey through understanding and implementing the <strong>Segment Tree in Python, Java &amp; C++</strong> reveals a data structure of immense power and flexibility. We've explored its hierarchical nature, its core operations—building, querying, and updating—each performed with impressive logarithmic time complexity, making it far superior to naive approaches for dynamic range problems. From the elegant recursive structure to the practical code examples in Python, Java, and C++, you now possess a comprehensive guide to deploy this tool effectively.</p>
+<p>Mastering Segment Trees is more than just learning another algorithm; it's about developing an intuitive understanding of how to decompose complex problems into manageable subproblems and leverage hierarchical structures for optimal performance. Whether you're navigating the competitive programming landscape, designing high-performance data processing systems, or simply aiming to deepen your algorithmic knowledge, the Segment Tree is an indispensable asset. Continue practicing, experiment with different aggregate operations (min, max, GCD), and consider diving into advanced topics like Lazy Propagation to truly unlock its full potential. The efficiency and versatility it offers will undoubtedly prove invaluable in your future coding endeavors.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: What is the primary advantage of a Segment Tree over a prefix sum array?</strong>
+A: A Segment Tree excels in scenarios requiring both efficient range queries and point updates. While a prefix sum array offers O(1) range queries, a single element update requires rebuilding the entire prefix sum array, resulting in O(N) complexity. Segment Trees handle both operations in O(log N) time.</p>
+<p><strong>Q: Can a Segment Tree be used for operations other than sum, like minimum or maximum?</strong>
+A: Absolutely! Segment Trees are highly versatile. By simply changing the aggregation logic when building and querying (e.g., using <code>Math.min()</code> or <code>std::min</code> instead of <code>+</code>), they can efficiently find range minimum, maximum, GCD, or any other associative operation.</p>
+<p><strong>Q: What is "Lazy Propagation" in the context of Segment Trees?</strong>
+A: Lazy Propagation is an optimization technique used with Segment Trees to handle range updates efficiently. Instead of updating every affected node in a range immediately, the updates are "marked" or "deferred" (made "lazy") on parent nodes and only propagated to children when their segments are directly involved in a query or another update. This maintains O(log N) complexity for range updates.</p>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Segment_tree">Wikipedia: Segment Tree</a></li>
+<li><a href="https://www.geeksforgeeks.org/segment-tree-set-1-sum-of-given-range/">GeeksforGeeks: Segment Tree | Set 1 (Sum of given range)</a></li>
+<li><a href="https://www.topcoder.com/thrive/articles/Segment%20Tree">TopCoder Tutorial: Segment Tree</a></li>
+<li><a href="https://cp-algorithms.com/data_structures/segment_tree.html">CP-Algorithms: Segment Tree</a></li>
+</ul>
+    </div>
+
+    <!-- Social Share Buttons -->
+    <div class="share-buttons">
+      <span class="share-label">Share:</span>
+
+      <!-- X (Twitter) -->
+      <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/&text=Segment%20Tree%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Comprehensive%20Guide"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/&title=Segment%20Tree%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Comprehensive%20Guide"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=Segment%20Tree%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Comprehensive%20Guide%20https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="article-footer-meta">
+      <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/data-structures.html">Data Structures</a></p>
+      <div class="tags-list">
+        <strong>Tags:</strong>
+        <span class="tag">#Segment Tree</span>
+        <span class="tag">#Python</span>
+        <span class="tag">#Java</span>
+        <span class="tag">#C++</span>
+        <span class="tag">#Data Structures</span>
+        <span class="tag">#Algorithms</span>
+        <span class="tag">#Competitive Programming</span>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <ul>
+        <li><a href="https://analyticsdrive.tech/cses-labyrinth-problem-python-java-cpp-guide/">CSES Labyrinth Problem in Python, Java & C++: A Complete Guide</a></li>
+        <li><a href="https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide</a></li>
+        <li><a href="https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/">Topological Sort using DFS & BFS in Python, C++, Java</a></li>
+      </ul>
+    </div>
+
+    <div class="post-footer">
+      <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Analytics Drive.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
