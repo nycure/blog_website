@@ -1,5 +1,403 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive - Algorithms</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/algorithms.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-24T13:59:00+00:00</updated><entry><title>Topological Sort using DFS &amp; BFS in Python, C++, Java</title><link href="https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/" rel="alternate"/><published>2026-02-24T13:59:00+00:00</published><updated>2026-02-24T13:59:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-24:/topological-sort-dfs-bfs-python-cpp-java/</id><summary type="html">&lt;p&gt;Learn to implement topological sort using DFS and BFS algorithms across Python, C++, and Java. Master this critical graph algorithm for DAGs.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Directed Acyclic Graphs (DAGs) are fundamental in computer science, modeling everything from task dependencies to course prerequisites. At the heart of effectively managing these structures lies the &lt;strong&gt;Topological Sort&lt;/strong&gt;, an algorithm that linearizes the vertices of a DAG such that for every directed edge from vertex &lt;code&gt;u&lt;/code&gt; to vertex &lt;code&gt;v&lt;/code&gt;, &lt;code&gt;u&lt;/code&gt; comes before &lt;code&gt;v&lt;/code&gt; in the ordering. This comprehensive guide will walk you through implementing &lt;strong&gt;Topological Sort using DFS &amp;amp; BFS in Python, C++, Java&lt;/strong&gt;, equipping you with the skills to tackle complex dependency problems. We'll explore both Depth-First Search (DFS) and Breadth-First Search (BFS) based approaches, providing detailed explanations and ready-to-use code examples in each language.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/"><title>Analytics Drive - Algorithms</title><link href="https://analyticsdrive.tech/" rel="alternate"/><link href="https://analyticsdrive.tech/feeds/algorithms.atom.xml" rel="self"/><id>https://analyticsdrive.tech/</id><updated>2026-02-26T15:02:00+00:00</updated><entry><title>Leetcode 1976: Number of Ways to Arrive at Destination Explained</title><link href="https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/" rel="alternate"/><published>2026-02-26T15:02:00+00:00</published><updated>2026-02-26T15:02:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-26:/leetcode-1976-number-of-ways-arrive-destination-tutorial/</id><summary type="html">&lt;p&gt;Master Leetcode 1976: Number of Ways to Arrive at Destination. This guide explains the modified Dijkstra's algorithm to solve this complex graph problem.&lt;/p&gt;</summary><content type="html">&lt;p&gt;When tackling advanced graph problems on platforms like Leetcode, you often encounter scenarios that push beyond the standard textbook algorithms. One such intriguing challenge is &lt;strong&gt;Leetcode 1976: Number of Ways to Arrive at Destination&lt;/strong&gt;. This problem asks us to find not just the shortest time to reach a specific point in a city, but also the total count of distinct paths that achieve that exact minimum travel time. This comprehensive tutorial will guide you through understanding, approaching, and implementing a solution to effectively solve this problem, ensuring you grasp the nuances of modifying classic algorithms for modern challenges. By the end of this guide, you will have a clear understanding of how to combine shortest path algorithms with dynamic programming principles to solve problems requiring the computation of multiple optimal paths.&lt;/p&gt;
+&lt;h2 id="prerequisites-for-tackling-leetcode-1976"&gt;Prerequisites for Tackling Leetcode 1976&lt;/h2&gt;
+&lt;p&gt;Before diving into the solution for "Number of Ways to Arrive at Destination," a solid understanding of several fundamental concepts is crucial. These prerequisites form the bedrock upon which our optimized algorithm will be built. Familiarity with these topics will ensure you can fully grasp the intricacies of the problem and its solution.&lt;/p&gt;
+&lt;h3 id="graph-theory-fundamentals"&gt;Graph Theory Fundamentals&lt;/h3&gt;
+&lt;p&gt;At its heart, this Leetcode problem is about navigating a graph. Understanding basic graph terminology is essential. For instance, correctly identifying nodes, edges, and their weights is crucial for problems involving pathfinding, much like analyzing movement in a grid-based scenario as seen in &lt;a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/"&gt;Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nodes (Vertices):&lt;/strong&gt; These represent the intersections or locations in our city. In Leetcode 1976, each intersection is a node.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edges:&lt;/strong&gt; These represent the roads connecting the intersections. An edge connects two nodes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Weights:&lt;/strong&gt; Each edge has an associated weight, which in this problem signifies the time it takes to travel along that road. Our goal is to minimize the total travel time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Undirected Graph:&lt;/strong&gt; The problem states that roads can be traveled in both directions. This means if there's an edge from node A to node B, there's also an equivalent edge from node B to node A with the same weight. Our graph representation must account for this bidirectionality.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Adjacency List:&lt;/strong&gt; This is a common and efficient way to represent a graph, especially for sparse graphs (graphs with relatively few edges compared to the maximum possible). An adjacency list stores, for each node, a list of its neighbors and the weights of the edges connecting them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="dijkstras-algorithm"&gt;Dijkstra's Algorithm&lt;/h3&gt;
+&lt;p&gt;Dijkstra's algorithm is the cornerstone for solving the single-source shortest path problem on graphs with non-negative edge weights. It is a fundamental concept in graph theory, often applied alongside or in comparison to other graph traversal techniques like BFS for unweighted graphs, similar to problems found in &lt;a href="/leetcode-127-word-ladder-bfs-tutorial/"&gt;Leetcode 127 Word Ladder: Master the BFS Approach Easily&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; It efficiently finds the shortest path (minimum cumulative weight) from a single source node to all other nodes in the graph.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mechanism:&lt;/strong&gt; It works by iteratively visiting nodes, always selecting the unvisited node with the smallest known distance from the source. It then relaxes all edges connected to this chosen node, updating the distances to its neighbors if a shorter path is found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Priority Queue:&lt;/strong&gt; Dijkstra's algorithm heavily relies on a priority queue (min-heap) to efficiently retrieve the unvisited node with the smallest current distance. The priority queue stores tuples of &lt;code&gt;(distance, node)&lt;/code&gt;, ordered by &lt;code&gt;distance&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Relaxation:&lt;/strong&gt; The core operation where we check if traversing through the current node offers a shorter path to an adjacent node. If &lt;code&gt;dist[u] + weight(u, v) &amp;lt; dist[v]&lt;/code&gt;, then &lt;code&gt;dist[v]&lt;/code&gt; is updated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While Dijkstra's directly finds the shortest path, we need to extend it to count the number of ways to achieve that minimum time.&lt;/p&gt;
+&lt;h3 id="dynamic-programming-concepts"&gt;Dynamic Programming Concepts&lt;/h3&gt;
+&lt;p&gt;Dynamic programming (DP) is an algorithmic technique for solving complex problems by breaking them down into simpler subproblems. In our case, DP principles help us accumulate the count of paths. This approach of building solutions from subproblems is a versatile tool across many algorithmic challenges, including those requiring pathfinding in mazes, which can sometimes benefit from similar thought processes, as explored in guides like &lt;a href="/cses-labyrinth-problem-python-java-cpp-guide/"&gt;CSES Labyrinth Problem in Python, Java &amp;amp; C++: A Complete Guide&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Optimal Substructure:&lt;/strong&gt; The optimal solution to the problem can be constructed from the optimal solutions of its subproblems. If the shortest path to node &lt;code&gt;v&lt;/code&gt; passes through node &lt;code&gt;u&lt;/code&gt;, then the path from the source to &lt;code&gt;u&lt;/code&gt; must also be a shortest path.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Overlapping Subproblems:&lt;/strong&gt; The same subproblems are encountered multiple times. By storing the results of these subproblems (memoization), we avoid redundant computations. Here, when we find a new path to a node that has the &lt;em&gt;same minimum time&lt;/em&gt; as a previously found path, we add the ways, rather than recalculating everything.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;State Definition:&lt;/strong&gt; For Leetcode 1976, we will maintain two critical pieces of information for each node: &lt;code&gt;min_time[node]&lt;/code&gt; (the minimum time to reach &lt;code&gt;node&lt;/code&gt; from the source) and &lt;code&gt;ways[node]&lt;/code&gt; (the number of ways to achieve &lt;code&gt;min_time[node]&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="modular-arithmetic"&gt;Modular Arithmetic&lt;/h3&gt;
+&lt;p&gt;The problem statement often specifies that the "number of ways" can be very large, so we should return the result modulo &lt;code&gt;10^9 + 7&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Why Modulo?&lt;/strong&gt; To prevent integer overflow. Many programming languages have limits on the size of integers they can represent. When numbers exceed these limits, they wrap around or cause errors. Taking the modulo ensures the numbers remain within a manageable range, which is critical when accumulating large counts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Applying Modulo:&lt;/strong&gt; The modulo operation should be applied whenever you perform an addition or multiplication that might result in a large number. For this problem, it will primarily apply when updating &lt;code&gt;ways[node]&lt;/code&gt; to keep the counts within the required range.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With these prerequisites firmly in mind, you are well-equipped to understand the detailed solution.&lt;/p&gt;
+&lt;h2 id="understanding-leetcode-1976-number-of-ways-to-arrive-at-destination"&gt;Understanding Leetcode 1976: Number of Ways to Arrive at Destination&lt;/h2&gt;
+&lt;p&gt;The problem "Number of Ways to Arrive at Destination" presents a city with &lt;code&gt;n&lt;/code&gt; intersections, numbered from &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;n-1&lt;/code&gt;. We are given a 2D integer array &lt;code&gt;roads&lt;/code&gt;, where &lt;code&gt;roads[i] = [ui, vi, timei]&lt;/code&gt; indicates a &lt;code&gt;timei&lt;/code&gt; minute road between intersections &lt;code&gt;ui&lt;/code&gt; and &lt;code&gt;vi&lt;/code&gt;. These roads can be traveled in both directions. Our objective is to find the number of ways to travel from intersection &lt;code&gt;0&lt;/code&gt; (the start) to intersection &lt;code&gt;n-1&lt;/code&gt; (the destination) in the &lt;em&gt;shortest possible time&lt;/em&gt;. Since the number of ways can be huge, we must return it modulo &lt;code&gt;10^9 + 7&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let's break down the key aspects:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Source and Destination:&lt;/strong&gt; Always fixed at &lt;code&gt;0&lt;/code&gt; and &lt;code&gt;n-1&lt;/code&gt; respectively. This simplifies the problem by having a consistent start and end point.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Non-negative Weights:&lt;/strong&gt; The &lt;code&gt;timei&lt;/code&gt; values are always non-negative, which is a crucial condition for Dijkstra's algorithm to work correctly. If negative weights were allowed, other algorithms like Bellman-Ford or SPFA would be necessary.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Undirected Roads:&lt;/strong&gt; Each &lt;code&gt;[ui, vi, timei]&lt;/code&gt; road implies two directed edges: &lt;code&gt;ui -&amp;gt; vi&lt;/code&gt; with &lt;code&gt;timei&lt;/code&gt; and &lt;code&gt;vi -&amp;gt; ui&lt;/code&gt; with &lt;code&gt;timei&lt;/code&gt;. This bidirectionality must be accurately reflected in the graph representation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;"Shortest Possible Time":&lt;/strong&gt; This immediately signals a shortest path algorithm, making Dijkstra a primary candidate. The modification to Dijkstra's will allow us to track more than just the shortest time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;"Number of Ways":&lt;/strong&gt; This is where the standard Dijkstra algorithm falls short. We need to not only find the minimum time but also count &lt;em&gt;how many distinct paths&lt;/em&gt; achieve that minimum time. If multiple paths lead to a node with the same minimum time, all these paths contribute to the total count for that node.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Consider an example:
+If there's a path &lt;code&gt;0 -&amp;gt; A -&amp;gt; D&lt;/code&gt; taking 10 minutes and another path &lt;code&gt;0 -&amp;gt; B -&amp;gt; C -&amp;gt; D&lt;/code&gt; also taking 10 minutes, and 10 minutes is the &lt;em&gt;minimum possible time&lt;/em&gt; to reach D, then there are 2 ways to reach D in the shortest time. This problem requires us to aggregate these distinct valid paths.&lt;/p&gt;
+&lt;p&gt;This problem is a classic example of extending a standard graph algorithm with dynamic programming principles to gather additional information during the traversal.&lt;/p&gt;
+&lt;h2 id="core-idea-and-algorithm-approach"&gt;Core Idea and Algorithm Approach&lt;/h2&gt;
+&lt;p&gt;Solving &lt;strong&gt;Leetcode 1976: Number of Ways to Arrive at Destination&lt;/strong&gt; requires a modification of Dijkstra's algorithm. A standard Dijkstra's algorithm only tracks the minimum distance to each node. To count the ways, we need to extend its state.&lt;/p&gt;
+&lt;p&gt;The core idea is to maintain two arrays for each node &lt;code&gt;i&lt;/code&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;min_time[i]&lt;/code&gt;: The shortest time found so far to reach node &lt;code&gt;i&lt;/code&gt; from the source (node &lt;code&gt;0&lt;/code&gt;). This array behaves exactly like the distance array in standard Dijkstra.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ways[i]&lt;/code&gt;: The number of distinct paths that achieve &lt;code&gt;min_time[i]&lt;/code&gt;. This array is our dynamic programming component, accumulating counts.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We will initialize &lt;code&gt;min_time&lt;/code&gt; for all nodes to infinity (or a very large number) and &lt;code&gt;ways&lt;/code&gt; for all nodes to &lt;code&gt;0&lt;/code&gt;. The source node &lt;code&gt;0&lt;/code&gt; will have &lt;code&gt;min_time[0] = 0&lt;/code&gt; and &lt;code&gt;ways[0] = 1&lt;/code&gt; (there's one way to be at the start at time 0).&lt;/p&gt;
+&lt;p&gt;Our modified Dijkstra will work as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It will still use a min-priority queue to explore nodes. The elements in the priority queue will be &lt;code&gt;(current_time, u)&lt;/code&gt;, representing that we have found a path to node &lt;code&gt;u&lt;/code&gt; taking &lt;code&gt;current_time&lt;/code&gt; minutes. The priority queue ensures we always process the node that is closest to the source first.&lt;/li&gt;
+&lt;li&gt;When we extract a node &lt;code&gt;u&lt;/code&gt; with &lt;code&gt;current_time&lt;/code&gt; from the priority queue, we know &lt;code&gt;current_time&lt;/code&gt; is the &lt;em&gt;definite&lt;/em&gt; shortest time to reach &lt;code&gt;u&lt;/code&gt; (just like in standard Dijkstra's). This is because Dijkstra's algorithm processes nodes in increasing order of their shortest path distances.&lt;/li&gt;
+&lt;li&gt;For each neighbor &lt;code&gt;v&lt;/code&gt; of &lt;code&gt;u&lt;/code&gt; connected by an edge of weight &lt;code&gt;w&lt;/code&gt;:&lt;ul&gt;
+&lt;li&gt;Calculate the time to reach &lt;code&gt;v&lt;/code&gt; via &lt;code&gt;u&lt;/code&gt;: &lt;code&gt;new_time = current_time + w&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Case 1: &lt;code&gt;new_time &amp;lt; min_time[v]&lt;/code&gt;&lt;/strong&gt;
+    This means we've found a &lt;em&gt;strictly shorter&lt;/em&gt; path to &lt;code&gt;v&lt;/code&gt;. We update &lt;code&gt;min_time[v]&lt;/code&gt; to &lt;code&gt;new_time&lt;/code&gt;. Crucially, since this is a new shortest path, the number of ways to reach &lt;code&gt;v&lt;/code&gt; must now be the same as the number of ways to reach &lt;code&gt;u&lt;/code&gt;. So, &lt;code&gt;ways[v] = ways[u]&lt;/code&gt;. Then, we add &lt;code&gt;(new_time, v)&lt;/code&gt; to the priority queue to explore paths originating from &lt;code&gt;v&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Case 2: &lt;code&gt;new_time == min_time[v]&lt;/code&gt;&lt;/strong&gt;
+    This is the critical modification. We've found an &lt;em&gt;alternative path&lt;/em&gt; to &lt;code&gt;v&lt;/code&gt; that takes the &lt;em&gt;exact same minimum time&lt;/em&gt; as an existing shortest path. This means we've discovered additional ways to reach &lt;code&gt;v&lt;/code&gt; in the minimum time. Therefore, we &lt;em&gt;add&lt;/em&gt; the number of ways to reach &lt;code&gt;u&lt;/code&gt; (&lt;code&gt;ways[u]&lt;/code&gt;) to &lt;code&gt;ways[v]&lt;/code&gt;. So, &lt;code&gt;ways[v] = (ways[v] + ways[u]) % MOD&lt;/code&gt;. We also add &lt;code&gt;(new_time, v)&lt;/code&gt; to the priority queue, as this path could lead to shortest paths for other nodes, and its contribution to the &lt;code&gt;ways&lt;/code&gt; count needs to be propagated.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Case 3: &lt;code&gt;new_time &amp;gt; min_time[v]&lt;/code&gt;&lt;/strong&gt;
+    This path is longer than an already known shortest path to &lt;code&gt;v&lt;/code&gt;. We simply ignore it, as it cannot contribute to the shortest time or the ways to achieve it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This approach essentially performs a shortest path search while simultaneously accumulating counts for paths that achieve the minimum time. The modular arithmetic is applied whenever we update &lt;code&gt;ways[v]&lt;/code&gt; to prevent overflow.&lt;/p&gt;
+&lt;h2 id="detailed-steps-for-solving-leetcode-1976"&gt;Detailed Steps for Solving Leetcode 1976&lt;/h2&gt;
+&lt;p&gt;Let's walk through the exact procedure to implement the solution for &lt;strong&gt;Leetcode 1976: Number of Ways to Arrive at Destination&lt;/strong&gt;. We'll use Python for our example implementation.&lt;/p&gt;
+&lt;h3 id="step-1-represent-the-graph"&gt;Step 1: Represent the Graph&lt;/h3&gt;
+&lt;p&gt;First, we need to efficiently store the city's road network. An adjacency list is ideal for this. Since the roads are undirected, if &lt;code&gt;u&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt; are connected, we add &lt;code&gt;v&lt;/code&gt; to &lt;code&gt;u&lt;/code&gt;'s list and &lt;code&gt;u&lt;/code&gt; to &lt;code&gt;v&lt;/code&gt;'s list with the associated time.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;heapq&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;countPaths&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;roads&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c1"&gt;# Define modulo constant as specified by the problem&lt;/span&gt;
+        &lt;span class="n"&gt;MOD&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 1. Graph Representation: Adjacency List&lt;/span&gt;
+        &lt;span class="c1"&gt;# adj[u] will store a list of tuples (v, travel_time) for neighbors of u&lt;/span&gt;
+        &lt;span class="n"&gt;adj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;roads&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# Roads are bidirectional (undirected graph)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="step-2-initialize-data-structures"&gt;Step 2: Initialize Data Structures&lt;/h3&gt;
+&lt;p&gt;We'll need arrays to store the minimum time and the number of ways to reach each node, along with a priority queue for Dijkstra's algorithm.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;min_time&lt;/code&gt;: Stores the minimum time to reach each intersection from the source. Initialize with infinity for all nodes except the source.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ways&lt;/code&gt;: Stores the number of ways to reach each intersection in &lt;code&gt;min_time&lt;/code&gt;. Initialize with &lt;code&gt;0&lt;/code&gt; for all nodes except the source.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pq&lt;/code&gt;: A min-priority queue to manage nodes to visit, ordered by the current minimum time to reach them.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;        &lt;span class="c1"&gt;# 2. Initialization of Dijkstra&amp;#39;s arrays&lt;/span&gt;
+        &lt;span class="c1"&gt;# min_time[i] stores the shortest time found so far to reach node i from node 0&lt;/span&gt;
+        &lt;span class="n"&gt;min_time&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;inf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+        &lt;span class="c1"&gt;# ways[i] stores the number of distinct paths that achieve min_time[i]&lt;/span&gt;
+        &lt;span class="n"&gt;ways&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Initialize for the source node (node 0)&lt;/span&gt;
+        &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;  &lt;span class="c1"&gt;# Time to reach source from source is 0&lt;/span&gt;
+        &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;      &lt;span class="c1"&gt;# There&amp;#39;s one way to be at the start at time 0&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Priority Queue: stores tuples of (current_time, node)&lt;/span&gt;
+        &lt;span class="c1"&gt;# It will extract the node with the smallest current_time first&lt;/span&gt;
+        &lt;span class="n"&gt;pq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="c1"&gt;# Start Dijkstra from node 0 with 0 time&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="step-3-implement-modified-dijkstras-algorithm"&gt;Step 3: Implement Modified Dijkstra's Algorithm&lt;/h3&gt;
+&lt;p&gt;This is the core of the solution. We'll extract nodes from the priority queue and systematically update &lt;code&gt;min_time&lt;/code&gt; and &lt;code&gt;ways&lt;/code&gt; for their neighbors based on the rules defined in the "Core Idea" section. The loop continues until all reachable nodes have been processed or the priority queue is empty.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;        &lt;span class="c1"&gt;# 3. Modified Dijkstra&amp;#39;s Algorithm&lt;/span&gt;
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="c1"&gt;# Extract the node with the smallest time found so far&lt;/span&gt;
+            &lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;heappop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Optimization: If we&amp;#39;ve already found a strictly shorter path to &amp;#39;u&amp;#39;&lt;/span&gt;
+            &lt;span class="c1"&gt;# than &amp;#39;current_time&amp;#39; (which means this &amp;#39;current_time&amp;#39; entry in PQ is stale),&lt;/span&gt;
+            &lt;span class="c1"&gt;# then skip processing this one. This prevents redundant calculations&lt;/span&gt;
+            &lt;span class="c1"&gt;# and ensures we always use the true minimum time for &amp;#39;u&amp;#39;.&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;current_time&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                &lt;span class="k"&gt;continue&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Iterate over all neighbors &amp;#39;v&amp;#39; of the current node &amp;#39;u&amp;#39;&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;travel_time&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                &lt;span class="c1"&gt;# Calculate the time to reach neighbor &amp;#39;v&amp;#39; through current node &amp;#39;u&amp;#39;&lt;/span&gt;
+                &lt;span class="n"&gt;new_time&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;current_time&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;travel_time&lt;/span&gt;
+
+                &lt;span class="c1"&gt;# Case 1: Found a strictly shorter path to &amp;#39;v&amp;#39;&lt;/span&gt;
+                &lt;span class="c1"&gt;# This is the standard Dijkstra&amp;#39;s relaxation step.&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;new_time&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                    &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new_time&lt;/span&gt;  &lt;span class="c1"&gt;# Update minimum time&lt;/span&gt;
+                    &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;       &lt;span class="c1"&gt;# The number of ways is now solely determined by ways[u]&lt;/span&gt;
+                    &lt;span class="n"&gt;heapq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;heappush&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# Push &amp;#39;v&amp;#39; to PQ to explore further paths&lt;/span&gt;
+
+                &lt;span class="c1"&gt;# Case 2: Found a path with the exact same minimum time to &amp;#39;v&amp;#39;&lt;/span&gt;
+                &lt;span class="c1"&gt;# This is the core modification for counting ways.&lt;/span&gt;
+                &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;new_time&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                    &lt;span class="c1"&gt;# This means we found an *additional* way to reach &amp;#39;v&amp;#39; in its minimum time.&lt;/span&gt;
+                    &lt;span class="c1"&gt;# So, we add the ways from &amp;#39;u&amp;#39; to the existing ways for &amp;#39;v&amp;#39;.&lt;/span&gt;
+                    &lt;span class="c1"&gt;# Apply modular arithmetic to prevent integer overflow.&lt;/span&gt;
+                    &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;MOD&lt;/span&gt;
+                    &lt;span class="c1"&gt;# Crucially, we still push &amp;#39;v&amp;#39; to the PQ. Even though its min_time hasn&amp;#39;t changed,&lt;/span&gt;
+                    &lt;span class="c1"&gt;# finding a *new path* to &amp;#39;v&amp;#39; with min_time means that subsequent paths starting&lt;/span&gt;
+                    &lt;span class="c1"&gt;# from &amp;#39;v&amp;#39; might now be counted in ways[v], and these paths need to be explored&lt;/span&gt;
+                    &lt;span class="c1"&gt;# with the correct way count propagation. The &amp;#39;current_time &amp;gt; min_time[u]&amp;#39; check&lt;/span&gt;
+                    &lt;span class="c1"&gt;# at the beginning of the loop efficiently handles potential duplicate entries&lt;/span&gt;
+                    &lt;span class="c1"&gt;# from being processed more than necessary after their true min_time is found.&lt;/span&gt;
+                    &lt;span class="n"&gt;heapq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;heappush&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="step-4-return-the-result"&gt;Step 4: Return the Result&lt;/h3&gt;
+&lt;p&gt;Once the priority queue is empty, &lt;code&gt;ways[n-1]&lt;/code&gt; will hold the total number of ways to reach the destination &lt;code&gt;n-1&lt;/code&gt; in the shortest possible time, modulo &lt;code&gt;10^9 + 7&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;        &lt;span class="c1"&gt;# 4. Final Result&lt;/span&gt;
+        &lt;span class="c1"&gt;# The answer is the number of ways to reach the destination node (n-1)&lt;/span&gt;
+        &lt;span class="c1"&gt;# in the shortest possible time.&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="complete-code-implementation-python"&gt;Complete Code Implementation (Python)&lt;/h3&gt;
+&lt;p&gt;Putting it all together, here's the full Python solution for &lt;strong&gt;Leetcode 1976: Number of Ways to Arrive at Destination&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;heapq&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;countPaths&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;roads&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c1"&gt;# Define modulo constant as specified by the problem&lt;/span&gt;
+        &lt;span class="n"&gt;MOD&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 1. Graph Representation: Adjacency List&lt;/span&gt;
+        &lt;span class="c1"&gt;# adj[u] will store a list of tuples (v, travel_time) for neighbors of u&lt;/span&gt;
+        &lt;span class="n"&gt;adj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;roads&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# Roads are bidirectional (undirected graph)&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 2. Initialization of Dijkstra&amp;#39;s arrays&lt;/span&gt;
+        &lt;span class="c1"&gt;# min_time[i] stores the shortest time found so far to reach node i from node 0&lt;/span&gt;
+        &lt;span class="n"&gt;min_time&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;inf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+        &lt;span class="c1"&gt;# ways[i] stores the number of distinct paths that achieve min_time[i]&lt;/span&gt;
+        &lt;span class="n"&gt;ways&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Initialize for the source node (node 0)&lt;/span&gt;
+        &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;  &lt;span class="c1"&gt;# Time to reach source from source is 0&lt;/span&gt;
+        &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;      &lt;span class="c1"&gt;# There&amp;#39;s one way to be at the start at time 0&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Priority Queue: stores tuples of (current_time, node)&lt;/span&gt;
+        &lt;span class="c1"&gt;# It will extract the node with the smallest current_time first&lt;/span&gt;
+        &lt;span class="n"&gt;pq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="c1"&gt;# Start Dijkstra from node 0 with 0 time&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 3. Modified Dijkstra&amp;#39;s Algorithm&lt;/span&gt;
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="c1"&gt;# Extract the node with the smallest time found so far&lt;/span&gt;
+            &lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;heapq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;heappop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Optimization: If we&amp;#39;ve already found a strictly shorter path to &amp;#39;u&amp;#39; than&lt;/span&gt;
+            &lt;span class="c1"&gt;# &amp;#39;current_time&amp;#39; (which means this &amp;#39;current_time&amp;#39; entry in PQ is stale),&lt;/span&gt;
+            &lt;span class="c1"&gt;# then skip processing this one. This prevents redundant calculations.&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;current_time&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                &lt;span class="k"&gt;continue&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Iterate over all neighbors &amp;#39;v&amp;#39; of the current node &amp;#39;u&amp;#39;&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;travel_time&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;adj&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                &lt;span class="c1"&gt;# Calculate the time to reach neighbor &amp;#39;v&amp;#39; through current node &amp;#39;u&amp;#39;&lt;/span&gt;
+                &lt;span class="n"&gt;new_time&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;current_time&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;travel_time&lt;/span&gt;
+
+                &lt;span class="c1"&gt;# Case 1: Found a strictly shorter path to &amp;#39;v&amp;#39;&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;new_time&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                    &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new_time&lt;/span&gt;  &lt;span class="c1"&gt;# Update minimum time&lt;/span&gt;
+                    &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;       &lt;span class="c1"&gt;# The number of ways is now solely determined by ways[u]&lt;/span&gt;
+                    &lt;span class="n"&gt;heapq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;heappush&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# Push &amp;#39;v&amp;#39; to PQ to explore further paths&lt;/span&gt;
+
+                &lt;span class="c1"&gt;# Case 2: Found a path with the exact same minimum time to &amp;#39;v&amp;#39;&lt;/span&gt;
+                &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;new_time&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;min_time&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+                    &lt;span class="c1"&gt;# This means we found an *additional* way to reach &amp;#39;v&amp;#39; in its minimum time.&lt;/span&gt;
+                    &lt;span class="c1"&gt;# So, we add the ways from &amp;#39;u&amp;#39; to the existing ways for &amp;#39;v&amp;#39;.&lt;/span&gt;
+                    &lt;span class="c1"&gt;# Apply modular arithmetic to prevent integer overflow.&lt;/span&gt;
+                    &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;MOD&lt;/span&gt;
+                    &lt;span class="c1"&gt;# Crucially, we still push &amp;#39;v&amp;#39; to the PQ. Even though its min_time hasn&amp;#39;t changed,&lt;/span&gt;
+                    &lt;span class="c1"&gt;# finding a *new path* to &amp;#39;v&amp;#39; with min_time means that subsequent paths starting&lt;/span&gt;
+                    &lt;span class="c1"&gt;# from &amp;#39;v&amp;#39; might now be counted in ways[v], and these paths need to be explored&lt;/span&gt;
+                    &lt;span class="c1"&gt;# with the correct way count propagation. The &amp;#39;current_time &amp;gt; min_time[u]&amp;#39; check&lt;/span&gt;
+                    &lt;span class="c1"&gt;# ensures that stale entries don&amp;#39;t cause infinite loops or incorrect behavior.&lt;/span&gt;
+                    &lt;span class="n"&gt;heapq&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;heappush&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 4. Final Result&lt;/span&gt;
+        &lt;span class="c1"&gt;# The answer is the number of ways to reach the destination node (n-1)&lt;/span&gt;
+        &lt;span class="c1"&gt;# in the shortest possible time.&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="example-walkthrough"&gt;Example Walkthrough&lt;/h3&gt;
+&lt;p&gt;Let's trace a small example to solidify understanding of how &lt;code&gt;ways&lt;/code&gt; are updated, particularly focusing on the &lt;code&gt;new_time == min_time[v]&lt;/code&gt; case.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;n = 3&lt;/code&gt;, &lt;code&gt;roads = [[0,1,10], [1,2,10], [0,2,20]]&lt;/code&gt;
+Source: &lt;code&gt;0&lt;/code&gt;, Destination: &lt;code&gt;2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Initial State:
+&lt;code&gt;min_time = [0, inf, inf]&lt;/code&gt; (inf represents &lt;code&gt;float('inf')&lt;/code&gt;)
+&lt;code&gt;ways = [1, 0, 0]&lt;/code&gt;
+&lt;code&gt;pq = [(0, 0)]&lt;/code&gt; (time, node)&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Pop &lt;code&gt;(0, 0)&lt;/code&gt; from &lt;code&gt;pq&lt;/code&gt;. &lt;code&gt;u = 0&lt;/code&gt;, &lt;code&gt;current_time = 0&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;min_time[0] = 0&lt;/code&gt;, &lt;code&gt;ways[0] = 1&lt;/code&gt;. (&lt;code&gt;current_time&lt;/code&gt; is not greater than &lt;code&gt;min_time[0]&lt;/code&gt;, so not stale).&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;0&lt;/code&gt;: &lt;code&gt;(1, 10)&lt;/code&gt;, &lt;code&gt;(2, 20)&lt;/code&gt; (neighbor node, travel time)&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Neighbor &lt;code&gt;v = 1&lt;/code&gt;, &lt;code&gt;travel_time = 10&lt;/code&gt;&lt;/strong&gt;:
+    &lt;code&gt;new_time = 0 + 10 = 10&lt;/code&gt;.
+    &lt;code&gt;10 &amp;lt; min_time[1]&lt;/code&gt; (&lt;code&gt;inf&lt;/code&gt;):
+    &lt;code&gt;min_time[1] = 10&lt;/code&gt;
+    &lt;code&gt;ways[1] = ways[0] = 1&lt;/code&gt;
+    &lt;code&gt;heapq.heappush(pq, (10, 1))&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Neighbor &lt;code&gt;v = 2&lt;/code&gt;, &lt;code&gt;travel_time = 20&lt;/code&gt;&lt;/strong&gt;:
+    &lt;code&gt;new_time = 0 + 20 = 20&lt;/code&gt;.
+    &lt;code&gt;20 &amp;lt; min_time[2]&lt;/code&gt; (&lt;code&gt;inf&lt;/code&gt;):
+    &lt;code&gt;min_time[2] = 20&lt;/code&gt;
+    &lt;code&gt;ways[2] = ways[0] = 1&lt;/code&gt;
+    &lt;code&gt;heapq.heappush(pq, (20, 2))&lt;/code&gt;
+&lt;code&gt;pq&lt;/code&gt; is now &lt;code&gt;[(10, 1), (20, 2)]&lt;/code&gt; (order might vary slightly for equal priorities, but for distinct times it's stable).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Pop &lt;code&gt;(10, 1)&lt;/code&gt; from &lt;code&gt;pq&lt;/code&gt;. &lt;code&gt;u = 1&lt;/code&gt;, &lt;code&gt;current_time = 10&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;min_time[1] = 10&lt;/code&gt;, &lt;code&gt;ways[1] = 1&lt;/code&gt;. (&lt;code&gt;current_time == min_time[1]&lt;/code&gt;, not stale).&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;1&lt;/code&gt;: &lt;code&gt;(0, 10)&lt;/code&gt;, &lt;code&gt;(2, 10)&lt;/code&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Neighbor &lt;code&gt;v = 0&lt;/code&gt;, &lt;code&gt;travel_time = 10&lt;/code&gt;&lt;/strong&gt;:
+    &lt;code&gt;new_time = 10 + 10 = 20&lt;/code&gt;.
+    &lt;code&gt;20 &amp;gt; min_time[0]&lt;/code&gt; (&lt;code&gt;0&lt;/code&gt;): Ignore (this path is longer than already known shortest path to 0).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Neighbor &lt;code&gt;v = 2&lt;/code&gt;, &lt;code&gt;travel_time = 10&lt;/code&gt;&lt;/strong&gt;:
+    &lt;code&gt;new_time = 10 + 10 = 20&lt;/code&gt;.
+    Compare &lt;code&gt;new_time&lt;/code&gt; with &lt;code&gt;min_time[2]&lt;/code&gt; (which is &lt;code&gt;20&lt;/code&gt;):
+    &lt;code&gt;new_time == min_time[2]&lt;/code&gt; (both are &lt;code&gt;20&lt;/code&gt;):
+    This is an alternative shortest path to &lt;code&gt;v=2&lt;/code&gt;.
+    &lt;code&gt;ways[2] = (ways[2] + ways[1]) % MOD = (1 + 1) % MOD = 2&lt;/code&gt;.
+    &lt;code&gt;heapq.heappush(pq, (20, 2))&lt;/code&gt;
+&lt;code&gt;pq&lt;/code&gt; is now &lt;code&gt;[(20, 2), (20, 2)]&lt;/code&gt;. (Note: The specific order of two entries with identical priority might vary slightly, but both will be processed).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Pop &lt;code&gt;(20, 2)&lt;/code&gt; from &lt;code&gt;pq&lt;/code&gt;. &lt;code&gt;u = 2&lt;/code&gt;, &lt;code&gt;current_time = 20&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;min_time[2] = 20&lt;/code&gt;, &lt;code&gt;ways[2] = 2&lt;/code&gt;. (&lt;code&gt;current_time == min_time[2]&lt;/code&gt;, not stale).&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;2&lt;/code&gt;: &lt;code&gt;(0, 20)&lt;/code&gt;, &lt;code&gt;(1, 10)&lt;/code&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Neighbor &lt;code&gt;v = 0&lt;/code&gt;, &lt;code&gt;travel_time = 20&lt;/code&gt;&lt;/strong&gt;:
+    &lt;code&gt;new_time = 20 + 20 = 40&lt;/code&gt;.
+    &lt;code&gt;40 &amp;gt; min_time[0]&lt;/code&gt; (&lt;code&gt;0&lt;/code&gt;): Ignore.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Neighbor &lt;code&gt;v = 1&lt;/code&gt;, &lt;code&gt;travel_time = 10&lt;/code&gt;&lt;/strong&gt;:
+    &lt;code&gt;new_time = 20 + 10 = 30&lt;/code&gt;.
+    &lt;code&gt;30 &amp;gt; min_time[1]&lt;/code&gt; (&lt;code&gt;10&lt;/code&gt;): Ignore.
+&lt;code&gt;pq&lt;/code&gt; is now &lt;code&gt;[(20, 2)]&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Pop &lt;code&gt;(20, 2)&lt;/code&gt; from &lt;code&gt;pq&lt;/code&gt;. &lt;code&gt;u = 2&lt;/code&gt;, &lt;code&gt;current_time = 20&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;min_time[2] = 20&lt;/code&gt;, &lt;code&gt;ways[2] = 2&lt;/code&gt;. (&lt;code&gt;current_time == min_time[2]&lt;/code&gt;, not stale).&lt;/li&gt;
+&lt;li&gt;Neighbors of &lt;code&gt;2&lt;/code&gt;: (Same as above, will be ignored as they lead to longer paths).
+&lt;code&gt;pq&lt;/code&gt; is now empty.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Algorithm terminates.&lt;/p&gt;
+&lt;p&gt;Final State:
+&lt;code&gt;min_time = [0, 10, 20]&lt;/code&gt;
+&lt;code&gt;ways = [1, 1, 2]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Result: &lt;code&gt;ways[n-1]&lt;/code&gt; (i.e., &lt;code&gt;ways[2]&lt;/code&gt;) is &lt;code&gt;2&lt;/code&gt;. This correctly identifies two paths that achieve the minimum time of 20 minutes to reach node 2:
+1.  &lt;code&gt;0 -&amp;gt; 2&lt;/code&gt; (direct path, time 20)
+2.  &lt;code&gt;0 -&amp;gt; 1 -&amp;gt; 2&lt;/code&gt; (via node 1, time 10 + 10 = 20)&lt;/p&gt;
+&lt;p&gt;This example clearly illustrates how the &lt;code&gt;ways&lt;/code&gt; count is accumulated when multiple paths yield the same minimum time.&lt;/p&gt;
+&lt;h2 id="complexity-analysis"&gt;Complexity Analysis&lt;/h2&gt;
+&lt;p&gt;Understanding the performance characteristics of our solution is vital for competitive programming and software engineering.&lt;/p&gt;
+&lt;h3 id="time-complexity"&gt;Time Complexity&lt;/h3&gt;
+&lt;p&gt;The time complexity of this modified Dijkstra's algorithm is largely similar to the standard version.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Graph Construction:&lt;/strong&gt; Building the adjacency list takes &lt;code&gt;O(V + E)&lt;/code&gt; time, where &lt;code&gt;V&lt;/code&gt; is the number of vertices (intersections) and &lt;code&gt;E&lt;/code&gt; is the number of edges (roads). Each road contributes two entries to the adjacency list due to the undirected nature.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dijkstra's Algorithm Loop:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;In the worst case, each vertex &lt;code&gt;V&lt;/code&gt; is extracted from the priority queue once for its &lt;em&gt;final&lt;/em&gt; shortest time. However, due to the &lt;code&gt;new_time == min_time[v]&lt;/code&gt; condition, a node can be pushed into the priority queue multiple times if new, equally optimal paths are discovered.&lt;/li&gt;
+&lt;li&gt;Each &lt;code&gt;heapq.heappush&lt;/code&gt; and &lt;code&gt;heapq.heappop&lt;/code&gt; operation takes &lt;code&gt;O(log K)&lt;/code&gt; time, where &lt;code&gt;K&lt;/code&gt; is the number of elements in the priority queue. In the worst case, &lt;code&gt;K&lt;/code&gt; can be up to &lt;code&gt;E&lt;/code&gt; (or &lt;code&gt;V&lt;/code&gt; for sparse graphs if each node is added at most once).&lt;/li&gt;
+&lt;li&gt;For a graph with &lt;code&gt;V&lt;/code&gt; vertices and &lt;code&gt;E&lt;/code&gt; edges using a binary heap (like Python's &lt;code&gt;heapq&lt;/code&gt;), the complexity is typically &lt;code&gt;O(E log V)&lt;/code&gt; if each node is pushed at most once. However, because a node &lt;code&gt;v&lt;/code&gt; can be pushed into the priority queue multiple times when &lt;code&gt;new_time == min_time[v]&lt;/code&gt;, the tightest upper bound becomes &lt;code&gt;O(E log E)&lt;/code&gt; in the absolute worst case (if every edge relaxation leads to an update and a push). Since &lt;code&gt;E&lt;/code&gt; can be at most &lt;code&gt;V^2&lt;/code&gt;, &lt;code&gt;log E&lt;/code&gt; is &lt;code&gt;2 log V&lt;/code&gt;, so it's often still simplified to &lt;code&gt;O(E log V)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Therefore, the overall time complexity is &lt;strong&gt;&lt;code&gt;O(E log V)&lt;/code&gt;&lt;/strong&gt; or, more accurately, &lt;strong&gt;&lt;code&gt;O(E log E)&lt;/code&gt;&lt;/strong&gt; with a binary heap. Given the constraints in typical Leetcode problems (&lt;code&gt;V&lt;/code&gt; up to &lt;code&gt;200&lt;/code&gt;, &lt;code&gt;E&lt;/code&gt; up to &lt;code&gt;V * (V-1) / 2&lt;/code&gt;), this is efficient enough.&lt;/p&gt;
+&lt;h3 id="space-complexity"&gt;Space Complexity&lt;/h3&gt;
+&lt;p&gt;The space complexity is determined by the data structures used.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Adjacency List:&lt;/strong&gt; Stores &lt;code&gt;O(V + E)&lt;/code&gt; elements, as each vertex is stored once, and each edge is stored twice (for both directions).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;min_time&lt;/code&gt; Array:&lt;/strong&gt; Requires &lt;code&gt;O(V)&lt;/code&gt; space to store minimum times for each vertex.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;ways&lt;/code&gt; Array:&lt;/strong&gt; Requires &lt;code&gt;O(V)&lt;/code&gt; space to store the number of ways for each vertex.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Priority Queue:&lt;/strong&gt; In the worst case, can hold up to &lt;code&gt;O(E)&lt;/code&gt; elements (if many nodes are pushed multiple times before being definitively settled).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thus, the overall space complexity is &lt;strong&gt;&lt;code&gt;O(V + E)&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="common-mistakes-and-troubleshooting"&gt;Common Mistakes and Troubleshooting&lt;/h2&gt;
+&lt;p&gt;Even with a solid understanding, specific pitfalls can lead to incorrect or inefficient solutions for &lt;strong&gt;Leetcode 1976: Number of Ways to Arrive at Destination&lt;/strong&gt;. Being aware of these common mistakes can help you debug and refine your approach.&lt;/p&gt;
+&lt;h3 id="1-incorrectly-handling-new_time-min_timev"&gt;1. Incorrectly Handling &lt;code&gt;new_time == min_time[v]&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;This is arguably the most critical and frequently missed detail, directly affecting the core logic of counting ways.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; If &lt;code&gt;new_time == min_time[v]&lt;/code&gt;, simply assigning &lt;code&gt;ways[v] = ways[u]&lt;/code&gt; instead of &lt;code&gt;ways[v] = (ways[v] + ways[u]) % MOD&lt;/code&gt;. This overwrites any previously found ways to reach &lt;code&gt;v&lt;/code&gt; in the same minimum time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Why it's wrong:&lt;/strong&gt; This overwrites previous ways instead of accumulating them. The problem specifically asks for the "number of ways," implying all paths that achieve the minimum time must be counted. If &lt;code&gt;ways[v]&lt;/code&gt; is simply assigned &lt;code&gt;ways[u]&lt;/code&gt;, you would only count the ways from the &lt;em&gt;last&lt;/em&gt; path that found an equal minimum time, losing all other valid paths.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Correction:&lt;/strong&gt; Always use &lt;code&gt;ways[v] = (ways[v] + ways[u]) % MOD&lt;/code&gt; when &lt;code&gt;new_time == min_time[v]&lt;/code&gt; to sum up all contributing paths.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-forgetting-modular-arithmetic"&gt;2. Forgetting Modular Arithmetic&lt;/h3&gt;
+&lt;p&gt;The problem statement explicitly mentions that the number of ways can be very large and requires the result modulo &lt;code&gt;10^9 + 7&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; Not applying &lt;code&gt;% MOD&lt;/code&gt; when updating &lt;code&gt;ways[v]&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Why it's wrong:&lt;/strong&gt; This will lead to integer overflow for large test cases. Most programming languages have a maximum integer value (e.g., &lt;code&gt;2^31 - 1&lt;/code&gt; or &lt;code&gt;2^63 - 1&lt;/code&gt;), and exceeding this limit can result in incorrect negative numbers, wrapped-around values, or runtime errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Correction:&lt;/strong&gt; Ensure &lt;code&gt;ways[v] = (ways[v] + ways[u]) % MOD&lt;/code&gt; is used whenever &lt;code&gt;ways[v]&lt;/code&gt; is incremented (or initialized based on another &lt;code&gt;ways&lt;/code&gt; value). Define &lt;code&gt;MOD = 10**9 + 7&lt;/code&gt; at the beginning of your solution.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-incorrect-graph-representation"&gt;3. Incorrect Graph Representation&lt;/h3&gt;
+&lt;p&gt;Misinterpreting the undirected nature of the roads is a common oversight in graph problems.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; Only adding &lt;code&gt;adj[u].append((v, time))&lt;/code&gt; for each road &lt;code&gt;[u, v, time]&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Why it's wrong:&lt;/strong&gt; This creates a directed graph where you can travel from &lt;code&gt;u&lt;/code&gt; to &lt;code&gt;v&lt;/code&gt; but not necessarily from &lt;code&gt;v&lt;/code&gt; to &lt;code&gt;u&lt;/code&gt;. The problem explicitly states roads can be traveled in "both directions," meaning an undirected graph is required. Failing to represent this means the algorithm might miss valid shortest paths that use a reverse traversal.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Correction:&lt;/strong&gt; For every &lt;code&gt;[u, v, time]&lt;/code&gt; in &lt;code&gt;roads&lt;/code&gt;, add both &lt;code&gt;adj[u].append((v, time))&lt;/code&gt; and &lt;code&gt;adj[v].append((u, time))&lt;/code&gt; to correctly model the bidirectionality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-initialization-errors"&gt;4. Initialization Errors&lt;/h3&gt;
+&lt;p&gt;Properly setting up &lt;code&gt;min_time&lt;/code&gt; and &lt;code&gt;ways&lt;/code&gt; for the source node and all other nodes is fundamental to Dijkstra's.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;Not setting &lt;code&gt;min_time[0] = 0&lt;/code&gt;. If &lt;code&gt;min_time[0]&lt;/code&gt; starts as &lt;code&gt;infinity&lt;/code&gt;, the algorithm won't correctly start its traversal from node 0.&lt;/li&gt;
+&lt;li&gt;Not setting &lt;code&gt;ways[0] = 1&lt;/code&gt;. If &lt;code&gt;ways[0]&lt;/code&gt; is &lt;code&gt;0&lt;/code&gt;, all subsequent &lt;code&gt;ways&lt;/code&gt; counts will also incorrectly be &lt;code&gt;0&lt;/code&gt;, as nothing propagates from the source.&lt;/li&gt;
+&lt;li&gt;Forgetting to initialize &lt;code&gt;min_time&lt;/code&gt; for other nodes to &lt;code&gt;infinity&lt;/code&gt; (or a very large number) and &lt;code&gt;ways&lt;/code&gt; for other nodes to &lt;code&gt;0&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Why it's wrong:&lt;/strong&gt; An incorrect initial state will propagate errors throughout Dijkstra's algorithm. The base cases for the shortest path and the number of ways must be correctly established for the source node.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Correction:&lt;/strong&gt; Initialize &lt;code&gt;min_time = [float('inf')] * n&lt;/code&gt;, then specifically set &lt;code&gt;min_time[0] = 0&lt;/code&gt;. Initialize &lt;code&gt;ways = [0] * n&lt;/code&gt;, then set &lt;code&gt;ways[0] = 1&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="5-stale-entries-in-priority-queue-less-common-with-proper-checks"&gt;5. Stale Entries in Priority Queue (Less common with proper checks)&lt;/h3&gt;
+&lt;p&gt;While the &lt;code&gt;if current_time &amp;gt; min_time[u]: continue&lt;/code&gt; check handles this gracefully, understanding its purpose is important.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; Not including the check &lt;code&gt;if current_time &amp;gt; min_time[u]: continue&lt;/code&gt; at the top of the &lt;code&gt;while&lt;/code&gt; loop.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Why it's wrong (without the check):&lt;/strong&gt; If a node &lt;code&gt;u&lt;/code&gt; is added to the priority queue multiple times with different times (e.g., first with time 10, then later with time 5 via a shorter path), the PQ might still contain the &lt;code&gt;(10, u)&lt;/code&gt; entry even after &lt;code&gt;min_time[u]&lt;/code&gt; has been updated to &lt;code&gt;5&lt;/code&gt;. If this stale &lt;code&gt;(10, u)&lt;/code&gt; entry is popped and processed, you might process &lt;code&gt;u&lt;/code&gt; with a suboptimal time, potentially propagating longer paths or doing redundant work.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Correction:&lt;/strong&gt; Always include the &lt;code&gt;if current_time &amp;gt; min_time[u]: continue&lt;/code&gt; check at the beginning of the &lt;code&gt;while&lt;/code&gt; loop to ensure you only process the most optimal path found so far for any given node. This ensures correctness and efficiency by preventing unnecessary re-processing of already optimized paths.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By carefully considering these common mistakes and adhering to the detailed steps, you can confidently implement a correct and efficient solution for &lt;strong&gt;Leetcode 1976: Number of Ways to Arrive at Destination&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="frequently-asked-questions"&gt;Frequently Asked Questions&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Q: Why can't a standard Dijkstra's algorithm solve Leetcode 1976 directly?&lt;/strong&gt;
+A: A standard Dijkstra's algorithm is designed to find only one shortest path (or the shortest distance) from a source to all other nodes. It doesn't inherently track or count multiple distinct paths that might achieve the exact same minimum distance. Leetcode 1976 requires counting all such paths, which necessitates additional logic beyond basic shortest path discovery.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: Why is modular arithmetic necessary in this problem?&lt;/strong&gt;
+A: The problem statement specifies that the "number of ways" can be very large. Without modular arithmetic (e.g., modulo &lt;code&gt;10^9 + 7&lt;/code&gt;), the count of paths could exceed the maximum value representable by standard integer data types, leading to integer overflow and incorrect results. Applying the modulo operation at each addition keeps the numbers within a manageable range.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: What is the time complexity of this modified Dijkstra's solution, and what contributes to it?&lt;/strong&gt;
+A: The time complexity is typically &lt;code&gt;O(E log V)&lt;/code&gt; or &lt;code&gt;O(E log E)&lt;/code&gt; when using a binary heap. This comes from building the adjacency list (&lt;code&gt;O(V+E)&lt;/code&gt;) and the Dijkstra's traversal itself. Each edge &lt;code&gt;E&lt;/code&gt; can potentially lead to a relaxation (distance update) and a push operation on the priority queue, which takes &lt;code&gt;O(log K)&lt;/code&gt; time, where &lt;code&gt;K&lt;/code&gt; is the size of the priority queue, bounded by &lt;code&gt;E&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="further-reading-resources"&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dijkstra's Algorithm on Wikipedia:&lt;/strong&gt; &lt;a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm"&gt;https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LeetCode 1976 Problem Page:&lt;/strong&gt; &lt;a href="https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/"&gt;https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dijkstra's Shortest Path Algorithm - GeeksforGeeks:&lt;/strong&gt; &lt;a href="https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/"&gt;https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Graph Theory on Wikipedia:&lt;/strong&gt; &lt;a href="https://en.wikipedia.org/wiki/Graph_theory"&gt;https://en.wikipedia.org/wiki/Graph_theory&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamic Programming on Wikipedia:&lt;/strong&gt; &lt;a href="https://en.wikipedia.org/wiki/Dynamic_programming"&gt;https://en.wikipedia.org/wiki/Dynamic_programming&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Algorithms"/><category term="Leetcode"/><category term="Graph"/><category term="Dijkstra"/><category term="Dynamic Programming"/><category term="Python"/><category term="Tutorial"/><media:content height="675" medium="image" type="image/webp" url="https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial.webp" width="1200"/><media:title type="plain">Leetcode 1976: Number of Ways to Arrive at Destination Explained</media:title><media:description type="plain">Master Leetcode 1976: Number of Ways to Arrive at Destination. This guide explains the modified Dijkstra's algorithm to solve this complex graph problem.</media:description></entry><entry><title>Topological Sort using DFS &amp; BFS in Python, C++, Java</title><link href="https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/" rel="alternate"/><published>2026-02-24T13:59:00+00:00</published><updated>2026-02-24T13:59:00+00:00</updated><author><name>Admin</name></author><id>tag:analyticsdrive.tech,2026-02-24:/topological-sort-dfs-bfs-python-cpp-java/</id><summary type="html">&lt;p&gt;Learn to implement topological sort using DFS and BFS algorithms across Python, C++, and Java. Master this critical graph algorithm for DAGs.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Directed Acyclic Graphs (DAGs) are fundamental in computer science, modeling everything from task dependencies to course prerequisites. At the heart of effectively managing these structures lies the &lt;strong&gt;Topological Sort&lt;/strong&gt;, an algorithm that linearizes the vertices of a DAG such that for every directed edge from vertex &lt;code&gt;u&lt;/code&gt; to vertex &lt;code&gt;v&lt;/code&gt;, &lt;code&gt;u&lt;/code&gt; comes before &lt;code&gt;v&lt;/code&gt; in the ordering. This comprehensive guide will walk you through implementing &lt;strong&gt;Topological Sort using DFS &amp;amp; BFS in Python, C++, Java&lt;/strong&gt;, equipping you with the skills to tackle complex dependency problems. We'll explore both Depth-First Search (DFS) and Breadth-First Search (BFS) based approaches, providing detailed explanations and ready-to-use code examples in each language.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id="prerequisites-for-mastering-topological-sort"&gt;Prerequisites for Mastering Topological Sort&lt;/h2&gt;
 &lt;p&gt;Before diving into the intricacies of topological sort, a solid foundation in certain computer science concepts is highly recommended. These prerequisites will ensure you can fully grasp the algorithms and their implementations without getting bogged down by basic concepts.&lt;/p&gt;

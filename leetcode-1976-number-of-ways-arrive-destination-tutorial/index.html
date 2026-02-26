@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leetcode 1976: Number of Ways to Arrive at Destination Explained
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master Leetcode 1976: Number of Ways to Arrive at Destination. This guide explains the modified Dijkstra's algorithm to solve this complex graph problem." />
+    <meta name="keywords" content="Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive" />
+    <meta name="author" content="Analytics Drive" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Leetcode 1976: Number of Ways to Arrive at Destination Explained" />
+    <meta property="og:description"
+        content="Master Leetcode 1976: Number of Ways to Arrive at Destination. This guide explains the modified Dijkstra's algorithm to solve this complex graph problem." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Leetcode 1976: Number of Ways to Arrive at Destination Explained" />
+    <meta name="twitter:description" content="Master Leetcode 1976: Number of Ways to Arrive at Destination. This guide explains the modified Dijkstra's algorithm to solve this complex graph problem." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial.webp" />
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive",        "https://www.reddit.com/r/Analyticsdrive/"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* =============================================
+           SYNTAX HIGHLIGHTING — One Dark (Pygments)
+           ============================================= */
+
+        /* Dark code block — works with or without .highlight wrapper */
+        .post-content pre {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ABB2BF;
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+        }
+
+        /* Reset code inside pre — don't let inline-code styles bleed in */
+        .post-content pre code {
+            background: transparent;
+            color: #ABB2BF;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        /* Inline code (not in a block) */
+        .post-content code {
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+            color: #E06C75;
+            background: rgba(40, 44, 52, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        /* Dark mode: inline code */
+        [data-theme="dark"] .post-content code {
+            background: rgba(97, 175, 239, 0.1);
+            color: #E06C75;
+        }
+
+        /* Also support .highlight wrapper if Pygments generates it */
+        .post-content .highlight {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .post-content .highlight pre {
+            background: transparent;
+            border: none;
+            margin: 0;
+        }
+
+        /* ── Pygments One Dark Token Colors ──
+           Targets spans directly inside pre (Pelican 4.x structure)
+           AND inside .highlight wrapper (fallback) */
+
+        /* Comments — grey */
+        .post-content pre .c,
+        .post-content pre .ch,
+        .post-content pre .cm,
+        .post-content pre .cp,
+        .post-content pre .c1,
+        .post-content pre .cs,
+        .post-content pre .cpf,
+        .highlight .c,
+        .highlight .ch,
+        .highlight .cm,
+        .highlight .cp,
+        .highlight .c1,
+        .highlight .cs {
+            color: #7F848E;
+        }
+
+        /* Keywords — purple */
+        .post-content pre .k,
+        .post-content pre .kd,
+        .post-content pre .kn,
+        .post-content pre .kp,
+        .post-content pre .kr,
+        .highlight .k,
+        .highlight .kd,
+        .highlight .kn,
+        .highlight .kp,
+        .highlight .kr {
+            color: #C678DD;
+        }
+
+        /* Keyword constants & types — yellow */
+        .post-content pre .kc,
+        .post-content pre .kt,
+        .post-content pre .nb,
+        .post-content pre .nc,
+        .post-content pre .bp,
+        .highlight .kc,
+        .highlight .kt,
+        .highlight .nb,
+        .highlight .nc,
+        .highlight .bp {
+            color: #E5C07B;
+        }
+
+        /* Strings — green */
+        .post-content pre .s,
+        .post-content pre .s1,
+        .post-content pre .s2,
+        .post-content pre .sa,
+        .post-content pre .sb,
+        .post-content pre .sc,
+        .post-content pre .sd,
+        .post-content pre .se,
+        .post-content pre .sh,
+        .post-content pre .si,
+        .post-content pre .sr,
+        .post-content pre .ss,
+        .post-content pre .sx,
+        .highlight .s,
+        .highlight .s1,
+        .highlight .s2,
+        .highlight .sa,
+        .highlight .sb,
+        .highlight .sc,
+        .highlight .sd,
+        .highlight .se,
+        .highlight .sh,
+        .highlight .si,
+        .highlight .sr,
+        .highlight .ss,
+        .highlight .sx {
+            color: #98C379;
+        }
+
+        /* Numbers — orange */
+        .post-content pre .m,
+        .post-content pre .mb,
+        .post-content pre .mf,
+        .post-content pre .mh,
+        .post-content pre .mi,
+        .post-content pre .mo,
+        .post-content pre .il,
+        .highlight .m,
+        .highlight .mb,
+        .highlight .mf,
+        .highlight .mh,
+        .highlight .mi,
+        .highlight .mo,
+        .highlight .il {
+            color: #D19A66;
+        }
+
+        /* Functions & decorators — blue */
+        .post-content pre .nf,
+        .post-content pre .nd,
+        .post-content pre .fm,
+        .highlight .nf,
+        .highlight .nd,
+        .highlight .fm {
+            color: #61AFEF;
+            font-weight: bold;
+        }
+
+        /* Operators — cyan */
+        .post-content pre .o,
+        .post-content pre .ow,
+        .highlight .o,
+        .highlight .ow {
+            color: #56B6C2;
+        }
+
+        /* Names / variables / tags — red-pink */
+        .post-content pre .n,
+        .post-content pre .na,
+        .post-content pre .ni,
+        .post-content pre .nl,
+        .post-content pre .nn,
+        .post-content pre .no,
+        .post-content pre .nt,
+        .post-content pre .nv,
+        .post-content pre .nx,
+        .post-content pre .ne,
+        .post-content pre .vc,
+        .post-content pre .vg,
+        .post-content pre .vi,
+        .post-content pre .vm,
+        .highlight .na,
+        .highlight .ni,
+        .highlight .no,
+        .highlight .nt,
+        .highlight .nv,
+        .highlight .ne,
+        .highlight .vc,
+        .highlight .vg,
+        .highlight .vi {
+            color: #E06C75;
+        }
+
+        /* Punctuation & whitespace — default text color */
+        .post-content pre .p,
+        .post-content pre .w,
+        .highlight .p,
+        .highlight .w {
+            color: #ABB2BF;
+        }
+
+        /* Highlighted line background */
+        .post-content pre .hll,
+        .highlight .hll {
+            background-color: #3E4451;
+        }
+
+        /* Errors */
+        .post-content pre .err,
+        .highlight .err {
+            color: #ABB2BF;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+
+            /* Mobile Nav Fix */
+            .main-nav {
+                display: flex;
+                justify-content: center;
+                /* Center links only */
+                align-items: center;
+                padding: 0.5rem 1rem;
+                position: static;
+                /* Let absolute children be relative to .site-header */
+            }
+
+            .main-nav ul {
+                flex: 1;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                /* Relative to .site-header */
+                top: 1rem;
+                right: 1rem;
+                transform: none;
+                margin-left: 0;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg);
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+                <li><a href="https://analyticsdrive.tech/about/">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/"
+  },
+  "headline": "Leetcode 1976: Number of Ways to Arrive at Destination Explained",
+  "description": "Master Leetcode 1976: Number of Ways to Arrive at Destination. This guide explains the modified Dijkstra's algorithm to solve this complex graph problem.",
+  "image": [
+    "https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial.webp"
+  ],
+  "datePublished": "2026-02-26T15:02:00+00:00",
+  "dateModified": "2026-02-26T15:02:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+<div class="post-layout">
+
+  <!-- Floating Sticky Share Sidebar (desktop only) -->
+  <aside class="share-sidebar" aria-label="Share this article">
+    <span class="share-sidebar__label">Share</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/&text=Leetcode%201976%3A%20Number%20of%20Ways%20to%20Arrive%20at%20Destination%20Explained"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+      aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/&title=Leetcode%201976%3A%20Number%20of%20Ways%20to%20Arrive%20at%20Destination%20Explained"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+      aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Leetcode%201976%3A%20Number%20of%20Ways%20to%20Arrive%20at%20Destination%20Explained%20https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </aside>
+
+  <article class="single-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2026-02-26T15:02:00+00:00">Thu 26 February 2026</time>
+      </div>
+      <h1>Leetcode 1976: Number of Ways to Arrive at Destination Explained</h1>
+    </header>
+
+    <div class="featured-image">
+      <img src="https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial.webp" alt="Leetcode 1976: Number of Ways to Arrive at Destination Explained" loading="lazy" />
+    </div>
+
+    <div class="post-content">
+      <p>When tackling advanced graph problems on platforms like Leetcode, you often encounter scenarios that push beyond the standard textbook algorithms. One such intriguing challenge is <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong>. This problem asks us to find not just the shortest time to reach a specific point in a city, but also the total count of distinct paths that achieve that exact minimum travel time. This comprehensive tutorial will guide you through understanding, approaching, and implementing a solution to effectively solve this problem, ensuring you grasp the nuances of modifying classic algorithms for modern challenges. By the end of this guide, you will have a clear understanding of how to combine shortest path algorithms with dynamic programming principles to solve problems requiring the computation of multiple optimal paths.</p>
+<h2 id="prerequisites-for-tackling-leetcode-1976">Prerequisites for Tackling Leetcode 1976</h2>
+<p>Before diving into the solution for "Number of Ways to Arrive at Destination," a solid understanding of several fundamental concepts is crucial. These prerequisites form the bedrock upon which our optimized algorithm will be built. Familiarity with these topics will ensure you can fully grasp the intricacies of the problem and its solution.</p>
+<h3 id="graph-theory-fundamentals">Graph Theory Fundamentals</h3>
+<p>At its heart, this Leetcode problem is about navigating a graph. Understanding basic graph terminology is essential. For instance, correctly identifying nodes, edges, and their weights is crucial for problems involving pathfinding, much like analyzing movement in a grid-based scenario as seen in <a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/">Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</a>.</p>
+<ul>
+<li><strong>Nodes (Vertices):</strong> These represent the intersections or locations in our city. In Leetcode 1976, each intersection is a node.</li>
+<li><strong>Edges:</strong> These represent the roads connecting the intersections. An edge connects two nodes.</li>
+<li><strong>Weights:</strong> Each edge has an associated weight, which in this problem signifies the time it takes to travel along that road. Our goal is to minimize the total travel time.</li>
+<li><strong>Undirected Graph:</strong> The problem states that roads can be traveled in both directions. This means if there's an edge from node A to node B, there's also an equivalent edge from node B to node A with the same weight. Our graph representation must account for this bidirectionality.</li>
+<li><strong>Adjacency List:</strong> This is a common and efficient way to represent a graph, especially for sparse graphs (graphs with relatively few edges compared to the maximum possible). An adjacency list stores, for each node, a list of its neighbors and the weights of the edges connecting them.</li>
+</ul>
+<h3 id="dijkstras-algorithm">Dijkstra's Algorithm</h3>
+<p>Dijkstra's algorithm is the cornerstone for solving the single-source shortest path problem on graphs with non-negative edge weights. It is a fundamental concept in graph theory, often applied alongside or in comparison to other graph traversal techniques like BFS for unweighted graphs, similar to problems found in <a href="/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a>.</p>
+<ul>
+<li><strong>Purpose:</strong> It efficiently finds the shortest path (minimum cumulative weight) from a single source node to all other nodes in the graph.</li>
+<li><strong>Mechanism:</strong> It works by iteratively visiting nodes, always selecting the unvisited node with the smallest known distance from the source. It then relaxes all edges connected to this chosen node, updating the distances to its neighbors if a shorter path is found.</li>
+<li><strong>Priority Queue:</strong> Dijkstra's algorithm heavily relies on a priority queue (min-heap) to efficiently retrieve the unvisited node with the smallest current distance. The priority queue stores tuples of <code>(distance, node)</code>, ordered by <code>distance</code>.</li>
+<li><strong>Relaxation:</strong> The core operation where we check if traversing through the current node offers a shorter path to an adjacent node. If <code>dist[u] + weight(u, v) &lt; dist[v]</code>, then <code>dist[v]</code> is updated.</li>
+</ul>
+<p>While Dijkstra's directly finds the shortest path, we need to extend it to count the number of ways to achieve that minimum time.</p>
+<h3 id="dynamic-programming-concepts">Dynamic Programming Concepts</h3>
+<p>Dynamic programming (DP) is an algorithmic technique for solving complex problems by breaking them down into simpler subproblems. In our case, DP principles help us accumulate the count of paths. This approach of building solutions from subproblems is a versatile tool across many algorithmic challenges, including those requiring pathfinding in mazes, which can sometimes benefit from similar thought processes, as explored in guides like <a href="/cses-labyrinth-problem-python-java-cpp-guide/">CSES Labyrinth Problem in Python, Java &amp; C++: A Complete Guide</a>.</p>
+<ul>
+<li><strong>Optimal Substructure:</strong> The optimal solution to the problem can be constructed from the optimal solutions of its subproblems. If the shortest path to node <code>v</code> passes through node <code>u</code>, then the path from the source to <code>u</code> must also be a shortest path.</li>
+<li><strong>Overlapping Subproblems:</strong> The same subproblems are encountered multiple times. By storing the results of these subproblems (memoization), we avoid redundant computations. Here, when we find a new path to a node that has the <em>same minimum time</em> as a previously found path, we add the ways, rather than recalculating everything.</li>
+<li><strong>State Definition:</strong> For Leetcode 1976, we will maintain two critical pieces of information for each node: <code>min_time[node]</code> (the minimum time to reach <code>node</code> from the source) and <code>ways[node]</code> (the number of ways to achieve <code>min_time[node]</code>).</li>
+</ul>
+<h3 id="modular-arithmetic">Modular Arithmetic</h3>
+<p>The problem statement often specifies that the "number of ways" can be very large, so we should return the result modulo <code>10^9 + 7</code>.</p>
+<ul>
+<li><strong>Why Modulo?</strong> To prevent integer overflow. Many programming languages have limits on the size of integers they can represent. When numbers exceed these limits, they wrap around or cause errors. Taking the modulo ensures the numbers remain within a manageable range, which is critical when accumulating large counts.</li>
+<li><strong>Applying Modulo:</strong> The modulo operation should be applied whenever you perform an addition or multiplication that might result in a large number. For this problem, it will primarily apply when updating <code>ways[node]</code> to keep the counts within the required range.</li>
+</ul>
+<p>With these prerequisites firmly in mind, you are well-equipped to understand the detailed solution.</p>
+<h2 id="understanding-leetcode-1976-number-of-ways-to-arrive-at-destination">Understanding Leetcode 1976: Number of Ways to Arrive at Destination</h2>
+<p>The problem "Number of Ways to Arrive at Destination" presents a city with <code>n</code> intersections, numbered from <code>0</code> to <code>n-1</code>. We are given a 2D integer array <code>roads</code>, where <code>roads[i] = [ui, vi, timei]</code> indicates a <code>timei</code> minute road between intersections <code>ui</code> and <code>vi</code>. These roads can be traveled in both directions. Our objective is to find the number of ways to travel from intersection <code>0</code> (the start) to intersection <code>n-1</code> (the destination) in the <em>shortest possible time</em>. Since the number of ways can be huge, we must return it modulo <code>10^9 + 7</code>.</p>
+<p>Let's break down the key aspects:</p>
+<ul>
+<li><strong>Source and Destination:</strong> Always fixed at <code>0</code> and <code>n-1</code> respectively. This simplifies the problem by having a consistent start and end point.</li>
+<li><strong>Non-negative Weights:</strong> The <code>timei</code> values are always non-negative, which is a crucial condition for Dijkstra's algorithm to work correctly. If negative weights were allowed, other algorithms like Bellman-Ford or SPFA would be necessary.</li>
+<li><strong>Undirected Roads:</strong> Each <code>[ui, vi, timei]</code> road implies two directed edges: <code>ui -&gt; vi</code> with <code>timei</code> and <code>vi -&gt; ui</code> with <code>timei</code>. This bidirectionality must be accurately reflected in the graph representation.</li>
+<li><strong>"Shortest Possible Time":</strong> This immediately signals a shortest path algorithm, making Dijkstra a primary candidate. The modification to Dijkstra's will allow us to track more than just the shortest time.</li>
+<li><strong>"Number of Ways":</strong> This is where the standard Dijkstra algorithm falls short. We need to not only find the minimum time but also count <em>how many distinct paths</em> achieve that minimum time. If multiple paths lead to a node with the same minimum time, all these paths contribute to the total count for that node.</li>
+</ul>
+<p>Consider an example:
+If there's a path <code>0 -&gt; A -&gt; D</code> taking 10 minutes and another path <code>0 -&gt; B -&gt; C -&gt; D</code> also taking 10 minutes, and 10 minutes is the <em>minimum possible time</em> to reach D, then there are 2 ways to reach D in the shortest time. This problem requires us to aggregate these distinct valid paths.</p>
+<p>This problem is a classic example of extending a standard graph algorithm with dynamic programming principles to gather additional information during the traversal.</p>
+<h2 id="core-idea-and-algorithm-approach">Core Idea and Algorithm Approach</h2>
+<p>Solving <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong> requires a modification of Dijkstra's algorithm. A standard Dijkstra's algorithm only tracks the minimum distance to each node. To count the ways, we need to extend its state.</p>
+<p>The core idea is to maintain two arrays for each node <code>i</code>:</p>
+<ol>
+<li><code>min_time[i]</code>: The shortest time found so far to reach node <code>i</code> from the source (node <code>0</code>). This array behaves exactly like the distance array in standard Dijkstra.</li>
+<li><code>ways[i]</code>: The number of distinct paths that achieve <code>min_time[i]</code>. This array is our dynamic programming component, accumulating counts.</li>
+</ol>
+<p>We will initialize <code>min_time</code> for all nodes to infinity (or a very large number) and <code>ways</code> for all nodes to <code>0</code>. The source node <code>0</code> will have <code>min_time[0] = 0</code> and <code>ways[0] = 1</code> (there's one way to be at the start at time 0).</p>
+<p>Our modified Dijkstra will work as follows:</p>
+<ul>
+<li>It will still use a min-priority queue to explore nodes. The elements in the priority queue will be <code>(current_time, u)</code>, representing that we have found a path to node <code>u</code> taking <code>current_time</code> minutes. The priority queue ensures we always process the node that is closest to the source first.</li>
+<li>When we extract a node <code>u</code> with <code>current_time</code> from the priority queue, we know <code>current_time</code> is the <em>definite</em> shortest time to reach <code>u</code> (just like in standard Dijkstra's). This is because Dijkstra's algorithm processes nodes in increasing order of their shortest path distances.</li>
+<li>For each neighbor <code>v</code> of <code>u</code> connected by an edge of weight <code>w</code>:<ul>
+<li>Calculate the time to reach <code>v</code> via <code>u</code>: <code>new_time = current_time + w</code>.</li>
+<li><strong>Case 1: <code>new_time &lt; min_time[v]</code></strong>
+    This means we've found a <em>strictly shorter</em> path to <code>v</code>. We update <code>min_time[v]</code> to <code>new_time</code>. Crucially, since this is a new shortest path, the number of ways to reach <code>v</code> must now be the same as the number of ways to reach <code>u</code>. So, <code>ways[v] = ways[u]</code>. Then, we add <code>(new_time, v)</code> to the priority queue to explore paths originating from <code>v</code>.</li>
+<li><strong>Case 2: <code>new_time == min_time[v]</code></strong>
+    This is the critical modification. We've found an <em>alternative path</em> to <code>v</code> that takes the <em>exact same minimum time</em> as an existing shortest path. This means we've discovered additional ways to reach <code>v</code> in the minimum time. Therefore, we <em>add</em> the number of ways to reach <code>u</code> (<code>ways[u]</code>) to <code>ways[v]</code>. So, <code>ways[v] = (ways[v] + ways[u]) % MOD</code>. We also add <code>(new_time, v)</code> to the priority queue, as this path could lead to shortest paths for other nodes, and its contribution to the <code>ways</code> count needs to be propagated.</li>
+<li><strong>Case 3: <code>new_time &gt; min_time[v]</code></strong>
+    This path is longer than an already known shortest path to <code>v</code>. We simply ignore it, as it cannot contribute to the shortest time or the ways to achieve it.</li>
+</ul>
+</li>
+</ul>
+<p>This approach essentially performs a shortest path search while simultaneously accumulating counts for paths that achieve the minimum time. The modular arithmetic is applied whenever we update <code>ways[v]</code> to prevent overflow.</p>
+<h2 id="detailed-steps-for-solving-leetcode-1976">Detailed Steps for Solving Leetcode 1976</h2>
+<p>Let's walk through the exact procedure to implement the solution for <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong>. We'll use Python for our example implementation.</p>
+<h3 id="step-1-represent-the-graph">Step 1: Represent the Graph</h3>
+<p>First, we need to efficiently store the city's road network. An adjacency list is ideal for this. Since the roads are undirected, if <code>u</code> and <code>v</code> are connected, we add <code>v</code> to <code>u</code>'s list and <code>u</code> to <code>v</code>'s list with the associated time.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">heapq</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">countPaths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">roads</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># Define modulo constant as specified by the problem</span>
+        <span class="n">MOD</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">9</span> <span class="o">+</span> <span class="mi">7</span>
+
+        <span class="c1"># 1. Graph Representation: Adjacency List</span>
+        <span class="c1"># adj[u] will store a list of tuples (v, travel_time) for neighbors of u</span>
+        <span class="n">adj</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">roads</span><span class="p">:</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span> <span class="c1"># Roads are bidirectional (undirected graph)</span>
+</code></pre></div>
+
+<h3 id="step-2-initialize-data-structures">Step 2: Initialize Data Structures</h3>
+<p>We'll need arrays to store the minimum time and the number of ways to reach each node, along with a priority queue for Dijkstra's algorithm.</p>
+<ul>
+<li><code>min_time</code>: Stores the minimum time to reach each intersection from the source. Initialize with infinity for all nodes except the source.</li>
+<li><code>ways</code>: Stores the number of ways to reach each intersection in <code>min_time</code>. Initialize with <code>0</code> for all nodes except the source.</li>
+<li><code>pq</code>: A min-priority queue to manage nodes to visit, ordered by the current minimum time to reach them.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>        <span class="c1"># 2. Initialization of Dijkstra&#39;s arrays</span>
+        <span class="c1"># min_time[i] stores the shortest time found so far to reach node i from node 0</span>
+        <span class="n">min_time</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n</span>
+        <span class="c1"># ways[i] stores the number of distinct paths that achieve min_time[i]</span>
+        <span class="n">ways</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+
+        <span class="c1"># Initialize for the source node (node 0)</span>
+        <span class="n">min_time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Time to reach source from source is 0</span>
+        <span class="n">ways</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1"># There&#39;s one way to be at the start at time 0</span>
+
+        <span class="c1"># Priority Queue: stores tuples of (current_time, node)</span>
+        <span class="c1"># It will extract the node with the smallest current_time first</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="c1"># Start Dijkstra from node 0 with 0 time</span>
+</code></pre></div>
+
+<h3 id="step-3-implement-modified-dijkstras-algorithm">Step 3: Implement Modified Dijkstra's Algorithm</h3>
+<p>This is the core of the solution. We'll extract nodes from the priority queue and systematically update <code>min_time</code> and <code>ways</code> for their neighbors based on the rules defined in the "Core Idea" section. The loop continues until all reachable nodes have been processed or the priority queue is empty.</p>
+<div class="highlight"><pre><span></span><code>        <span class="c1"># 3. Modified Dijkstra&#39;s Algorithm</span>
+        <span class="k">while</span> <span class="n">pq</span><span class="p">:</span>
+            <span class="c1"># Extract the node with the smallest time found so far</span>
+            <span class="n">current_time</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">pq</span><span class="p">)</span>
+
+            <span class="c1"># Optimization: If we&#39;ve already found a strictly shorter path to &#39;u&#39;</span>
+            <span class="c1"># than &#39;current_time&#39; (which means this &#39;current_time&#39; entry in PQ is stale),</span>
+            <span class="c1"># then skip processing this one. This prevents redundant calculations</span>
+            <span class="c1"># and ensures we always use the true minimum time for &#39;u&#39;.</span>
+            <span class="k">if</span> <span class="n">current_time</span> <span class="o">&gt;</span> <span class="n">min_time</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Iterate over all neighbors &#39;v&#39; of the current node &#39;u&#39;</span>
+            <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">travel_time</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="c1"># Calculate the time to reach neighbor &#39;v&#39; through current node &#39;u&#39;</span>
+                <span class="n">new_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">+</span> <span class="n">travel_time</span>
+
+                <span class="c1"># Case 1: Found a strictly shorter path to &#39;v&#39;</span>
+                <span class="c1"># This is the standard Dijkstra&#39;s relaxation step.</span>
+                <span class="k">if</span> <span class="n">new_time</span> <span class="o">&lt;</span> <span class="n">min_time</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+                    <span class="n">min_time</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_time</span>  <span class="c1"># Update minimum time</span>
+                    <span class="n">ways</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">ways</span><span class="p">[</span><span class="n">u</span><span class="p">]</span>       <span class="c1"># The number of ways is now solely determined by ways[u]</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">pq</span><span class="p">,</span> <span class="p">(</span><span class="n">new_time</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span> <span class="c1"># Push &#39;v&#39; to PQ to explore further paths</span>
+
+                <span class="c1"># Case 2: Found a path with the exact same minimum time to &#39;v&#39;</span>
+                <span class="c1"># This is the core modification for counting ways.</span>
+                <span class="k">elif</span> <span class="n">new_time</span> <span class="o">==</span> <span class="n">min_time</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+                    <span class="c1"># This means we found an *additional* way to reach &#39;v&#39; in its minimum time.</span>
+                    <span class="c1"># So, we add the ways from &#39;u&#39; to the existing ways for &#39;v&#39;.</span>
+                    <span class="c1"># Apply modular arithmetic to prevent integer overflow.</span>
+                    <span class="n">ways</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ways</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+</span> <span class="n">ways</span><span class="p">[</span><span class="n">u</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+                    <span class="c1"># Crucially, we still push &#39;v&#39; to the PQ. Even though its min_time hasn&#39;t changed,</span>
+                    <span class="c1"># finding a *new path* to &#39;v&#39; with min_time means that subsequent paths starting</span>
+                    <span class="c1"># from &#39;v&#39; might now be counted in ways[v], and these paths need to be explored</span>
+                    <span class="c1"># with the correct way count propagation. The &#39;current_time &gt; min_time[u]&#39; check</span>
+                    <span class="c1"># at the beginning of the loop efficiently handles potential duplicate entries</span>
+                    <span class="c1"># from being processed more than necessary after their true min_time is found.</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">pq</span><span class="p">,</span> <span class="p">(</span><span class="n">new_time</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</code></pre></div>
+
+<h3 id="step-4-return-the-result">Step 4: Return the Result</h3>
+<p>Once the priority queue is empty, <code>ways[n-1]</code> will hold the total number of ways to reach the destination <code>n-1</code> in the shortest possible time, modulo <code>10^9 + 7</code>.</p>
+<div class="highlight"><pre><span></span><code>        <span class="c1"># 4. Final Result</span>
+        <span class="c1"># The answer is the number of ways to reach the destination node (n-1)</span>
+        <span class="c1"># in the shortest possible time.</span>
+        <span class="k">return</span> <span class="n">ways</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+
+<h3 id="complete-code-implementation-python">Complete Code Implementation (Python)</h3>
+<p>Putting it all together, here's the full Python solution for <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">heapq</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">countPaths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">roads</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># Define modulo constant as specified by the problem</span>
+        <span class="n">MOD</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">9</span> <span class="o">+</span> <span class="mi">7</span>
+
+        <span class="c1"># 1. Graph Representation: Adjacency List</span>
+        <span class="c1"># adj[u] will store a list of tuples (v, travel_time) for neighbors of u</span>
+        <span class="n">adj</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">roads</span><span class="p">:</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span> <span class="c1"># Roads are bidirectional (undirected graph)</span>
+
+        <span class="c1"># 2. Initialization of Dijkstra&#39;s arrays</span>
+        <span class="c1"># min_time[i] stores the shortest time found so far to reach node i from node 0</span>
+        <span class="n">min_time</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n</span>
+        <span class="c1"># ways[i] stores the number of distinct paths that achieve min_time[i]</span>
+        <span class="n">ways</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+
+        <span class="c1"># Initialize for the source node (node 0)</span>
+        <span class="n">min_time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Time to reach source from source is 0</span>
+        <span class="n">ways</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c1"># There&#39;s one way to be at the start at time 0</span>
+
+        <span class="c1"># Priority Queue: stores tuples of (current_time, node)</span>
+        <span class="c1"># It will extract the node with the smallest current_time first</span>
+        <span class="n">pq</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="c1"># Start Dijkstra from node 0 with 0 time</span>
+
+        <span class="c1"># 3. Modified Dijkstra&#39;s Algorithm</span>
+        <span class="k">while</span> <span class="n">pq</span><span class="p">:</span>
+            <span class="c1"># Extract the node with the smallest time found so far</span>
+            <span class="n">current_time</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">pq</span><span class="p">)</span>
+
+            <span class="c1"># Optimization: If we&#39;ve already found a strictly shorter path to &#39;u&#39; than</span>
+            <span class="c1"># &#39;current_time&#39; (which means this &#39;current_time&#39; entry in PQ is stale),</span>
+            <span class="c1"># then skip processing this one. This prevents redundant calculations.</span>
+            <span class="k">if</span> <span class="n">current_time</span> <span class="o">&gt;</span> <span class="n">min_time</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Iterate over all neighbors &#39;v&#39; of the current node &#39;u&#39;</span>
+            <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">travel_time</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="c1"># Calculate the time to reach neighbor &#39;v&#39; through current node &#39;u&#39;</span>
+                <span class="n">new_time</span> <span class="o">=</span> <span class="n">current_time</span> <span class="o">+</span> <span class="n">travel_time</span>
+
+                <span class="c1"># Case 1: Found a strictly shorter path to &#39;v&#39;</span>
+                <span class="k">if</span> <span class="n">new_time</span> <span class="o">&lt;</span> <span class="n">min_time</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+                    <span class="n">min_time</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_time</span>  <span class="c1"># Update minimum time</span>
+                    <span class="n">ways</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">ways</span><span class="p">[</span><span class="n">u</span><span class="p">]</span>       <span class="c1"># The number of ways is now solely determined by ways[u]</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">pq</span><span class="p">,</span> <span class="p">(</span><span class="n">new_time</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span> <span class="c1"># Push &#39;v&#39; to PQ to explore further paths</span>
+
+                <span class="c1"># Case 2: Found a path with the exact same minimum time to &#39;v&#39;</span>
+                <span class="k">elif</span> <span class="n">new_time</span> <span class="o">==</span> <span class="n">min_time</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+                    <span class="c1"># This means we found an *additional* way to reach &#39;v&#39; in its minimum time.</span>
+                    <span class="c1"># So, we add the ways from &#39;u&#39; to the existing ways for &#39;v&#39;.</span>
+                    <span class="c1"># Apply modular arithmetic to prevent integer overflow.</span>
+                    <span class="n">ways</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ways</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+</span> <span class="n">ways</span><span class="p">[</span><span class="n">u</span><span class="p">])</span> <span class="o">%</span> <span class="n">MOD</span>
+                    <span class="c1"># Crucially, we still push &#39;v&#39; to the PQ. Even though its min_time hasn&#39;t changed,</span>
+                    <span class="c1"># finding a *new path* to &#39;v&#39; with min_time means that subsequent paths starting</span>
+                    <span class="c1"># from &#39;v&#39; might now be counted in ways[v], and these paths need to be explored</span>
+                    <span class="c1"># with the correct way count propagation. The &#39;current_time &gt; min_time[u]&#39; check</span>
+                    <span class="c1"># ensures that stale entries don&#39;t cause infinite loops or incorrect behavior.</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">pq</span><span class="p">,</span> <span class="p">(</span><span class="n">new_time</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+
+        <span class="c1"># 4. Final Result</span>
+        <span class="c1"># The answer is the number of ways to reach the destination node (n-1)</span>
+        <span class="c1"># in the shortest possible time.</span>
+        <span class="k">return</span> <span class="n">ways</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+
+<h3 id="example-walkthrough">Example Walkthrough</h3>
+<p>Let's trace a small example to solidify understanding of how <code>ways</code> are updated, particularly focusing on the <code>new_time == min_time[v]</code> case.</p>
+<p><code>n = 3</code>, <code>roads = [[0,1,10], [1,2,10], [0,2,20]]</code>
+Source: <code>0</code>, Destination: <code>2</code></p>
+<p>Initial State:
+<code>min_time = [0, inf, inf]</code> (inf represents <code>float('inf')</code>)
+<code>ways = [1, 0, 0]</code>
+<code>pq = [(0, 0)]</code> (time, node)</p>
+<ol>
+<li>
+<p><strong>Pop <code>(0, 0)</code> from <code>pq</code>. <code>u = 0</code>, <code>current_time = 0</code>.</strong></p>
+<ul>
+<li><code>min_time[0] = 0</code>, <code>ways[0] = 1</code>. (<code>current_time</code> is not greater than <code>min_time[0]</code>, so not stale).</li>
+<li>Neighbors of <code>0</code>: <code>(1, 10)</code>, <code>(2, 20)</code> (neighbor node, travel time)<ul>
+<li><strong>Neighbor <code>v = 1</code>, <code>travel_time = 10</code></strong>:
+    <code>new_time = 0 + 10 = 10</code>.
+    <code>10 &lt; min_time[1]</code> (<code>inf</code>):
+    <code>min_time[1] = 10</code>
+    <code>ways[1] = ways[0] = 1</code>
+    <code>heapq.heappush(pq, (10, 1))</code></li>
+<li><strong>Neighbor <code>v = 2</code>, <code>travel_time = 20</code></strong>:
+    <code>new_time = 0 + 20 = 20</code>.
+    <code>20 &lt; min_time[2]</code> (<code>inf</code>):
+    <code>min_time[2] = 20</code>
+    <code>ways[2] = ways[0] = 1</code>
+    <code>heapq.heappush(pq, (20, 2))</code>
+<code>pq</code> is now <code>[(10, 1), (20, 2)]</code> (order might vary slightly for equal priorities, but for distinct times it's stable).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Pop <code>(10, 1)</code> from <code>pq</code>. <code>u = 1</code>, <code>current_time = 10</code>.</strong></p>
+<ul>
+<li><code>min_time[1] = 10</code>, <code>ways[1] = 1</code>. (<code>current_time == min_time[1]</code>, not stale).</li>
+<li>Neighbors of <code>1</code>: <code>(0, 10)</code>, <code>(2, 10)</code><ul>
+<li><strong>Neighbor <code>v = 0</code>, <code>travel_time = 10</code></strong>:
+    <code>new_time = 10 + 10 = 20</code>.
+    <code>20 &gt; min_time[0]</code> (<code>0</code>): Ignore (this path is longer than already known shortest path to 0).</li>
+<li><strong>Neighbor <code>v = 2</code>, <code>travel_time = 10</code></strong>:
+    <code>new_time = 10 + 10 = 20</code>.
+    Compare <code>new_time</code> with <code>min_time[2]</code> (which is <code>20</code>):
+    <code>new_time == min_time[2]</code> (both are <code>20</code>):
+    This is an alternative shortest path to <code>v=2</code>.
+    <code>ways[2] = (ways[2] + ways[1]) % MOD = (1 + 1) % MOD = 2</code>.
+    <code>heapq.heappush(pq, (20, 2))</code>
+<code>pq</code> is now <code>[(20, 2), (20, 2)]</code>. (Note: The specific order of two entries with identical priority might vary slightly, but both will be processed).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Pop <code>(20, 2)</code> from <code>pq</code>. <code>u = 2</code>, <code>current_time = 20</code>.</strong></p>
+<ul>
+<li><code>min_time[2] = 20</code>, <code>ways[2] = 2</code>. (<code>current_time == min_time[2]</code>, not stale).</li>
+<li>Neighbors of <code>2</code>: <code>(0, 20)</code>, <code>(1, 10)</code><ul>
+<li><strong>Neighbor <code>v = 0</code>, <code>travel_time = 20</code></strong>:
+    <code>new_time = 20 + 20 = 40</code>.
+    <code>40 &gt; min_time[0]</code> (<code>0</code>): Ignore.</li>
+<li><strong>Neighbor <code>v = 1</code>, <code>travel_time = 10</code></strong>:
+    <code>new_time = 20 + 10 = 30</code>.
+    <code>30 &gt; min_time[1]</code> (<code>10</code>): Ignore.
+<code>pq</code> is now <code>[(20, 2)]</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Pop <code>(20, 2)</code> from <code>pq</code>. <code>u = 2</code>, <code>current_time = 20</code>.</strong></p>
+<ul>
+<li><code>min_time[2] = 20</code>, <code>ways[2] = 2</code>. (<code>current_time == min_time[2]</code>, not stale).</li>
+<li>Neighbors of <code>2</code>: (Same as above, will be ignored as they lead to longer paths).
+<code>pq</code> is now empty.</li>
+</ul>
+</li>
+</ol>
+<p>Algorithm terminates.</p>
+<p>Final State:
+<code>min_time = [0, 10, 20]</code>
+<code>ways = [1, 1, 2]</code></p>
+<p>Result: <code>ways[n-1]</code> (i.e., <code>ways[2]</code>) is <code>2</code>. This correctly identifies two paths that achieve the minimum time of 20 minutes to reach node 2:
+1.  <code>0 -&gt; 2</code> (direct path, time 20)
+2.  <code>0 -&gt; 1 -&gt; 2</code> (via node 1, time 10 + 10 = 20)</p>
+<p>This example clearly illustrates how the <code>ways</code> count is accumulated when multiple paths yield the same minimum time.</p>
+<h2 id="complexity-analysis">Complexity Analysis</h2>
+<p>Understanding the performance characteristics of our solution is vital for competitive programming and software engineering.</p>
+<h3 id="time-complexity">Time Complexity</h3>
+<p>The time complexity of this modified Dijkstra's algorithm is largely similar to the standard version.</p>
+<ul>
+<li><strong>Graph Construction:</strong> Building the adjacency list takes <code>O(V + E)</code> time, where <code>V</code> is the number of vertices (intersections) and <code>E</code> is the number of edges (roads). Each road contributes two entries to the adjacency list due to the undirected nature.</li>
+<li><strong>Dijkstra's Algorithm Loop:</strong><ul>
+<li>In the worst case, each vertex <code>V</code> is extracted from the priority queue once for its <em>final</em> shortest time. However, due to the <code>new_time == min_time[v]</code> condition, a node can be pushed into the priority queue multiple times if new, equally optimal paths are discovered.</li>
+<li>Each <code>heapq.heappush</code> and <code>heapq.heappop</code> operation takes <code>O(log K)</code> time, where <code>K</code> is the number of elements in the priority queue. In the worst case, <code>K</code> can be up to <code>E</code> (or <code>V</code> for sparse graphs if each node is added at most once).</li>
+<li>For a graph with <code>V</code> vertices and <code>E</code> edges using a binary heap (like Python's <code>heapq</code>), the complexity is typically <code>O(E log V)</code> if each node is pushed at most once. However, because a node <code>v</code> can be pushed into the priority queue multiple times when <code>new_time == min_time[v]</code>, the tightest upper bound becomes <code>O(E log E)</code> in the absolute worst case (if every edge relaxation leads to an update and a push). Since <code>E</code> can be at most <code>V^2</code>, <code>log E</code> is <code>2 log V</code>, so it's often still simplified to <code>O(E log V)</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Therefore, the overall time complexity is <strong><code>O(E log V)</code></strong> or, more accurately, <strong><code>O(E log E)</code></strong> with a binary heap. Given the constraints in typical Leetcode problems (<code>V</code> up to <code>200</code>, <code>E</code> up to <code>V * (V-1) / 2</code>), this is efficient enough.</p>
+<h3 id="space-complexity">Space Complexity</h3>
+<p>The space complexity is determined by the data structures used.</p>
+<ul>
+<li><strong>Adjacency List:</strong> Stores <code>O(V + E)</code> elements, as each vertex is stored once, and each edge is stored twice (for both directions).</li>
+<li><strong><code>min_time</code> Array:</strong> Requires <code>O(V)</code> space to store minimum times for each vertex.</li>
+<li><strong><code>ways</code> Array:</strong> Requires <code>O(V)</code> space to store the number of ways for each vertex.</li>
+<li><strong>Priority Queue:</strong> In the worst case, can hold up to <code>O(E)</code> elements (if many nodes are pushed multiple times before being definitively settled).</li>
+</ul>
+<p>Thus, the overall space complexity is <strong><code>O(V + E)</code></strong>.</p>
+<h2 id="common-mistakes-and-troubleshooting">Common Mistakes and Troubleshooting</h2>
+<p>Even with a solid understanding, specific pitfalls can lead to incorrect or inefficient solutions for <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong>. Being aware of these common mistakes can help you debug and refine your approach.</p>
+<h3 id="1-incorrectly-handling-new_time-min_timev">1. Incorrectly Handling <code>new_time == min_time[v]</code></h3>
+<p>This is arguably the most critical and frequently missed detail, directly affecting the core logic of counting ways.</p>
+<ul>
+<li><strong>Mistake:</strong> If <code>new_time == min_time[v]</code>, simply assigning <code>ways[v] = ways[u]</code> instead of <code>ways[v] = (ways[v] + ways[u]) % MOD</code>. This overwrites any previously found ways to reach <code>v</code> in the same minimum time.</li>
+<li><strong>Why it's wrong:</strong> This overwrites previous ways instead of accumulating them. The problem specifically asks for the "number of ways," implying all paths that achieve the minimum time must be counted. If <code>ways[v]</code> is simply assigned <code>ways[u]</code>, you would only count the ways from the <em>last</em> path that found an equal minimum time, losing all other valid paths.</li>
+<li><strong>Correction:</strong> Always use <code>ways[v] = (ways[v] + ways[u]) % MOD</code> when <code>new_time == min_time[v]</code> to sum up all contributing paths.</li>
+</ul>
+<h3 id="2-forgetting-modular-arithmetic">2. Forgetting Modular Arithmetic</h3>
+<p>The problem statement explicitly mentions that the number of ways can be very large and requires the result modulo <code>10^9 + 7</code>.</p>
+<ul>
+<li><strong>Mistake:</strong> Not applying <code>% MOD</code> when updating <code>ways[v]</code>.</li>
+<li><strong>Why it's wrong:</strong> This will lead to integer overflow for large test cases. Most programming languages have a maximum integer value (e.g., <code>2^31 - 1</code> or <code>2^63 - 1</code>), and exceeding this limit can result in incorrect negative numbers, wrapped-around values, or runtime errors.</li>
+<li><strong>Correction:</strong> Ensure <code>ways[v] = (ways[v] + ways[u]) % MOD</code> is used whenever <code>ways[v]</code> is incremented (or initialized based on another <code>ways</code> value). Define <code>MOD = 10**9 + 7</code> at the beginning of your solution.</li>
+</ul>
+<h3 id="3-incorrect-graph-representation">3. Incorrect Graph Representation</h3>
+<p>Misinterpreting the undirected nature of the roads is a common oversight in graph problems.</p>
+<ul>
+<li><strong>Mistake:</strong> Only adding <code>adj[u].append((v, time))</code> for each road <code>[u, v, time]</code>.</li>
+<li><strong>Why it's wrong:</strong> This creates a directed graph where you can travel from <code>u</code> to <code>v</code> but not necessarily from <code>v</code> to <code>u</code>. The problem explicitly states roads can be traveled in "both directions," meaning an undirected graph is required. Failing to represent this means the algorithm might miss valid shortest paths that use a reverse traversal.</li>
+<li><strong>Correction:</strong> For every <code>[u, v, time]</code> in <code>roads</code>, add both <code>adj[u].append((v, time))</code> and <code>adj[v].append((u, time))</code> to correctly model the bidirectionality.</li>
+</ul>
+<h3 id="4-initialization-errors">4. Initialization Errors</h3>
+<p>Properly setting up <code>min_time</code> and <code>ways</code> for the source node and all other nodes is fundamental to Dijkstra's.</p>
+<ul>
+<li><strong>Mistake:</strong><ul>
+<li>Not setting <code>min_time[0] = 0</code>. If <code>min_time[0]</code> starts as <code>infinity</code>, the algorithm won't correctly start its traversal from node 0.</li>
+<li>Not setting <code>ways[0] = 1</code>. If <code>ways[0]</code> is <code>0</code>, all subsequent <code>ways</code> counts will also incorrectly be <code>0</code>, as nothing propagates from the source.</li>
+<li>Forgetting to initialize <code>min_time</code> for other nodes to <code>infinity</code> (or a very large number) and <code>ways</code> for other nodes to <code>0</code>.</li>
+</ul>
+</li>
+<li><strong>Why it's wrong:</strong> An incorrect initial state will propagate errors throughout Dijkstra's algorithm. The base cases for the shortest path and the number of ways must be correctly established for the source node.</li>
+<li><strong>Correction:</strong> Initialize <code>min_time = [float('inf')] * n</code>, then specifically set <code>min_time[0] = 0</code>. Initialize <code>ways = [0] * n</code>, then set <code>ways[0] = 1</code>.</li>
+</ul>
+<h3 id="5-stale-entries-in-priority-queue-less-common-with-proper-checks">5. Stale Entries in Priority Queue (Less common with proper checks)</h3>
+<p>While the <code>if current_time &gt; min_time[u]: continue</code> check handles this gracefully, understanding its purpose is important.</p>
+<ul>
+<li><strong>Mistake:</strong> Not including the check <code>if current_time &gt; min_time[u]: continue</code> at the top of the <code>while</code> loop.</li>
+<li><strong>Why it's wrong (without the check):</strong> If a node <code>u</code> is added to the priority queue multiple times with different times (e.g., first with time 10, then later with time 5 via a shorter path), the PQ might still contain the <code>(10, u)</code> entry even after <code>min_time[u]</code> has been updated to <code>5</code>. If this stale <code>(10, u)</code> entry is popped and processed, you might process <code>u</code> with a suboptimal time, potentially propagating longer paths or doing redundant work.</li>
+<li><strong>Correction:</strong> Always include the <code>if current_time &gt; min_time[u]: continue</code> check at the beginning of the <code>while</code> loop to ensure you only process the most optimal path found so far for any given node. This ensures correctness and efficiency by preventing unnecessary re-processing of already optimized paths.</li>
+</ul>
+<p>By carefully considering these common mistakes and adhering to the detailed steps, you can confidently implement a correct and efficient solution for <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong>.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: Why can't a standard Dijkstra's algorithm solve Leetcode 1976 directly?</strong>
+A: A standard Dijkstra's algorithm is designed to find only one shortest path (or the shortest distance) from a source to all other nodes. It doesn't inherently track or count multiple distinct paths that might achieve the exact same minimum distance. Leetcode 1976 requires counting all such paths, which necessitates additional logic beyond basic shortest path discovery.</p>
+<p><strong>Q: Why is modular arithmetic necessary in this problem?</strong>
+A: The problem statement specifies that the "number of ways" can be very large. Without modular arithmetic (e.g., modulo <code>10^9 + 7</code>), the count of paths could exceed the maximum value representable by standard integer data types, leading to integer overflow and incorrect results. Applying the modulo operation at each addition keeps the numbers within a manageable range.</p>
+<p><strong>Q: What is the time complexity of this modified Dijkstra's solution, and what contributes to it?</strong>
+A: The time complexity is typically <code>O(E log V)</code> or <code>O(E log E)</code> when using a binary heap. This comes from building the adjacency list (<code>O(V+E)</code>) and the Dijkstra's traversal itself. Each edge <code>E</code> can potentially lead to a relaxation (distance update) and a push operation on the priority queue, which takes <code>O(log K)</code> time, where <code>K</code> is the size of the priority queue, bounded by <code>E</code>.</p>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
+<ul>
+<li><strong>Dijkstra's Algorithm on Wikipedia:</strong> <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm</a></li>
+<li><strong>LeetCode 1976 Problem Page:</strong> <a href="https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/">https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/</a></li>
+<li><strong>Dijkstra's Shortest Path Algorithm - GeeksforGeeks:</strong> <a href="https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/">https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/</a></li>
+<li><strong>Graph Theory on Wikipedia:</strong> <a href="https://en.wikipedia.org/wiki/Graph_theory">https://en.wikipedia.org/wiki/Graph_theory</a></li>
+<li><strong>Dynamic Programming on Wikipedia:</strong> <a href="https://en.wikipedia.org/wiki/Dynamic_programming">https://en.wikipedia.org/wiki/Dynamic_programming</a></li>
+</ul>
+    </div>
+
+    <!-- Social Share Buttons -->
+    <div class="share-buttons">
+      <span class="share-label">Share:</span>
+
+      <!-- X (Twitter) -->
+      <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/&text=Leetcode%201976%3A%20Number%20of%20Ways%20to%20Arrive%20at%20Destination%20Explained"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/&title=Leetcode%201976%3A%20Number%20of%20Ways%20to%20Arrive%20at%20Destination%20Explained"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=Leetcode%201976%3A%20Number%20of%20Ways%20to%20Arrive%20at%20Destination%20Explained%20https://analyticsdrive.tech/leetcode-1976-number-of-ways-arrive-destination-tutorial/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="article-footer-meta">
+      <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/algorithms.html">Algorithms</a></p>
+      <div class="tags-list">
+        <strong>Tags:</strong>
+        <span class="tag">#Leetcode</span>
+        <span class="tag">#Graph</span>
+        <span class="tag">#Dijkstra</span>
+        <span class="tag">#Dynamic Programming</span>
+        <span class="tag">#Python</span>
+        <span class="tag">#Tutorial</span>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <ul>
+        <li><a href="https://analyticsdrive.tech/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a></li>
+        <li><a href="https://analyticsdrive.tech/leetcode-269-alien-dictionary-code-python-java-cpp/">Leetcode: 269 - Alien Dictionary Code in Python, Java, C++</a></li>
+        <li><a href="https://analyticsdrive.tech/01-matrix-problem-shortest-distance-bfs-dp-explained/">Unraveling the 01 Matrix: Finding the Nearest Zero with BFS and DP</a></li>
+      </ul>
+    </div>
+
+    <div class="post-footer">
+      <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Analytics Drive.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
