@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master the Bellman Ford Algorithm in Python, C++, and Java. This comprehensive tutorial covers implementation, time complexity, and handling negative cycles." />
+    <meta name="keywords" content="Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive" />
+    <meta name="author" content="Analytics Drive" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial" />
+    <meta property="og:description"
+        content="Master the Bellman Ford Algorithm in Python, C++, and Java. This comprehensive tutorial covers implementation, time complexity, and handling negative cycles." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/bellman-ford-algorithm-python-cpp-java-tutorial.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial" />
+    <meta name="twitter:description" content="Master the Bellman Ford Algorithm in Python, C++, and Java. This comprehensive tutorial covers implementation, time complexity, and handling negative cycles." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/bellman-ford-algorithm-python-cpp-java-tutorial.webp" />
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive",        "https://www.reddit.com/r/Analyticsdrive/"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* =============================================
+           SYNTAX HIGHLIGHTING — One Dark (Pygments)
+           ============================================= */
+
+        /* Dark code block — works with or without .highlight wrapper */
+        .post-content pre {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ABB2BF;
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+        }
+
+        /* Reset code inside pre — don't let inline-code styles bleed in */
+        .post-content pre code {
+            background: transparent;
+            color: #ABB2BF;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        /* Inline code (not in a block) */
+        .post-content code {
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+            color: #E06C75;
+            background: rgba(40, 44, 52, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        /* Dark mode: inline code */
+        [data-theme="dark"] .post-content code {
+            background: rgba(97, 175, 239, 0.1);
+            color: #E06C75;
+        }
+
+        /* Also support .highlight wrapper if Pygments generates it */
+        .post-content .highlight {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .post-content .highlight pre {
+            background: transparent;
+            border: none;
+            margin: 0;
+        }
+
+        /* ── Pygments One Dark Token Colors ──
+           Targets spans directly inside pre (Pelican 4.x structure)
+           AND inside .highlight wrapper (fallback) */
+
+        /* Comments — grey */
+        .post-content pre .c,
+        .post-content pre .ch,
+        .post-content pre .cm,
+        .post-content pre .cp,
+        .post-content pre .c1,
+        .post-content pre .cs,
+        .post-content pre .cpf,
+        .highlight .c,
+        .highlight .ch,
+        .highlight .cm,
+        .highlight .cp,
+        .highlight .c1,
+        .highlight .cs {
+            color: #7F848E;
+        }
+
+        /* Keywords — purple */
+        .post-content pre .k,
+        .post-content pre .kd,
+        .post-content pre .kn,
+        .post-content pre .kp,
+        .post-content pre .kr,
+        .highlight .k,
+        .highlight .kd,
+        .highlight .kn,
+        .highlight .kp,
+        .highlight .kr {
+            color: #C678DD;
+        }
+
+        /* Keyword constants & types — yellow */
+        .post-content pre .kc,
+        .post-content pre .kt,
+        .post-content pre .nb,
+        .post-content pre .nc,
+        .post-content pre .bp,
+        .highlight .kc,
+        .highlight .kt,
+        .highlight .nb,
+        .highlight .nc,
+        .highlight .bp {
+            color: #E5C07B;
+        }
+
+        /* Strings — green */
+        .post-content pre .s,
+        .post-content pre .s1,
+        .post-content pre .s2,
+        .post-content pre .sa,
+        .post-content pre .sb,
+        .post-content pre .sc,
+        .post-content pre .sd,
+        .post-content pre .se,
+        .post-content pre .sh,
+        .post-content pre .si,
+        .post-content pre .sr,
+        .post-content pre .ss,
+        .post-content pre .sx,
+        .highlight .s,
+        .highlight .s1,
+        .highlight .s2,
+        .highlight .sa,
+        .highlight .sb,
+        .highlight .sc,
+        .highlight .sd,
+        .highlight .se,
+        .highlight .sh,
+        .highlight .si,
+        .highlight .sr,
+        .highlight .ss,
+        .highlight .sx {
+            color: #98C379;
+        }
+
+        /* Numbers — orange */
+        .post-content pre .m,
+        .post-content pre .mb,
+        .post-content pre .mf,
+        .post-content pre .mh,
+        .post-content pre .mi,
+        .post-content pre .mo,
+        .post-content pre .il,
+        .highlight .m,
+        .highlight .mb,
+        .highlight .mf,
+        .highlight .mh,
+        .highlight .mi,
+        .highlight .mo,
+        .highlight .il {
+            color: #D19A66;
+        }
+
+        /* Functions & decorators — blue */
+        .post-content pre .nf,
+        .post-content pre .nd,
+        .post-content pre .fm,
+        .highlight .nf,
+        .highlight .nd,
+        .highlight .fm {
+            color: #61AFEF;
+            font-weight: bold;
+        }
+
+        /* Operators — cyan */
+        .post-content pre .o,
+        .post-content pre .ow,
+        .highlight .o,
+        .highlight .ow {
+            color: #56B6C2;
+        }
+
+        /* Names / variables / tags — red-pink */
+        .post-content pre .n,
+        .post-content pre .na,
+        .post-content pre .ni,
+        .post-content pre .nl,
+        .post-content pre .nn,
+        .post-content pre .no,
+        .post-content pre .nt,
+        .post-content pre .nv,
+        .post-content pre .nx,
+        .post-content pre .ne,
+        .post-content pre .vc,
+        .post-content pre .vg,
+        .post-content pre .vi,
+        .post-content pre .vm,
+        .highlight .na,
+        .highlight .ni,
+        .highlight .no,
+        .highlight .nt,
+        .highlight .nv,
+        .highlight .ne,
+        .highlight .vc,
+        .highlight .vg,
+        .highlight .vi {
+            color: #E06C75;
+        }
+
+        /* Punctuation & whitespace — default text color */
+        .post-content pre .p,
+        .post-content pre .w,
+        .highlight .p,
+        .highlight .w {
+            color: #ABB2BF;
+        }
+
+        /* Highlighted line background */
+        .post-content pre .hll,
+        .highlight .hll {
+            background-color: #3E4451;
+        }
+
+        /* Errors */
+        .post-content pre .err,
+        .highlight .err {
+            color: #ABB2BF;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+
+            /* Mobile Nav Fix */
+            .main-nav {
+                display: flex;
+                justify-content: center;
+                /* Center links only */
+                align-items: center;
+                padding: 0.5rem 1rem;
+                position: static;
+                /* Let absolute children be relative to .site-header */
+            }
+
+            .main-nav ul {
+                flex: 1;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                /* Relative to .site-header */
+                top: 1rem;
+                right: 1rem;
+                transform: none;
+                margin-left: 0;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg);
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+                <li><a href="https://analyticsdrive.tech/about/">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/"
+  },
+  "headline": "Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial",
+  "description": "Master the Bellman Ford Algorithm in Python, C++, and Java. This comprehensive tutorial covers implementation, time complexity, and handling negative cycles.",
+  "image": [
+    "https://analyticsdrive.tech/images/bellman-ford-algorithm-python-cpp-java-tutorial.webp"
+  ],
+  "datePublished": "2026-02-27T09:45:00+00:00",
+  "dateModified": "2026-02-27T09:45:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+<div class="post-layout">
+
+  <!-- Floating Sticky Share Sidebar (desktop only) -->
+  <aside class="share-sidebar" aria-label="Share this article">
+    <span class="share-sidebar__label">Share</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/&text=Bellman%20Ford%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Complete%20Tutorial"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+      aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/&title=Bellman%20Ford%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Complete%20Tutorial"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+      aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Bellman%20Ford%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Complete%20Tutorial%20https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </aside>
+
+  <article class="single-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2026-02-27T09:45:00+00:00">Fri 27 February 2026</time>
+      </div>
+      <h1>Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial</h1>
+    </header>
+
+    <div class="featured-image">
+      <img src="https://analyticsdrive.tech/images/bellman-ford-algorithm-python-cpp-java-tutorial.webp" alt="Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial" loading="lazy" />
+    </div>
+
+    <div class="post-content">
+      <p>The Bellman Ford Algorithm in Python, C++, Java is a fundamental and incredibly powerful algorithm for finding the shortest paths from a single source vertex to all other vertices in a weighted digraph. Unlike <a href="/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra's algorithm</a>, Bellman Ford possesses the crucial ability to handle graphs containing edges with negative weights, a scenario where Dijkstra's falls short. This makes it an indispensable tool in various computational problems, especially in network routing and arbitrage detection. This <strong>complete tutorial</strong> will guide you through its mechanics, explain its underlying principles, and provide practical implementations in <strong>Python, C++, and Java</strong>. By the end, you'll have a robust understanding of how to apply this algorithm, detect negative cycles, and appreciate its significance in graph theory.</p>
+<h2 id="prerequisites-for-understanding-bellman-ford">Prerequisites for Understanding Bellman Ford</h2>
+<p>Before diving deep into the Bellman Ford algorithm, it's beneficial to have a foundational understanding of a few key concepts. Familiarity with these topics will significantly enhance your learning experience and make the complex aspects of the algorithm more intuitive.</p>
+<ul>
+<li><strong>Graph Theory Basics:</strong> A solid grasp of what graphs are, including vertices (nodes), edges, directed vs. undirected graphs, and weighted graphs. Understanding how graphs are typically represented (adjacency matrix or adjacency list) is also crucial. For a deeper dive into common graph problems, you might explore challenges like the <a href="/cses-labyrinth-problem-python-java-cpp-guide/">CSES Labyrinth Problem</a>.</li>
+<li><strong>Basic Data Structures:</strong> Knowledge of arrays, lists, and potentially hash maps/dictionaries will be helpful for implementing the algorithm in different programming languages.</li>
+<li><strong>Algorithm Analysis:</strong> An understanding of time and space complexity (Big O notation) will allow you to appreciate the performance characteristics of Bellman Ford.</li>
+<li><strong>Shortest Path Problem:</strong> A general understanding of what the shortest path problem entails and why it's important. For another approach to finding shortest distances in a specific type of grid, consider how algorithms like BFS and DP are used in the <a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/">01 Matrix Problem</a>.</li>
+</ul>
+<h2 id="understanding-the-bellman-ford-algorithm">Understanding the Bellman Ford Algorithm</h2>
+<p>The Bellman Ford algorithm is a single-source shortest path algorithm capable of handling graphs where edge weights can be negative. This distinguishes it from Dijkstra's algorithm, which only works with non-negative edge weights. The core idea behind Bellman Ford is a technique called "relaxation," repeatedly updating estimated distances to vertices until the shortest path is found.</p>
+<h3 id="what-is-the-bellman-ford-algorithm">What is the Bellman Ford Algorithm?</h3>
+<p>At its heart, Bellman Ford is an iterative algorithm that progressively finds shorter paths. It operates on the principle that if there are <code>V</code> vertices in a graph, the shortest path between any two vertices can have at most <code>V-1</code> edges. This fact is critical because it tells us exactly how many iterations we need to perform. For each iteration, the algorithm considers every edge in the graph and attempts to relax it.</p>
+<h3 id="the-intuition-behind-relaxation">The Intuition Behind Relaxation</h3>
+<p>Relaxation is the process of updating the shortest path estimate to a vertex if a shorter path is found. Imagine you're trying to find the quickest way from your starting point (source) to various destinations. Initially, you might assume all destinations are infinitely far away, except your starting point, which is 0 distance from itself.</p>
+<p>When you traverse an edge from vertex <code>u</code> to vertex <code>v</code> with weight <code>w(u, v)</code>, you check if the current shortest path distance to <code>u</code> plus the weight of the edge <code>(u, v)</code> is less than the current shortest path distance to <code>v</code>. If it is, it means you've found a shorter path to <code>v</code> via <code>u</code>, so you update <code>v</code>'s distance. This process is repeated for all edges in the graph.</p>
+<p>The algorithm performs <code>V-1</code> such iterations. Why <code>V-1</code>? Because in a simple path (no repeated vertices), the maximum number of edges between any two vertices in a graph with <code>V</code> vertices is <code>V-1</code>. Each iteration guarantees that shortest paths with one more edge are correctly evaluated. After <code>V-1</code> iterations, all shortest paths (assuming no negative cycles reachable from the source) will have been found.</p>
+<h3 id="why-bellman-ford-is-important-vs-dijkstras">Why Bellman Ford is Important (vs. Dijkstra's)</h3>
+<p>The primary reason for Bellman Ford's importance is its ability to handle negative edge weights. In real-world scenarios, "weight" might not always represent a positive cost or distance. For example:</p>
+<ul>
+<li><strong>Financial Arbitrage:</strong> In currency exchange, an edge weight could represent the logarithm of the exchange rate, and negative weights would indicate a profitable exchange path.</li>
+<li><strong>Network Routing:</strong> In some network topologies, certain links might have negative "costs" representing a performance gain or a preferred route.</li>
+<li><strong>Resource Optimization:</strong> A negative weight could signify a "gain" rather than a "cost" in a resource allocation problem.</li>
+</ul>
+<p>Dijkstra's algorithm relies on a greedy approach that assumes once a vertex is visited and its shortest path finalized, that path won't change. This assumption breaks down with negative edge weights, as a later, unvisited negative edge could potentially offer a shorter path to an already "finalized" vertex. Bellman Ford, with its iterative relaxation, avoids this pitfall by continually re-evaluating paths.</p>
+<h3 id="dealing-with-negative-cycles">Dealing with Negative Cycles</h3>
+<p>One of the most powerful features of the Bellman Ford algorithm is its capacity to detect negative cycles. A negative cycle is a cycle in the graph where the sum of the edge weights along the cycle is negative. If a negative cycle is reachable from the source vertex, then the shortest path to any vertex on that cycle (or reachable from it) becomes undefined, or technically, approaches negative infinity, because you could traverse the cycle indefinitely to reduce the path cost.</p>
+<p>After <code>V-1</code> iterations, if we can still relax any edge <code>(u, v)</code> (i.e., <code>dist[u] + weight(u, v) &lt; dist[v]</code>), it indicates the presence of a negative cycle. This is because if there were no negative cycles, all shortest paths would have been finalized within <code>V-1</code> iterations. Any further relaxation implies that paths can still be made shorter, which is only possible if traversing a negative cycle repeatedly. This detection mechanism is crucial for many applications where negative cycles signify impossible or undesirable conditions (like infinite profit in arbitrage).</p>
+<h2 id="steps-to-implement-the-bellman-ford-algorithm">Steps to Implement the Bellman Ford Algorithm</h2>
+<p>Implementing the Bellman Ford algorithm involves three main phases: initialization, repeated relaxation of all edges, and finally, a check for negative cycles. Let's break down each step in detail.</p>
+<h3 id="step-1-initialize-distances">Step 1: Initialize Distances</h3>
+<p>The first step in any shortest path algorithm is to set up the initial conditions for path distances.</p>
+<ol>
+<li><strong>Create a Distance Array:</strong> Initialize an array <code>dist</code> of size <code>V</code> (number of vertices). This array will store the shortest distance from the source vertex to every other vertex.</li>
+<li><strong>Set Source Distance:</strong> Set <code>dist[source]</code> to <code>0</code>. The distance from the source to itself is always zero.</li>
+<li><strong>Set Other Distances to Infinity:</strong> For all other vertices <code>i</code> (where <code>i != source</code>), set <code>dist[i]</code> to <code>infinity</code>. This <code>infinity</code> represents an unreachable or extremely large distance, indicating that we haven't yet found a path to these vertices. In practical implementations, <code>infinity</code> is usually a very large integer (e.g., <code>sys.maxsize</code> in Python, <code>INT_MAX</code> in C++, <code>Integer.MAX_VALUE</code> in Java).</li>
+</ol>
+<h3 id="step-2-relax-edges-v-1-times">Step 2: Relax Edges V-1 Times</h3>
+<p>This is the core iterative process where the algorithm refines the shortest path estimates.</p>
+<ol>
+<li><strong>Outer Loop:</strong> Run an outer loop <code>V-1</code> times. Each iteration of this loop represents considering paths with one additional edge.</li>
+<li><strong>Inner Loop (Edge Traversal):</strong> Inside the outer loop, iterate through <em>all</em> edges <code>(u, v)</code> in the graph. For each edge, perform the relaxation operation:<ul>
+<li><strong>Check for Shorter Path:</strong> If <code>dist[u]</code> is not <code>infinity</code> (meaning <code>u</code> is reachable from the source) AND <code>dist[u] + weight(u, v) &lt; dist[v]</code>, then a shorter path to <code>v</code> through <code>u</code> has been found.</li>
+<li><strong>Update Distance:</strong> Update <code>dist[v] = dist[u] + weight(u, v)</code>. This effectively "relaxes" the edge <code>(u, v)</code>.</li>
+</ul>
+</li>
+</ol>
+<p>After <code>V-1</code> iterations, if the graph contains no negative cycles reachable from the source, the <code>dist</code> array will hold the shortest path distances from the source to all other reachable vertices.</p>
+<h3 id="step-3-detect-negative-cycles">Step 3: Detect Negative Cycles</h3>
+<p>The final step is crucial for verifying the validity of the computed shortest paths and identifying problematic graph structures.</p>
+<ol>
+<li><strong>One More Iteration:</strong> After the <code>V-1</code> relaxation passes are complete, run one <em>additional</em> iteration over all edges.</li>
+<li><strong>Check for Further Relaxation:</strong> For each edge <code>(u, v)</code> in the graph, check if <code>dist[u]</code> is not <code>infinity</code> AND <code>dist[u] + weight(u, v) &lt; dist[v]</code>.</li>
+<li><strong>Negative Cycle Indication:</strong> If this condition is true for <em>any</em> edge, it means that a path can still be shortened after <code>V-1</code> iterations. This conclusively indicates the presence of a negative cycle reachable from the source vertex. In this case, shortest paths are not well-defined, and the algorithm should report the presence of a negative cycle.</li>
+<li><strong>Shortest Paths Validated:</strong> If no edge can be relaxed in this <code>V</code>-th iteration, it means the graph does not contain any negative cycles reachable from the source, and the <code>dist</code> array contains the correct shortest path distances.</li>
+</ol>
+<h2 id="implementing-the-bellman-ford-algorithm-in-python-c-and-java">Implementing the Bellman Ford Algorithm in Python, C++, and Java</h2>
+<p>Let's illustrate the Bellman Ford algorithm with code examples. We'll use a sample graph to demonstrate the process:</p>
+<p><strong>Graph Representation:</strong>
+Vertices: 0, 1, 2, 3, 4
+Edges:
+(0, 1, -1)
+(0, 2, 4)
+(1, 2, 3)
+(1, 3, 2)
+(1, 4, 2)
+(3, 2, 5)
+(3, 1, 1)
+(4, 3, -3)</p>
+<p>Source vertex: 0</p>
+<h3 id="implementation-in-python">Implementation in Python</h3>
+<p>Python's dynamic typing and list comprehensions make graph representation and algorithm implementation quite concise. We'll represent the graph as a list of edges, where each edge is a tuple <code>(u, v, weight)</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">class</span> <span class="nc">Graph</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">vertices</span> <span class="c1"># Number of vertices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># List of edges. Each edge is (u, v, weight)</span>
+
+    <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">bellman_ford</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="c1"># Step 1: Initialize distances from src to all other vertices as INFINITE</span>
+        <span class="c1"># and distance to src as 0</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">V</span>
+        <span class="n">dist</span><span class="p">[</span><span class="n">src</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Step 2: Relax all edges V-1 times</span>
+        <span class="c1"># A shortest path from src to any other vertex can have at most V-1 edges</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">!=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="ow">and</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+                    <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span>
+
+        <span class="c1"># Step 3: Check for negative cycles</span>
+        <span class="c1"># If we can still relax an edge, then there&#39;s a negative cycle</span>
+        <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">!=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span> <span class="ow">and</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Graph contains negative weight cycle!&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="c1"># Shortest paths are not well-defined</span>
+
+        <span class="c1"># Print the shortest distances if no negative cycle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_solution</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dist</span>
+
+    <span class="k">def</span> <span class="nf">print_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vertex Distance from Source&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">V</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxsize</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="se">\t</span><span class="s2"> unreachable&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example Usage</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bellman Ford Algorithm in Python:&quot;</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">bellman_ford</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Example with a negative cycle:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Graph with a negative cycle:&quot;</span><span class="p">)</span>
+    <span class="n">g_cycle</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">g_cycle</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">g_cycle</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">g_cycle</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># This creates a negative cycle 0 -&gt; 1 -&gt; 2 -&gt; 0 (sum = -1)</span>
+    <span class="n">g_cycle</span><span class="o">.</span><span class="n">bellman_ford</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Python Code Explanation:</strong>
+The <code>Graph</code> class in Python stores the number of vertices (<code>self.V</code>) and a list of edges (<code>self.graph</code>). Each edge is a tuple <code>(u, v, w)</code> representing a directed edge from <code>u</code> to <code>v</code> with weight <code>w</code>. The <code>add_edge</code> method simply appends these tuples to the <code>self.graph</code> list.</p>
+<p>The <code>bellman_ford(self, src)</code> method implements the algorithm:
+1.  <strong>Initialization:</strong> <code>dist</code> array is created, filled with <code>sys.maxsize</code> (Python's representation of infinity), and <code>dist[src]</code> is set to 0.
+2.  <strong>Relaxation:</strong> Two nested loops are used. The outer loop runs <code>self.V - 1</code> times. The inner loop iterates through all edges in <code>self.graph</code>. Inside the inner loop, the relaxation condition <code>dist[u] != sys.maxsize and dist[u] + w &lt; dist[v]</code> is checked. If true, <code>dist[v]</code> is updated. The <code>dist[u] != sys.maxsize</code> check prevents arithmetic overflow if <code>dist[u]</code> is still infinity, ensuring that we only consider paths from reachable vertices.
+3.  <strong>Negative Cycle Detection:</strong> After <code>V-1</code> iterations, a final pass over all edges is made. If any edge can still be relaxed, it signifies a negative cycle, and a message is printed, and the function returns. Otherwise, the shortest distances are valid and printed using <code>print_solution</code>.</p>
+<h3 id="implementation-in-c">Implementation in C++</h3>
+<p>In C++, we can use a <code>std::vector</code> to store the edges and an array/vector for distances. We'll define a <code>struct</code> for edges for better readability.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;limits&gt;</span><span class="c1"> // For std::numeric_limits</span>
+
+<span class="c1">// Define a structure for an edge</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Edge</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Graph</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">V</span><span class="p">;</span><span class="w"> </span><span class="c1">// Number of vertices</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span><span class="w"> </span><span class="n">edges</span><span class="p">;</span><span class="w"> </span><span class="c1">// List of edges</span>
+
+<span class="w">    </span><span class="n">Graph</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">vertices</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">V</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">add_edge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">edges</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">bellmanFord</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">src</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Step 1: Initialize distances from src to all other vertices as INFINITE</span>
+<span class="w">        </span><span class="c1">// and distance to src as 0</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dist</span><span class="p">(</span><span class="n">V</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">());</span>
+<span class="w">        </span><span class="n">dist</span><span class="p">[</span><span class="n">src</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Step 2: Relax all edges V-1 times</span>
+<span class="w">        </span><span class="c1">// A shortest path from src to any other vertex can have at most V-1 edges</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Edge</span><span class="o">&amp;</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">u</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">v</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">weight</span><span class="p">;</span>
+
+<span class="w">                </span><span class="c1">// Check if dist[u] is not infinity to prevent overflow when adding weight</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 3: Check for negative cycles</span>
+<span class="w">        </span><span class="c1">// If we can still relax an edge, then there&#39;s a negative cycle</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Edge</span><span class="o">&amp;</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">u</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">v</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">weight</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">v</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Graph contains negative weight cycle!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// Shortest paths are not well-defined</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Print the shortest distances if no negative cycle</span>
+<span class="w">        </span><span class="n">printSolution</span><span class="p">(</span><span class="n">dist</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">printSolution</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Vertex Distance from Source</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> unreachable</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Example Usage</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Graph</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">-3</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Bellman Ford Algorithm in C++:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">g</span><span class="p">.</span><span class="n">bellmanFord</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Example with a negative cycle:</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Graph with a negative cycle:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Graph</span><span class="w"> </span><span class="n">g_cycle</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g_cycle</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g_cycle</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">g_cycle</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span><span class="w"> </span><span class="c1">// This creates a negative cycle 0 -&gt; 1 -&gt; 2 -&gt; 0 (sum = -1)</span>
+<span class="w">    </span><span class="n">g_cycle</span><span class="p">.</span><span class="n">bellmanFord</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>C++ Code Explanation:</strong>
+Similar to the Python version, the <code>Graph</code> class in C++ stores the number of vertices <code>V</code> and a <code>std::vector</code> of <code>Edge</code> structs. The <code>Edge</code> struct holds <code>u</code>, <code>v</code>, and <code>weight</code>. <code>add_edge</code> pushes these <code>Edge</code> objects into the vector.</p>
+<p>The <code>bellmanFord(int src)</code> method:
+1.  <strong>Initialization:</strong> A <code>std::vector&lt;long long&gt; dist</code> is created and initialized with <code>std::numeric_limits&lt;long long&gt;::max()</code> for infinity. Using <code>long long</code> for distances is a good practice to prevent overflow, especially when dealing with potentially large sums of negative edge weights. <code>dist[src]</code> is set to 0.
+2.  <strong>Relaxation:</strong> The outer loop iterates <code>V - 1</code> times. The inner loop uses a range-based for loop to iterate through all <code>Edge</code> objects in the <code>edges</code> vector. The relaxation logic is identical to Python.
+3.  <strong>Negative Cycle Detection:</strong> A final loop checks for any further relaxation. If found, a negative cycle message is printed, and the function returns. Otherwise, <code>printSolution</code> displays the results.</p>
+<h3 id="implementation-in-java">Implementation in Java</h3>
+<p>Java's approach will be similar to C++, using an <code>ArrayList</code> to store <code>Edge</code> objects and an array for distances.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+
+<span class="c1">// Define a class for an edge</span>
+<span class="kd">class</span> <span class="nc">Edge</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Edge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Graph</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">V</span><span class="p">;</span><span class="w"> </span><span class="c1">// Number of vertices</span>
+<span class="w">    </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;</span><span class="w"> </span><span class="n">edges</span><span class="p">;</span><span class="w"> </span><span class="c1">// List of edges</span>
+
+<span class="w">    </span><span class="n">Graph</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">vertices</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vertices</span><span class="p">;</span>
+<span class="w">        </span><span class="n">edges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">addEdge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">edges</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Edge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">bellmanFord</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">src</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Step 1: Initialize distances from src to all other vertices as INFINITE</span>
+<span class="w">        </span><span class="c1">// and distance to src as 0</span>
+<span class="w">        </span><span class="kt">long</span><span class="o">[]</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">long</span><span class="o">[</span><span class="n">V</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// Use long to prevent overflow</span>
+<span class="w">        </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span><span class="w"> </span><span class="n">Long</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">);</span>
+<span class="w">        </span><span class="n">dist</span><span class="o">[</span><span class="n">src</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Step 2: Relax all edges V-1 times</span>
+<span class="w">        </span><span class="c1">// A shortest path from src to any other vertex can have at most V-1 edges</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Edge</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">u</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">v</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">weight</span><span class="p">;</span>
+
+<span class="w">                </span><span class="c1">// Check if dist[u] is not infinity to prevent overflow when adding weight</span>
+<span class="w">                </span><span class="c1">// and to only consider reachable nodes for relaxation</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Long</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 3: Check for negative cycles</span>
+<span class="w">        </span><span class="c1">// If we can still relax an edge, then there&#39;s a negative cycle</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Edge</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">u</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">v</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">weight</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Long</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">u</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">v</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Graph contains negative weight cycle!&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// Shortest paths are not well-defined</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Print the shortest distances if no negative cycle</span>
+<span class="w">        </span><span class="n">printSolution</span><span class="p">(</span><span class="n">dist</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">printSolution</span><span class="p">(</span><span class="kt">long</span><span class="o">[]</span><span class="w"> </span><span class="n">dist</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Vertex Distance from Source&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">V</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Long</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\t unreachable&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\t &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Example Usage</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BellmanFord</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Graph</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Graph</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Bellman Ford Algorithm in Java:&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g</span><span class="p">.</span><span class="na">bellmanFord</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Example with a negative cycle:</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;\nGraph with a negative cycle:&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Graph</span><span class="w"> </span><span class="n">g_cycle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Graph</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g_cycle</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g_cycle</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">g_cycle</span><span class="p">.</span><span class="na">addEdge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// This creates a negative cycle 0 -&gt; 1 -&gt; 2 -&gt; 0 (sum = -1)</span>
+<span class="w">        </span><span class="n">g_cycle</span><span class="p">.</span><span class="na">bellmanFord</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Java Code Explanation:</strong>
+The Java implementation mirrors the C++ version very closely.
+1.  <strong><code>Edge</code> Class:</strong> A dedicated <code>Edge</code> class encapsulates <code>u</code>, <code>v</code>, and <code>weight</code>.
+2.  <strong><code>Graph</code> Class:</strong> Stores <code>V</code> and an <code>ArrayList&lt;Edge&gt; edges</code>. <code>addEdge</code> adds new <code>Edge</code> objects.
+3.  <strong><code>bellmanFord(int src)</code>:</strong>
+    *   <strong>Initialization:</strong> <code>long[] dist</code> array is used, initialized with <code>Long.MAX_VALUE</code> for infinity, and <code>dist[src]</code> is set to 0. Using <code>long</code> is critical for avoiding integer overflow with potentially large path sums.
+    *   <strong>Relaxation:</strong> The outer loop runs <code>V - 1</code> times. The inner loop iterates through the <code>edges</code> <code>ArrayList</code>. The relaxation logic is identical, including the check <code>dist[u] != Long.MAX_VALUE</code>.
+    *   <strong>Negative Cycle Detection:</strong> A final loop checks for negative cycles. If detected, a message is printed and the method returns. Otherwise, <code>printSolution</code> displays the results.</p>
+<p>All three implementations demonstrate the same core logic, adapting to the specific syntax and standard libraries of each language.</p>
+<h2 id="bellman-ford-algorithm-trace-example">Bellman Ford Algorithm Trace Example</h2>
+<p>To truly understand how Bellman Ford works, let's trace its execution on our example graph with 5 vertices (0, 1, 2, 3, 4) and source vertex 0.</p>
+<p><strong>Graph Edges:</strong> (u, v, weight)
+(0, 1, -1), (0, 2, 4), (1, 2, 3), (1, 3, 2), (1, 4, 2), (3, 2, 5), (3, 1, 1), (4, 3, -3)</p>
+<p><strong>Initial Distances (src=0):</strong>
+<code>dist = [0, INF, INF, INF, INF]</code> (where INF = <code>sys.maxsize</code>/<code>Long.MAX_VALUE</code>)</p>
+<p><strong>Vertices (V) = 5. We need <code>V-1 = 4</code> iterations.</strong></p>
+<hr>
+<h3 id="iteration-1-k-0">Iteration 1 (k = 0):</h3>
+<ul>
+<li><strong>Initial <code>dist</code> for this iteration:</strong> <code>[0, INF, INF, INF, INF]</code></li>
+<li><strong>Edges (u, v, w):</strong><ul>
+<li>(0, 1, -1): <code>dist[0]</code> (0) + (-1) = -1 &lt; <code>dist[1]</code> (INF). Relax. <code>dist[1] = -1</code>.</li>
+<li>(0, 2, 4): <code>dist[0]</code> (0) + 4 = 4 &lt; <code>dist[2]</code> (INF). Relax. <code>dist[2] = 4</code>.</li>
+<li>(1, 2, 3): <code>dist[1]</code> (-1) + 3 = 2 &lt; <code>dist[2]</code> (4). Relax. <code>dist[2] = 2</code>.</li>
+<li>(1, 3, 2): <code>dist[1]</code> (-1) + 2 = 1 &lt; <code>dist[3]</code> (INF). Relax. <code>dist[3] = 1</code>.</li>
+<li>(1, 4, 2): <code>dist[1]</code> (-1) + 2 = 1 &lt; <code>dist[4]</code> (INF). Relax. <code>dist[4] = 1</code>.</li>
+<li>(3, 2, 5): <code>dist[3]</code> (1) + 5 = 6. Not less than <code>dist[2]</code> (2). No relaxation.</li>
+<li>(3, 1, 1): <code>dist[3]</code> (1) + 1 = 2. Not less than <code>dist[1]</code> (-1). No relaxation.</li>
+<li>(4, 3, -3): <code>dist[4]</code> (1) + (-3) = -2. Not less than <code>dist[3]</code> (1). No relaxation.</li>
+</ul>
+</li>
+<li><strong><code>dist</code> after Iteration 1:</strong> <code>[0, -1, 2, 1, 1]</code></li>
+</ul>
+<hr>
+<h3 id="iteration-2-k-1">Iteration 2 (k = 1):</h3>
+<ul>
+<li><strong>Initial <code>dist</code> for this iteration:</strong> <code>[0, -1, 2, 1, 1]</code></li>
+<li><strong>Edges (u, v, w):</strong><ul>
+<li>(0, 1, -1): <code>dist[0]</code> (0) + (-1) = -1. Not less than <code>dist[1]</code> (-1). No relaxation.</li>
+<li>(0, 2, 4): <code>dist[0]</code> (0) + 4 = 4. Not less than <code>dist[2]</code> (2). No relaxation.</li>
+<li>(1, 2, 3): <code>dist[1]</code> (-1) + 3 = 2. Not less than <code>dist[2]</code> (2). No relaxation.</li>
+<li>(1, 3, 2): <code>dist[1]</code> (-1) + 2 = 1. Not less than <code>dist[3]</code> (1). No relaxation.</li>
+<li>(1, 4, 2): <code>dist[1]</code> (-1) + 2 = 1. Not less than <code>dist[4]</code> (1). No relaxation.</li>
+<li>(3, 2, 5): <code>dist[3]</code> (1) + 5 = 6. Not less than <code>dist[2]</code> (2). No relaxation.</li>
+<li>(3, 1, 1): <code>dist[3]</code> (1) + 1 = 2. Not less than <code>dist[1]</code> (-1). No relaxation.</li>
+<li>(4, 3, -3): <code>dist[4]</code> (1) + (-3) = -2 &lt; <code>dist[3]</code> (1). Relax. <code>dist[3] = -2</code>.</li>
+</ul>
+</li>
+<li><strong><code>dist</code> after Iteration 2:</strong> <code>[0, -1, 2, -2, 1]</code></li>
+</ul>
+<hr>
+<h3 id="iteration-3-k-2">Iteration 3 (k = 2):</h3>
+<ul>
+<li><strong>Initial <code>dist</code> for this iteration:</strong> <code>[0, -1, 2, -2, 1]</code></li>
+<li><strong>Edges (u, v, w):</strong><ul>
+<li>... (edges 0,1,2,3,4 relaxations similar to previous, no changes yet due to <code>dist[3]</code> update) ...</li>
+<li>(3, 2, 5): <code>dist[3]</code> (-2) + 5 = 3. Not less than <code>dist[2]</code> (2). No relaxation.</li>
+<li>(3, 1, 1): <code>dist[3]</code> (-2) + 1 = -1. Not less than <code>dist[1]</code> (-1). No relaxation.</li>
+<li>(4, 3, -3): <code>dist[4]</code> (1) + (-3) = -2. Not less than <code>dist[3]</code> (-2). No relaxation.</li>
+</ul>
+</li>
+<li><strong><code>dist</code> after Iteration 3:</strong> <code>[0, -1, 2, -2, 1]</code> (No changes from previous iteration, all paths of length up to 3 edges have been settled)</li>
+</ul>
+<hr>
+<h3 id="iteration-4-k-3">Iteration 4 (k = 3):</h3>
+<ul>
+<li><strong>Initial <code>dist</code> for this iteration:</strong> <code>[0, -1, 2, -2, 1]</code></li>
+<li>In this iteration, no edge relaxation will occur, as all shortest paths (up to 4 edges) have been found.</li>
+<li><strong><code>dist</code> after Iteration 4:</strong> <code>[0, -1, 2, -2, 1]</code></li>
+</ul>
+<hr>
+<h3 id="negative-cycle-check-iteration-v-5">Negative Cycle Check (Iteration V = 5):</h3>
+<ul>
+<li><strong>Final <code>dist</code> before check:</strong> <code>[0, -1, 2, -2, 1]</code></li>
+<li><strong>Edges (u, v, w):</strong> We iterate through all edges one last time.<ul>
+<li>For (0,1,-1): <code>dist[0]</code> (0) + (-1) = -1. <code>dist[1]</code> is -1. No change.</li>
+<li>For (0,2,4): <code>dist[0]</code> (0) + 4 = 4. <code>dist[2]</code> is 2. No change.</li>
+<li>For (1,2,3): <code>dist[1]</code> (-1) + 3 = 2. <code>dist[2]</code> is 2. No change.</li>
+<li>For (1,3,2): <code>dist[1]</code> (-1) + 2 = 1. <code>dist[3]</code> is -2. No change (1 is not less than -2).</li>
+<li>For (1,4,2): <code>dist[1]</code> (-1) + 2 = 1. <code>dist[4]</code> is 1. No change.</li>
+<li>For (3,2,5): <code>dist[3]</code> (-2) + 5 = 3. <code>dist[2]</code> is 2. No change (3 is not less than 2).</li>
+<li>For (3,1,1): <code>dist[3]</code> (-2) + 1 = -1. <code>dist[1]</code> is -1. No change.</li>
+<li>For (4,3,-3): <code>dist[4]</code> (1) + (-3) = -2. <code>dist[3]</code> is -2. No change.</li>
+</ul>
+</li>
+<li>Since no <code>dist[v]</code> was updated in this final pass, there is no negative cycle reachable from the source.</li>
+</ul>
+<p><strong>Final Shortest Distances from Source 0:</strong>
+*   To 0: 0
+*   To 1: -1 (Path: 0 -&gt; 1)
+*   To 2: 2 (Path: 0 -&gt; 1 -&gt; 2)
+*   To 3: -2 (Path: 0 -&gt; 1 -&gt; 4 -&gt; 3)
+*   To 4: 1 (Path: 0 -&gt; 1 -&gt; 4)</p>
+<p>This trace vividly demonstrates how the algorithm iteratively refines the shortest path estimates, eventually converging to the correct values, even with negative edge weights.</p>
+<h2 id="time-and-space-complexity-analysis">Time and Space Complexity Analysis</h2>
+<p>Understanding the performance characteristics of an algorithm is crucial for choosing the right tool for a given problem.</p>
+<h3 id="time-complexity">Time Complexity</h3>
+<p>The time complexity of the Bellman Ford algorithm is dominated by its two main loops:
+1.  <strong>Outer Loop:</strong> This loop runs <code>V-1</code> times (or <code>V</code> times if you include the negative cycle check pass, though it's typically accounted for separately or as part of the <code>V-1</code> passes followed by one final check). <code>V</code> is the number of vertices.
+2.  <strong>Inner Loop:</strong> Inside each iteration of the outer loop, the algorithm iterates through <em>all</em> edges in the graph. If <code>E</code> is the number of edges, this inner loop takes <code>O(E)</code> time.</p>
+<p>Therefore, the total time complexity for the Bellman Ford algorithm is <strong>O(V * E)</strong>.</p>
+<ul>
+<li>In a sparse graph (few edges), <code>E</code> can be close to <code>V</code>. So, <code>O(V^2)</code>.</li>
+<li>In a dense graph (many edges), <code>E</code> can be up to <code>V^2</code>. So, <code>O(V^3)</code>.
+However, the most generally accepted complexity is <code>O(VE)</code>.</li>
+</ul>
+<h3 id="space-complexity">Space Complexity</h3>
+<p>The space complexity of the Bellman Ford algorithm is relatively straightforward:
+1.  <strong>Distance Array:</strong> An array <code>dist</code> of size <code>V</code> is used to store the shortest distances. This takes <code>O(V)</code> space.
+2.  <strong>Edge List:</strong> The graph itself is typically stored as a list of edges, which takes <code>O(E)</code> space.</p>
+<p>Thus, the total space complexity is <strong>O(V + E)</strong>.</p>
+<p>Compared to Dijkstra's algorithm, which can achieve <code>O(E + V log V)</code> with a min-priority queue, Bellman Ford is generally slower due to its <code>O(VE)</code> complexity. However, its ability to handle negative weights and detect negative cycles often justifies the increased computational cost.</p>
+<h2 id="common-mistakes-and-troubleshooting">Common Mistakes and Troubleshooting</h2>
+<p>When implementing or working with the Bellman Ford algorithm, several common pitfalls can lead to incorrect results or runtime errors. Being aware of these can help in effective troubleshooting.</p>
+<ul>
+<li><strong>Incorrect Initialization of Distances:</strong> Forgetting to initialize the source distance to 0 and all other distances to <code>infinity</code> is a frequent error. If <code>infinity</code> is too small, sums with weights might overflow or incorrectly appear smaller than <code>infinity</code>. Using <code>sys.maxsize</code>, <code>Long.MAX_VALUE</code>, or <code>std::numeric_limits&lt;long long&gt;::max()</code> is crucial.</li>
+<li><strong>Off-by-One Errors in Loops:</strong> The main relaxation loop must run exactly <code>V-1</code> times. Running it <code>V</code> times (before the negative cycle check) is not technically wrong but redundant in terms of finding shortest paths (if no negative cycles). Running it fewer than <code>V-1</code> times might not find all shortest paths. The negative cycle check must be done in a <em>separate</em> <code>V</code>-th iteration.</li>
+<li><strong>Improper Negative Cycle Detection:</strong> Not performing the <code>V</code>-th iteration check for negative cycles, or performing it incorrectly, can lead to incorrect shortest path values being reported when a negative cycle exists. Always remember the distinction between <code>V-1</code> relaxations for paths and the <code>V</code>-th check for cycles.</li>
+<li><strong>Integer Overflow:</strong> If edge weights or path sums can be large, using standard <code>int</code> types might lead to overflow, especially when <code>dist[u] + w</code> is calculated. Using <code>long</code> in Java/C++ or Python's arbitrary-precision integers is recommended for the distance array to mitigate this.</li>
+<li><strong>Graph Representation Issues:</strong> Ensure your graph representation (e.g., list of edges, adjacency list) is correctly parsed and all edges are accessible during the relaxation phase. A common mistake is to only store edges in one direction if the graph is directed, but then incorrectly iterate over them as if they were undirected.</li>
+<li><strong>Unreachable Nodes:</strong> When <code>dist[u]</code> remains <code>infinity</code> (or <code>MAX_VALUE</code>), it means vertex <code>u</code> is unreachable from the source. Adding <code>dist[u]</code> (infinity) to a weight <code>w</code> can lead to overflow or incorrect comparisons if not handled by checking <code>dist[u] != INFINITY</code> before relaxation.</li>
+</ul>
+<h2 id="bellman-ford-vs-dijkstras-algorithm">Bellman Ford vs. Dijkstra's Algorithm</h2>
+<p>Both Bellman Ford and Dijkstra's algorithms solve the single-source shortest path problem, but they have distinct characteristics that make them suitable for different scenarios.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Bellman Ford Algorithm</th>
+<th style="text-align: left;">Dijkstra's Algorithm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Negative Edge Weights</strong></td>
+<td style="text-align: left;"><strong>Handles them correctly.</strong></td>
+<td style="text-align: left;"><strong>Does NOT handle them correctly.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Negative Cycles</strong></td>
+<td style="text-align: left;"><strong>Detects their presence.</strong></td>
+<td style="text-align: left;">Cannot detect negative cycles and produces incorrect results if they exist.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Time Complexity</strong></td>
+<td style="text-align: left;"><code>O(V * E)</code></td>
+<td style="text-align: left;"><code>O(E + V log V)</code> with a min-priority queue (Fibonacci heap), or <code>O(E log V)</code> with a binary heap.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Space Complexity</strong></td>
+<td style="text-align: left;"><code>O(V + E)</code></td>
+<td style="text-align: left;"><code>O(V + E)</code> (for adjacency list and priority queue)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Greedy Approach</strong></td>
+<td style="text-align: left;">No. Uses dynamic programming, iterative relaxation.</td>
+<td style="text-align: left;">Yes. Greedily selects the closest unvisited vertex.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Guaranteed Shortest Path</strong></td>
+<td style="text-align: left;">Yes, if no negative cycles.</td>
+<td style="text-align: left;">Yes, if all edge weights are non-negative.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Applications</strong></td>
+<td style="text-align: left;">Network routing (e.g., RIP protocol), arbitrage detection, graphs with negative costs.</td>
+<td style="text-align: left;">GPS navigation, network shortest path calculations (where costs are positive), positive-weighted graphs.</td>
+</tr>
+</tbody>
+</table>
+<p>In summary, if your graph might contain negative edge weights or you need to detect negative cycles, Bellman Ford is the algorithm of choice. If all edge weights are guaranteed to be non-negative, Dijkstra's algorithm is typically preferred due to its superior performance.</p>
+<h2 id="applications-of-bellman-ford">Applications of Bellman Ford</h2>
+<p>The Bellman Ford algorithm, despite its higher time complexity compared to Dijkstra's, finds critical applications in areas where negative edge weights or the detection of negative cycles are crucial.</p>
+<ul>
+<li><strong>Network Routing Protocols (e.g., RIP):</strong> The Routing Information Protocol (RIP) in computer networks uses a variant of the Bellman Ford algorithm to determine the best routes for data packets. While RIP itself is a distance-vector routing protocol (which is a distributed version of Bellman Ford), it demonstrates the algorithm's utility in finding paths across networks where "cost" might be defined in complex ways, potentially involving negative values in more abstract network models.</li>
+<li><strong>Arbitrage Detection in Financial Markets:</strong> In foreign exchange markets, arbitrage involves finding a sequence of trades that yields a risk-free profit. If currency exchange rates are modeled as edge weights (often as negative logarithms of exchange rates), a negative cycle in the resulting graph indicates an arbitrage opportunity. The Bellman Ford algorithm can effectively detect these cycles.</li>
+<li><strong>Hazardous Materials Routing:</strong> In scenarios involving the transportation of hazardous materials, certain paths might incur a "negative cost" if they allow for faster disposal or safer passage, effectively reducing overall risk or time. Bellman Ford can navigate these complex cost structures.</li>
+<li><strong>Constraint Satisfaction Problems:</strong> In certain types of constraint satisfaction problems, especially those involving inequalities, the problem can be transformed into finding shortest paths in a graph where some "costs" can be negative, making Bellman Ford applicable.</li>
+</ul>
+<p>These applications highlight that the unique capabilities of the Bellman Ford algorithm, particularly its robustness with negative weights and cycle detection, make it an invaluable tool in specific problem domains.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: Can Bellman Ford find the shortest path in an undirected graph with negative weights?</strong>
+A: Bellman Ford is designed for directed graphs. For an undirected graph, each undirected edge <code>(u, v)</code> with weight <code>w</code> is typically represented as two directed edges <code>(u, v, w)</code> and <code>(v, u, w)</code>. If <code>w</code> is negative, this creates an immediate negative cycle between <code>u</code> and <code>v</code>, making shortest paths undefined if you can traverse <code>u -&gt; v -&gt; u</code> infinitely for a decreasing cost. Therefore, Bellman Ford is generally not applied to undirected graphs with negative edges.</p>
+<p><strong>Q: What happens if there are multiple shortest paths to a vertex?</strong>
+A: If multiple paths yield the same minimum distance to a vertex, Bellman Ford will correctly identify one of them. The specific path recorded might depend on the order in which edges are relaxed, but the final distance will be the same shortest distance.</p>
+<p><strong>Q: Is Bellman Ford suitable for very large graphs?</strong>
+A: Due to its <code>O(V*E)</code> time complexity, Bellman Ford can become inefficient for very large graphs compared to Dijkstra's <code>O(E + V log V)</code> when negative weights are not an issue. For extremely large graphs, specialized algorithms or heuristics might be required, or for specific cases like single-source-single-destination, bidirectional search variants might be more efficient.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The <strong>Bellman Ford Algorithm in Python, C++, Java</strong> is a cornerstone in graph theory, offering a robust solution to the single-source shortest path problem, even in the presence of negative edge weights. This tutorial has walked you through its theoretical foundations, detailed implementation steps, and provided clear code examples across Python, C++, and Java. We've explored its unique ability to detect negative cycles, a critical feature that differentiates it from other algorithms like Dijkstra's.</p>
+<p>By mastering Bellman Ford, you gain a powerful tool for analyzing complex networks, optimizing routes with varied costs, and even detecting opportunities in financial markets. Remember its <code>O(VE)</code> time complexity and its necessity when dealing with negative weights. Armed with this knowledge and the provided implementations, you are now well-equipped to apply the Bellman Ford algorithm to a wide array of computational challenges. Keep practicing, and explore more advanced graph algorithms to expand your problem-solving toolkit!</p>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
+<ul>
+<li><strong>Wikipedia:</strong> <a href="https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm">Bellman-Ford Algorithm</a></li>
+<li><strong>GeeksForGeeks:</strong> <a href="https://www.geeksforgeeks.org/bellman-ford-algorithm-set-1-shortest-path-given-source-unreachable-destination/">Bellman-Ford Algorithm | Set 1 (Introduction and Working)</a></li>
+<li><strong>Introduction to Algorithms (CLRS):</strong> Chapter 24, "Single-Source Shortest Paths". A classic textbook for in-depth algorithmic theory.</li>
+<li><strong>Baeldung:</strong> <a href="https://www.baeldung.com/java-bellman-ford">The Bellman-Ford Algorithm in Java</a></li>
+</ul>
+    </div>
+
+    <!-- Social Share Buttons -->
+    <div class="share-buttons">
+      <span class="share-label">Share:</span>
+
+      <!-- X (Twitter) -->
+      <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/&text=Bellman%20Ford%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Complete%20Tutorial"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/&title=Bellman%20Ford%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Complete%20Tutorial"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=Bellman%20Ford%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Complete%20Tutorial%20https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="article-footer-meta">
+      <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/algorithms.html">Algorithms</a></p>
+      <div class="tags-list">
+        <strong>Tags:</strong>
+        <span class="tag">#bellman ford</span>
+        <span class="tag">#shortest path</span>
+        <span class="tag">#negative cycles</span>
+        <span class="tag">#python</span>
+        <span class="tag">#c++</span>
+        <span class="tag">#java</span>
+        <span class="tag">#graph algorithm</span>
+        <span class="tag">#dynamic programming</span>
+        <span class="tag">#data structures</span>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <ul>
+        <li><a href="https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide</a></li>
+        <li><a href="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/">Segment Tree in Python, Java & C++: A Comprehensive Guide</a></li>
+        <li><a href="https://analyticsdrive.tech/topological-sort-dfs-bfs-python-cpp-java/">Topological Sort using DFS & BFS in Python, C++, Java</a></li>
+      </ul>
+    </div>
+
+    <div class="post-footer">
+      <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Analytics Drive.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
