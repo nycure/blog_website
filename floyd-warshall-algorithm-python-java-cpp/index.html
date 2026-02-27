@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Floyd Warshall Algorithm in Python, Java & C++: A Tutorial
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master the Floyd Warshall Algorithm in Python, Java, and C++ with this comprehensive tutorial. Learn to find all-pairs shortest paths efficiently." />
+    <meta name="keywords" content="Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive" />
+    <meta name="author" content="Analytics Drive" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Floyd Warshall Algorithm in Python, Java & C++: A Tutorial" />
+    <meta property="og:description"
+        content="Master the Floyd Warshall Algorithm in Python, Java, and C++ with this comprehensive tutorial. Learn to find all-pairs shortest paths efficiently." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/index.html" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/floyd-warshall-algorithm-python-java-cpp-hero.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Floyd Warshall Algorithm in Python, Java & C++: A Tutorial" />
+    <meta name="twitter:description" content="Master the Floyd Warshall Algorithm in Python, Java, and C++ with this comprehensive tutorial. Learn to find all-pairs shortest paths efficiently." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/floyd-warshall-algorithm-python-java-cpp-hero.webp" />
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-P1LT4885S9');
+    </script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://analyticsdrive.tech/search.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Analytics Drive",
+      "url": "https://analyticsdrive.tech",
+      "logo": "https://analyticsdrive.tech/theme/images/logo.png",
+      "sameAs": [
+        "https://twitter.com/analyticsdrive",        "https://www.facebook.com/profile.php?id=61588072082428",        "https://www.instagram.com/analyticsdrive",        "https://www.reddit.com/r/Analyticsdrive/"      ]
+    }
+    </script>
+
+    <!-- CSS -->
+    <style>
+        /* 
+ * THE ANALYTICS POST - NEWSPAPER THEME
+ * (c) 2026 - Classic Journalism Aesthetic
+ */
+
+        :root {
+            /* Colors */
+            --bg-paper: #ffffff;
+            --text-ink: #2a2a2a;
+            --text-muted: #666;
+            --border-line: #e0e0e0;
+            --accent: #000;
+            /* Classic Black */
+            --link-color: #005b96;
+            /* Classic Blue */
+
+            /* Typography */
+            --font-masthead: 'UnifrakturMaguntia', cursive;
+            --font-headline: 'Playfair Display', serif;
+            --font-body: 'Libre Baskerville', serif;
+            --font-ui: 'Libre Franklin', sans-serif;
+
+            /* Layout */
+            --max-width: 1100px;
+            --spacing: 2rem;
+
+            /* Component Specific */
+            --bg-footer: #f9f9f9;
+            --text-summary: #444444;
+        }
+
+        /* Dark Mode Overrides */
+        [data-theme="dark"] {
+            --bg-paper: #121212;
+            --text-ink: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-line: #333333;
+            --accent: #ffffff;
+            --link-color: #64b5f6;
+
+            /* Component Override */
+            --bg-footer: #1e1e1e;
+            --text-summary: #d0d0d0;
+        }
+
+        /* Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-paper);
+            color: var(--text-ink);
+            font-family: var(--font-body);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+        }
+
+        /* Header / Masthead */
+        .site-header {
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: relative;
+            /* Anchor for absolute positioned elements */
+            z-index: 100;
+        }
+
+        .site-header .logo {
+            font-family: var(--font-masthead);
+            font-size: 4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+
+
+        .site-header .logo .dot {
+            display: none;
+            /* Hide the modern dot */
+        }
+
+        /* Navigation */
+        .main-nav {
+            border-top: 1px solid var(--border-line);
+            border-bottom: 3px double var(--border-line);
+            padding: 0.75rem 0;
+            position: relative;
+            /* Anchor for toggle button */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .main-nav a {
+            color: var(--text-ink);
+            text-decoration: none;
+        }
+
+        .main-nav a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        /* Theme Toggle (Integrated in Nav) */
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-ink);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-50%) rotate(15deg);
+        }
+
+        /* Hero Section (Top Story) */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-line);
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-headline);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .pagination a {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border-line);
+            color: var(--text-ink);
+            transition: 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-color: var(--accent);
+        }
+
+        /* Post Grid (Masonry / Columns) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .post-card {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        /* Remove CSS Grid lines for a cleaner look, stick to bottom borders */
+
+        .post-meta {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .post-meta .category a {
+            color: #d00;
+            /* Red for category like 'Politics', 'Sports' */
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .post-card h3 {
+            font-family: var(--font-headline);
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .post-card h3 a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: #444;
+            text-decoration: none;
+            /* Already handled by color change */
+        }
+
+
+        .post-card p {
+            color: var(--text-summary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--link-color);
+        }
+
+        /* Article Page */
+        .single-post header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 2rem;
+        }
+
+        .single-post h1 {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .single-post .post-meta {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Featured Image (Article Page) */
+        .featured-image {
+            max-width: 740px;
+            margin: 0 auto 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Post Card Thumbnail (Homepage) */
+        .post-card-image {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover .post-card-image img {
+            transform: scale(1.05);
+        }
+
+        .post-content {
+            max-width: 740px;
+            /* Standard reading width */
+            margin: 0 auto;
+            font-size: 1.2rem;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* Drop Cap for first paragraph */
+        .post-content>p:first-of-type::first-letter {
+            float: left;
+            font-family: var(--font-headline);
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 4px;
+            color: var(--accent);
+        }
+
+        .post-content h2,
+        .post-content h3 {
+            font-family: var(--font-headline);
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-ink);
+        }
+
+        /* =============================================
+           SYNTAX HIGHLIGHTING — One Dark (Pygments)
+           ============================================= */
+
+        /* Dark code block — works with or without .highlight wrapper */
+        .post-content pre {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ABB2BF;
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+        }
+
+        /* Reset code inside pre — don't let inline-code styles bleed in */
+        .post-content pre code {
+            background: transparent;
+            color: #ABB2BF;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        /* Inline code (not in a block) */
+        .post-content code {
+            font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+            color: #E06C75;
+            background: rgba(40, 44, 52, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        /* Dark mode: inline code */
+        [data-theme="dark"] .post-content code {
+            background: rgba(97, 175, 239, 0.1);
+            color: #E06C75;
+        }
+
+        /* Also support .highlight wrapper if Pygments generates it */
+        .post-content .highlight {
+            background: #282C34;
+            border-left: 4px solid #61AFEF;
+            border-radius: 6px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .post-content .highlight pre {
+            background: transparent;
+            border: none;
+            margin: 0;
+        }
+
+        /* ── Pygments One Dark Token Colors ──
+           Targets spans directly inside pre (Pelican 4.x structure)
+           AND inside .highlight wrapper (fallback) */
+
+        /* Comments — grey */
+        .post-content pre .c,
+        .post-content pre .ch,
+        .post-content pre .cm,
+        .post-content pre .cp,
+        .post-content pre .c1,
+        .post-content pre .cs,
+        .post-content pre .cpf,
+        .highlight .c,
+        .highlight .ch,
+        .highlight .cm,
+        .highlight .cp,
+        .highlight .c1,
+        .highlight .cs {
+            color: #7F848E;
+        }
+
+        /* Keywords — purple */
+        .post-content pre .k,
+        .post-content pre .kd,
+        .post-content pre .kn,
+        .post-content pre .kp,
+        .post-content pre .kr,
+        .highlight .k,
+        .highlight .kd,
+        .highlight .kn,
+        .highlight .kp,
+        .highlight .kr {
+            color: #C678DD;
+        }
+
+        /* Keyword constants & types — yellow */
+        .post-content pre .kc,
+        .post-content pre .kt,
+        .post-content pre .nb,
+        .post-content pre .nc,
+        .post-content pre .bp,
+        .highlight .kc,
+        .highlight .kt,
+        .highlight .nb,
+        .highlight .nc,
+        .highlight .bp {
+            color: #E5C07B;
+        }
+
+        /* Strings — green */
+        .post-content pre .s,
+        .post-content pre .s1,
+        .post-content pre .s2,
+        .post-content pre .sa,
+        .post-content pre .sb,
+        .post-content pre .sc,
+        .post-content pre .sd,
+        .post-content pre .se,
+        .post-content pre .sh,
+        .post-content pre .si,
+        .post-content pre .sr,
+        .post-content pre .ss,
+        .post-content pre .sx,
+        .highlight .s,
+        .highlight .s1,
+        .highlight .s2,
+        .highlight .sa,
+        .highlight .sb,
+        .highlight .sc,
+        .highlight .sd,
+        .highlight .se,
+        .highlight .sh,
+        .highlight .si,
+        .highlight .sr,
+        .highlight .ss,
+        .highlight .sx {
+            color: #98C379;
+        }
+
+        /* Numbers — orange */
+        .post-content pre .m,
+        .post-content pre .mb,
+        .post-content pre .mf,
+        .post-content pre .mh,
+        .post-content pre .mi,
+        .post-content pre .mo,
+        .post-content pre .il,
+        .highlight .m,
+        .highlight .mb,
+        .highlight .mf,
+        .highlight .mh,
+        .highlight .mi,
+        .highlight .mo,
+        .highlight .il {
+            color: #D19A66;
+        }
+
+        /* Functions & decorators — blue */
+        .post-content pre .nf,
+        .post-content pre .nd,
+        .post-content pre .fm,
+        .highlight .nf,
+        .highlight .nd,
+        .highlight .fm {
+            color: #61AFEF;
+            font-weight: bold;
+        }
+
+        /* Operators — cyan */
+        .post-content pre .o,
+        .post-content pre .ow,
+        .highlight .o,
+        .highlight .ow {
+            color: #56B6C2;
+        }
+
+        /* Names / variables / tags — red-pink */
+        .post-content pre .n,
+        .post-content pre .na,
+        .post-content pre .ni,
+        .post-content pre .nl,
+        .post-content pre .nn,
+        .post-content pre .no,
+        .post-content pre .nt,
+        .post-content pre .nv,
+        .post-content pre .nx,
+        .post-content pre .ne,
+        .post-content pre .vc,
+        .post-content pre .vg,
+        .post-content pre .vi,
+        .post-content pre .vm,
+        .highlight .na,
+        .highlight .ni,
+        .highlight .no,
+        .highlight .nt,
+        .highlight .nv,
+        .highlight .ne,
+        .highlight .vc,
+        .highlight .vg,
+        .highlight .vi {
+            color: #E06C75;
+        }
+
+        /* Punctuation & whitespace — default text color */
+        .post-content pre .p,
+        .post-content pre .w,
+        .highlight .p,
+        .highlight .w {
+            color: #ABB2BF;
+        }
+
+        /* Highlighted line background */
+        .post-content pre .hll,
+        .highlight .hll {
+            background-color: #3E4451;
+        }
+
+        /* Errors */
+        .post-content pre .err,
+        .highlight .err {
+            color: #ABB2BF;
+        }
+
+        /* Footer Meta */
+        .article-footer-meta {
+            max-width: 740px;
+            margin: 4rem auto 0;
+            border-top: 4px solid var(--accent);
+            /* Thick end line */
+            padding-top: 2rem;
+        }
+
+        .article-footer-meta strong {
+            color: var(--accent);
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .tag:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Site Footer */
+        .site-footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--accent);
+            padding: 3rem 0;
+            background: var(--bg-footer);
+            text-align: center;
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .site-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .single-post h1 {
+                font-size: 2.25rem;
+            }
+
+            /* Mobile Nav Fix */
+            .main-nav {
+                display: flex;
+                justify-content: center;
+                /* Center links only */
+                align-items: center;
+                padding: 0.5rem 1rem;
+                position: static;
+                /* Let absolute children be relative to .site-header */
+            }
+
+            .main-nav ul {
+                flex: 1;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0;
+                margin: 0;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                /* Relative to .site-header */
+                top: 1rem;
+                right: 1rem;
+                transform: none;
+                margin-left: 0;
+            }
+
+            .theme-toggle:hover {
+                transform: rotate(15deg);
+            }
+        }
+    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <header class="site-header">
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="https://analyticsdrive.tech/">Home</a></li>
+                <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
+                <li><a href="https://analyticsdrive.tech/categories.html">Categories</a></li>
+                <li><a href="https://analyticsdrive.tech/about/">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+        </div>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/"
+  },
+  "headline": "Floyd Warshall Algorithm in Python, Java & C++: A Tutorial",
+  "description": "Master the Floyd Warshall Algorithm in Python, Java, and C++ with this comprehensive tutorial. Learn to find all-pairs shortest paths efficiently.",
+  "image": [
+    "https://analyticsdrive.tech/images/floyd-warshall-algorithm-python-java-cpp-hero.webp"
+  ],
+  "datePublished": "2026-02-27T11:29:00+00:00",
+  "dateModified": "2026-02-27T11:29:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "Admin",
+    "url": "https://analyticsdrive.tech/author/admin.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+<div class="post-layout">
+
+  <!-- Floating Sticky Share Sidebar (desktop only) -->
+  <aside class="share-sidebar" aria-label="Share this article">
+    <span class="share-sidebar__label">Share</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/&text=Floyd%20Warshall%20Algorithm%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Tutorial"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+      aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/&title=Floyd%20Warshall%20Algorithm%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Tutorial"
+      target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+      aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Floyd%20Warshall%20Algorithm%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Tutorial%20https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/" target="_blank"
+      rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </aside>
+
+  <article class="single-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="2026-02-27T11:29:00+00:00">Fri 27 February 2026</time>
+      </div>
+      <h1>Floyd Warshall Algorithm in Python, Java & C++: A Tutorial</h1>
+    </header>
+
+    <div class="featured-image">
+      <img src="https://analyticsdrive.tech/images/floyd-warshall-algorithm-python-java-cpp-hero.webp" alt="Floyd Warshall Algorithm in Python, Java & C++: A Tutorial" loading="lazy" />
+    </div>
+
+    <div class="post-content">
+      <h2 id="introduction-to-the-floyd-warshall-algorithm">Introduction to the Floyd Warshall Algorithm</h2>
+<p>Welcome to this comprehensive tutorial where we will deeply explore the <strong>Floyd Warshall Algorithm in Python, Java and C++</strong>. This powerful algorithm is a fundamental concept in graph theory, designed to find the shortest paths between all pairs of vertices in a weighted graph. Whether you're a student embarking on your algorithmic journey or a seasoned developer looking to refresh your knowledge, this tutorial will guide you through understanding its core principles, practical implementation, and common pitfalls across these popular programming languages. Mastering the Floyd Warshall Algorithm offers invaluable insights into dynamic programming and graph traversal, proving essential for various real-world applications ranging from network routing to transportation logistics. Our goal is to provide a clear, step-by-step approach, ensuring you can confidently apply this technique to your own projects.</p>
+<h2 id="prerequisites-for-understanding-floyd-warshall">Prerequisites for Understanding Floyd Warshall</h2>
+<p>Before diving into the intricacies of the Floyd Warshall Algorithm, it’s beneficial to have a foundational understanding of several key computer science concepts. These prerequisites will ensure you can fully grasp the logic and implementation details presented in this tutorial.</p>
+<h3 id="basic-graph-theory">Basic Graph Theory</h3>
+<p>Familiarity with fundamental graph theory concepts is essential. This includes knowing what a graph is (set of vertices and edges), understanding directed and undirected graphs, and being aware of weighted edges. Concepts like adjacency matrices, which represent connections and weights between nodes, are particularly important as they form the primary data structure for the Floyd Warshall Algorithm. Knowing the difference between an edge's weight (cost) and a path's total weight will also be helpful.</p>
+<h3 id="dynamic-programming">Dynamic Programming</h3>
+<p>The Floyd Warshall Algorithm is a classic example of dynamic programming. A basic understanding of dynamic programming principles, such as breaking down a complex problem into smaller, overlapping subproblems and storing the results to avoid redundant calculations, will significantly aid your comprehension. If you've encountered problems like the Fibonacci sequence or knapsack problem using dynamic programming, you're well-prepared.</p>
+<h3 id="basic-programming-concepts">Basic Programming Concepts</h3>
+<p>You should have a working knowledge of at least one of the target languages: Python, Java, or C++. This includes understanding:
+*   <strong>Loops:</strong> <code>for</code> loops are extensively used in the algorithm's implementation.
+*   <strong>Arrays/Matrices:</strong> Representing graphs using 2D arrays (adjacency matrices) is central to the algorithm.
+*   <strong>Constants:</strong> Using a large integer to represent "infinity" for unreachable paths.
+*   <strong>Conditional Statements:</strong> For comparisons and updates.</p>
+<p>Possessing these foundational skills will enable you to follow the algorithmic logic and the provided code examples with ease, allowing you to focus on the unique aspects of the Floyd Warshall Algorithm itself.</p>
+<h2 id="understanding-the-floyd-warshall-algorithm">Understanding the Floyd Warshall Algorithm</h2>
+<p>The Floyd Warshall Algorithm is an elegant and powerful algorithm for solving the all-pairs shortest path problem in a weighted, directed graph. Unlike single-source shortest path algorithms like <a href="/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra's Algorithm</a> or the <a href="/bellman-ford-algorithm-python-cpp-java-tutorial/">Bellman-Ford Algorithm</a>, Floyd Warshall calculates the shortest path between every possible pair of vertices in the graph. It can handle graphs with positive and negative edge weights, but it cannot handle negative cycles (a cycle where the sum of edge weights is negative), as such a cycle would allow for infinitely decreasing path lengths.</p>
+<h3 id="what-is-the-all-pairs-shortest-path-problem">What is the All-Pairs Shortest Path Problem?</h3>
+<p>The all-pairs shortest path problem asks us to find, for every pair of vertices (u, v) in a given graph, the path with the minimum total weight from u to v. This is a common problem in areas like network routing, where you need to know the fastest or cheapest way to get from any point to any other point.</p>
+<h3 id="key-concepts">Key Concepts</h3>
+<h4 id="dynamic-programming-paradigm">Dynamic Programming Paradigm</h4>
+<p>At its heart, the Floyd Warshall Algorithm is a prime example of dynamic programming. It builds up a solution incrementally. Instead of solving the problem directly, it solves a sequence of related subproblems, storing their solutions and reusing them to build the final answer. Each iteration improves upon the previous one by considering an additional vertex as a potential intermediate point on the shortest path.</p>
+<h4 id="intermediate-vertices">Intermediate Vertices</h4>
+<p>The core idea revolves around iteratively allowing more and more vertices to be used as "intermediate" points in a path. Let <code>dist[i][j]</code> be the shortest distance from vertex <code>i</code> to vertex <code>j</code>. When considering a vertex <code>k</code> as an intermediate vertex, we ask: "Is the path from <code>i</code> to <code>k</code> then <code>k</code> to <code>j</code> shorter than the current known shortest path from <code>i</code> to <code>j</code>?"
+*   Initially, <code>dist[i][j]</code> is just the direct edge weight (or infinity if no direct edge).
+*   In the first iteration, we allow <code>V0</code> as an intermediate vertex.
+*   In the second iteration, we allow <code>V0</code> or <code>V1</code> as intermediate vertices.
+*   This continues until we allow all vertices <code>V0</code> through <code>V(N-1)</code> as intermediate vertices.</p>
+<h4 id="adjacency-matrix-representation">Adjacency Matrix Representation</h4>
+<p>The algorithm typically uses an adjacency matrix <code>dist[N][N]</code> to store the shortest path distances.
+*   <code>dist[i][j]</code> stores the shortest distance from vertex <code>i</code> to vertex <code>j</code>.
+*   If <code>i</code> equals <code>j</code>, <code>dist[i][j]</code> is 0.
+*   If there is a direct edge from <code>i</code> to <code>j</code>, <code>dist[i][j]</code> is its weight.
+*   If there is no direct edge, <code>dist[i][j]</code> is initialized to infinity (a very large number).</p>
+<h3 id="the-algorithms-core-logic">The Algorithm's Core Logic</h3>
+<p>The Floyd Warshall Algorithm proceeds in <code>N</code> phases, where <code>N</code> is the number of vertices in the graph. In the <code>k</code>-th phase (where <code>k</code> ranges from <code>0</code> to <code>N-1</code>), the algorithm considers paths that are allowed to use vertices <code>0, 1, ..., k</code> as intermediate points.</p>
+<p>The core of the algorithm is a set of three nested loops:</p>
+<div class="highlight"><pre><span></span><code>for k from 0 to N-1:         // k is the intermediate vertex
+    for i from 0 to N-1:     // i is the source vertex
+        for j from 0 to N-1: // j is the destination vertex
+            // If vertex k is on the shortest path from i to j,
+            // then update the value of dist[i][j]
+            dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+</code></pre></div>
+
+<p>Let's break down this update rule:
+*   <code>dist[i][j]</code> represents the current shortest path found from <code>i</code> to <code>j</code> without using any vertex greater than <code>k-1</code> as an intermediate.
+*   <code>dist[i][k] + dist[k][j]</code> represents the path from <code>i</code> to <code>j</code> that <em>does</em> use <code>k</code> as an intermediate vertex. Here, <code>dist[i][k]</code> is the shortest path from <code>i</code> to <code>k</code> using intermediate vertices up to <code>k-1</code>, and similarly for <code>dist[k][j]</code>.
+*   By taking the <code>min</code> of these two values, we are effectively saying: the shortest path from <code>i</code> to <code>j</code> using intermediate vertices up to <code>k</code> is either the shortest path without using <code>k</code> (which is <code>dist[i][j]</code>) or the shortest path that <em>does</em> use <code>k</code> (which is <code>dist[i][k] + dist[k][j]</code>).</p>
+<p>The crucial aspect of this algorithm's correctness is the order of the loops. The outermost loop <em>must</em> iterate through <code>k</code> (the intermediate vertex) first. This ensures that when <code>dist[i][k]</code> and <code>dist[k][j]</code> are used to update <code>dist[i][j]</code>, they already contain the shortest path distances allowing intermediate vertices up to <code>k-1</code>.</p>
+<h3 id="handling-negative-cycles">Handling Negative Cycles</h3>
+<p>The Floyd Warshall Algorithm can also detect negative cycles. If, after the algorithm completes, <code>dist[i][i]</code> for any vertex <code>i</code> is negative, it indicates the presence of a negative cycle reachable from <code>i</code> and returning to <code>i</code>. This is because a negative cycle would allow the path length from <code>i</code> to <code>i</code> to continuously decrease.</p>
+<h2 id="implementing-the-floyd-warshall-algorithm-in-python-java-and-c">Implementing the Floyd Warshall Algorithm in Python, Java, and C++</h2>
+<p>Now, let's proceed with the practical implementation of the Floyd Warshall Algorithm. We'll provide code examples in Python, Java, and C++, along with detailed explanations for each step.</p>
+<h3 id="step-1-initialize-the-distance-matrix">Step 1: Initialize the Distance Matrix</h3>
+<p>The first step for all implementations is to set up an <code>N x N</code> distance matrix. This matrix will initially represent the direct edge weights between vertices.
+*   <code>dist[i][j]</code> will be the weight of the direct edge from <code>i</code> to <code>j</code>.
+*   If <code>i == j</code>, <code>dist[i][j]</code> is 0.
+*   If there's no direct edge from <code>i</code> to <code>j</code>, <code>dist[i][j]</code> is set to a special "infinity" value to denote that the vertices are unreachable from each other (or that a path hasn't been found yet).</p>
+<h3 id="step-2-apply-the-triple-nested-loop">Step 2: Apply the Triple Nested Loop</h3>
+<p>After initialization, the core of the algorithm involves three nested loops. The outermost loop iterates through all possible intermediate vertices (<code>k</code>), followed by loops for source vertices (<code>i</code>) and destination vertices (<code>j</code>). Inside the innermost loop, the distance matrix is updated using the <code>min(dist[i][j], dist[i][k] + dist[k][j])</code> formula.</p>
+<h3 id="step-3-check-for-negative-cycles-optional-but-recommended">Step 3: Check for Negative Cycles (Optional but Recommended)</h3>
+<p>After the algorithm completes, you can iterate through the diagonal of the distance matrix (<code>dist[i][i]</code>). If any <code>dist[i][i]</code> is less than 0, it signifies the presence of a negative cycle in the graph.</p>
+<hr>
+<h3 id="python-implementation">Python Implementation</h3>
+<p>Here's how to implement the Floyd Warshall Algorithm using Python. Python's clear syntax and dynamic typing make it an excellent language for understanding algorithmic concepts.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="c1"># Define a large number for infinity</span>
+<span class="n">INF</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">floyd_warshall_python</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the Floyd Warshall Algorithm to find all-pairs shortest paths.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graph (list of lists): An adjacency matrix representation of the graph.</span>
+<span class="sd">                               graph[i][j] is the weight of the edge from i to j.</span>
+<span class="sd">                               If there is no direct edge, use INF. Self-loops are 0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list of lists: A matrix where dist[i][j] is the shortest path from i to j.</span>
+<span class="sd">                       Returns None if a negative cycle is detected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_vertices</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+
+    <span class="c1"># Initialize the distance matrix</span>
+    <span class="c1"># Make a deep copy to avoid modifying the original graph</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">]</span>
+
+    <span class="c1"># Main algorithm: Triple nested loops</span>
+    <span class="c1"># k is the intermediate vertex</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vertices</span><span class="p">):</span>
+        <span class="c1"># i is the source vertex</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vertices</span><span class="p">):</span>
+            <span class="c1"># j is the destination vertex</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vertices</span><span class="p">):</span>
+                <span class="c1"># If vertex k is on the shortest path from i to j,</span>
+                <span class="c1"># then update the value of dist[i][j]</span>
+
+                <span class="c1"># Ensure that dist[i][k] and dist[k][j] are not INF</span>
+                <span class="c1"># before adding to prevent overflow issues with INF + number</span>
+                <span class="c1"># and to correctly handle unreachable paths.</span>
+                <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">!=</span> <span class="n">INF</span> <span class="ow">and</span> <span class="n">dist</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">INF</span><span class="p">:</span>
+                    <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">dist</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+
+    <span class="c1"># Check for negative cycles</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vertices</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Negative cycle detected at vertex </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span> <span class="c1"># Or handle as per requirement, e.g., raise an error</span>
+
+    <span class="k">return</span> <span class="n">dist</span>
+
+<span class="c1"># --- Example Usage (Python) ---</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Example graph represented as an adjacency matrix</span>
+    <span class="c1"># 4 vertices: 0, 1, 2, 3</span>
+    <span class="c1"># INF represents no direct edge</span>
+
+    <span class="c1"># Graph 1: Basic example</span>
+    <span class="n">graph1</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">INF</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Graph 1: Basic Example ---&quot;</span><span class="p">)</span>
+    <span class="n">shortest_paths1</span> <span class="o">=</span> <span class="n">floyd_warshall_python</span><span class="p">(</span><span class="n">graph1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">shortest_paths1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shortest path matrix:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">shortest_paths1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span> <span class="o">!=</span> <span class="n">INF</span> <span class="k">else</span> <span class="s2">&quot;INF&quot;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Graph 2: Example with negative edge weights (but no negative cycle)</span>
+    <span class="n">graph2</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="n">INF</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">INF</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">INF</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">INF</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Graph 2: With Negative Edges (No Negative Cycle) ---&quot;</span><span class="p">)</span>
+    <span class="n">shortest_paths2</span> <span class="o">=</span> <span class="n">floyd_warshall_python</span><span class="p">(</span><span class="n">graph2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">shortest_paths2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shortest path matrix:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">shortest_paths2</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span> <span class="o">!=</span> <span class="n">INF</span> <span class="k">else</span> <span class="s2">&quot;INF&quot;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Graph 3: Example with a negative cycle</span>
+    <span class="n">graph3</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">INF</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">INF</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">INF</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="c1"># Cycle: 0 -&gt; 1 -&gt; 2 -&gt; 0 (1 + (-3) + (-2) = -4)</span>
+    <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Graph 3: With Negative Cycle ---&quot;</span><span class="p">)</span>
+    <span class="n">shortest_paths3</span> <span class="o">=</span> <span class="n">floyd_warshall_python</span><span class="p">(</span><span class="n">graph3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">shortest_paths3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shortest path matrix:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">shortest_paths3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span> <span class="o">!=</span> <span class="n">INF</span> <span class="k">else</span> <span class="s2">&quot;INF&quot;</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h4 id="explanation-for-python-implementation">Explanation for Python Implementation</h4>
+<ol>
+<li><strong><code>INF = float('inf')</code></strong>: We use <code>float('inf')</code> from Python's math module to represent unreachable paths. This is a convenient way to handle the concept of "infinity" in numerical comparisons.</li>
+<li><strong><code>floyd_warshall_python(graph)</code> function</strong>:<ul>
+<li>Takes an adjacency matrix <code>graph</code> as input.</li>
+<li><code>num_vertices = len(graph)</code>: Determines the number of vertices.</li>
+<li><code>dist = [row[:] for row in graph]</code>: Creates a deep copy of the input graph to prevent modifying the original matrix. This <code>dist</code> matrix will store the shortest paths.</li>
+<li><strong>Triple Nested Loops</strong>: The heart of the algorithm.<ul>
+<li>The outer loop <code>for k in range(num_vertices)</code> iterates through all possible intermediate vertices.</li>
+<li>The middle loop <code>for i in range(num_vertices)</code> iterates through all possible source vertices.</li>
+<li>The inner loop <code>for j in range(num_vertices)</code> iterates through all possible destination vertices.</li>
+</ul>
+</li>
+<li><strong>Update Rule</strong>: <code>dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])</code>. Before adding, we check <code>if dist[i][k] != INF and dist[k][j] != INF</code>. This check is crucial to prevent <code>INF + actual_number</code> from resulting in <code>INF</code> and potentially allowing a path through an unreachable node to appear shorter than it is. It correctly handles cases where a direct path from <code>i</code> to <code>k</code> or <code>k</code> to <code>j</code> does not exist.</li>
+<li><strong>Negative Cycle Detection</strong>: After the loops, we check if <code>dist[i][i] &lt; 0</code> for any <code>i</code>. If true, a negative cycle exists, and the function returns <code>None</code>.</li>
+<li>Finally, the function returns the <code>dist</code> matrix containing all-pairs shortest paths.</li>
+</ul>
+</li>
+<li><strong>Example Usage</strong>: Demonstrates how to call the function with sample graphs, including one with a negative cycle to show the detection mechanism.</li>
+</ol>
+<hr>
+<h3 id="java-implementation">Java Implementation</h3>
+<p>For Java, we'll use a similar structure, adapting to Java's strong typing and array handling.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FloydWarshallJava</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// Define a large number for infinity. Integer.MAX_VALUE / 2 is safer than MAX_VALUE</span>
+<span class="w">    </span><span class="c1">// to prevent overflow when adding two &quot;infinity&quot; values.</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1_000_000_000</span><span class="p">;</span><span class="w"> </span><span class="c1">// A sufficiently large number</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="nf">floydWarshall</span><span class="p">(</span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">graph</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">graph</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">numVertices</span><span class="o">][</span><span class="n">numVertices</span><span class="o">]</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Initialize the distance matrix</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Main algorithm: Triple nested loops</span>
+<span class="w">        </span><span class="c1">// k is the intermediate vertex</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// i is the source vertex</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// j is the destination vertex</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="c1">// If vertex k is on the shortest path from i to j,</span>
+<span class="w">                    </span><span class="c1">// then update the value of dist[i][j]</span>
+
+<span class="w">                    </span><span class="c1">// Ensure that dist[i][k] and dist[k][j] are not INF</span>
+<span class="w">                    </span><span class="c1">// before adding to prevent overflow</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">k</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">INF</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">INF</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">min</span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">k</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dist</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">);</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Check for negative cycles</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Negative cycle detected at vertex &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// Or throw an exception</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Helper method to print the matrix</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">printMatrix</span><span class="p">(</span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">matrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">matrix</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;No valid shortest path matrix (negative cycle detected).&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">matrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">row</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">val</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">INF</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;INF\t&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">val</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// --- Example Usage (Java) ---</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Example graph represented as an adjacency matrix</span>
+<span class="w">        </span><span class="c1">// 4 vertices: 0, 1, 2, 3</span>
+<span class="w">        </span><span class="c1">// INF represents no direct edge</span>
+
+<span class="w">        </span><span class="c1">// Graph 1: Basic example</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">graph1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;--- Graph 1: Basic Example ---&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">shortestPaths1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">floydWarshall</span><span class="p">(</span><span class="n">graph1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printMatrix</span><span class="p">(</span><span class="n">shortestPaths1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Graph 2: Example with negative edge weights (but no negative cycle)</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">graph2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;--- Graph 2: With Negative Edges (No Negative Cycle) ---&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">shortestPaths2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">floydWarshall</span><span class="p">(</span><span class="n">graph2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printMatrix</span><span class="p">(</span><span class="n">shortestPaths2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Graph 3: Example with a negative cycle</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">graph3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">3</span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="w"> </span><span class="c1">// Cycle: 0 -&gt; 1 -&gt; 2 -&gt; 0 (1 + (-3) + (-2) = -4)</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;--- Graph 3: With Negative Cycle ---&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">shortestPaths3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">floydWarshall</span><span class="p">(</span><span class="n">graph3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">printMatrix</span><span class="p">(</span><span class="n">shortestPaths3</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4 id="explanation-for-java-implementation">Explanation for Java Implementation</h4>
+<ol>
+<li><strong><code>INF = 1_000_000_000</code></strong>: We use a large integer value to represent infinity. Using <code>Integer.MAX_VALUE</code> directly can cause issues if <code>Integer.MAX_VALUE + X</code> is performed, leading to an overflow and becoming a negative number. A sufficiently large number, roughly <code>MAX_VALUE / 2</code>, is a common practice to avoid this.</li>
+<li><strong><code>floydWarshall(int[][] graph)</code> function</strong>:<ul>
+<li>Takes a 2D integer array <code>graph</code> (adjacency matrix) as input.</li>
+<li><code>int[][] dist = new int[numVertices][numVertices];</code>: Declares and initializes the <code>dist</code> matrix. Java arrays are initialized to default values (0 for <code>int</code>), so explicit copying from <code>graph</code> is necessary.</li>
+<li><strong>Initialization Loop</strong>: Explicitly copies values from the input <code>graph</code> to <code>dist</code>.</li>
+<li><strong>Triple Nested Loops</strong>: Identical logic to the Python version, using <code>Math.min()</code> for comparison.</li>
+<li><strong>Overflow Prevention</strong>: The condition <code>dist[i][k] != INF &amp;&amp; dist[k][j] != INF</code> is crucial in Java (and C++) to prevent integer overflow when adding <code>INF</code> values, which could result in a negative number and incorrect path detection.</li>
+<li><strong>Negative Cycle Detection</strong>: Similar logic, checking <code>dist[i][i] &lt; 0</code>. Returns <code>null</code> if detected.</li>
+</ul>
+</li>
+<li><strong><code>printMatrix</code> helper method</strong>: A utility method to print the 2D array, handling the <code>INF</code> representation for better readability.</li>
+<li><strong><code>main</code> method</strong>: Provides example usage with different graphs.</li>
+</ol>
+<hr>
+<h3 id="c-implementation">C++ Implementation</h3>
+<p>The C++ implementation will be very similar to Java, utilizing <code>std::vector</code> for dynamic arrays and <code>INT_MAX</code> for infinity, with careful consideration for potential integer overflow.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;algorithm&gt;</span><span class="c1"> // For std::min</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;limits&gt;</span><span class="c1">    // For std::numeric_limits</span>
+
+<span class="c1">// Define a large number for infinity.</span>
+<span class="c1">// Using a value less than INT_MAX to avoid overflow when adding.</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">INF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span>
+
+<span class="c1">// Function to implement Floyd Warshall Algorithm</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">floydWarshall</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">graph</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">graph</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">dist</span><span class="p">(</span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">numVertices</span><span class="p">));</span>
+
+<span class="w">    </span><span class="c1">// Initialize the distance matrix</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Main algorithm: Triple nested loops</span>
+<span class="w">    </span><span class="c1">// k is the intermediate vertex</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// i is the source vertex</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// j is the destination vertex</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// If vertex k is on the shortest path from i to j,</span>
+<span class="w">                </span><span class="c1">// then update the value of dist[i][j]</span>
+
+<span class="w">                </span><span class="c1">// Ensure that dist[i][k] and dist[k][j] are not INF</span>
+<span class="w">                </span><span class="c1">// before adding to prevent overflow issues and incorrect comparisons.</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">INF</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">INF</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">dist</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Check for negative cycles</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numVertices</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Negative cycle detected at vertex &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">// A common way to signal an invalid state, e.g., by returning an empty matrix</span>
+<span class="w">            </span><span class="c1">// or a matrix filled with INF/specific error codes.</span>
+<span class="w">            </span><span class="c1">// For simplicity, we&#39;ll return a special value.</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span><span class="w"> </span><span class="c1">// Return an empty vector of vectors to indicate error</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Helper function to print the matrix</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">printMatrix</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">matrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">matrix</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;No valid shortest path matrix (negative cycle detected).&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">matrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">row</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">val</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">INF</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;INF</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// --- Example Usage (C++) ---</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Example graph represented as an adjacency matrix</span>
+<span class="w">    </span><span class="c1">// 4 vertices: 0, 1, 2, 3</span>
+<span class="w">    </span><span class="c1">// INF represents no direct edge</span>
+
+<span class="w">    </span><span class="c1">// Graph 1: Basic example</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">graph1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;--- Graph 1: Basic Example ---&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">shortestPaths1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">floydWarshall</span><span class="p">(</span><span class="n">graph1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printMatrix</span><span class="p">(</span><span class="n">shortestPaths1</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Graph 2: Example with negative edge weights (but no negative cycle)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">graph2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">-4</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;--- Graph 2: With Negative Edges (No Negative Cycle) ---&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">shortestPaths2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">floydWarshall</span><span class="p">(</span><span class="n">graph2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printMatrix</span><span class="p">(</span><span class="n">shortestPaths2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Graph 3: Example with a negative cycle</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">graph3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-3</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="n">INF</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="w"> </span><span class="c1">// Cycle: 0 -&gt; 1 -&gt; 2 -&gt; 0 (1 + (-3) + (-2) = -4)</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;--- Graph 3: With Negative Cycle ---&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">shortestPaths3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">floydWarshall</span><span class="p">(</span><span class="n">graph3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">printMatrix</span><span class="p">(</span><span class="n">shortestPaths3</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4 id="explanation-for-c-implementation">Explanation for C++ Implementation</h4>
+<ol>
+<li><strong><code>#include &lt;limits&gt;</code> and <code>INF</code></strong>: We use <code>std::numeric_limits&lt;int&gt;::max() / 2</code> for <code>INF</code>. This is a robust way to get the maximum integer value and then halve it to prevent overflow issues when adding two <code>INF</code> or <code>INF + a_number</code>.</li>
+<li><strong><code>std::vector&lt;std::vector&lt;int&gt;&gt;</code></strong>: C++ uses <code>std::vector</code> for dynamic arrays, making it flexible for graph representation.<ul>
+<li><code>std::vector&lt;std::vector&lt;int&gt;&gt; dist(numVertices, std::vector&lt;int&gt;(numVertices));</code> initializes an <code>N x N</code> matrix.</li>
+</ul>
+</li>
+<li><strong>Initialization and Loops</strong>: The logic for initializing <code>dist</code> and the three nested loops are functionally identical to the Java implementation.</li>
+<li><strong>Overflow Prevention</strong>: The <code>if (dist[i][k] != INF &amp;&amp; dist[k][j] != INF)</code> check is equally critical in C++ for <code>int</code> types to prevent overflow.</li>
+<li><strong>Negative Cycle Detection</strong>: Similar detection, returning an empty <code>std::vector&lt;std::vector&lt;int&gt;&gt;</code> to signify an error or invalid state due to a negative cycle.</li>
+<li><strong><code>printMatrix</code></strong>: A helper function to display the matrix, with <code>const auto&amp;</code> for efficient iteration and <code>const</code> reference for the matrix to avoid unnecessary copying.</li>
+</ol>
+<h2 id="time-and-space-complexity-analysis">Time and Space Complexity Analysis</h2>
+<p>Understanding the performance characteristics of an algorithm is just as important as knowing how to implement it. The Floyd Warshall Algorithm has a distinct time and space complexity profile that makes it suitable for certain types of problems and graph sizes.</p>
+<h3 id="time-complexity-ov3">Time Complexity: O(V³)</h3>
+<p>The time complexity of the Floyd Warshall Algorithm is cubic, specifically <strong>O(V³)</strong>, where <code>V</code> is the number of vertices in the graph. This arises directly from its structure:
+*   The algorithm consists of three perfectly nested <code>for</code> loops.
+*   Each loop iterates <code>V</code> times (once for each vertex).
+*   The innermost operation (the <code>min</code> comparison and addition) takes constant time.</p>
+<p>Therefore, the total number of operations is proportional to <code>V * V * V</code>, leading to <code>O(V³)</code>.</p>
+<p>This cubic complexity implies that the algorithm's performance degrades rapidly as the number of vertices increases. For graphs with a very large number of vertices (e.g., thousands), <code>O(V³)</code> can become computationally prohibitive. For instance, a graph with 1000 vertices would require approximately 1 billion operations, which could take a significant amount of time.</p>
+<h3 id="space-complexity-ov2">Space Complexity: O(V²)</h3>
+<p>The space complexity of the Floyd Warshall Algorithm is quadratic, specifically <strong>O(V²)</strong>.
+*   The algorithm primarily uses a 2D array (the distance matrix <code>dist</code>) of size <code>V x V</code> to store the shortest path distances between all pairs of vertices.
+*   This matrix directly scales with the square of the number of vertices.</p>
+<p>No other auxiliary data structures that grow significantly with <code>V</code> are typically required. Therefore, the total space required is dominated by this <code>V x V</code> matrix.</p>
+<h3 id="comparison-with-other-algorithms">Comparison with Other Algorithms</h3>
+<p>It's useful to put these complexities into perspective with other shortest path algorithms:
+*   <strong><a href="/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra's Algorithm</a></strong>: For single-source shortest paths on graphs with non-negative edge weights. Using a min-priority queue, its complexity is typically <code>O(E log V)</code> or <code>O(E + V log V)</code>, where <code>E</code> is the number of edges. If run <code>V</code> times (once for each source) to solve the all-pairs problem, it becomes <code>O(V * E log V)</code>.
+*   <strong><a href="/bellman-ford-algorithm-python-cpp-java-tutorial/">Bellman-Ford Algorithm</a></strong>: For single-source shortest paths on graphs with negative edge weights (but no negative cycles). Its complexity is <code>O(V * E)</code>. If run <code>V</code> times, it becomes <code>O(V² * E)</code>.</p>
+<p><strong>Key Takeaways on Complexity:</strong>
+*   Floyd Warshall is simpler to implement than <code>V</code> runs of Dijkstra or Bellman-Ford for the all-pairs problem, especially when path reconstruction is not explicitly handled in those <code>V</code> runs.
+*   For dense graphs (where <code>E</code> approaches <code>V²</code>), <code>V</code> runs of Dijkstra or Bellman-Ford can approach or exceed <code>O(V³)</code>. In such cases, Floyd Warshall is competitive.
+*   For sparse graphs (where <code>E</code> is much smaller than <code>V²</code>), <code>V</code> runs of Dijkstra (<code>O(V E log V)</code>) can be significantly faster than Floyd Warshall's <code>O(V³)</code>.
+*   The Floyd Warshall Algorithm's ability to handle negative edge weights (unlike Dijkstra) and its clean detection of negative cycles are significant advantages in its specific use cases.</p>
+<p>In essence, the <code>O(V³)</code> time complexity makes Floyd Warshall best suited for graphs where the number of vertices <code>V</code> is relatively small, typically up to a few hundred. For larger graphs, alternative approaches or more specialized algorithms might be necessary, depending on the graph's density and edge weight properties.</p>
+<h2 id="common-mistakes-and-troubleshooting">Common Mistakes and Troubleshooting</h2>
+<p>Implementing graph algorithms like the <strong>Floyd Warshall Algorithm in Python, Java and C++</strong> can introduce several common pitfalls. Being aware of these will help you troubleshoot and write more robust code.</p>
+<h3 id="1-incorrect-initialization-of-the-distance-matrix">1. Incorrect Initialization of the Distance Matrix</h3>
+<ul>
+<li><strong>Mistake</strong>: Not setting diagonal elements <code>dist[i][i]</code> to 0 (shortest path from a vertex to itself is 0). Or, incorrectly using <code>0</code> for non-existent edges, which implies a free path.</li>
+<li><strong>Resolution</strong>: Always initialize <code>dist[i][i]</code> to 0 for all <code>i</code>. For non-existent direct edges <code>(i, j)</code>, initialize <code>dist[i][j]</code> to your <code>INF</code> constant (a very large number). Only direct edges with given weights should populate the initial <code>dist[i][j]</code> value. Ensure your graph representation correctly differentiates between an edge with weight 0 and no edge at all.</li>
+</ul>
+<h3 id="2-improper-handling-of-infinity">2. Improper Handling of "Infinity"</h3>
+<ul>
+<li><strong>Mistake</strong>: Using <code>Integer.MAX_VALUE</code> directly for <code>INF</code> in Java/C++ without consideration for overflow. If <code>INF + any_number</code> results in a value exceeding <code>MAX_VALUE</code>, it will wrap around to a negative number, leading to incorrect shortest path calculations (e.g., an unreachable path suddenly appearing as a very short negative path).</li>
+<li><strong>Resolution</strong>: In languages like Java and C++, use <code>Integer.MAX_VALUE / 2</code> or a sufficiently large constant less than <code>MAX_VALUE</code> for <code>INF</code>. In Python, <code>float('inf')</code> handles this gracefully, but be cautious if mixing with large integers that might exceed standard <code>int</code> limits in certain contexts (though generally not an issue for typical graph sizes). Always check <code>if dist[i][k] != INF &amp;&amp; dist[k][j] != INF</code> before attempting <code>dist[i][k] + dist[k][j]</code> to prevent adding <code>INF</code> values, which might also result in <code>INF</code>, but could mask specific numerical issues or comparisons.</li>
+</ul>
+<h3 id="3-incorrect-loop-order">3. Incorrect Loop Order</h3>
+<ul>
+<li><strong>Mistake</strong>: Swapping the order of the <code>k</code>, <code>i</code>, and <code>j</code> loops. The algorithm's correctness hinges on <code>k</code> (the intermediate vertex) being the outermost loop.</li>
+<li><strong>Resolution</strong>: The order <strong>must</strong> be <code>for k</code>, then <code>for i</code>, then <code>for j</code>. The <code>k</code> loop iteratively allows more vertices to be used as intermediate points, and its completion ensures that <code>dist[i][k]</code> and <code>dist[k][j]</code> are already updated to their shortest possible values considering intermediate vertices up to <code>k-1</code> before they are used to update <code>dist[i][j]</code>.</li>
+</ul>
+<h3 id="4-not-detecting-or-misinterpreting-negative-cycles">4. Not Detecting or Misinterpreting Negative Cycles</h3>
+<ul>
+<li><strong>Mistake</strong>: Failing to check for negative cycles or misinterpreting their presence. If a negative cycle exists and is reachable, the concept of a "shortest path" becomes ill-defined as one could traverse the cycle indefinitely to achieve arbitrarily small (large negative) path weights.</li>
+<li><strong>Resolution</strong>: After the main triple loops complete, iterate through <code>dist[i][i]</code> for all <code>i</code>. If any <code>dist[i][i] &lt; 0</code>, a negative cycle is detected. The algorithm effectively finds the shortest path even with negative cycles, but if <code>dist[i][i]</code> is negative, it indicates an issue for paths involving <code>i</code>. Your function should ideally return a special value (e.g., <code>null</code> in Java, empty vector in C++, <code>None</code> in Python) or throw an exception when a negative cycle is detected, as the computed shortest paths might no longer be meaningful.</li>
+</ul>
+<h3 id="5-modifying-the-original-graph-adjacency-matrix">5. Modifying the Original Graph Adjacency Matrix</h3>
+<ul>
+<li><strong>Mistake</strong>: Directly modifying the input <code>graph</code> matrix instead of working on a copy. This can lead to unexpected side effects if the original graph is needed elsewhere.</li>
+<li><strong>Resolution</strong>: Always create a deep copy of the initial adjacency matrix into your <code>dist</code> matrix. In Python, <code>dist = [row[:] for row in graph]</code> creates a deep copy for a list of lists. In Java/C++, explicitly copy elements or ensure your <code>dist</code> matrix is a separate, new allocation.</li>
+</ul>
+<h3 id="6-off-by-one-errors-in-loop-bounds">6. Off-by-One Errors in Loop Bounds</h3>
+<ul>
+<li><strong>Mistake</strong>: Incorrectly setting loop bounds (e.g., <code>range(num_vertices - 1)</code> instead of <code>range(num_vertices)</code>).</li>
+<li><strong>Resolution</strong>: Ensure all loops iterate correctly from <code>0</code> to <code>num_vertices - 1</code> (inclusive of <code>0</code>, exclusive of <code>num_vertices</code> in Python's <code>range</code>, or inclusive of both in C++/Java <code>for</code> loops).</li>
+</ul>
+<p>By keeping these common issues in mind, you can approach the implementation of the Floyd Warshall Algorithm with greater confidence and build more robust and accurate solutions.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We've journeyed through the intricacies of the <strong>Floyd Warshall Algorithm in Python, Java and C++</strong>, a foundational tool in graph theory for solving the all-pairs shortest path problem. This tutorial has equipped you with a comprehensive understanding of its dynamic programming principles, the core logic involving intermediate vertices, and practical, step-by-step implementations in Python, Java, and C++. We covered the essential initialization of the distance matrix, the critical triple nested loop structure, and even the important mechanism for detecting negative cycles.</p>
+<p>You now understand that while its <code>O(V³)</code> time complexity limits its application to graphs with a relatively small number of vertices, its elegance, simplicity, and ability to handle negative edge weights (unlike Dijkstra's) make it invaluable in scenarios where finding all-pairs shortest paths is crucial. We also explored common pitfalls, such as incorrect initialization, issues with "infinity" representation, and the vital order of loops, providing you with the knowledge to troubleshoot effectively.</p>
+<p>The Floyd Warshall Algorithm is more than just a theoretical concept; it's a powerful and practical technique with applications spanning network routing, resource allocation, and even social network analysis. By mastering this algorithm, you've not only added a significant tool to your algorithmic arsenal but also deepened your understanding of dynamic programming and graph traversal. Continue to practice with different graph structures and experiment with its parameters to solidify your grasp on this essential algorithm.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: What is the main purpose of the Floyd Warshall Algorithm?</strong>
+A: The Floyd Warshall Algorithm is designed to find the shortest paths between all possible pairs of vertices in a weighted graph. It calculates the minimum total weight to travel from any starting vertex to any other destination vertex.</p>
+<p><strong>Q: Can Floyd Warshall handle negative edge weights, and what about negative cycles?</strong>
+A: Yes, the Floyd Warshall Algorithm can correctly handle graphs with negative edge weights. However, it cannot correctly find shortest paths in graphs that contain negative cycles, as such cycles would allow for infinitely decreasing path lengths. The algorithm can detect the presence of negative cycles.</p>
+<p><strong>Q: How does the Floyd Warshall Algorithm compare to Dijkstra's Algorithm?</strong>
+A: Floyd Warshall finds all-pairs shortest paths and can handle negative edge weights, with a time complexity of <code>O(V³)</code> (where V is the number of vertices). Dijkstra's Algorithm, conversely, finds single-source shortest paths, requires non-negative edge weights, and typically has a complexity of <code>O(E log V)</code> or <code>O(E + V log V)</code> (where E is the number of edges). For dense graphs, Floyd Warshall can be competitive for the all-pairs problem.</p>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
+<ol>
+<li><strong>Wikipedia - Floyd–Warshall algorithm:</strong> <a href="https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm">https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm</a></li>
+<li><strong>GeeksforGeeks - Floyd Warshall Algorithm:</strong> <a href="https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/">https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/</a></li>
+<li><strong>Programiz - Floyd Warshall Algorithm:</strong> <a href="https://www.programiz.com/dsa/floyd-warshall-algorithm">https://www.programiz.com/dsa/floyd-warshall-algorithm</a></li>
+</ol>
+    </div>
+
+    <!-- Social Share Buttons -->
+    <div class="share-buttons">
+      <span class="share-label">Share:</span>
+
+      <!-- X (Twitter) -->
+      <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/&text=Floyd%20Warshall%20Algorithm%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Tutorial"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Reddit -->
+      <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/&title=Floyd%20Warshall%20Algorithm%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Tutorial"
+        target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+        </svg>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/?text=Floyd%20Warshall%20Algorithm%20in%20Python%2C%20Java%20%26%20C%2B%2B%3A%20A%20Tutorial%20https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/" target="_blank"
+        rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="article-footer-meta">
+      <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/graph-algorithms.html">Graph Algorithms</a></p>
+      <div class="tags-list">
+        <strong>Tags:</strong>
+        <span class="tag">#Floyd Warshall</span>
+        <span class="tag">#All-Pairs Shortest Path</span>
+        <span class="tag">#Dynamic Programming</span>
+        <span class="tag">#Python</span>
+        <span class="tag">#Java</span>
+        <span class="tag">#C++</span>
+        <span class="tag">#Graph Theory</span>
+        <span class="tag">#Algorithms</span>
+      </div>
+    </div>
+
+    <div class="related-posts">
+      <h3>Related Articles</h3>
+      <ul>
+        <li><a href="https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/">Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial</a></li>
+        <li><a href="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/">Segment Tree in Python, Java & C++: A Comprehensive Guide</a></li>
+        <li><a href="https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide</a></li>
+      </ul>
+    </div>
+
+    <div class="post-footer">
+      <a href="https://analyticsdrive.tech/" class="back-link">&larr; Back to Home</a>
+    </div>
+  </article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Analytics Drive.
+            </p>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
