@@ -1180,27 +1180,7 @@ body {
 .delay-2 { transition-delay: 0.4s; }
 .delay-3 { transition-delay: 0.6s; }
 .delay-4 { transition-delay: 0.8s; }
-
-.shake {
-    animation: shakeAnim 0.5s cubic-bezier(.36,.07,.19,.97) both;
-}
-@keyframes shakeAnim {
-    10%, 90% { transform: translate3d(-2px, 0, 0); }
-    20%, 80% { transform: translate3d(4px, 0, 0); }
-    30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
-    40%, 60% { transform: translate3d(8px, 0, 0); }
-}
 </style>
-
-<!-- Audio Element -->
-<p><audio id="holi-audio" loop>
-    <source src="https://upload.wikimedia.org/wikipedia/commons/2/22/Vol1_Track01_-_Bansuri%2C_Teen_Taal.ogg" type="audio/ogg">
-</audio></p>
-<!-- Envelope Overlay -->
-<div id="envelope-overlay" class="envelope-overlay">
-    <div style="font-size: 5rem; margin-bottom: 20px; animation: drift 3s infinite alternate;">💌</div>
-    <button class="envelope-btn" onclick="openEnvelope()">Tap to Open Surprise ✨</button>
-</div>
 
 <!-- Gulal Edge Blooms -->
 <div class="gulal-edge gulal-tr"></div>
@@ -1214,31 +1194,31 @@ body {
 <div id="main-content-card" class="holi-container">
 
     <!-- Decorative SVG Splash -->
-    <svg class="water-splash fade-in-up delay-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <svg class="water-splash" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <path fill="#e91e63" d="M36.1,-58.5C46.8,-48.9,55.5,-38.3,64.4,-25.5C73.3,-12.8,82.4,2,80.1,15.1C77.7,28.2,63.9,39.6,50.8,49.2C37.8,58.8,25.6,66.6,12.1,70.1C-1.4,73.5,-16.1,72.6,-28.5,67C-40.9,61.4,-51,51.1,-60.1,39C-69.2,26.9,-77.3,13.4,-77.9,-0.3C-78.5,-14.1,-71.7,-28.1,-61,-37.8C-50.3,-47.5,-35.6,-52.8,-22.7,-57.1C-9.8,-61.4,1.4,-64.7,13.2,-64C24.9,-63.3,25.4,-68.1,36.1,-58.5Z" transform="translate(100 100)" />
     </svg>
 
-    <h1 class="holi-title-hindi fade-in-up delay-1">होली की हार्दिक शुभकामनाएँ</h1>
-    <h2 class="holi-title-eng fade-in-up delay-2">Happy Holi!</h2>
+    <h1 class="holi-title-hindi">होली की हार्दिक शुभकामनाएँ</h1>
+    <h2 class="holi-title-eng">Happy Holi!</h2>
 
-    <div id="greeting-box" class="greeting-from fade-in-up delay-2">
+    <div id="greeting-box" class="greeting-from">
         <span>Warm wishes from</span>
         <strong id="sender-name">Someone</strong> 
     </div>
 
-    <p class="holi-message fade-in-up delay-3">
+    <p class="holi-message">
         May this festival of colors fill your life with eternal joy, peace, and love. 
         Let's dissolve all differences in the beautiful colors of Holi! 
         <br><br>
         बुरा न मानो, होली है! (Don't mind, it's Holi!)
     </p>
 
-    <div class="fade-in-up delay-3" style="font-size: 3rem; margin: 1rem 0;">
+    <div style="font-size: 3rem; margin: 1rem 0;">
         🪔 🎨 🤝
     </div>
 
     <!-- Share Section -->
-    <div class="share-section fade-in-up delay-4">
+    <div class="share-section">
         <h3 class="share-title">Spread the Colors!</h3>
         <p class="share-desc">Create your own beautiful Holi greeting to share with your loved ones.</p>
 
@@ -1264,39 +1244,8 @@ body {
 </div>
 
 <script>
-    // ==========================================
-    // ENVELOPE LOGIC (REVEAL & AUDIO)
-    // ==========================================
-    function openEnvelope() {
-        const overlay = document.getElementById('envelope-overlay');
-        overlay.classList.add('hidden');
-
-        // Try to play audio (some browsers need interaction, which this click provides)
-        const audio = document.getElementById('holi-audio');
-        if(audio) {
-            audio.volume = 0.5;
-            audio.play().catch(e => console.log("Audio play blocked by browser."));
-        }
-
-        // Trigger the beautiful fade-in animations
-        setTimeout(() => {
-            const elements = document.querySelectorAll('.fade-in-up');
-            elements.forEach(el => el.classList.add('visible'));
-        }, 300);
-
-        // Massive Celebration Burst
-        setTimeout(() => {
-            splatterBurst(window.innerWidth / 2, window.innerHeight * 0.4, 250);
-            shakeContainer();
-        }, 800);
-    }
-
-    function shakeContainer() {
-        const card = document.getElementById('main-content-card');
-        card.classList.remove('shake'); // reset if already shaking
-        void card.offsetWidth; // trigger reflow
-        card.classList.add('shake');
-    }
+    let isDrawing = false;
+    let lastSprayTime = 0;
 
     // ==========================================
     // URL HANDLING & DOM POPULATION
@@ -1310,6 +1259,11 @@ body {
             document.getElementById('sender-name').textContent = cleanName;
             document.getElementById('greeting-box').style.display = 'block';
             document.getElementById('name-input').value = cleanName;
+
+            // Trigger an initial burst of colors for the recipient
+            setTimeout(() => {
+                splatterBurst(window.innerWidth / 2, window.innerHeight * 0.3, 150);
+            }, 500);
         }
 
         if (navigator.share) {
@@ -1397,7 +1351,6 @@ body {
             if(e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON' && !e.target.closest('.envelope-overlay')) {
                 isDrawing = true;
                 splatterBurst(e.clientX, e.clientY, 40);
-                shakeContainer();
             }
         });
 
