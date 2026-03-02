@@ -1182,6 +1182,10 @@ body {
 .delay-4 { transition-delay: 0.8s; }
 </style>
 
+<!-- Audio Element -->
+<p><audio id="holi-audio" loop>
+    <source src="https://upload.wikimedia.org/wikipedia/commons/2/22/Vol1_Track01_-_Bansuri%2C_Teen_Taal.ogg" type="audio/ogg">
+</audio></p>
 <!-- Gulal Edge Blooms -->
 <div class="gulal-edge gulal-tr"></div>
 <div class="gulal-edge gulal-bl"></div>
@@ -1194,31 +1198,31 @@ body {
 <div id="main-content-card" class="holi-container">
 
     <!-- Decorative SVG Splash -->
-    <svg class="water-splash" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <svg class="water-splash fade-in-up delay-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <path fill="#e91e63" d="M36.1,-58.5C46.8,-48.9,55.5,-38.3,64.4,-25.5C73.3,-12.8,82.4,2,80.1,15.1C77.7,28.2,63.9,39.6,50.8,49.2C37.8,58.8,25.6,66.6,12.1,70.1C-1.4,73.5,-16.1,72.6,-28.5,67C-40.9,61.4,-51,51.1,-60.1,39C-69.2,26.9,-77.3,13.4,-77.9,-0.3C-78.5,-14.1,-71.7,-28.1,-61,-37.8C-50.3,-47.5,-35.6,-52.8,-22.7,-57.1C-9.8,-61.4,1.4,-64.7,13.2,-64C24.9,-63.3,25.4,-68.1,36.1,-58.5Z" transform="translate(100 100)" />
     </svg>
 
-    <h1 class="holi-title-hindi">होली की हार्दिक शुभकामनाएँ</h1>
-    <h2 class="holi-title-eng">Happy Holi!</h2>
+    <h1 class="holi-title-hindi fade-in-up delay-1">होली की हार्दिक शुभकामनाएँ</h1>
+    <h2 class="holi-title-eng fade-in-up delay-2">Happy Holi!</h2>
 
-    <div id="greeting-box" class="greeting-from">
+    <div id="greeting-box" class="greeting-from fade-in-up delay-2">
         <span>Warm wishes from</span>
         <strong id="sender-name">Someone</strong> 
     </div>
 
-    <p class="holi-message">
+    <p class="holi-message fade-in-up delay-3">
         May this festival of colors fill your life with eternal joy, peace, and love. 
         Let's dissolve all differences in the beautiful colors of Holi! 
         <br><br>
         बुरा न मानो, होली है! (Don't mind, it's Holi!)
     </p>
 
-    <div style="font-size: 3rem; margin: 1rem 0;">
+    <div class="fade-in-up delay-3" style="font-size: 3rem; margin: 1rem 0;">
         🪔 🎨 🤝
     </div>
 
     <!-- Share Section -->
-    <div class="share-section">
+    <div class="share-section fade-in-up delay-4">
         <h3 class="share-title">Spread the Colors!</h3>
         <p class="share-desc">Create your own beautiful Holi greeting to share with your loved ones.</p>
 
@@ -1248,9 +1252,33 @@ body {
     let lastSprayTime = 0;
 
     // ==========================================
+    // AUDIO & ANIMATION TRIGGERS (PAGE LOAD)
+    // ==========================================
+    function triggerPremiumStart() {
+        // Trigger fade in animations
+        setTimeout(() => {
+            const elements = document.querySelectorAll('.fade-in-up');
+            elements.forEach(el => el.classList.add('visible'));
+        }, 100);
+
+        // Try to start background audio immediately on interaction
+        const audio = document.getElementById('holi-audio');
+        if(audio) {
+            audio.volume = 0.5;
+            // Browsers strictly block autoplay without clicking. 
+            // We tie it to global click events so it plays as soon as they interact (e.g., throwing a color).
+            document.body.addEventListener('pointerdown', () => {
+                if (audio.paused) audio.play().catch(e => console.log("Audio blocked", e));
+            }, { once: true });
+        }
+    }
+
+    // ==========================================
     // URL HANDLING & DOM POPULATION
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
+        triggerPremiumStart();
+
         const urlParams = new URLSearchParams(window.location.search);
         const fromName = urlParams.get('from');
 
