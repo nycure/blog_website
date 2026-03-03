@@ -1180,12 +1180,121 @@ body {
 .delay-2 { transition-delay: 0.4s; }
 .delay-3 { transition-delay: 0.6s; }
 .delay-4 { transition-delay: 0.8s; }
+
+/* =========================================
+   HOLI ARTIFACT IMAGES
+   ========================================= */
+
+/* Zone 1: Fixed Background Decorations */
+.arti-fixed {
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+}
+.arti-kurta {
+    bottom: -30px;
+    left: -20px;
+    width: clamp(120px, 18vw, 220px);
+    opacity: 0.92;
+    animation: artiBob 4s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+.arti-bonfire {
+    bottom: -10px;
+    right: 10px;
+    width: clamp(90px, 12vw, 160px);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 18px #ff8c00) drop-shadow(0 0 40px rgba(255,140,0,0.5));
+    animation: artiBonfireGlow 2s ease-in-out infinite alternate;
+    transform-origin: bottom center;
+}
+.arti-dhol {
+    top: 8vh;
+    right: -15px;
+    width: clamp(70px, 10vw, 130px);
+    opacity: 0.88;
+    animation: artiTilt 3s ease-in-out infinite alternate;
+    transform-origin: center center;
+}
+
+/* Zone 2: Inside-card artifacts */
+.arti-pichkari {
+    position: absolute;
+    top: -30px;
+    right: -20px;
+    width: clamp(80px, 12vw, 150px);
+    opacity: 0.92;
+    transform: rotate(30deg);
+    pointer-events: none;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+    z-index: 3;
+}
+.arti-balloons {
+    position: absolute;
+    top: 60px;
+    left: -20px;
+    width: clamp(60px, 9vw, 110px);
+    opacity: 0.88;
+    animation: artiBob 3s ease-in-out infinite;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12));
+    z-index: 3;
+}
+.arti-gujiya {
+    display: inline-block;
+    width: clamp(36px, 5vw, 56px);
+    vertical-align: middle;
+    margin-left: 10px;
+    animation: artiSpin 6s linear infinite;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+}
+.arti-claypot {
+    display: block;
+    margin: 0 auto 8px auto;
+    width: clamp(50px, 7vw, 80px);
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+    animation: artiBob 3.5s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes artiBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes artiBonfireGlow {
+    from { filter: drop-shadow(0 0 14px #ff6a00) drop-shadow(0 0 30px rgba(255,100,0,0.4)); transform: scaleX(1); }
+    to   { filter: drop-shadow(0 0 28px #ff9800) drop-shadow(0 0 60px rgba(255,180,0,0.6)); transform: scaleX(1.04); }
+}
+@keyframes artiTilt {
+    from { transform: rotate(-8deg); }
+    to   { transform: rotate(8deg); }
+}
+@keyframes artiSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* Hide some fixed artifacts on very small screens to avoid clutter */
+@media (max-width: 500px) {
+    .arti-dhol { display: none; }
+    .arti-kurta { width: 90px; }
+    .arti-bonfire { width: 80px; }
+}
 </style>
 
 <!-- Audio Element -->
 <p><audio id="holi-audio" loop>
     <source src="https://upload.wikimedia.org/wikipedia/commons/2/22/Vol1_Track01_-_Bansuri%2C_Teen_Taal.ogg" type="audio/ogg">
 </audio></p>
+<!-- ZONE 1: Fixed Background Artifact Images -->
+<p><img src="https://analyticsdrive.tech/images/holi-artifacts/White Kurta with Color Splashes.png"
+     class="arti-fixed arti-kurta" alt="Holi Kurta">
+<img src="https://analyticsdrive.tech/images/holi-artifacts/Holika Dahan Bonfire.png"
+     class="arti-fixed arti-bonfire" alt="Holika Dahan Bonfire">
+<img src="https://analyticsdrive.tech/images/holi-artifacts/Dhol (Drum).png"
+     class="arti-fixed arti-dhol" alt="Dhol Drum"></p>
 <!-- Gulal Edge Blooms -->
 <div class="gulal-edge gulal-tr"></div>
 <div class="gulal-edge gulal-bl"></div>
@@ -1195,19 +1304,22 @@ body {
 <!-- Interactive Confetti/Splatter Canvas -->
 <canvas id="gulal-canvas"></canvas>
 
-<div id="main-content-card" class="holi-container">
+<div id="main-content-card" class="holi-container" style="position:relative; overflow:visible;">
 
-    <!-- Decorative SVG Splash -->
-    <svg class="water-splash fade-in-up delay-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <path fill="#e91e63" d="M36.1,-58.5C46.8,-48.9,55.5,-38.3,64.4,-25.5C73.3,-12.8,82.4,2,80.1,15.1C77.7,28.2,63.9,39.6,50.8,49.2C37.8,58.8,25.6,66.6,12.1,70.1C-1.4,73.5,-16.1,72.6,-28.5,67C-40.9,61.4,-51,51.1,-60.1,39C-69.2,26.9,-77.3,13.4,-77.9,-0.3C-78.5,-14.1,-71.7,-28.1,-61,-37.8C-50.3,-47.5,-35.6,-52.8,-22.7,-57.1C-9.8,-61.4,1.4,-64.7,13.2,-64C24.9,-63.3,25.4,-68.1,36.1,-58.5Z" transform="translate(100 100)" />
-    </svg>
+    <!-- ZONE 2: Inside-card artifact images -->
+    <img src="https://analyticsdrive.tech/images/holi-artifacts/Pichkari (Water Gun).png"
+         class="arti-pichkari fade-in-up delay-1" alt="Pichkari">
+    <img src="https://analyticsdrive.tech/images/holi-artifacts/Water Balloons.png"
+         class="arti-balloons fade-in-up delay-2" alt="Water Balloons">
 
     <h1 class="holi-title-hindi fade-in-up delay-1">होली की हार्दिक शुभकामनाएँ</h1>
     <h2 class="holi-title-eng fade-in-up delay-2">Happy Holi!</h2>
 
     <div id="greeting-box" class="greeting-from fade-in-up delay-2">
         <span>Warm wishes from</span>
-        <strong id="sender-name">Someone</strong> 
+        <strong id="sender-name">Someone</strong>
+        <img src="https://analyticsdrive.tech/images/holi-artifacts/Gujiya Sweet.png"
+             class="arti-gujiya" alt="Gujiya Sweet">
     </div>
 
     <p class="holi-message fade-in-up delay-3">
@@ -1223,6 +1335,8 @@ body {
 
     <!-- Share Section -->
     <div class="share-section fade-in-up delay-4">
+        <img src="https://analyticsdrive.tech/images/holi-artifacts/Clay Pot with Colors.png"
+             class="arti-claypot" alt="Clay Pot with Colors">
         <h3 class="share-title">Spread the Colors!</h3>
         <p class="share-desc">Create your own beautiful Holi greeting to share with your loved ones.</p>
 
@@ -1368,6 +1482,16 @@ body {
     // Holi Colors
     const colors = ['#e91e63', '#00bcd4', '#ff9800', '#f05a28', '#880e4f', '#4caf50', '#ffd700'];
 
+    // Preload Gulal powder image for canvas petals
+    const gulalImg = new Image();
+    (function() {
+        const anyImg = document.querySelector('.arti-fixed');
+        if (anyImg) {
+            const srcBase = anyImg.src.substring(0, anyImg.src.lastIndexOf('/') + 1);
+            gulalImg.src = srcBase + 'Holi%20Gulal%20(Color%20Powder).png';
+        }
+    })();
+
     function initCanvas() {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
@@ -1406,26 +1530,37 @@ body {
             this.y = canvas.height + 10;
             this.color = colors[Math.floor(Math.random() * colors.length)];
             this.radius = Math.random() * 4 + 2;
+            this.size = Math.random() * 30 + 15;
             this.vx = (Math.random() - 0.5) * 1.5;
             this.vy = -(Math.random() * 1.5 + 0.5);
             this.alpha = Math.random() * 0.6 + 0.2;
             this.wobble = Math.random() * Math.PI * 2;
             this.wobbleSpeed = Math.random() * 0.05 + 0.01;
+            this.rotation = Math.random() * Math.PI * 2;
+            // 35% chance to render as Gulal powder image if loaded
+            this.useImage = gulalImg.complete && gulalImg.naturalWidth > 0 && Math.random() < 0.35;
         }
         update() {
             this.wobble += this.wobbleSpeed;
             this.x += this.vx + Math.sin(this.wobble) * 0.8;
             this.y += this.vy;
+            this.rotation += 0.02;
         }
         draw(ctx) {
             ctx.save();
             ctx.globalAlpha = this.alpha;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
-            ctx.shadowBlur = 5;
-            ctx.shadowColor = this.color;
-            ctx.fill();
+            if (this.useImage && gulalImg.complete && gulalImg.naturalWidth > 0) {
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.drawImage(gulalImg, -this.size / 2, -this.size / 2, this.size, this.size);
+            } else {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+            }
             ctx.restore();
         }
     }
