@@ -96,8 +96,13 @@
 
 <body>
     <header class="site-header">
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
         <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
-        <nav class="main-nav">
+        <nav id="main-nav" class="main-nav">
             <ul>
                 <li><a href="https://analyticsdrive.tech/">Home</a></li>
                 <li><a href="https://analyticsdrive.tech/archives.html">Archives</a></li>
@@ -109,7 +114,6 @@
                 <span id="theme-icon">🌙</span>
             </button>
         </nav>
-        </div>
     </header>
 
 
@@ -408,6 +412,34 @@
                 } catch (e) { }
             });
         })();
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        if (mobileMenuToggle && mainNav) {
+            mobileMenuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+                mainNav.classList.toggle('menu-open');
+                mobileMenuToggle.classList.toggle('is-active');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (mainNav.classList.contains('menu-open') && !mainNav.contains(e.target)) {
+                    mainNav.classList.remove('menu-open');
+                    mobileMenuToggle.classList.remove('is-active');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Prevent closing when clicking inside the menu
+            mainNav.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
     </script>
 
 </body>

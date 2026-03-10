@@ -631,6 +631,38 @@ a:hover {
     margin-top: 1.5rem;
 }
 
+/* Mobile Menu Base Styles */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001; /* Above nav */
+}
+
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--text-ink);
+    transition: all 0.3s ease-in-out;
+    border-radius: 2px;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
 @media (max-width:768px) {
     .site-header {
         padding-left: 3.5rem;
@@ -649,28 +681,56 @@ a:hover {
         font-size: 2.25rem;
     }
 
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 2rem;
+        left: 1rem;
+    }
+
     .main-nav {
         display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100vh;
+        background: var(--bg-paper);
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 0.5rem 1rem;
-        position: static;
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        padding: 2rem;
+        border-top: none;
+        border-bottom: none;
+        border-right: 1px solid var(--border-line);
+    }
+
+    [data-theme="dark"] .main-nav {
+        box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+
+    .main-nav.menu-open {
+        transform: translateX(0);
     }
 
     .main-nav ul {
-        flex: 1;
-        justify-content: flex-start;
-        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+        text-align: center;
+        overflow-x: visible;
+        white-space: normal;
         padding: 0;
         margin: 0;
-        overflow-x: auto;
-        white-space: nowrap;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
     }
 
-    .main-nav ul::-webkit-scrollbar {
-        display: none;
+    .main-nav ul li a {
+        font-size: 1.25rem;
     }
 
     .theme-toggle {
