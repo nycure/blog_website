@@ -9,10 +9,13 @@
 {{ title_text }} | {{ site_text }}
 {% endif %}
 {% endblock %}
-{% block description %}{{ page.content|striptags|truncate(160) }}{% endblock %}
+{% block description %}{% if page.summary %}{{ page.summary|striptags }}{% else %}{{
+page.content|striptags|truncate(160) }}{% endif %}{% endblock %}
 {% block og_title %}{{ page.title }}{% endblock %}
-{% block og_description %}{{ page.content|striptags|truncate(160) }}{% endblock %}
-{% block og_image %}{{ OG_IMAGE }}{% endblock %}
+{% block og_description %}{% if page.summary %}{{ page.summary|striptags }}{% else %}{{
+page.content|striptags|truncate(160) }}{% endif %}{% endblock %}
+{% block og_image %}{% if page.og_image %}{{ SITEURL }}/{{ page.og_image }}{% else %}{{ OG_IMAGE }}{% endif %}{%
+endblock %}
 
 {% block content %}
 <article class="single-post">

@@ -31,18 +31,54 @@ if not api_key:
 # Global variable to track the currently working API key
 active_api_key = api_key
 
-def call_gemini_api(prompt, model="gemini-2.5-flash"):
+def clean_response(text):
+    """
+    Cleans the AI response by removing markdown code fences.
+    """
+    if not text:
+        return text
+        
+    lines = text.splitlines()
+    cleaned_lines = []
+    inside_code_block = False
+    
+    # Check if the very first line is a code block marker
+    if lines and lines[0].strip().startswith("```"):
+        # simple stripping for the common case where the whole response is wrapped
+        if lines[0].strip().startswith("```markdown"):
+            lines = lines[1:]
+        elif lines[0].strip() == "```":
+            lines = lines[1:]
+            
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+            
+        return "\n".join(lines)
+        
+    return text
+
+def call_gemini_api(prompt, model="gemini-2.5-flash", use_grounding=False):
     """
     Calls Gemini API with fallback support and persistence.
     """
     global active_api_key
     
+    # Configure tools if grounding is requested
+    config = None
+    if use_grounding:
+        print("   🌍 Using Google Search Grounding...")
+        config = types.GenerateContentConfig(
+            tools=[types.Tool(google_search=types.GoogleSearch())],
+            response_modalities=["TEXT"]
+        )
+
     # Try with the currently active key
     client = genai.Client(api_key=active_api_key)
     try:
         response = client.models.generate_content(
             model=model,
-            contents=prompt
+            contents=prompt,
+            config=config
         )
         return response.text
     except Exception as e:
@@ -56,7 +92,8 @@ def call_gemini_api(prompt, model="gemini-2.5-flash"):
                 client2 = genai.Client(api_key=active_api_key)
                 response = client2.models.generate_content(
                     model=model,
-                    contents=prompt
+                    contents=prompt,
+                    config=config
                 )
                 return response.text
             except Exception as e2:
@@ -66,68 +103,310 @@ def call_gemini_api(prompt, model="gemini-2.5-flash"):
             print("   ❌ No other API keys to try or secondary key also failed.")
             return None
 
-def generate_draft(topic):
+
+def detect_topic_type(topic: str) -> str:
     """
-    Pass 1: Generates the initial draft.
+    Detects the content type of the topic using keyword matching.
+    Returns one of: TUTORIAL, NEWS, SPORTS, TECH_EXPLAINER, LISTICLE, REVIEW, GENERAL
     """
-    print(f"   Drafting content for '{topic}'...")
-    prompt = f"""
-    You are an expert, versatile blog writer. You can write engaging, high-quality content on ANY topic, not just technology.
-    
-    Topic: "{topic}"
-    
-    Write a comprehensive, SEO-friendly blog post.
-    
-    Structure the response in the following format exactly:
-    
-    Title: [Catchy Title, max 50 characters]
-    Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}
-    Category: [Most Relevant Category]
-    Tags: [tag1], [tag2], [tag3]
-    Slug: [seo-friendly-slug]
-    Authors: Admin
-    Summary: [Compelling meta description, max 160 chars]
-    
-    [Content of the blog post in Markdown]
-    
-    - Use H2 (##) and H3 (###) for structure.
-    - Keep paragraphs short and readable.
-    - If the topic is technical, use code blocks. If it's lifestyle/news, use emotive language.
-    - Ensure a proper conclusion.
+    t = topic.lower()
+
+    # Tutorial / How-to
+    if any(kw in t for kw in ["how to", "how do", "guide", "tutorial", "step by step", "steps to", "learn to", "build a", "write a", "create a"]):
+        return "TUTORIAL"
+
+    # Sports
+    if any(kw in t for kw in ["match", "vs ", " v ", "tournament", "cricket", "football", "soccer", "tennis", "nba", "ipl", "t20", "world cup", "olympics", "race", "athlete", "league", "score", "game"]):
+        return "SPORTS"
+
+    # Listicle
+    if any(kw in t for kw in ["top ", "best ", "worst ", "reasons ", " reasons", "tips for", "ways to", "must-have", " tools", " apps", "ranked"]):
+        return "LISTICLE"
+
+    # Review
+    if any(kw in t for kw in ["review", "comparison", "pros and cons", " vs ", "worth it", "rating", "tested", "hands on", "hands-on"]):
+        return "REVIEW"
+
+    # Tech Explainer - removed "model", "release", "launch" (too generic)
+    if any(kw in t for kw in ["what is", "explained", "how does", "deep dive", "understanding",
+                               "overview of", "introduction to", "ai", "ml", "llm", "api",
+                               "algorithm", "framework", "programming", "python", "javascript",
+                               "neural", "blockchain", "cloud"]):
+        return "TECH_EXPLAINER"
+
+    # Entertainment / Film / Music (placed before TECH_EXPLAINER to prevent tech-bias)
+    if any(kw in t for kw in ["trailer", "movie", "film", "cinema", "series", "episode",
+                               "season", "actor", "actress", "director", "cast", "plot",
+                               "marvel", "dc ", "netflix", "disney", "hbo", "anime",
+                               "sequel", "prequel", "album", "song", "music video",
+                               "concert", "celebrity", "tv show", "box office"]):
+        return "ENTERTAINMENT"
+
+    # News / Analysis
+    if any(kw in t for kw in ["news", "breaking", "update", "latest", "announced", "release", "launch", "unveiled", "report", "analysis", "recap", "results", "impact", "2025", "2026"]):
+        return "NEWS"
+
+    return "GENERAL"
+
+
+# Topic type config: min words, audience, style notes
+TOPIC_CONFIG = {
+    "TUTORIAL": {
+        "min_words": 1800,
+        "audience": "developer or student with beginner-to-intermediate knowledge",
+        "style": "Use numbered steps for all procedures. Include code blocks where relevant. Use H3 for each step.",
+        "structure": "Introduction → Prerequisites → Steps (numbered, H3) → Common Mistakes → Conclusion",
+    },
+    "NEWS": {
+        "min_words": 1200,
+        "audience": "general reader interested in current events",
+        "style": "Use inverted pyramid structure (most important info first). Be factual, clear, and avoid speculation.",
+        "structure": "Introduction (key facts) → Background Context → Key Details → Expert Opinion / Quotes → Impact → Conclusion",
+    },
+    "SPORTS": {
+        "min_words": 1200,
+        "audience": "passionate sports fan who follows the sport closely",
+        "style": "Punchy, dynamic, journalistic. Use vivid language, statistics, and player highlights.",
+        "structure": "Opening Hook → Match/Event Summary → Key Moments → Player Highlights → Stats & Standings → What It Means Going Forward → Conclusion",
+    },
+    "TECH_EXPLAINER": {
+        "min_words": 1600,
+        "audience": "tech-savvy reader aged 20-40 who wants depth, not fluff",
+        "style": "Authoritative and informative. Use analogies for complex concepts. Back claims with data.",
+        "structure": "Introduction → What Is It? → How It Works → Key Components / Features → Real-World Applications → Pros & Cons → Future Outlook → Conclusion",
+    },
+    "LISTICLE": {
+        "min_words": 1400,
+        "audience": "general reader looking for quick, actionable information",
+        "style": "Use a numbered or bulleted list as the spine of the article. Each item must have 2-3 paragraphs of explanation.",
+        "structure": "Introduction (why this list matters) → Numbered/Bulleted Items (H3 for each) → Honorable Mentions → Conclusion",
+    },
+    "REVIEW": {
+        "min_words": 1500,
+        "audience": "consumer or professional deciding whether to use/buy a product or service",
+        "style": "Balanced and honest. Structure clearly around pros, cons, and verdict. Use a rating if appropriate.",
+        "structure": "Introduction → What Is It? → Key Features → Performance & Testing → Pros → Cons → Who Should Use It? → Verdict",
+    },
+    "ENTERTAINMENT": {
+        "min_words": 1200,
+        "audience": "movie, TV, or music fan interested in pop culture and entertainment",
+        "style": "Conversational, enthusiastic, fan-friendly tone. Focus on story, characters, cast, director, themes, and emotional impact. Do NOT write from a technology perspective. Write like an entertainment journalist or film critic.",
+        "structure": "Opening Hook (hype/anticipation) → What Is It? (premise/franchise background) → Trailer or Announcement Breakdown → Cast & Director Highlights → Themes & Tone → Fan & Critic Reactions → Release Date & Where to Watch → Final Verdict / Excitement Level",
+    },
+    "GENERAL": {
+        "min_words": 1500,
+        "audience": "curious general reader",
+        "style": "Engaging and informative. Mix facts with storytelling where appropriate.",
+        "structure": "Introduction → Main Body (3-5 H2 sections) → Conclusion",
+    },
+}
+
+
+def generate_draft(topic, topic_type="GENERAL", use_grounding=False):
     """
-    
-    response_text = call_gemini_api(prompt)
+    Pass 1: Generates the initial draft using a topic-specific prompt.
+    """
+    print(f"   Drafting content for '{topic}' (Type: {topic_type})...")
+
+    cfg = TOPIC_CONFIG.get(topic_type, TOPIC_CONFIG["GENERAL"])
+    min_words = cfg["min_words"]
+    audience = cfg["audience"]
+    style = cfg["style"]
+    structure = cfg["structure"]
+
+    prompt = f"""You are an expert blog writer specializing in {topic_type.replace('_', ' ').title()} content.
+
+Topic / Primary Keyword: "{topic}"
+Content Type: {topic_type}
+Target Audience: {audience}
+
+Your Task: Write a comprehensive, SEO-optimized blog post on the above topic.
+
+--- CRITICAL SEO REQUIREMENTS ---
+1. TITLE: 55-60 characters. Include the primary keyword "{topic}" near the start. Make it compelling.
+2. KEYWORD DENSITY: Use the primary keyword "{topic}" naturally:
+   - Once in the first paragraph (intro)
+   - At least once in an H2 heading
+   - Once in the conclusion
+   - Total: 3-5 times in the full article (do NOT overstuff)
+3. H1 TITLE ALIGNMENT (CRITICAL FOR SEO): The Title you write becomes the H1 on the page.
+   The FIRST PARAGRAPH of the body MUST naturally contain at least 3-4 meaningful words
+   from that Title (ignore stopwords like "the", "a", "of", "and", "in", "to").
+   Example: if Title is "ChatGPT vs Gemini: The Future of AI Assistants", the intro
+   must mention words like "ChatGPT", "Gemini", "future", "AI assistants".
+   This prevents the SEO warning: "Words from H1 heading not found in page content".
+4. MINIMUM LENGTH: Write AT LEAST {min_words} words of body content. This is non-negotiable.
+5. SUBHEADINGS: Use keyword-rich H2 and H3 headings that a reader might Google.
+
+--- CONTENT STYLE ---
+{style}
+
+--- FORMATTING RULES ---
+- NEVER wrap URLs in backticks (`https://example.com`). This breaks them.
+- ALWAYS make links clickable using standard Markdown format: `[Link Text](https://example.com)`.
+
+--- RECOMMENDED STRUCTURE ---
+{structure}
+
+--- OUTPUT FORMAT (Pelican Metadata at the very top, REQUIRED) ---
+Title: [SEO title, 55-60 characters, keyword-first]
+Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}
+Category: [Pick EXACTLY ONE from this fixed list — do NOT invent new categories:
+  Artificial Intelligence | Technology | Algorithms | Data Structures |
+  Competitive Programming | SQL & Databases | Cricket | Sports |
+  Politics & Geopolitics | World News | Entertainment | Science & Space |
+  India & Culture]
+Tags: [Pick EXACTLY 3-4 tags from this fixed list ONLY — do NOT invent new tags:
+  Python | Java | C Plus Plus | Algorithms | Data Structures | Dynamic Programming |
+  Graph Theory | LeetCode | SQL | Competitive Programming | Artificial Intelligence |
+  Technology | Machine Learning | Gemini | Cricket | Football | Sports | Olympics |
+  India | Iran | USA | Pakistan | Geopolitics | World News | Movies | Entertainment |
+  Marvel | Space | Science | Lifestyle]
+Slug: [seo-friendly-slug-no-special-chars]
+Authors: Admin
+Summary: [Compelling meta description, exactly 150-160 characters, include keyword]
+
+[Body content in Markdown starts here]
+
+--- WRITING RULES ---
+- **DOMAIN AWARENESS (CRITICAL)**: Write ENTIRELY from the perspective of the topic's own domain.
+  - Movie/TV/trailer topic → write entertainment journalism (plot, cast, emotion, hype). NOT tech.
+  - Food/travel topic → write lifestyle content. NOT tech.
+  - Science topic → write science journalism. NOT software engineering.
+  - NEVER default to a technology angle unless the topic itself is explicitly about technology.
+- **CRITICAL — NO H1 HEADINGS**: Do NOT use `# Heading` (single `#`) anywhere in the body. The page template already displays the title as H1. Start sections with `## ` (H2) at minimum. Using H1 in the body creates a duplicate H1 which hurts SEO.
+- NO filler phrases like "In conclusion, it is important to note..."
+- Keep paragraphs to 3-4 sentences max.
+- Use transition words between sections.
+- Be specific — use real statistics, examples, and names where possible.
+"""
+
+    response_text = call_gemini_api(prompt, use_grounding=use_grounding)
     if response_text:
         return response_text
     else:
         print("   Error generating draft: All API attempts failed.")
         return None
 
-def critique_and_fix(draft_content):
+
+def get_existing_posts(content_dir="content"):
     """
-    Pass 2: The Editor AI reviews and polished the draft.
+    Scans the content directory and returns a list of (title, slug) tuples
+    for all existing posts. Used to inject internal linking opportunities
+    into the editor AI prompt.
+    """
+    posts = []
+    if not os.path.exists(content_dir):
+        return posts
+    for fname in os.listdir(content_dir):
+        if not fname.endswith(".md"):
+            continue
+        filepath = os.path.join(content_dir, fname)
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                title, slug = None, None
+                for line in f:
+                    line = line.strip()
+                    if line.lower().startswith("title:"):
+                        title = line.split(":", 1)[1].strip()
+                    elif line.lower().startswith("slug:"):
+                        slug = line.split(":", 1)[1].strip()
+                    elif line == "":
+                        break  # End of metadata block
+                if title and slug:
+                    posts.append((title, slug))
+        except Exception:
+            continue
+    return posts
+
+
+def critique_and_fix(draft_content, topic, topic_type="GENERAL"):
+    """
+    Pass 2: The Editor AI reviews and polishes the draft.
     """
     print("   Reviewing and polishing (AI Editor Mode)...")
-    
-    prompt = f"""
-    You are a strict Editor-in-Chief. Review the following blog post draft for quality, formatting, and impact.
-    
-    Your Goal: Return the FINAL, polished version of the post.
-    
-    Checklist:
-    1. **Metadata**: Ensure Title, Date, Slug, etc. are at the very top, formatted correctly for Pelican.
-    2. **Formatting**: Ensure Markdown is clean (no broken lists or unclosed bolds).
-    3. **Tone**: Ensure the tone matches the topic (e.g., authoritative for tech, warm for travel).
-    4. **Backlinks (CRITICAL)**: Analyze the content and identifying 3-5 key concepts, technologies, or news items mentioned. 
-       - At the very end of the post, add a section titled "## Further Reading & Resources".
-       - Add a bulleted list of ACTUAL, VALID URLs to authoritative sources (e.g., official documentation, Wikipedia, major news outlets) that support the article. 
-       - Do NOT invent fake links. If you are unsure of a specific URL, link to the general domain or explain how to find it.
-    5. **No Chatty Filler**: Do NOT include "Here is the corrected version" or "I fixed a typo". Just output the BLOG POST.
-    
-    --- DRAFT TO REVIEW ---
-    {draft_content}
-    --- END DRAFT ---
-    """
+
+    cfg = TOPIC_CONFIG.get(topic_type, TOPIC_CONFIG["GENERAL"])
+    min_words = cfg["min_words"]
+
+    # --- Gather existing posts for internal linking ---
+    existing_posts = get_existing_posts()
+    if existing_posts:
+        internal_links_block = "Available internal articles you can link to:\n"
+        for title, slug in existing_posts[:40]:  # Cap at 40 to keep prompt lean
+            internal_links_block += f"  - {title} → /{slug}/\n"
+    else:
+        internal_links_block = "(No existing articles found for internal linking.)"
+
+    prompt = f"""You are a strict Editor-in-Chief reviewing a blog post draft. Your job is to return the FINAL, polished, publish-ready version.
+
+Primary Keyword: "{topic}"
+Content Type: {topic_type}
+Minimum Required Word Count: {min_words} words
+
+--- YOUR CHECKLIST ---
+
+1. **METADATA** (CRITICAL): Ensure Title, Date, Category, Tags, Slug, Authors, Summary are at the very top. Pelican format, no changes to Date/Slug.
+
+1b. **TAGS QUALITY** (CRITICAL): The Tags line must have EXACTLY 3-4 tags from this approved list (exact spelling required):
+   Python, Java, C Plus Plus, Algorithms, Data Structures, Dynamic Programming,
+   Graph Theory, LeetCode, SQL, Competitive Programming, Artificial Intelligence,
+   Technology, Machine Learning, Gemini, Cricket, Football, Sports, Olympics,
+   India, Iran, USA, Pakistan, Geopolitics, World News, Movies, Entertainment,
+   Marvel, Space, Science, Lifestyle
+   - Pick ONLY from this list. Replace any tag NOT on this list with the closest match.
+   - No plural duplicates, no special characters.
+
+1c. **SUMMARY LENGTH** (CRITICAL): Count the exact characters in the `Summary:` line. It MUST be exactly 150-160 characters. If it is 161+ characters, you MUST rewrite it to be shorter. Google truncates at 160.
+
+1c. **CATEGORY QUALITY** (CRITICAL): The Category line must contain EXACTLY ONE value from this fixed list (exact spelling required):
+   Artificial Intelligence, Technology, Algorithms, Data Structures,
+   Competitive Programming, SQL & Databases, Cricket, Sports,
+   Politics & Geopolitics, World News, Entertainment, Science & Space, India & Culture
+   If the current Category is NOT on this list, replace it with the closest matching category from the list above.
+
+2. **WORD COUNT**: Count the approximate words. If the body is under {min_words} words, EXPAND the weakest/shortest section by adding more detail, examples, or analysis. Do NOT remove content.
+
+3. **KEYWORD USAGE**: Check that "{topic}" appears:
+   - In the first paragraph
+   - In at least one H2 heading  
+   - In the conclusion
+   If any are missing, add it naturally.
+
+3b. **H1 TITLE ALIGNMENT** (SEO CRITICAL): Extract the exact Title from the metadata at the top.
+    Check that the FIRST PARAGRAPH of the body contains at least 3-4 meaningful words from
+    that Title (ignore stopwords: "the", "a", "of", "and", "in", "to", "for", "is", "are").
+    If the first paragraph is missing key title words, rewrite its FIRST SENTENCE to naturally
+    include them — do NOT change the rest of the paragraph.
+    Example: Title "ChatGPT vs Gemini: The Future of AI" → intro must mention
+    "ChatGPT", "Gemini", and "future" or "AI" naturally.
+
+4. **FORMATTING**: Fix any broken Markdown (unclosed bolds, broken lists, inconsistent headings).
+   - **CRITICAL**: If there are any URLs wrapped in backticks (like `https://...`), you MUST remove the backticks and convert them into standard clickable Markdown links: `[Text](https://...)`. Never leave a URL inside a code block.
+
+5. **INTERNAL LINKS** (CRITICAL FOR SEO): Find 2-3 places in the body where you can naturally reference a related article from the list below. Insert a markdown link like `[anchor text](/slug/)`.
+   - Use descriptive anchor text (NOT "click here" or "read more")
+   - Only link where it is genuinely relevant — do NOT force it
+   - Place links inside body paragraphs, NOT in headings
+
+{internal_links_block}
+
+6. **BACKLINKS**: At the very end, add a section:
+   ## Further Reading & Resources
+   List 3-5 REAL, VALID URLs to authoritative sources (Wikipedia, official docs, major news sites). NO fake or invented links.
+
+7. **FAQ SECTION** (CRITICAL FOR SEO): Before "Further Reading", add:
+   ## Frequently Asked Questions
+   Write 3 realistic Q&A pairs a reader might Google about this topic. Format:
+   **Q: [Question]**
+   A: [Concise 2-3 sentence answer]
+
+8. **NO CHATTY OUTPUT**: Do NOT write "Here is the revised version" or similar. Output ONLY the blog post.
+
+--- DRAFT ---
+{draft_content}
+--- END DRAFT ---
+"""
 
     response_text = call_gemini_api(prompt)
     if response_text:
@@ -135,6 +414,8 @@ def critique_and_fix(draft_content):
     else:
         print("   Error during review: All API attempts failed.")
         return draft_content  # Fallback to draft if review fails
+
+
 
 def generate_featured_image(title, slug):
     """
@@ -294,7 +575,7 @@ def generate_featured_image(title, slug):
         print(f"      ❌ [Tier 3] Image generation completely failed: {e}")
         return None
 
-def save_post(content, topic):
+def save_post(content, topic, media_type=None, media_path=None):
     """
     Saves the content to a file.
     """
@@ -320,25 +601,147 @@ def save_post(content, topic):
             post_title = line.replace("Title:", "").strip()
             break
     
-    # GENERATE FEATURED IMAGE (3-tier: Pollinations → Unsplash → Pillow)
-    image_path = generate_featured_image(post_title, slug)
+    # DETERMINE MEDIA (Custom Video/Image OR Default AI Image)
+    image_path = None
     
-    # Inject Image metadata into the post if not already present
-    if image_path and "Image:" not in content:
-        lines = content.splitlines()
-        new_lines = []
-        injected = False
-        for line in lines:
-            new_lines.append(line)
-            if line.startswith("Slug:") and not injected:
-                new_lines.append(f"Image: {image_path}")
-                injected = True
+    # inject_media_line will hold the string to inject, e.g. "Video: ..." or "Image: ..."
+    inject_media_line = None
+
+    if media_type == 'video' and media_path:
+        # Handle Local Video Path vs URL
+        if os.path.exists(media_path):
+            # It's a local file, we need to copy it to content/videos
+            import shutil
+            video_filename = os.path.basename(media_path)
+            # Ensure safe filename
+            video_filename = "".join([c for c in video_filename if c.isalnum() or c in "-_."])
+            
+            target_dir = os.path.join("content", "videos")
+            os.makedirs(target_dir, exist_ok=True)
+            
+            target_path = os.path.join(target_dir, video_filename)
+            try:
+                shutil.copy2(media_path, target_path)
+                print(f"   📂 Copied video to: {target_path}")
+                # Use relative path for Hugo/Pelican
+                inject_media_line = f"Video: videos/{video_filename}"
+                
+                # --- THUMBNAIL GENERATION ---
+                # Attempt to generate a thumbnail for OG:IMAGE
+                try:
+                    import subprocess
+                    thumbnail_filename = f"{os.path.splitext(video_filename)[0]}_thumb.jpg"
+                    images_dir = os.path.join("content", "images")
+                    os.makedirs(images_dir, exist_ok=True)
+                    thumbnail_path = os.path.join(images_dir, thumbnail_filename)
+                    
+                    # ffmpeg command to extract a frame at 00:00:01
+                    cmd = [
+                        "ffmpeg", "-y", "-i", target_path, 
+                        "-ss", "00:00:01.000", "-vframes", "1", 
+                        thumbnail_path
+                    ]
+                    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    
+                    if os.path.exists(thumbnail_path):
+                        print(f"   📸 Generated thumbnail: {thumbnail_path}")
+                        # Append Image metadata line
+                        inject_media_line += f"\nImage: images/{thumbnail_filename}"
+                except Exception as e:
+                    print(f"   ⚠️ Could not generate thumbnail (ffmpeg missing?): {e}")
+
+            except Exception as e:
+                print(f"   ❌ Failed to copy video: {e}")
+                inject_media_line = f"Video: {media_path}" # Fallback
+        else:
+            # Assume it's a URL (YouTube/Vimeo)
+            print(f"   🎥 Using custom VIDEO URL: {media_path}")
+            inject_media_line = f"Video: {media_path}"
+            
+            # TODO: Fetch YouTube/Vimeo thumbnail if possible, but complexity is high.
+            # Ideally user provides one.
         
-        if not injected:
-            # Fallback: insert near the top
-            new_lines.insert(0, f"Image: {image_path}")
-             
-        content = "\n".join(new_lines)
+    elif media_type == 'image' and media_path:
+        # Handle Local Image
+        # Strip surrounding quotes (Windows drag-drop adds them)
+        media_path = media_path.strip('"').strip("'")
+
+        if os.path.exists(media_path):
+            import shutil
+            target_dir = os.path.join("content", "images")
+            os.makedirs(target_dir, exist_ok=True)
+
+            # --- WebP Conversion ---
+            webp_filename = f"{slug}-hero.webp"
+            target_webp = os.path.join(target_dir, webp_filename)
+            converted = False
+            try:
+                from PIL import Image as PILImage
+                img = PILImage.open(media_path)
+                # Convert RGBA/P modes for WebP compat
+                if img.mode in ("RGBA", "P"):
+                    img = img.convert("RGBA")
+                else:
+                    img = img.convert("RGB")
+                # Resize to max 1200px wide
+                max_w = 1200
+                if img.width > max_w:
+                    ratio = max_w / img.width
+                    img = img.resize((max_w, int(img.height * ratio)), PILImage.LANCZOS)
+                img.save(target_webp, "WEBP", quality=75, method=6)
+                orig_kb = os.path.getsize(media_path) // 1024
+                webp_kb  = os.path.getsize(target_webp) // 1024
+                print(f"   🖼️  Converted to WebP: {target_webp}")
+                print(f"   📦 Size: {orig_kb} KB → {webp_kb} KB (WebP)")
+                inject_media_line = f"Image: images/{webp_filename}"
+                converted = True
+            except Exception as e:
+                print(f"   ⚠️  WebP conversion failed ({e}), falling back to copy.")
+
+            if not converted:
+                # Fallback: plain copy without conversion
+                image_filename = os.path.basename(media_path)
+                image_filename = "".join([c for c in image_filename if c.isalnum() or c in "-_."])
+                target_path = os.path.join(target_dir, image_filename)
+                try:
+                    shutil.copy2(media_path, target_path)
+                    print(f"   📂 Copied image to: {target_path}")
+                    inject_media_line = f"Image: images/{image_filename}"
+                except Exception as e:
+                    print(f"   ❌ Failed to copy image: {e}")
+                    inject_media_line = None
+        else:
+            print(f"   ⚠️  Image file not found at: {media_path}")
+            print(f"       Tip: Make sure the path exists and is not wrapped in quotes.")
+            inject_media_line = None  # Fall back to AI image generation
+
+
+
+    else:
+        # Default Flow: Generate Featured Image
+        # 3-tier: Pollinations → Unsplash → Pillow
+        image_path = generate_featured_image(post_title, slug)
+        if image_path:
+            inject_media_line = f"Image: {image_path}"
+    
+    # Inject Media metadata into the post if not already present
+    if inject_media_line:
+        # Check if "Video:" or "Image:" is already in content (unlikely for new draft but good safety)
+        if "Image:" not in content and "Video:" not in content:
+            lines = content.splitlines()
+            new_lines = []
+            injected = False
+            for line in lines:
+                new_lines.append(line)
+                if line.startswith("Slug:") and not injected:
+                    new_lines.append(inject_media_line)
+                    injected = True
+            
+            if not injected:
+                # Fallback: insert near the top
+                new_lines.insert(0, inject_media_line)
+                 
+            content = "\n".join(new_lines)
 
     filename = f"content/{slug}.md"
     os.makedirs("content", exist_ok=True)
@@ -349,26 +752,41 @@ def save_post(content, topic):
     print(f"✅ Blog post saved to: {filename}")
     return filename
 
-def generate_blog_post(topic):
+def generate_blog_post(topic, use_grounding=False, topic_type=None):
     """
     Wrapper function for backward compatibility.
     Orchestrates the draft and critique process.
     """
-    # Inner functions handle their own logging, so we don't need to print here.
-    draft = generate_draft(topic)
+    # Auto-detect topic type if not provided
+    if topic_type is None:
+        topic_type = detect_topic_type(topic)
+    print(f"   🏷️  Topic Type Detected: {topic_type}")
+
+    draft = generate_draft(topic, topic_type=topic_type, use_grounding=use_grounding)
     
     if not draft:
         return None
         
-    final_content = critique_and_fix(draft)
-    return final_content
+    final_content = critique_and_fix(draft, topic=topic, topic_type=topic_type)
+    return clean_response(final_content)
 
 if __name__ == "__main__":
     print("--- AI Blog Post Generator (Self-Correcting) ---")
+    print("   1. Standard")
+    print("   2. Latest (Grounding)")
+    mode = input("   Select mode (1/2) [1]: ").strip()
+    use_grounding = (mode == '2')
+    
     user_topic = input("Enter a topic: ")
     
     if user_topic:
-        post_content = generate_blog_post(user_topic)
+        detected_type = detect_topic_type(user_topic)
+        print(f"\n   🏷️  Auto-detected topic type: {detected_type}")
+        valid_types = list(TOPIC_CONFIG.keys())
+        override = input(f"   Press Enter to accept, or type a type {valid_types}: ").strip().upper()
+        final_type = override if override in TOPIC_CONFIG else detected_type
+        
+        post_content = generate_blog_post(user_topic, use_grounding=use_grounding, topic_type=final_type)
         if post_content:
             save_post(post_content, user_topic)
     else:

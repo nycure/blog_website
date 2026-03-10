@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}{{ category }} — {{ SITENAME }}{% endblock %}
-{% block description %}Browse all {{ articles | length }} articles in the {{ category }} category on {{ SITENAME }}.{%
-endblock %}
-{% block og_title %}{{ category }} — {{ SITENAME }}{% endblock %}
-{% block og_description %}Browse all {{ articles | length }} articles in the {{ category }} category on {{ SITENAME
-}}.{% endblock %}
+{% block title %}#{{ tag }} Articles — {{ SITENAME }}{% endblock %}
+{% block description %}All articles tagged #{{ tag }} on {{ SITENAME }}. Browse {{ articles | length }} article{% if
+articles | length != 1 %}s{% endif %} on this topic.{% endblock %}
+{% block og_title %}#{{ tag }} — {{ SITENAME }}{% endblock %}
+{% block og_description %}All articles tagged #{{ tag }} on {{ SITENAME }}.{% endblock %}
 
 {% block content %}
 <section class="post-list">
@@ -13,21 +12,21 @@ endblock %}
     <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="{{ SITEURL }}/">Home</a>
         <span class="sep">›</span>
-        <a href="{{ SITEURL }}/categories.html">Categories</a>
+        <a href="{{ SITEURL }}/tags.html">Tags</a>
         <span class="sep">›</span>
-        <span class="current">{{ category }}</span>
+        <span class="current">#{{ tag }}</span>
     </nav>
 
     <header class="page-header"
         style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
         <p
             style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Category</p>
+            Tag Archive</p>
         <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            {{ category }}
+            #{{ tag }}
         </h1>
         <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            {{ articles | length }} article{% if articles | length != 1 %}s{% endif %}
+            {{ articles | length }} article{% if articles | length != 1 %}s{% endif %} found
         </p>
     </header>
 
@@ -56,6 +55,8 @@ endblock %}
 
             <div class="post-meta">
                 <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+                <span class="category"><a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category
+                        }}</a></span>
             </div>
             <h3><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
             <p>{{ article.summary | striptags | truncate(140) }}</p>
@@ -69,17 +70,16 @@ endblock %}
     <div class="pagination">
         {% if articles_page.has_previous() %}
         {% if articles_page.previous_page_number() == 1 %}
-        <a href="{{ SITEURL }}/category/{{ category.slug }}.html">&laquo; Newer</a>
+        <a href="{{ SITEURL }}/tag/{{ tag.slug }}.html">&laquo; Newer</a>
         {% else %}
-        <a href="{{ SITEURL }}/category/{{ category.slug }}{{ articles_page.previous_page_number() }}.html">&laquo;
-            Newer</a>
+        <a href="{{ SITEURL }}/tag/{{ tag.slug }}{{ articles_page.previous_page_number() }}.html">&laquo; Newer</a>
         {% endif %}
         {% endif %}
         {% if articles_page.has_next() %}
-        <a href="{{ SITEURL }}/category/{{ category.slug }}{{ articles_page.next_page_number() }}.html">Older
-            &raquo;</a>
+        <a href="{{ SITEURL }}/tag/{{ tag.slug }}{{ articles_page.next_page_number() }}.html">Older &raquo;</a>
         {% endif %}
     </div>
     {% endif %}
+
 </section>
 {% endblock %}

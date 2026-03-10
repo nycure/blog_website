@@ -7,6 +7,7 @@ SITEURL = 'https://analyticsdrive.tech'
 PATH = 'content'
 TIMEZONE = 'UTC'
 DEFAULT_LANG = 'en'
+DEFAULT_DATE = 'fs'
 
 # --- THEME SETTINGS ---
 THEME = 'themes/modern-ai'
@@ -26,7 +27,8 @@ SITEMAP = {
         'articles': 'monthly',
         'indexes': 'daily',
         'pages': 'monthly'
-    }
+    },
+    'exclude': ['tag/', 'category/', 'author/']
 }
 
 # --- FEED SETTINGS ---
@@ -35,8 +37,8 @@ RSS_FEED_SUMMARY_ONLY = False
 FEED_MAX_ITEMS = 50  # Control feed size
 
 # --- SEO SETTINGS ---
-SEO_DESCRIPTION = "Analytics Drive: Your futuristic guide to AI, Machine Learning, and Tech. Explore in-depth articles, tutorials, and insights on the future of innovation."
-SEO_KEYWORDS = "AI, Machine Learning, Tech, Future, Python, Data Science, Neural Networks, Robotics, News"
+SEO_DESCRIPTION = "Breaking news, live coverage, investigations, analysis, photos and opinions from Analytics Drive. Explore in-depth articles, tutorials, and insights."
+SEO_KEYWORDS = "Breaking news, live coverage, investigations, analysis, photos ,opinions, Analytics Drive"
 OG_IMAGE = "images/blog.jpg" # Place image in content/images/
 
 # --- UI CUSTOMIZATION ---
@@ -52,6 +54,7 @@ MENUITEMS = (
     ('Home', '/'),
     ('Archives', '/archives.html'),
     ('Categories', '/categories.html'),
+    ('Tags', '/tags.html'),
     ('About', '/about/'),
 )
 
@@ -60,6 +63,7 @@ SOCIAL = (
     ('Twitter', 'https://twitter.com/analyticsdrive'),
     ('Facebook', 'https://www.facebook.com/profile.php?id=61588072082428'),
     ('Instagram', 'https://www.instagram.com/analyticsdrive'),
+    ('Reddit', 'https://www.reddit.com/r/Analyticsdrive/'),
 )
 
 TWITTER_USERNAME = '@analyticsdrive'
@@ -74,8 +78,23 @@ ARTICLE_SAVE_AS = '{slug}/index.html'
 PAGE_URL = '{slug}/'
 PAGE_SAVE_AS = '{slug}/index.html'
 
+# --- MARKDOWN / SYNTAX HIGHLIGHTING ---
+MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.codehilite': {
+            'css_class': 'highlight',
+            'linenums': False,
+            'guess_lang': False,
+        },
+        'markdown.extensions.fenced_code': {},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.toc': {},
+    },
+    'output_format': 'html5',
+}
+
 # --- STATIC & EXTRA PATHS ---
-STATIC_PATHS = ['images', 'extra']
+STATIC_PATHS = ['images', 'extra', 'videos']
 EXTRA_PATH_METADATA = {
     'extra/robots.txt': {'path': 'robots.txt'},
     'extra/CNAME': {'path': 'CNAME'},

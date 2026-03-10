@@ -18,12 +18,25 @@ def main():
     print("   🤖 AI Auto-Blog Manager")
     print("========================================")
     
-    # 1. Ask for topic
+    # 1. Ask for Mode
+    print("\n   Choose Mode:")
+    print("   1. Standard (Creative/General Knowledge)")
+    print("   2. Latest (Google Search Grounded) - Best for news/current events")
+    mode_choice = input("   Select mode (1/2) [1]: ").strip()
+    
+    use_grounding = False
+    if mode_choice == '2':
+        use_grounding = True
+        print("   🌍 Mode: Latest (Grounding Enabled)")
+    else:
+        print("   🎨 Mode: Standard")
+
+    # 2. Ask for topic
     topic = input("\nEnter a topic for your new blog post (or press Enter to skip generation): ").strip()
     
     if topic:
         print(f"\n[1/3] 🧠 Generating content for '{topic}' using Gemini 2.5 Flash...")
-        content = generate_blog_post(topic)
+        content = generate_blog_post(topic, use_grounding=use_grounding)
         if content:
             saved_file = save_post(content, topic)
         else:
