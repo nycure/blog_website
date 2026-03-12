@@ -1,5 +1,651 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Analytics Drive - Admin</title><link>https://analyticsdrive.tech/</link><description/><atom:link href="https://analyticsdrive.tech/feeds/admin.rss.xml" rel="self"/><lastBuildDate>Thu, 12 Mar 2026 15:03:00 +0000</lastBuildDate><item><title>1697. Checking Existence of Edge Length Limited Paths: A Deep Dive</title><link>https://analyticsdrive.tech/1697-checking-existence-edge-length-limited-paths/</link><description>&lt;p&gt;When tackling advanced graph problems in competitive programming, efficiency is paramount. One such challenge that frequently tests a developer's understanding of algorithms and data structures is LeetCode problem &lt;strong&gt;1697. Checking Existence of Edge Length Limited Paths&lt;/strong&gt;. Mastering this specific problem involves a deep dive into powerful techniques like offline processing and the Disjoint Set Union (DSU) data structure, offering a significant learning opportunity for anyone looking to enhance their algorithmic toolkit.&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Analytics Drive - Admin</title><link>https://analyticsdrive.tech/</link><description/><atom:link href="https://analyticsdrive.tech/feeds/admin.rss.xml" rel="self"/><lastBuildDate>Thu, 12 Mar 2026 15:07:00 +0000</lastBuildDate><item><title>Number Of Islands: A Deep Dive into Graph Traversal Algorithms</title><link>https://analyticsdrive.tech/number-of-islands-graph-traversal-tutorial/</link><description>&lt;p&gt;The &lt;code&gt;Number Of Islands&lt;/code&gt; problem is a cornerstone in competitive programming and a fantastic way to solidify your understanding of graph traversal algorithms. This challenge, often presented as a grid of '1's (land) and '0's (water), asks you to count the total number of distinct islands. It's a classic problem that demands a &lt;strong&gt;deep dive&lt;/strong&gt; into how to efficiently explore connected components within a matrix, making it an excellent exercise for practicing fundamental &lt;strong&gt;graph traversal&lt;/strong&gt; techniques and designing robust &lt;strong&gt;algorithms&lt;/strong&gt;. Its widespread appearance in technical interviews underscores its importance as a fundamental test of problem-solving and algorithmic thinking. By the end of this tutorial, you'll be well-equipped to tackle similar grid-based problems with confidence and apply these traversal techniques to a broader range of challenges.&lt;/p&gt;
+&lt;div class="toc"&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#introduction-to-the-number-of-islands-problem"&gt;Introduction to the Number Of Islands Problem&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#prerequisites-for-tackling-this-challenge"&gt;Prerequisites for Tackling this Challenge&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#basic-programming-concepts"&gt;Basic Programming Concepts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#arrays-and-matrices"&gt;Arrays and Matrices&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#recursion-for-dfs"&gt;Recursion (for DFS)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#basic-graph-theory-concepts"&gt;Basic Graph Theory Concepts&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#problem-statement-visualizing-the-grid"&gt;Problem Statement &amp;amp; Visualizing the Grid&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#understanding-the-core-concepts-graphs-and-traversal"&gt;Understanding the Core Concepts: Graphs and Traversal&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#the-grid-as-an-implicit-graph"&gt;The Grid as an Implicit Graph&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#why-graph-traversal"&gt;Why Graph Traversal?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#two-primary-traversal-strategies-bfs-and-dfs"&gt;Two Primary Traversal Strategies: BFS and DFS&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#breadth-first-search-bfs"&gt;Breadth-First Search (BFS)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#depth-first-search-dfs"&gt;Depth-First Search (DFS)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#solving-the-number-of-islands-problem-with-bfs"&gt;Solving the Number Of Islands Problem with BFS&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#step-1-initialize-grid-dimensions-and-island-count"&gt;Step 1: Initialize Grid Dimensions and Island Count&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-2-iterate-through-each-cell-in-the-grid"&gt;Step 2: Iterate Through Each Cell in the Grid&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-3-initiate-bfs-from-a-land-cell"&gt;Step 3: Initiate BFS from a Land Cell&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-4-explore-neighbors-using-the-queue"&gt;Step 4: Explore Neighbors Using the Queue&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-5-mark-cells-as-visited-in-place-modification"&gt;Step 5: Mark Cells as Visited (In-place Modification)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-6-return-the-total-count"&gt;Step 6: Return the Total Count&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#python-code-example-bfs"&gt;Python Code Example (BFS)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#depth-first-search-dfs-approach-for-number-of-islands"&gt;Depth-First Search (DFS) Approach for Number Of Islands&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#step-1-initialize-grid-dimensions-and-island-count_1"&gt;Step 1: Initialize Grid Dimensions and Island Count&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-2-iterate-through-each-cell"&gt;Step 2: Iterate Through Each Cell&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-3-define-the-recursive-dfs-helper-function"&gt;Step 3: Define the Recursive DFS Helper Function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-4-implement-base-cases-and-boundary-checks-in-dfs"&gt;Step 4: Implement Base Cases and Boundary Checks in DFS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-5-mark-current-cell-as-visited"&gt;Step 5: Mark Current Cell as Visited&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-6-recursively-explore-neighbors"&gt;Step 6: Recursively Explore Neighbors&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#step-7-return-the-total-count"&gt;Step 7: Return the Total Count&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#python-code-example-dfs"&gt;Python Code Example (DFS)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#complexity-analysis"&gt;Complexity Analysis&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#time-complexity"&gt;Time Complexity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#space-complexity"&gt;Space Complexity&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#common-mistakes-and-edge-cases"&gt;Common Mistakes and Edge Cases&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#1-incorrect-boundary-checks"&gt;1. Incorrect Boundary Checks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#2-forgetting-to-mark-visited-cells"&gt;2. Forgetting to Mark Visited Cells&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#3-incorrect-neighbor-definitions"&gt;3. Incorrect Neighbor Definitions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#4-handling-an-empty-grid"&gt;4. Handling an Empty Grid&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#5-grid-with-only-water-or-only-land"&gt;5. Grid with Only Water or Only Land&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#practical-applications-of-the-number-of-islands-logic"&gt;Practical Applications of the "Number Of Islands" Logic&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#1-image-processing-and-computer-vision"&gt;1. Image Processing and Computer Vision&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#2-network-analysis"&gt;2. Network Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#3-game-development"&gt;3. Game Development&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#4-geographical-information-systems-gis"&gt;4. Geographical Information Systems (GIS)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#5-circuit-design-and-vlsi"&gt;5. Circuit Design and VLSI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#6-medical-imaging"&gt;6. Medical Imaging&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#7-robotics-and-autonomous-systems"&gt;7. Robotics and Autonomous Systems&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="#frequently-asked-questions"&gt;Frequently Asked Questions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#further-reading-resources"&gt;Further Reading &amp;amp; Resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;h2 id="introduction-to-the-number-of-islands-problem"&gt;Introduction to the Number Of Islands Problem&lt;/h2&gt;
+&lt;p&gt;The "Number Of Islands" problem is a popular algorithmic challenge frequently encountered in technical interviews and competitive programming contests. It presents a straightforward premise: given a 2D binary grid, where '1' represents land and '0' represents water, you need to determine the total number of islands. An island is defined as a group of '1's that are connected horizontally or vertically (not diagonally). Crucially, an island is completely surrounded by water or the boundaries of the grid.&lt;/p&gt;
+&lt;p&gt;At its core, this problem is about identifying connected components in an undirected graph. Although the input is a 2D grid, we can implicitly view each land cell ('1') as a node in a graph, and two land cells are connected if they are adjacent horizontally or vertically. Counting the number of islands then translates to counting the number of disjoint connected components in this implicit graph. Solving this problem provides practical experience with Breadth-First Search (BFS) and Depth-First Search (DFS), two fundamental algorithms for traversing graphs and solving a wide array of connectivity problems. Mastering this concept is key for many grid-based or connectivity-related questions.&lt;/p&gt;
+&lt;h2 id="prerequisites-for-tackling-this-challenge"&gt;Prerequisites for Tackling this Challenge&lt;/h2&gt;
+&lt;p&gt;Before diving into the solution for the "Number Of Islands" problem, it's beneficial to have a foundational understanding of several key concepts. These prerequisites will ensure you can fully grasp the logic and implementation details of the algorithms we'll discuss.&lt;/p&gt;
+&lt;h3 id="basic-programming-concepts"&gt;Basic Programming Concepts&lt;/h3&gt;
+&lt;p&gt;You should be comfortable with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Variables and Data Types:&lt;/strong&gt; Understanding integers, booleans, and string representations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Conditional Statements:&lt;/strong&gt; &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;else if&lt;/code&gt;, &lt;code&gt;else&lt;/code&gt; for handling different scenarios and boundary conditions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Loops:&lt;/strong&gt; &lt;code&gt;for&lt;/code&gt; and &lt;code&gt;while&lt;/code&gt; loops for iterating through grids and performing repetitive actions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Functions/Methods:&lt;/strong&gt; Defining and calling functions to encapsulate logic, especially for recursive DFS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="arrays-and-matrices"&gt;Arrays and Matrices&lt;/h3&gt;
+&lt;p&gt;The problem input is a 2D grid, which is essentially a matrix or a list of lists. Familiarity with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Accessing Elements:&lt;/strong&gt; How to retrieve values at &lt;code&gt;grid[row][col]&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iterating:&lt;/strong&gt; Looping through rows and columns to visit every cell in the grid.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Boundary Checks:&lt;/strong&gt; Understanding how to prevent "index out of bounds" errors when moving within the grid.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="recursion-for-dfs"&gt;Recursion (for DFS)&lt;/h3&gt;
+&lt;p&gt;While not strictly necessary for BFS, a good grasp of recursion is vital for implementing the Depth-First Search approach elegantly.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Base Cases:&lt;/strong&gt; Identifying the conditions under which a recursive call should stop.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Recursive Step:&lt;/strong&gt; How the problem breaks down into smaller, similar sub-problems.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Call Stack:&lt;/strong&gt; A basic understanding of how recursive calls are managed by the system.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="basic-graph-theory-concepts"&gt;Basic Graph Theory Concepts&lt;/h3&gt;
+&lt;p&gt;Although the problem doesn't explicitly give you a graph, it's an implicit graph problem. Understanding these concepts will make the solution much clearer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nodes (Vertices) and Edges:&lt;/strong&gt; In our case, land cells are nodes, and adjacency (horizontal/vertical) defines edges.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connected Components:&lt;/strong&gt; A subgraph in which any two vertices are connected to each other by paths, and which is connected to no additional vertices in the larger graph. An island is a connected component.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Graph Traversal:&lt;/strong&gt; The process of visiting (checking and/or updating) each vertex in a graph. For a deeper dive into other fundamental graph algorithms, consider exploring tutorials on &lt;a href="/dijkstra-algorithm-python-cpp-java-tutorial/"&gt;Dijkstra's Algorithm in Python, C++, Java&lt;/a&gt; or the &lt;a href="/bellman-ford-algorithm-python-cpp-java-tutorial/"&gt;Bellman Ford Algorithm&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Breadth-First Search (BFS):&lt;/strong&gt; An algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph) and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level. It typically uses a queue.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Depth-First Search (DFS):&lt;/strong&gt; An algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root (or selects some arbitrary node as the root) and explores as far as possible along each branch before backtracking. It typically uses recursion or a stack.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Having these prerequisites in your toolkit will greatly assist you in not just solving the "Number Of Islands" problem but also in approaching a wide range of other algorithmic challenges.&lt;/p&gt;
+&lt;h2 id="problem-statement-visualizing-the-grid"&gt;Problem Statement &amp;amp; Visualizing the Grid&lt;/h2&gt;
+&lt;p&gt;Let's formalize the problem statement and then visualize what an island looks like on a grid.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Problem Statement:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Given an &lt;code&gt;m x n&lt;/code&gt; 2D binary grid &lt;code&gt;grid&lt;/code&gt;, which represents a map of '1's (land) and '0's (water), return the number of islands.&lt;/p&gt;
+&lt;p&gt;An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Consider the following &lt;code&gt;5x4&lt;/code&gt; grid:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;1 1 1 1 0
+1 1 0 1 0
+1 1 0 0 0
+0 0 0 0 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;How many islands do you see? Let's break it down.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The '1's in the top-left form a large connected component. This is one island.&lt;/li&gt;
+&lt;li&gt;All other cells are '0's.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So, in this example, the answer would be &lt;strong&gt;1 island&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Let's look at another example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;1 1 0 0 0
+1 1 0 0 0
+0 0 1 0 0
+0 0 0 1 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here's how we visualize the islands:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;First Island:&lt;/strong&gt; The top-left &lt;code&gt;2x2&lt;/code&gt; block of '1's forms one island.
+    &lt;code&gt;(1) (1) 0 0 0
+    (1) (1) 0 0 0
+     0   0  1 0 0
+     0   0  0 1 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Second Island:&lt;/strong&gt; The '1' at &lt;code&gt;grid[2][2]&lt;/code&gt; is isolated. It's an island by itself.
+    &lt;code&gt;1  1  0  0  0
+     1  1  0  0  0
+     0  0 (1) 0  0
+     0  0  0  1  1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Third Island:&lt;/strong&gt; The &lt;code&gt;1x2&lt;/code&gt; block of '1's at &lt;code&gt;grid[3][3]&lt;/code&gt; and &lt;code&gt;grid[3][4]&lt;/code&gt; forms another island.
+    &lt;code&gt;1  1  0  0  0
+     1  1  0  0  0
+     0  0  1  0  0
+     0  0  0 (1) (1)&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In this second example, the answer would be &lt;strong&gt;3 islands&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The key insight is that once we find a piece of land ('1'), it belongs to an island. To count that island and ensure we don't count its constituent land cells again, we must "sink" or "mark as visited" all connected land cells belonging to that island. This is where graph traversal algorithms come into play.&lt;/p&gt;
+&lt;h2 id="understanding-the-core-concepts-graphs-and-traversal"&gt;Understanding the Core Concepts: Graphs and Traversal&lt;/h2&gt;
+&lt;p&gt;Before diving into the specific algorithms, let's firmly establish why this grid problem can be solved using graph theory and what graph traversal entails.&lt;/p&gt;
+&lt;h3 id="the-grid-as-an-implicit-graph"&gt;The Grid as an Implicit Graph&lt;/h3&gt;
+&lt;p&gt;While the input is a 2D matrix, we can model it as an undirected graph.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Nodes (Vertices):&lt;/strong&gt; Each cell &lt;code&gt;(row, col)&lt;/code&gt; in the grid can be considered a node. However, we are primarily interested in land cells ('1's) as potential nodes in our graph. Water cells ('0's) serve as separators.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Edges:&lt;/strong&gt; An edge exists between two land cells if they are horizontally or vertically adjacent. For example, if &lt;code&gt;grid[r][c]&lt;/code&gt; is '1', it has potential edges to &lt;code&gt;grid[r-1][c]&lt;/code&gt;, &lt;code&gt;grid[r+1][c]&lt;/code&gt;, &lt;code&gt;grid[r][c-1]&lt;/code&gt;, and &lt;code&gt;grid[r][c+1]&lt;/code&gt;, provided these neighbors are also land cells ('1') and within the grid boundaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The goal then becomes to find the number of &lt;strong&gt;connected components&lt;/strong&gt; in this implicit graph. Each connected component of '1's forms a distinct island.&lt;/p&gt;
+&lt;h3 id="why-graph-traversal"&gt;Why Graph Traversal?&lt;/h3&gt;
+&lt;p&gt;Graph traversal algorithms are designed to systematically visit every node and edge in a graph. For the "Number Of Islands" problem, traversal is essential for two main reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Identifying all parts of an island:&lt;/strong&gt; Once you find a '1', you need to explore all adjacent '1's to determine the full extent of that island. This process of exploration ensures that all connected land cells are grouped together.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preventing re-counting:&lt;/strong&gt; After discovering and exploring an entire island, you need a mechanism to mark all its constituent land cells as "visited." This prevents them from being counted again when the main loop iterates to another part of the grid and encounters a cell belonging to an already counted island.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="two-primary-traversal-strategies-bfs-and-dfs"&gt;Two Primary Traversal Strategies: BFS and DFS&lt;/h3&gt;
+&lt;p&gt;Both Breadth-First Search (BFS) and Depth-First Search (DFS) are suitable for this task. They differ in their exploration strategy:&lt;/p&gt;
+&lt;h4 id="breadth-first-search-bfs"&gt;Breadth-First Search (BFS)&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Strategy:&lt;/strong&gt; Explores layer by layer. It starts at a source node, visits all its immediate neighbors, then visits all their unvisited neighbors, and so on.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analogy:&lt;/strong&gt; Imagine ripples expanding outwards in a pond from a dropped stone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Implementation:&lt;/strong&gt; Typically uses a &lt;strong&gt;queue&lt;/strong&gt; to store nodes to visit. When a node is visited, it's added to the queue, and its unvisited neighbors are added to the queue for future processing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="depth-first-search-dfs"&gt;Depth-First Search (DFS)&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Strategy:&lt;/strong&gt; Explores as far as possible along each branch before backtracking.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analogy:&lt;/strong&gt; Walking through a maze; you go down one path until you hit a dead end, then backtrack and try another path.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Implementation:&lt;/strong&gt; Typically uses &lt;strong&gt;recursion&lt;/strong&gt; (which implicitly uses the call stack) or an explicit &lt;strong&gt;stack&lt;/strong&gt; data structure. When a node is visited, its unvisited neighbor is visited next, and the current path is explored deeply.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the "Number Of Islands" problem, both algorithms yield the correct result. The choice between BFS and DFS often comes down to personal preference or specific constraints of related problems. For a more specialized application of these techniques, see our guide on &lt;a href="/topological-sort-dfs-bfs-python-cpp-java/"&gt;Topological Sort using DFS &amp;amp; BFS in Python, C++, Java&lt;/a&gt;. We will explore both in detail.&lt;/p&gt;
+&lt;h2 id="solving-the-number-of-islands-problem-with-bfs"&gt;Solving the Number Of Islands Problem with BFS&lt;/h2&gt;
+&lt;p&gt;Breadth-First Search (BFS) is an excellent choice for finding connected components. It systematically explores all reachable cells layer by layer from a starting point.&lt;/p&gt;
+&lt;p&gt;Let's outline the steps and then look at the Python implementation.&lt;/p&gt;
+&lt;h3 id="step-1-initialize-grid-dimensions-and-island-count"&gt;Step 1: Initialize Grid Dimensions and Island Count&lt;/h3&gt;
+&lt;p&gt;First, determine the dimensions of the grid (&lt;code&gt;rows&lt;/code&gt; and &lt;code&gt;cols&lt;/code&gt;). Initialize a counter for &lt;code&gt;num_islands&lt;/code&gt; to zero. We also need a way to mark visited cells to avoid cycles and redundant processing. We can modify the grid in-place (changing '1's to '0's as we visit them) or use a separate &lt;code&gt;visited&lt;/code&gt; 2D array/set. For simplicity and often better performance, in-place modification is common in this problem.&lt;/p&gt;
+&lt;h3 id="step-2-iterate-through-each-cell-in-the-grid"&gt;Step 2: Iterate Through Each Cell in the Grid&lt;/h3&gt;
+&lt;p&gt;Use nested loops to traverse every cell &lt;code&gt;(r, c)&lt;/code&gt; in the grid.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;grid[r][c]&lt;/code&gt; is '1' (land), it means we've found a new, unvisited piece of an island.&lt;/li&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Start a BFS traversal from this cell to explore and "sink" all connected land cells belonging to this island.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="step-3-initiate-bfs-from-a-land-cell"&gt;Step 3: Initiate BFS from a Land Cell&lt;/h3&gt;
+&lt;p&gt;When a new land cell &lt;code&gt;(r, c)&lt;/code&gt; is found, add it to a queue and immediately mark it as visited (e.g., change &lt;code&gt;grid[r][c]&lt;/code&gt; to '0').&lt;/p&gt;
+&lt;h3 id="step-4-explore-neighbors-using-the-queue"&gt;Step 4: Explore Neighbors Using the Queue&lt;/h3&gt;
+&lt;p&gt;While the queue is not empty:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dequeue a cell &lt;code&gt;(current_r, current_c)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Check its four cardinal neighbors (up, down, left, right): &lt;code&gt;(current_r-1, current_c)&lt;/code&gt;, &lt;code&gt;(current_r+1, current_c)&lt;/code&gt;, &lt;code&gt;(current_r, current_c-1)&lt;/code&gt;, &lt;code&gt;(current_r, current_c+1)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;For each neighbor:&lt;ul&gt;
+&lt;li&gt;Ensure it's within grid boundaries.&lt;/li&gt;
+&lt;li&gt;Ensure it's a land cell ('1') and hasn't been visited yet (if using a separate visited set).&lt;/li&gt;
+&lt;li&gt;If it meets these conditions, change it to '0' (mark as visited) and enqueue it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="step-5-mark-cells-as-visited-in-place-modification"&gt;Step 5: Mark Cells as Visited (In-place Modification)&lt;/h3&gt;
+&lt;p&gt;As soon as a land cell &lt;code&gt;grid[r][c]&lt;/code&gt; is added to the queue, change its value to '0'. This effectively "sinks" the land and ensures it won't be counted again or processed by another BFS call.&lt;/p&gt;
+&lt;h3 id="step-6-return-the-total-count"&gt;Step 6: Return the Total Count&lt;/h3&gt;
+&lt;p&gt;After the loops complete, &lt;code&gt;num_islands&lt;/code&gt; will hold the total count of distinct islands.&lt;/p&gt;
+&lt;h3 id="python-code-example-bfs"&gt;Python Code Example (BFS)&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;deque&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;numIslands&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+
+        &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;cols&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;num_islands&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Define possible directions for neighbors (up, down, left, right)&lt;/span&gt;
+        &lt;span class="n"&gt;directions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;bfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;deque&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+            &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+            &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;0&amp;#39;&lt;/span&gt; &lt;span class="c1"&gt;# Mark as visited/sunk&lt;/span&gt;
+
+            &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;curr_r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;curr_c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;popleft&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;directions&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;next_r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;next_c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;curr_r&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;curr_c&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;dc&lt;/span&gt;
+
+                    &lt;span class="c1"&gt;# Check boundaries and if it&amp;#39;s land&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;next_r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;next_c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;cols&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;next_r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;next_c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                        &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;next_r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;next_c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;0&amp;#39;&lt;/span&gt; &lt;span class="c1"&gt;# Mark as visited/sunk&lt;/span&gt;
+                        &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;next_r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;next_c&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;num_islands&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+                    &lt;span class="n"&gt;bfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Start BFS to sink the entire island&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;num_islands&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Example Usage:&lt;/span&gt;
+&lt;span class="c1"&gt;# grid1 = [&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;]&lt;/span&gt;
+&lt;span class="c1"&gt;# ]&lt;/span&gt;
+&lt;span class="c1"&gt;# print(Solution().numIslands(grid1)) # Output: 1&lt;/span&gt;
+
+&lt;span class="c1"&gt;# grid2 = [&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;]&lt;/span&gt;
+&lt;span class="c1"&gt;# ]&lt;/span&gt;
+&lt;span class="c1"&gt;# print(Solution().numIslands(grid2)) # Output: 3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;BFS Walkthrough with Example Grid:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let's use &lt;code&gt;grid2&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;1 1 0 0 0
+1 1 0 0 0
+0 0 1 0 0
+0 0 0 1 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Initialize &lt;code&gt;num_islands = 0&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Outer loops start at &lt;code&gt;(0,0)&lt;/code&gt;. &lt;code&gt;grid[0][0]&lt;/code&gt; is '1'.&lt;ul&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt; to &lt;code&gt;1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;bfs(0,0)&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Queue &lt;code&gt;q = [(0,0)]&lt;/code&gt;. &lt;code&gt;grid[0][0]&lt;/code&gt; becomes '0'.&lt;/li&gt;
+&lt;li&gt;Dequeue &lt;code&gt;(0,0)&lt;/code&gt;. Neighbors:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;(0,1)&lt;/code&gt;: '1'. Change &lt;code&gt;grid[0][1]&lt;/code&gt; to '0'. Enqueue &lt;code&gt;(0,1)&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(1,0)&lt;/code&gt;: '1'. Change &lt;code&gt;grid[1][0]&lt;/code&gt; to '0'. Enqueue &lt;code&gt;(1,0)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Dequeue &lt;code&gt;(0,1)&lt;/code&gt;. Neighbors:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;(0,0)&lt;/code&gt;: '0' (already visited).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(1,1)&lt;/code&gt;: '1'. Change &lt;code&gt;grid[1][1]&lt;/code&gt; to '0'. Enqueue &lt;code&gt;(1,1)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Dequeue &lt;code&gt;(1,0)&lt;/code&gt;. Neighbors:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;(0,0)&lt;/code&gt;: '0'.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(1,1)&lt;/code&gt;: '0' (already visited).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Dequeue &lt;code&gt;(1,1)&lt;/code&gt;. Neighbors:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;(0,1)&lt;/code&gt;: '0'.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(1,0)&lt;/code&gt;: '0'.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Queue is empty. &lt;code&gt;bfs(0,0)&lt;/code&gt; ends.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Current grid state:
+    &lt;code&gt;0 0 0 0 0
+    0 0 0 0 0
+    0 0 1 0 0
+    0 0 0 1 1&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Outer loops continue. Many cells are '0'.&lt;/li&gt;
+&lt;li&gt;At &lt;code&gt;(2,2)&lt;/code&gt;, &lt;code&gt;grid[2][2]&lt;/code&gt; is '1'.&lt;ul&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt; to &lt;code&gt;2&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;bfs(2,2)&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Queue &lt;code&gt;q = [(2,2)]&lt;/code&gt;. &lt;code&gt;grid[2][2]&lt;/code&gt; becomes '0'.&lt;/li&gt;
+&lt;li&gt;Dequeue &lt;code&gt;(2,2)&lt;/code&gt;. No '1' neighbors.&lt;/li&gt;
+&lt;li&gt;Queue empty. &lt;code&gt;bfs(2,2)&lt;/code&gt; ends.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Current grid state:
+    &lt;code&gt;0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 1 1&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Outer loops continue.&lt;/li&gt;
+&lt;li&gt;At &lt;code&gt;(3,3)&lt;/code&gt;, &lt;code&gt;grid[3][3]&lt;/code&gt; is '1'.&lt;ul&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt; to &lt;code&gt;3&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;bfs(3,3)&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Queue &lt;code&gt;q = [(3,3)]&lt;/code&gt;. &lt;code&gt;grid[3][3]&lt;/code&gt; becomes '0'.&lt;/li&gt;
+&lt;li&gt;Dequeue &lt;code&gt;(3,3)&lt;/code&gt;. Neighbors:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;(3,4)&lt;/code&gt;: '1'. Change &lt;code&gt;grid[3][4]&lt;/code&gt; to '0'. Enqueue &lt;code&gt;(3,4)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Dequeue &lt;code&gt;(3,4)&lt;/code&gt;. No '1' neighbors.&lt;/li&gt;
+&lt;li&gt;Queue empty. &lt;code&gt;bfs(3,3)&lt;/code&gt; ends.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Current grid state:
+    &lt;code&gt;0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Outer loops finish. Return &lt;code&gt;num_islands = 3&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="depth-first-search-dfs-approach-for-number-of-islands"&gt;Depth-First Search (DFS) Approach for Number Of Islands&lt;/h2&gt;
+&lt;p&gt;Depth-First Search (DFS) provides an alternative yet equally effective method for solving the "Number Of Islands" problem. Instead of using a queue, DFS leverages recursion (or an explicit stack) to explore as deeply as possible along each path before backtracking.&lt;/p&gt;
+&lt;h3 id="step-1-initialize-grid-dimensions-and-island-count_1"&gt;Step 1: Initialize Grid Dimensions and Island Count&lt;/h3&gt;
+&lt;p&gt;Similar to BFS, get the &lt;code&gt;rows&lt;/code&gt; and &lt;code&gt;cols&lt;/code&gt; of the grid and initialize &lt;code&gt;num_islands = 0&lt;/code&gt;. We will also use in-place modification of the grid to mark visited land cells as '0'.&lt;/p&gt;
+&lt;h3 id="step-2-iterate-through-each-cell"&gt;Step 2: Iterate Through Each Cell&lt;/h3&gt;
+&lt;p&gt;Loop through every cell &lt;code&gt;(r, c)&lt;/code&gt; in the grid using nested &lt;code&gt;for&lt;/code&gt; loops.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If &lt;code&gt;grid[r][c]&lt;/code&gt; is '1' (land), it signifies the discovery of a new, unvisited island.&lt;/li&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call a recursive &lt;code&gt;dfs&lt;/code&gt; helper function, starting from this cell, to explore and "sink" all connected land cells belonging to this island.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="step-3-define-the-recursive-dfs-helper-function"&gt;Step 3: Define the Recursive DFS Helper Function&lt;/h3&gt;
+&lt;p&gt;Create a helper function, say &lt;code&gt;dfs(r, c)&lt;/code&gt;, which will perform the depth-first traversal. This function will take the current row and column as arguments.&lt;/p&gt;
+&lt;h3 id="step-4-implement-base-cases-and-boundary-checks-in-dfs"&gt;Step 4: Implement Base Cases and Boundary Checks in DFS&lt;/h3&gt;
+&lt;p&gt;Inside the &lt;code&gt;dfs&lt;/code&gt; function, immediately check for base cases and boundary conditions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Out of Bounds:&lt;/strong&gt; If &lt;code&gt;r&lt;/code&gt; or &lt;code&gt;c&lt;/code&gt; are outside the grid dimensions (&lt;code&gt;0 &amp;lt;= r &amp;lt; rows&lt;/code&gt; and &lt;code&gt;0 &amp;lt;= c &amp;lt; cols&lt;/code&gt;), return immediately.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Water or Already Visited:&lt;/strong&gt; If &lt;code&gt;grid[r][c]&lt;/code&gt; is '0' (water) or has already been marked as visited (changed to '0' during a previous traversal), return immediately.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These checks prevent infinite recursion and ensure we only process valid, unvisited land cells.&lt;/p&gt;
+&lt;h3 id="step-5-mark-current-cell-as-visited"&gt;Step 5: Mark Current Cell as Visited&lt;/h3&gt;
+&lt;p&gt;If the current cell &lt;code&gt;(r, c)&lt;/code&gt; is a valid, unvisited land cell, mark it as visited by changing &lt;code&gt;grid[r][c]&lt;/code&gt; to '0'. This is crucial to prevent re-visiting this cell and causing infinite loops in the recursion.&lt;/p&gt;
+&lt;h3 id="step-6-recursively-explore-neighbors"&gt;Step 6: Recursively Explore Neighbors&lt;/h3&gt;
+&lt;p&gt;After marking the current cell as visited, recursively call &lt;code&gt;dfs&lt;/code&gt; for all its four cardinal neighbors:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dfs(r + 1, c)&lt;/code&gt; (down)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(r - 1, c)&lt;/code&gt; (up)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(r, c + 1)&lt;/code&gt; (right)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(r, c - 1)&lt;/code&gt; (left)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The recursive calls will continue to explore deeper into the island until all connected land cells are visited and marked.&lt;/p&gt;
+&lt;h3 id="step-7-return-the-total-count"&gt;Step 7: Return the Total Count&lt;/h3&gt;
+&lt;p&gt;Once the outer loops have finished iterating through the entire grid, &lt;code&gt;num_islands&lt;/code&gt; will contain the final count of distinct islands.&lt;/p&gt;
+&lt;h3 id="python-code-example-dfs"&gt;Python Code Example (DFS)&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;numIslands&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+
+        &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;cols&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;num_islands&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="c1"&gt;# Base cases: out of bounds, or water, or already visited land&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Mark current cell as visited by changing &amp;#39;1&amp;#39; to &amp;#39;0&amp;#39;&lt;/span&gt;
+            &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;
+
+            &lt;span class="c1"&gt;# Recursively explore all four cardinal neighbors&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Down&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Up&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Right&lt;/span&gt;
+            &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Left&lt;/span&gt;
+
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cols&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;num_islands&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+                    &lt;span class="n"&gt;dfs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Start DFS to sink the entire island&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;num_islands&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Example Usage:&lt;/span&gt;
+&lt;span class="c1"&gt;# grid1 = [&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;]&lt;/span&gt;
+&lt;span class="c1"&gt;# ]&lt;/span&gt;
+&lt;span class="c1"&gt;# print(Solution().numIslands(grid1)) # Output: 1&lt;/span&gt;
+
+&lt;span class="c1"&gt;# grid2 = [&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;],&lt;/span&gt;
+&lt;span class="c1"&gt;#     [&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;0&amp;quot;,&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;]&lt;/span&gt;
+&lt;span class="c1"&gt;# ]&lt;/span&gt;
+&lt;span class="c1"&gt;# print(Solution().numIslands(grid2)) # Output: 3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;DFS Walkthrough with Example Grid:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let's use &lt;code&gt;grid2&lt;/code&gt; again:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;1 1 0 0 0
+1 1 0 0 0
+0 0 1 0 0
+0 0 0 1 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Initialize &lt;code&gt;num_islands = 0&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Outer loops start at &lt;code&gt;(0,0)&lt;/code&gt;. &lt;code&gt;grid[0][0]&lt;/code&gt; is '1'.&lt;ul&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt; to &lt;code&gt;1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;dfs(0,0)&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Inside &lt;code&gt;dfs(0,0)&lt;/code&gt;: &lt;code&gt;grid[0][0]&lt;/code&gt; becomes '0'.&lt;/li&gt;
+&lt;li&gt;Recursive calls: &lt;code&gt;dfs(1,0)&lt;/code&gt;, &lt;code&gt;dfs(-1,0)&lt;/code&gt; (out of bounds), &lt;code&gt;dfs(0,1)&lt;/code&gt;, &lt;code&gt;dfs(0,-1)&lt;/code&gt; (out of bounds).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(1,0)&lt;/code&gt;: &lt;code&gt;grid[1][0]&lt;/code&gt; is '1'. &lt;code&gt;grid[1][0]&lt;/code&gt; becomes '0'.&lt;ul&gt;
+&lt;li&gt;Recursive calls: &lt;code&gt;dfs(2,0)&lt;/code&gt; (water), &lt;code&gt;dfs(0,0)&lt;/code&gt; (visited), &lt;code&gt;dfs(1,1)&lt;/code&gt;, &lt;code&gt;dfs(1,-1)&lt;/code&gt; (out of bounds).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(1,1)&lt;/code&gt;: &lt;code&gt;grid[1][1]&lt;/code&gt; is '1'. &lt;code&gt;grid[1][1]&lt;/code&gt; becomes '0'.&lt;ul&gt;
+&lt;li&gt;Recursive calls: &lt;code&gt;dfs(2,1)&lt;/code&gt; (water), &lt;code&gt;dfs(0,1)&lt;/code&gt; (visited), &lt;code&gt;dfs(1,2)&lt;/code&gt; (water), &lt;code&gt;dfs(1,0)&lt;/code&gt; (visited).&lt;/li&gt;
+&lt;li&gt;All neighbors are water or visited. &lt;code&gt;dfs(1,1)&lt;/code&gt; returns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(1,0)&lt;/code&gt; finishes its calls, returns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(0,1)&lt;/code&gt;: &lt;code&gt;grid[0][1]&lt;/code&gt; is '1'. &lt;code&gt;grid[0][1]&lt;/code&gt; becomes '0'.&lt;ul&gt;
+&lt;li&gt;Recursive calls: &lt;code&gt;dfs(1,1)&lt;/code&gt; (visited), &lt;code&gt;dfs(-1,1)&lt;/code&gt; (out of bounds), &lt;code&gt;dfs(0,2)&lt;/code&gt; (water), &lt;code&gt;dfs(0,0)&lt;/code&gt; (visited).&lt;/li&gt;
+&lt;li&gt;All neighbors are water or visited. &lt;code&gt;dfs(0,1)&lt;/code&gt; returns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(0,0)&lt;/code&gt; finishes its calls, returns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;At this point, the first island is completely sunk, and &lt;code&gt;num_islands = 1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Grid state:
+    &lt;code&gt;0 0 0 0 0
+    0 0 0 0 0
+    0 0 1 0 0
+    0 0 0 1 1&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Outer loops continue.&lt;/li&gt;
+&lt;li&gt;At &lt;code&gt;(2,2)&lt;/code&gt;, &lt;code&gt;grid[2][2]&lt;/code&gt; is '1'.&lt;ul&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt; to &lt;code&gt;2&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;dfs(2,2)&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Inside &lt;code&gt;dfs(2,2)&lt;/code&gt;: &lt;code&gt;grid[2][2]&lt;/code&gt; becomes '0'.&lt;/li&gt;
+&lt;li&gt;Recursive calls: All neighbors &lt;code&gt;(3,2)&lt;/code&gt;, &lt;code&gt;(1,2)&lt;/code&gt;, &lt;code&gt;(2,3)&lt;/code&gt;, &lt;code&gt;(2,1)&lt;/code&gt; are water.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(2,2)&lt;/code&gt; returns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Grid state:
+    &lt;code&gt;0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 1 1&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Outer loops continue.&lt;/li&gt;
+&lt;li&gt;At &lt;code&gt;(3,3)&lt;/code&gt;, &lt;code&gt;grid[3][3]&lt;/code&gt; is '1'.&lt;ul&gt;
+&lt;li&gt;Increment &lt;code&gt;num_islands&lt;/code&gt; to &lt;code&gt;3&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Call &lt;code&gt;dfs(3,3)&lt;/code&gt;.&lt;ul&gt;
+&lt;li&gt;Inside &lt;code&gt;dfs(3,3)&lt;/code&gt;: &lt;code&gt;grid[3][3]&lt;/code&gt; becomes '0'.&lt;/li&gt;
+&lt;li&gt;Recursive calls: &lt;code&gt;dfs(4,3)&lt;/code&gt; (out of bounds), &lt;code&gt;dfs(2,3)&lt;/code&gt; (water), &lt;code&gt;dfs(3,4)&lt;/code&gt;, &lt;code&gt;dfs(3,2)&lt;/code&gt; (water).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(3,4)&lt;/code&gt;: &lt;code&gt;grid[3][4]&lt;/code&gt; is '1'. &lt;code&gt;grid[3][4]&lt;/code&gt; becomes '0'.&lt;ul&gt;
+&lt;li&gt;Recursive calls: All neighbors &lt;code&gt;(4,4)&lt;/code&gt; (out of bounds), &lt;code&gt;(2,4)&lt;/code&gt; (water), &lt;code&gt;(3,5)&lt;/code&gt; (out of bounds), &lt;code&gt;(3,3)&lt;/code&gt; (visited).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(3,4)&lt;/code&gt; returns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfs(3,3)&lt;/code&gt; finishes its calls, returns.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Grid state:
+    &lt;code&gt;0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Outer loops finish. Return &lt;code&gt;num_islands = 3&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Both BFS and DFS effectively achieve the same goal, differing mainly in their traversal order and the data structure/mechanism used for exploration.&lt;/p&gt;
+&lt;h2 id="complexity-analysis"&gt;Complexity Analysis&lt;/h2&gt;
+&lt;p&gt;Understanding the time and space complexity of our solutions is crucial for evaluating their efficiency.&lt;/p&gt;
+&lt;p&gt;Let &lt;code&gt;R&lt;/code&gt; be the number of rows and &lt;code&gt;C&lt;/code&gt; be the number of columns in the grid. The total number of cells in the grid is &lt;code&gt;N = R * C&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="time-complexity"&gt;Time Complexity&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;O(R * C)&lt;/strong&gt; for both BFS and DFS.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Explanation:&lt;/strong&gt; The outermost loops iterate through each of the &lt;code&gt;R * C&lt;/code&gt; cells in the grid. For every cell that contains '1' and hasn't been visited yet, a BFS or DFS traversal is initiated. During a traversal (either BFS or DFS), each land cell belonging to that particular island is visited and processed exactly once. When a cell is visited, its value is changed from '1' to '0' (or it's added to a &lt;code&gt;visited&lt;/code&gt; set), ensuring that it will not trigger a new traversal or be processed again by the current traversal. Each visit involves checking up to four neighbors, which is a constant-time operation. Therefore, the total time complexity is directly proportional to the total number of cells in the grid, as each cell is examined a constant number of times.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="space-complexity"&gt;Space Complexity&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;O(R * C)&lt;/strong&gt; for both BFS and DFS in the worst case.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Explanation:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BFS:&lt;/strong&gt; The space complexity for BFS is determined by the maximum size of the queue. In the worst-case scenario, if the entire grid is filled with '1's, or if a very large "ring" or "spiral" shaped island exists, the queue could potentially hold almost all &lt;code&gt;R * C&lt;/code&gt; cells before they are processed. For example, in a checkerboard pattern of '1's, the queue could store approximately half the cells.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DFS:&lt;/strong&gt; For DFS, the space complexity is dictated by the maximum depth of the recursion stack. In a worst-case scenario, such as a grid where all '1's form a single, long, snake-like island that traverses the entire grid, the recursion stack could grow to a depth of &lt;code&gt;R * C&lt;/code&gt;. Each recursive call consumes stack space. If an explicit stack data structure is used for an iterative DFS implementation, it would similarly hold up to &lt;code&gt;R * C&lt;/code&gt; elements in the worst case.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;It's important to note that if we choose to use a separate &lt;code&gt;visited&lt;/code&gt; 2D boolean array instead of modifying the grid in-place, that array would also consume &lt;code&gt;O(R * C)&lt;/code&gt; space, contributing to the overall space complexity. Our current solutions, which modify the grid, primarily use auxiliary space for the queue or recursion stack.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In summary, both BFS and DFS provide efficient solutions for the "Number Of Islands" problem, with optimal time complexity and a space complexity that is directly related to the size of the input grid due to the nature of graph traversal on dense, connected components.&lt;/p&gt;
+&lt;h2 id="common-mistakes-and-edge-cases"&gt;Common Mistakes and Edge Cases&lt;/h2&gt;
+&lt;p&gt;When solving the "Number Of Islands" problem, it's easy to fall into common pitfalls or overlook specific scenarios. Being aware of these can save you debugging time.&lt;/p&gt;
+&lt;h3 id="1-incorrect-boundary-checks"&gt;1. Incorrect Boundary Checks&lt;/h3&gt;
+&lt;p&gt;This is perhaps the most frequent mistake. When exploring neighbors &lt;code&gt;(r+dr, c+dc)&lt;/code&gt;, you &lt;strong&gt;must&lt;/strong&gt; ensure &lt;code&gt;r+dr&lt;/code&gt; and &lt;code&gt;c+dc&lt;/code&gt; are within the valid range of the grid dimensions.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; Forgetting to check &lt;code&gt;0 &amp;lt;= next_r &amp;lt; rows&lt;/code&gt; and &lt;code&gt;0 &amp;lt;= next_c &amp;lt; cols&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consequence:&lt;/strong&gt; &lt;code&gt;IndexError&lt;/code&gt; (Python) or similar array out-of-bounds exceptions in other languages, leading to runtime errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution:&lt;/strong&gt; Always include explicit boundary checks for &lt;code&gt;next_r&lt;/code&gt; and &lt;code&gt;next_c&lt;/code&gt; before attempting to access &lt;code&gt;grid[next_r][next_c]&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-forgetting-to-mark-visited-cells"&gt;2. Forgetting to Mark Visited Cells&lt;/h3&gt;
+&lt;p&gt;The core idea of preventing re-counting parts of an island relies on marking cells as visited.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; Not changing &lt;code&gt;grid[r][c]&lt;/code&gt; from '1' to '0' (or not adding to a &lt;code&gt;visited&lt;/code&gt; set) when a cell is processed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consequence:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Infinite loops/recursion:&lt;/strong&gt; If you process a cell, then its neighbor, then that neighbor's neighbor, and eventually come back to the original cell without marking it, you could get stuck in an infinite loop (BFS) or a stack overflow (DFS).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Incorrect island count:&lt;/strong&gt; An island might be counted multiple times if its cells aren't marked as visited after its first discovery.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution:&lt;/strong&gt; As soon as a land cell is added to the queue (BFS) or processed in the recursive call (DFS), change its value to '0'.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-incorrect-neighbor-definitions"&gt;3. Incorrect Neighbor Definitions&lt;/h3&gt;
+&lt;p&gt;The problem statement specifies "horizontally or vertically" connected.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; Including diagonal neighbors. If you consider &lt;code&gt;(r+1, c+1)&lt;/code&gt; as a neighbor, your definition of an island will expand, leading to an incorrect count and misinterpretation of the problem.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consequence:&lt;/strong&gt; Overcounting or incorrect grouping of cells.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution:&lt;/strong&gt; Stick to the four cardinal directions: &lt;code&gt;(r+1, c)&lt;/code&gt;, &lt;code&gt;(r-1, c)&lt;/code&gt;, &lt;code&gt;(r, c+1)&lt;/code&gt;, &lt;code&gt;(r, c-1)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-handling-an-empty-grid"&gt;4. Handling an Empty Grid&lt;/h3&gt;
+&lt;p&gt;An empty grid is a valid input and should be handled gracefully.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mistake:&lt;/strong&gt; Not checking &lt;code&gt;if not grid or not grid[0]: return 0&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consequence:&lt;/strong&gt; &lt;code&gt;IndexError&lt;/code&gt; when trying to access &lt;code&gt;len(grid[0])&lt;/code&gt; or iterate through an empty grid.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution:&lt;/strong&gt; Always include an initial check at the beginning of your function.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="5-grid-with-only-water-or-only-land"&gt;5. Grid with Only Water or Only Land&lt;/h3&gt;
+&lt;p&gt;These are specific edge cases that your algorithm should correctly handle.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Only Water (all '0's):&lt;/strong&gt; The loops will run, but &lt;code&gt;grid[r][c] == '1'&lt;/code&gt; will never be true, so &lt;code&gt;num_islands&lt;/code&gt; will remain 0, which is correct.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Only Land (all '1's):&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;The first '1' encountered will increment &lt;code&gt;num_islands&lt;/code&gt; to 1.&lt;/li&gt;
+&lt;li&gt;The BFS/DFS traversal starting from that cell will mark ALL other '1's in the grid as '0'.&lt;/li&gt;
+&lt;li&gt;Subsequent iterations of the outer loop will find no more '1's.&lt;/li&gt;
+&lt;li&gt;The result will correctly be 1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These are good test cases to mentally walk through or include in your unit tests. By being mindful of these common mistakes and edge cases, you can build a more robust and correct solution for the "Number Of Islands" problem.&lt;/p&gt;
+&lt;h2 id="practical-applications-of-the-number-of-islands-logic"&gt;Practical Applications of the "Number Of Islands" Logic&lt;/h2&gt;
+&lt;p&gt;The underlying logic used to solve the "Number Of Islands" problem, particularly the concept of identifying connected components in a grid or graph, has a surprising number of real-world and computational applications across various domains. It's not just a theoretical exercise; it represents a foundational problem-solving pattern.&lt;/p&gt;
+&lt;h3 id="1-image-processing-and-computer-vision"&gt;1. Image Processing and Computer Vision&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Blob Detection:&lt;/strong&gt; Algorithms similar to "Number Of Islands" are used to identify distinct regions (or "blobs") of a certain color or intensity in an image. For example, counting distinct objects in an image, segmenting different parts of an image, or analyzing cellular structures in microscopy images.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Object Recognition:&lt;/strong&gt; Identifying connected pixels that form a coherent object is a basic step in more complex object recognition and analysis systems.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="2-network-analysis"&gt;2. Network Analysis&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Social Network Analysis:&lt;/strong&gt; Finding groups of closely connected individuals ("communities" or "clusters") in a social network graph. Each "island" would represent a distinct community or sub-group with strong internal ties.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Computer Network Topology:&lt;/strong&gt; Determining disconnected segments of a network, identifying points of failure, or ensuring all parts of a system are reachable. An "island" could represent a subnet that is isolated from the main network due to a link failure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-game-development"&gt;3. Game Development&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pathfinding and Navigation:&lt;/strong&gt; In games with grid-based maps (like strategy games or RPGs), determining reachable areas for a character or unit. Connected land cells indicate traversable terrain, helping AI agents navigate game worlds.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Map Generation:&lt;/strong&gt; Algorithms might use this logic to ensure generated terrains have distinct landmasses (islands!) or to assess the connectivity of different regions for gameplay balance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Collision Detection:&lt;/strong&gt; Identifying distinct collision meshes or interactable areas in a game world to optimize physics calculations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-geographical-information-systems-gis"&gt;4. Geographical Information Systems (GIS)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Landmass Delineation:&lt;/strong&gt; Identifying distinct geographical landmasses from satellite imagery or elevation data. This is a very direct parallel to the original problem, helping define continents, islands, and lakes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Resource Management:&lt;/strong&gt; Analyzing contiguous areas of certain land types (e.g., forests, farmlands, urban zones) for planning, environmental monitoring, and management purposes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="5-circuit-design-and-vlsi"&gt;5. Circuit Design and VLSI&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Connectivity Verification:&lt;/strong&gt; In integrated circuit design, verifying that all components intended to be connected are indeed part of the same electrical net, and that no unintended connections or isolated components exist. This ensures the circuit functions as designed.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Layout Analysis:&lt;/strong&gt; Identifying different "islands" of conductive material on a circuit board, which could indicate manufacturing defects or design flaws if they are supposed to be connected.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="6-medical-imaging"&gt;6. Medical Imaging&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tumor Detection:&lt;/strong&gt; In MRI or CT scans, identifying distinct regions of abnormal tissue growth. Connected component analysis helps delineate the boundaries and volume of tumors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Organ Segmentation:&lt;/strong&gt; Separating different organs or anatomical structures within a scan for diagnostic or surgical planning purposes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="7-robotics-and-autonomous-systems"&gt;7. Robotics and Autonomous Systems&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Occupancy Grids:&lt;/strong&gt; Robots use grid maps (occupancy grids) to represent their environment. "Number Of Islands" logic can help identify free traversable spaces, large obstacles, or distinct navigable zones within a complex environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The "Number Of Islands" problem, while seemingly simple, introduces you to the powerful concept of graph connectivity. Mastering this fundamental pattern opens doors to understanding and solving complex problems in many advanced fields.&lt;/p&gt;
+&lt;h2 id="frequently-asked-questions"&gt;Frequently Asked Questions&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Q: What is the "Number Of Islands" problem?&lt;/strong&gt;
+A: It's an algorithmic challenge to count distinct groups of connected '1's (representing land) in a 2D binary grid, where '0's represent water. Land cells are considered connected if they are horizontally or vertically adjacent.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: Which algorithms are suitable for solving this problem?&lt;/strong&gt;
+A: Both Breadth-First Search (BFS) and Depth-First Search (DFS) are highly effective for solving this problem. They systematically explore connected land cells, marking them as visited to prevent re-counting and ensure each island is identified only once.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Q: What is the time complexity of the solutions?&lt;/strong&gt;
+A: Both BFS and DFS solutions for the "Number Of Islands" problem have a time complexity of O(R * C), where R is the number of rows and C is the number of columns in the grid. This is because each cell in the grid is visited at most once.&lt;/p&gt;
+&lt;h2 id="further-reading-resources"&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://leetcode.com/problems/number-of-islands/"&gt;LeetCode Problem: Number of Islands&lt;/a&gt; - The original problem on LeetCode offers a platform to practice with various test cases and view community solutions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://www.geeksforgeeks.org/breadth-first-search-src-for-graph/"&gt;GeeksforGeeks - BFS Algorithm Tutorial&lt;/a&gt; and &lt;a href="https://www.geeksforgeeks.org/depth-first-search-for-a-graph/"&gt;DFS Algorithm Tutorial&lt;/a&gt; - Comprehensive guides on the fundamentals of Breadth-First Search and Depth-First Search.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/resources/lecture-14-graph-algorithms-bfs-dfs-shortest-paths-part-1/"&gt;MIT OpenCourseware - Graph Algorithms (MIT OCW)&lt;/a&gt; - For a more academic and in-depth understanding of graph theory and algorithms.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Connected_component_(graph_theory)"&gt;Wikipedia - Connected Component (Graph Theory)&lt;/a&gt; - Understand the mathematical definition and properties of connected components in graph theory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These resources will help you reinforce the concepts learned here and prepare you for more advanced graph problems.&lt;/p&gt;
+&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;Number Of Islands&lt;/code&gt; problem serves as an invaluable entry point into the world of graph algorithms, particularly for those new to grid-based challenges. We've explored two primary techniques—Breadth-First Search (BFS) and Depth-First Search (DFS)—demonstrating how each can effectively identify and count distinct landmasses within a 2D binary grid. Both approaches offer optimal time and space complexity, making them efficient solutions for typical problem constraints.&lt;/p&gt;
+&lt;p&gt;By walking through the step-by-step implementations and understanding the underlying logic, you've gained practical experience with essential graph traversal. This problem highlights the importance of boundary checks, proper marking of visited nodes to prevent cycles and re-counting, and correctly defining neighbors. The concepts mastered here, such as finding connected components, extend far beyond just counting islands, finding applications in image processing, network analysis, game development, and more. Keep practicing with similar problems, as the ability to efficiently traverse and analyze graph-like structures is a fundamental skill for any aspiring developer or computer scientist looking to tackle complex real-world problems.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Admin</dc:creator><pubDate>Thu, 12 Mar 2026 15:07:00 +0000</pubDate><guid>tag:analyticsdrive.tech,2026-03-12:/number-of-islands-graph-traversal-tutorial/</guid><enclosure length="0" type="image/webp" url="https://analyticsdrive.tech/images/number-of-islands-graph-traversal-tutorial.webp"/><category>Algorithms</category><category>Python</category><category>Algorithms</category><category>Data Structures</category><category>Graph Theory</category></item><item><title>1697. Checking Existence of Edge Length Limited Paths: A Deep Dive</title><link>https://analyticsdrive.tech/1697-checking-existence-edge-length-limited-paths/</link><description>&lt;p&gt;When tackling advanced graph problems in competitive programming, efficiency is paramount. One such challenge that frequently tests a developer's understanding of algorithms and data structures is LeetCode problem &lt;strong&gt;1697. Checking Existence of Edge Length Limited Paths&lt;/strong&gt;. Mastering this specific problem involves a deep dive into powerful techniques like offline processing and the Disjoint Set Union (DSU) data structure, offering a significant learning opportunity for anyone looking to enhance their algorithmic toolkit.&lt;/p&gt;
 &lt;div class="toc"&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#understanding-the-problem-1697-checking-existence-of-edge-length-limited-paths"&gt;Understanding the Problem: 1697. Checking Existence of Edge Length Limited Paths&lt;/a&gt;&lt;ul&gt;
@@ -8298,27 +8944,4 @@ A: The effectiveness of the tariffs is a subject of debate. While they did bring
 &lt;li&gt;&lt;a href="https://www.wto.org/english/tratop_e/dispu_e/disp_works_e.htm?type=member&amp;amp;id=US"&gt;World Trade Organization: Disputes related to US Section 232 tariffs on steel and aluminum&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.frbsf.org/economic-research/publications/economic-letter/2019/september/effect-us-tariff-policy-on-manufacturing/"&gt;Federal Reserve Bank of San Francisco: The Effect of US Tariff Policy on US Manufacturing&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.nytimes.com/interactive/2018/business/economy/trump-tariffs.html"&gt;The New York Times: Trump's Tariffs: A Battle Plan (and Scorecard)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Admin</dc:creator><pubDate>Sat, 21 Feb 2026 16:50:00 +0000</pubDate><guid>tag:analyticsdrive.tech,2026-02-21:/trump-tariffs-economic-political-impact/</guid><enclosure length="0" type="image/webp" url="https://analyticsdrive.tech/images/trump-tariffs-economic-political-impact.webp"/><category>Politics &amp; Geopolitics</category><category>USA</category><category>World News</category></item><item><title>Trump's Unprecedented Second Act</title><link>https://analyticsdrive.tech/donald-trumps-unprecedented-second-act/</link><description>&lt;h2 id="donald-trump-a-force-reshaping-american-politics"&gt;Donald Trump: A Force Reshaping American Politics&lt;/h2&gt;
-&lt;p&gt;Donald John Trump, a figure synonymous with real estate, media, and an undeniable political phenomenon, has once again ascended to the highest office in the United States. His journey from a prominent New York businessman and television personality to the 45th and now 47th President has been marked by a distinctive style and a profound impact on the nation's political landscape.&lt;/p&gt;
-&lt;p&gt;Born in Queens, New York, Trump initially forged a career as a real estate developer, following in his father's footsteps. His brand grew through ambitious projects and later, through his role as host and producer of the popular reality television show, &lt;em&gt;The Apprentice&lt;/em&gt;, which significantly bolstered his public fame. This extensive background in business and media, rather than traditional politics or military service, set the stage for his unconventional entry into the political arena.&lt;/p&gt;
-&lt;h3 id="the-path-to-the-presidency-first-term-and-key-policies"&gt;The Path to the Presidency: First Term and Key Policies&lt;/h3&gt;
-&lt;p&gt;Trump's political aspirations became tangible with his successful 2016 presidential campaign, where he ran as a political outsider and secured the presidency against Hillary Clinton. His first term, from January 20, 2017, to January 20, 2021, was characterized by bold policy shifts and a commitment to his "America First" agenda.&lt;/p&gt;
-&lt;p&gt;Among his administration's significant domestic actions were the passage of the Tax Cuts and Jobs Act of 2017, which brought substantial income and corporate tax reductions, and efforts towards deregulation across various sectors. He appointed three conservative justices to the Supreme Court: Neil Gorsuch, Brett Kavanaugh, and Amy Coney Barrett, fundamentally reshaping the judiciary. Immigration remained a signature issue, leading to policies like the expansion of the Mexico-United States border wall, a travel ban on several Muslim-majority countries, and a family separation policy.&lt;/p&gt;
-&lt;p&gt;In foreign policy, Trump pursued an "America First" approach, characterized by unilateral actions and a re-evaluation of traditional alliances. His administration withdrew from the Paris Agreement on climate change and the Iran nuclear deal, imposed tariffs that triggered retaliatory measures, and brokered the Abraham Accords, normalizing relations between Israel and several Arab nations.&lt;/p&gt;
-&lt;h3 id="the-historic-return-2024-election-and-second-term"&gt;The Historic Return: 2024 Election and Second Term&lt;/h3&gt;
-&lt;p&gt;Following his defeat in the 2020 election to Joe Biden, Donald Trump launched another presidential campaign, formally announcing his candidacy on November 15, 2022. His campaign in 2024 reiterated a focus on his "America First" agenda, emphasizing sharply curtailed immigration through mass deportations, an isolationist foreign policy, and critiques of the economy under the previous administration.&lt;/p&gt;
-&lt;p&gt;In a truly unprecedented turn of events, Donald Trump successfully secured the Republican nomination and, on November 5, 2024, was elected the 47th President of the United States, alongside his running mate, Senator J.D. Vance of Ohio. This victory made him only the second U.S. president in history, after Grover Cleveland, to serve non-consecutive terms. Notably, he won all seven swing states and, for the first time in his presidential campaigns, also won the national popular vote with a plurality of 49.8%. Analysis of the 2024 electorate showed a more racially and ethnically diverse voter coalition supporting Trump, including gains among Hispanic, Black, and Asian voters.&lt;/p&gt;
-&lt;p&gt;President Trump began his second term on January 20, 2025. His early actions and stated priorities reflect a continuation and intensification of his previous administration's themes. As of February 2026, he has signed numerous executive orders aimed at reducing government bureaucracy, enhancing border security, and pursuing "America First" policies in trade and defense. For example, in February 2026, he signed documents imposing a 10% tariff on all countries, following a Supreme Court ruling that struck down some of his previous tariff implementations. His administration has also focused on issues like promoting critical mineral reserves and strengthening national defense.&lt;/p&gt;
-&lt;h3 id="enduring-impact-on-american-politics"&gt;Enduring Impact on American Politics&lt;/h3&gt;
-&lt;p&gt;Donald Trump's political career has undeniably left an indelible mark on American politics and the Republican Party. Through his campaigns and presidencies, he has profoundly influenced the party's direction, leading to a shift in focus towards populist and nationalist sentiments. His emphasis on personal loyalty and his challenges to established political norms have sparked extensive debate about the nature of democratic governance and the importance of traditions that, while uncodified, are crucial to the system's functioning.&lt;/p&gt;
-&lt;p&gt;His outspoken nature and willingness to challenge conventional political behavior have made him a constant subject of public attention and a source of deep partisan divisions. The "Trump era" has seen a further widening of the ideological gulf between Republicans and Democrats, reshaping public discourse and engagement.&lt;/p&gt;
-&lt;h3 id="conclusion"&gt;Conclusion&lt;/h3&gt;
-&lt;p&gt;Donald Trump's political narrative is one of remarkable resilience and continued influence. His return to the White House for a non-consecutive second term underscores his enduring appeal to a significant portion of the American electorate and signals a continued emphasis on the policies and approaches that defined his first presidency. As the 47th President, his second act promises to be as impactful and closely watched as his first, continuing to shape the trajectory of both domestic and international affairs.&lt;/p&gt;
-&lt;h2 id="further-reading-resources"&gt;Further Reading &amp;amp; Resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Donald Trump Biography:&lt;/strong&gt; &lt;a href="https://en.wikipedia.org/wiki/Donald_Trump"&gt;https://en.wikipedia.org/wiki/Donald_Trump&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Tax Cuts and Jobs Act of 2017:&lt;/strong&gt; &lt;a href="https://www.congress.gov/bill/115th-congress/house-bill/1"&gt;https://www.congress.gov/bill/115th-congress/house-bill/1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Abraham Accords:&lt;/strong&gt; &lt;a href="https://www.state.gov/abraham-accords/"&gt;https://www.state.gov/abraham-accords/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;2024 United States Presidential Election:&lt;/strong&gt; &lt;a href="https://en.wikipedia.org/wiki/2024_United_States_presidential_election"&gt;https://en.wikipedia.org/wiki/2024_United_States_presidential_election&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Grover Cleveland (Non-Consecutive Terms):&lt;/strong&gt; &lt;a href="https://en.wikipedia.org/wiki/Grover_Cleveland"&gt;https://en.wikipedia.org/wiki/Grover_Cleveland&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Admin</dc:creator><pubDate>Sat, 21 Feb 2026 16:03:00 +0000</pubDate><guid>tag:analyticsdrive.tech,2026-02-21:/donald-trumps-unprecedented-second-act/</guid><enclosure length="0" type="image/webp" url="https://analyticsdrive.tech/images/donald-trumps-unprecedented-second-act.webp"/><category>Politics &amp; Geopolitics</category><category>USA</category><category>Geopolitics</category></item></channel></rss>
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Admin</dc:creator><pubDate>Sat, 21 Feb 2026 16:50:00 +0000</pubDate><guid>tag:analyticsdrive.tech,2026-02-21:/trump-tariffs-economic-political-impact/</guid><enclosure length="0" type="image/webp" url="https://analyticsdrive.tech/images/trump-tariffs-economic-political-impact.webp"/><category>Politics &amp; Geopolitics</category><category>USA</category><category>World News</category></item></channel></rss>
