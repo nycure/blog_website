@@ -339,13 +339,19 @@
 <p>Your task is to return a list of all the people who eventually know the secret.</p>
 <p>Let's consider an example: <code>n = 6</code>, <code>meetings = [[0,2,1],[1,3,1],[4,5,2]]</code>, <code>firstPerson = 1</code>.
 Initially: Person 0 and Person 1 know the secret.
-Meetings at time <code>t=1</code>:
-1.  <code>[0,2,1]</code>: Person 0 knows the secret. Person 2 does not. After the meeting, Person 2 learns the secret.
-2.  <code>[1,3,1]</code>: Person 1 knows the secret. Person 3 does not. After the meeting, Person 3 learns the secret.
-Now, at the end of <code>t=1</code>, people 0, 1, 2, 3 know the secret.
-Meetings at time <code>t=2</code>:
-1.  <code>[4,5,2]</code>: Person 4 does not know the secret, and Person 5 does not know the secret. No secret is shared.
-Final secret holders: 0, 1, 2, 3.</p>
+Meetings at time <code>t=1</code>:</p>
+<ol>
+<li><code>[0,2,1]</code>: Person 0 knows the secret. Person 2 does not. After the meeting, Person 2 learns the secret.</li>
+<li>
+<p><code>[1,3,1]</code>: Person 1 knows the secret. Person 3 does not. After the meeting, Person 3 learns the secret.
+    Now, at the end of <code>t=1</code>, people 0, 1, 2, 3 know the secret.
+    Meetings at time <code>t=2</code>:</p>
+</li>
+<li>
+<p><code>[4,5,2]</code>: Person 4 does not know the secret, and Person 5 does not know the secret. No secret is shared.
+    Final secret holders: 0, 1, 2, 3.</p>
+</li>
+</ol>
 <h3 id="core-challenges">Core Challenges</h3>
 <p>The complexity of the 2092. Find All People With Secret leetcode question in c++, python,java stems from several interconnected factors:</p>
 <ol>
@@ -358,30 +364,40 @@ Final secret holders: 0, 1, 2, 3.</p>
 <h2 id="prerequisites-for-solving-leetcode-2092">Prerequisites for Solving LeetCode 2092</h2>
 <p>To effectively tackle the 2092. Find All People With Secret leetcode question in c++, python,java, a solid grasp of certain fundamental data structures and algorithms is essential. This problem serves as an excellent test of your understanding of these concepts.</p>
 <h3 id="basic-graph-theory">Basic Graph Theory</h3>
-<p>The problem inherently models relationships between people, which can be visualized as a graph.
-*   <strong>Nodes (Vertices):</strong> Each person <code>0</code> to <code>n-1</code> represents a node in the graph.
-*   <strong>Edges:</strong> A meeting <code>[x, y, time]</code> can be thought of as a potential edge between <code>x</code> and <code>y</code> that exists at <code>time</code>.
-Understanding how these nodes and edges form connections is crucial. While we won't build an explicit adjacency list for the entire graph over all times, the concept of interconnected components is central. For another excellent example of graph traversal, consider exploring a <a href="/number-of-islands-graph-traversal-tutorial/">deep dive into graph traversal algorithms like those used in the Number Of Islands problem</a>.</p>
+<p>The problem inherently models relationships between people, which can be visualized as a graph.</p>
+<ul>
+<li><strong>Nodes (Vertices):</strong> Each person <code>0</code> to <code>n-1</code> represents a node in the graph.</li>
+<li><strong>Edges:</strong> A meeting <code>[x, y, time]</code> can be thought of as a potential edge between <code>x</code> and <code>y</code> that exists at <code>time</code>.
+Understanding how these nodes and edges form connections is crucial. While we won't build an explicit adjacency list for the entire graph over all times, the concept of interconnected components is central. For another excellent example of graph traversal, consider exploring a <a href="/number-of-islands-graph-traversal-tutorial/">deep dive into graph traversal algorithms like those used in the Number Of Islands problem</a>.</li>
+</ul>
 <h3 id="disjoint-set-union-dsu">Disjoint Set Union (DSU)</h3>
-<p>The Disjoint Set Union (also known as Union-Find) data structure is indispensable for solving this problem efficiently. DSU is optimized for managing a collection of disjoint sets, performing two primary operations:
-*   <strong><code>find(i)</code>:</strong> Determines the representative (or root) of the set to which element <code>i</code> belongs. This effectively tells you which set <code>i</code> is a part of.
-*   <strong><code>union(i, j)</code>:</strong> Merges the sets containing elements <code>i</code> and <code>j</code> into a single set.
-DSU is perfect for problems where you need to track connected components or group elements. Key optimizations for DSU include path compression (during <code>find</code>) and union by rank or size (during <code>union</code>), which bring its amortized time complexity for both operations very close to O(1). This makes it particularly useful for challenges similar to <a href="/leetcode-1976-number-of-ways-arrive-destination-tutorial/">Leetcode 1976: Number of Ways to Arrive at Destination Explained</a> or other path-finding scenarios.</p>
-<p>In the context of this problem, DSU will help us:
-*   Identify groups of people who are connected and thus can potentially share a secret at a specific time.
-*   Quickly check if a person is connected to the initial secret holders (person <code>0</code> or <code>firstPerson</code>).</p>
+<p>The Disjoint Set Union (also known as Union-Find) data structure is indispensable for solving this problem efficiently. DSU is optimized for managing a collection of disjoint sets, performing two primary operations:</p>
+<ul>
+<li><strong><code>find(i)</code>:</strong> Determines the representative (or root) of the set to which element <code>i</code> belongs. This effectively tells you which set <code>i</code> is a part of.</li>
+<li><strong><code>union(i, j)</code>:</strong> Merges the sets containing elements <code>i</code> and <code>j</code> into a single set.
+DSU is perfect for problems where you need to track connected components or group elements. Key optimizations for DSU include path compression (during <code>find</code>) and union by rank or size (during <code>union</code>), which bring its amortized time complexity for both operations very close to O(1). This makes it particularly useful for challenges similar to <a href="/leetcode-1976-number-of-ways-arrive-destination-tutorial/">Leetcode 1976: Number of Ways to Arrive at Destination Explained</a> or other path-finding scenarios.</li>
+</ul>
+<p>In the context of this problem, DSU will help us:</p>
+<ul>
+<li>Identify groups of people who are connected and thus can potentially share a secret at a specific time.</li>
+<li>Quickly check if a person is connected to the initial secret holders (person <code>0</code> or <code>firstPerson</code>).</li>
+</ul>
 <h3 id="sorting-and-time-complexity-analysis">Sorting and Time Complexity Analysis</h3>
-<p>The time-dependent nature of the secret propagation necessitates processing meetings in chronological order. Therefore, sorting the <code>meetings</code> array by <code>time_i</code> is a fundamental first step.
-*   <strong>Sorting Algorithms:</strong> Familiarity with algorithms like Merge Sort or Quick Sort (which <code>std::sort</code> in C++, <code>sorted()</code> in Python, or <code>Collections.sort()</code> in Java typically use) is important.
-*   <strong>Time Complexity:</strong> Understanding how to analyze the time complexity of your solution (e.g., O(N log N) for sorting, amortized O(alpha(N)) for DSU operations where alpha is the inverse Ackermann function, which is practically constant) is crucial for building an efficient algorithm that passes within typical time limits. For other important graph algorithms that rely on efficient traversal and pathfinding, you can review tutorials such as <a href="/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra Algorithm in Python, C++, Java</a>.</p>
+<p>The time-dependent nature of the secret propagation necessitates processing meetings in chronological order. Therefore, sorting the <code>meetings</code> array by <code>time_i</code> is a fundamental first step.</p>
+<ul>
+<li><strong>Sorting Algorithms:</strong> Familiarity with algorithms like Merge Sort or Quick Sort (which <code>std::sort</code> in C++, <code>sorted()</code> in Python, or <code>Collections.sort()</code> in Java typically use) is important.</li>
+<li><strong>Time Complexity:</strong> Understanding how to analyze the time complexity of your solution (e.g., O(N log N) for sorting, amortized O(alpha(N)) for DSU operations where alpha is the inverse Ackermann function, which is practically constant) is crucial for building an efficient algorithm that passes within typical time limits. For other important graph algorithms that rely on efficient traversal and pathfinding, you can review tutorials such as <a href="/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra Algorithm in Python, C++, Java</a>.</li>
+</ul>
 <h2 id="step-by-step-solution-finding-all-people-with-secret">Step-by-Step Solution: Finding All People With Secret</h2>
 <p>The optimal approach to the "Find All People With Secret" problem involves a combination of sorting, the Disjoint Set Union (DSU) data structure, and careful time-based processing. Let's break down the solution into manageable steps.</p>
 <h3 id="step-1-analyze-the-problem-constraints-and-structure">Step 1: Analyze the Problem Constraints and Structure</h3>
-<p>Before diving into implementation, it's vital to understand the scale of the problem.
-*   <code>n</code> (number of people) can be up to <code>10^5</code>.
-*   <code>meetings</code> can be up to <code>10^5</code>.
-*   <code>time_i</code> can be up to <code>10^5</code>.
-These constraints suggest that a solution with complexity around O((N + M) * log M) or O((N + M) * alpha(N)) (where M is number of meetings) will be required. Direct graph traversal on a potentially dense graph for each time step would be too slow. The DSU approach, with its near-constant time operations, fits well within these bounds.</p>
+<p>Before diving into implementation, it's vital to understand the scale of the problem.</p>
+<ul>
+<li><code>n</code> (number of people) can be up to <code>10^5</code>.</li>
+<li><code>meetings</code> can be up to <code>10^5</code>.</li>
+<li><code>time_i</code> can be up to <code>10^5</code>.
+These constraints suggest that a solution with complexity around O((N + M) * log M) or O((N + M) * alpha(N)) (where M is number of meetings) will be required. Direct graph traversal on a potentially dense graph for each time step would be too slow. The DSU approach, with its near-constant time operations, fits well within these bounds.</li>
+</ul>
 <h3 id="step-2-sort-meetings-by-time">Step 2: Sort Meetings by Time</h3>
 <p>The core principle of secret propagation is its adherence to a chronological order. A secret cannot be shared in a past meeting. Therefore, the very first step is to sort all <code>meetings</code> based on their <code>time_i</code> in ascending order. If two meetings occur at the same time, their relative order doesn't matter for correctness, but processing them together is key.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Python</span>
@@ -399,12 +415,16 @@ These constraints suggest that a solution with complexity around O((N + M) * log
 </code></pre></div>
 
 <h3 id="step-3-initialize-disjoint-set-union-dsu-structure">Step 3: Initialize Disjoint Set Union (DSU) Structure</h3>
-<p>We need a DSU structure to keep track of connected components. Each person will initially be in their own set.
-*   <code>parent</code> array: <code>parent[i]</code> stores the parent of person <code>i</code>. If <code>parent[i] == i</code>, then <code>i</code> is the root of its set.
-*   <code>rank</code> or <code>size</code> array: Used for optimization during union (union by rank/size) to keep the tree shallow. <code>rank[i]</code> could store the height of the tree rooted at <code>i</code>, or <code>size[i]</code> could store the number of nodes in the tree rooted at <code>i</code>.</p>
-<p>Initialize the DSU structure:
-*   Set <code>parent[i] = i</code> for all <code>i</code> from <code>0</code> to <code>n-1</code>.
-*   Set <code>rank[i] = 0</code> (or <code>size[i] = 1</code>) for all <code>i</code>.</p>
+<p>We need a DSU structure to keep track of connected components. Each person will initially be in their own set.</p>
+<ul>
+<li><code>parent</code> array: <code>parent[i]</code> stores the parent of person <code>i</code>. If <code>parent[i] == i</code>, then <code>i</code> is the root of its set.</li>
+<li><code>rank</code> or <code>size</code> array: Used for optimization during union (union by rank/size) to keep the tree shallow. <code>rank[i]</code> could store the height of the tree rooted at <code>i</code>, or <code>size[i]</code> could store the number of nodes in the tree rooted at <code>i</code>.</li>
+</ul>
+<p>Initialize the DSU structure:</p>
+<ul>
+<li>Set <code>parent[i] = i</code> for all <code>i</code> from <code>0</code> to <code>n-1</code>.</li>
+<li>Set <code>rank[i] = 0</code> (or <code>size[i] = 1</code>) for all <code>i</code>.</li>
+</ul>
 <p>Crucially, person <code>0</code> and <code>firstPerson</code> initially know the secret. They should be connected in our DSU from the start. So, perform <code>union(0, firstPerson)</code> after initializing the DSU for everyone.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Python DSU class structure</span>
 <span class="k">class</span> <span class="nc">DSU</span><span class="p">:</span>
@@ -457,10 +477,12 @@ We can use a pointer to iterate through the sorted <code>meetings</code> list, p
 </code></pre></div>
 
 <h3 id="step-5-perform-union-operations-for-each-group">Step 5: Perform Union Operations for Each Group</h3>
-<p>For each group of meetings occurring at the <code>current_time</code>:
-1.  Identify all people involved in these meetings. Store them temporarily (e.g., in a <code>temp_people</code> set or list).
-2.  For each meeting <code>[p1, p2, current_time]</code> in this group, perform <code>dsu.union(p1, p2)</code>. This connects all people who meet at this specific time, forming temporary secret-sharing components.
-This step essentially creates a "snapshot" of connectivity at <code>current_time</code>.</p>
+<p>For each group of meetings occurring at the <code>current_time</code>:</p>
+<ol>
+<li>Identify all people involved in these meetings. Store them temporarily (e.g., in a <code>temp_people</code> set or list).</li>
+<li>For each meeting <code>[p1, p2, current_time]</code> in this group, perform <code>dsu.union(p1, p2)</code>. This connects all people who meet at this specific time, forming temporary secret-sharing components.
+    This step essentially creates a "snapshot" of connectivity at <code>current_time</code>.</li>
+</ol>
 <div class="highlight"><pre><span></span><code><span class="c1"># Python (within the loop from Step 4)</span>
 <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">meetings</span><span class="p">):</span>
@@ -478,11 +500,13 @@ This step essentially creates a "snapshot" of connectivity at <code>current_time
 </code></pre></div>
 
 <h3 id="step-6-identify-and-reset-non-secret-holders">Step 6: Identify and Reset Non-Secret Holders</h3>
-<p>This is the most critical and often misunderstood step. After all <code>union</code> operations for a given <code>current_time</code> are complete, we have a temporary network of connections. Now, we need to determine who <em>actually</em> gains the secret at this time.
-1.  For every person <code>p</code> in <code>temp_people</code> (i.e., everyone who participated in a meeting at <code>current_time</code>):
-2.  Check if <code>dsu.find(p)</code> is connected to <code>dsu.find(0)</code> (the root of the component containing person 0, who always has the secret).
-3.  If <code>dsu.find(p) != dsu.find(0)</code>, it means person <code>p</code> is <em>not</em> connected to anyone who definitely holds the secret <em>at this <code>current_time</code></em>. Despite meeting others and forming temporary connections, <code>p</code> does not learn the secret yet.
-4.  If <code>p</code> does not learn the secret, their connections formed <em>only</em> within this <code>current_time</code> group should not carry over to future time steps if they didn't lead to secret acquisition. To achieve this, we <em>reset</em> their DSU state. This means setting <code>dsu.parent[p] = p</code> and potentially <code>dsu.rank[p] = 0</code> (or <code>dsu.size[p] = 1</code>). This effectively isolates them back into their own set, unless they are re-connected to someone who does know the secret in a future meeting.</p>
+<p>This is the most critical and often misunderstood step. After all <code>union</code> operations for a given <code>current_time</code> are complete, we have a temporary network of connections. Now, we need to determine who <em>actually</em> gains the secret at this time.</p>
+<ol>
+<li>For every person <code>p</code> in <code>temp_people</code> (i.e., everyone who participated in a meeting at <code>current_time</code>):</li>
+<li>Check if <code>dsu.find(p)</code> is connected to <code>dsu.find(0)</code> (the root of the component containing person 0, who always has the secret).</li>
+<li>If <code>dsu.find(p) != dsu.find(0)</code>, it means person <code>p</code> is <em>not</em> connected to anyone who definitely holds the secret <em>at this <code>current_time</code></em>. Despite meeting others and forming temporary connections, <code>p</code> does not learn the secret yet.</li>
+<li>If <code>p</code> does not learn the secret, their connections formed <em>only</em> within this <code>current_time</code> group should not carry over to future time steps if they didn't lead to secret acquisition. To achieve this, we <em>reset</em> their DSU state. This means setting <code>dsu.parent[p] = p</code> and potentially <code>dsu.rank[p] = 0</code> (or <code>dsu.size[p] = 1</code>). This effectively isolates them back into their own set, unless they are re-connected to someone who does know the secret in a future meeting.</li>
+</ol>
 <p><strong>Why this reset is necessary:</strong> Imagine people A and B meet at <code>t=5</code>. Neither knows the secret. They connect in DSU. Later, at <code>t=10</code>, A meets C, who knows the secret. A learns the secret. If we don't reset, B would also incorrectly appear to know the secret because of the <code>A-B</code> connection at <code>t=5</code>. By resetting, we ensure that secret propagation only happens through valid paths <em>at the specific time of meeting</em>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Python (within the loop from Step 4, after unions)</span>
     <span class="c1"># ... (unions done)</span>
@@ -495,10 +519,12 @@ This step essentially creates a "snapshot" of connectivity at <code>current_time
 </code></pre></div>
 
 <h3 id="step-7-collect-all-secret-holders">Step 7: Collect All Secret Holders</h3>
-<p>After iterating through all meetings across all time steps, the DSU structure will accurately reflect who is connected to the initial secret holders (person <code>0</code>).
-1.  Iterate from <code>0</code> to <code>n-1</code>.
-2.  For each person <code>i</code>, if <code>dsu.find(i) == dsu.find(0)</code>, then person <code>i</code> knows the secret.
-3.  Add all such persons <code>i</code> to your result list.</p>
+<p>After iterating through all meetings across all time steps, the DSU structure will accurately reflect who is connected to the initial secret holders (person <code>0</code>).</p>
+<ol>
+<li>Iterate from <code>0</code> to <code>n-1</code>.</li>
+<li>For each person <code>i</code>, if <code>dsu.find(i) == dsu.find(0)</code>, then person <code>i</code> knows the secret.</li>
+<li>Add all such persons <code>i</code> to your result list.</li>
+</ol>
 <div class="highlight"><pre><span></span><code><span class="c1"># Python (after the main loop)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -831,12 +857,12 @@ This step essentially creates a "snapshot" of connectivity at <code>current_time
 <strong>Avoidance:</strong> Be vigilant about array sizes and indexing. If <code>n</code> people are labeled <code>0</code> to <code>n-1</code>, your DSU array size should be <code>n</code>. When iterating, use <code>range(n)</code> or <code>0</code> to <code>n-1</code>.</p>
 <p>By being mindful of these common mistakes, you can significantly improve your chances of developing a correct and robust solution for the "Find All People With Secret" problem.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Q: What is the main challenge in LeetCode 2092?</strong>
-A: The main challenge is managing time-dependent secret propagation. Meetings must be processed chronologically, and people only acquire secrets if connected to an initial holder at that specific time.</p>
-<p><strong>Q: Why is Disjoint Set Union (DSU) used in this problem?</strong>
-A: DSU efficiently manages groups of connected people. It helps determine if a person is part of a component that includes an initial secret holder, allowing for quick union and find operations.</p>
-<p><strong>Q: What is the significance of the "reset" step in the DSU approach?</strong>
-A: The reset step is crucial to prevent incorrect secret propagation. It ensures that temporary connections formed at a specific time are only maintained if they lead to secret acquisition, preventing invalid connections from affecting future time steps.</p>
+<p><strong>Q: What is the main challenge in LeetCode 2092?</strong></p>
+<p>A: The main challenge is managing time-dependent secret propagation. Meetings must be processed chronologically, and people only acquire secrets if connected to an initial holder at that specific time.</p>
+<p><strong>Q: Why is Disjoint Set Union (DSU) used in this problem?</strong></p>
+<p>A: DSU efficiently manages groups of connected people. It helps determine if a person is part of a component that includes an initial secret holder, allowing for quick union and find operations.</p>
+<p><strong>Q: What is the significance of the "reset" step in the DSU approach?</strong></p>
+<p>A: The reset step is crucial to prevent incorrect secret propagation. It ensures that temporary connections formed at a specific time are only maintained if they lead to secret acquisition, preventing invalid connections from affecting future time steps.</p>
 <h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
 <ul>
 <li><a href="https://leetcode.com/problems/find-all-people-with-secret/">LeetCode Problem 2092: Find All People With Secret</a></li>

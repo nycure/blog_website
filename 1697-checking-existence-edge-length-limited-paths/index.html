@@ -385,18 +385,24 @@ So, the path <code>0 -&gt; 1 -&gt; 2</code> is invalid under this limit. There's
 <h2 id="inefficiencies-of-naive-approaches">Inefficiencies of Naive Approaches</h2>
 <p>To appreciate the optimal solution, let's first consider why simpler approaches fall short.</p>
 <h3 id="brute-force-bfsdfs-for-each-query">Brute-Force BFS/DFS for Each Query</h3>
-<p>A straightforward approach for each query <code>[p, q, limit]</code> would be to:
-1.  Construct a <em>subgraph</em> containing only edges whose weights are strictly less than <code>limit</code>.
-2.  Perform a BFS or DFS starting from <code>p</code> in this subgraph to see if <code>q</code> is reachable.</p>
-<p><strong>Time Complexity Analysis</strong>:
-*   For each query, constructing the subgraph might involve iterating through all <code>E</code> edges.
-*   A BFS/DFS on a graph with <code>V</code> nodes and <code>E'</code> edges takes <code>O(V + E')</code> time. In the worst case, <code>E'</code> could be <code>O(E)</code>.
-*   If there are <code>Q</code> queries, the total time complexity would be <code>O(Q * (E + V + E))</code>, which simplifies to <code>O(Q * (V + E))</code>.</p>
-<p><strong>Space Complexity Analysis</strong>:
-*   For each query, constructing an adjacency list for the subgraph might take <code>O(V + E)</code> space. The visited array for BFS/DFS takes <code>O(V)</code> space.
-*   Total space would be <code>O(V + E)</code> per query if the subgraph is rebuilt, or <code>O(V + E)</code> overall if the original graph is filtered on the fly.</p>
-<p><strong>Why it's inefficient</strong>:
-Given typical constraints where <code>N</code> (nodes) can be up to <code>10^5</code>, <code>E</code> (edges) up to <code>10^5</code>, and <code>Q</code> (queries) up to <code>10^5</code>, a solution of <code>O(Q * (V + E))</code> would be roughly <code>10^5 * (10^5 + 10^5) = 2 * 10^{10}</code> operations in the worst case. This is far too slow and would lead to a Time Limit Exceeded (TLE) error. The problem lies in repeatedly building subgraphs and running searches for each query independently. We need a way to reuse computations.</p>
+<p>A straightforward approach for each query <code>[p, q, limit]</code> would be to:</p>
+<ol>
+<li>Construct a <em>subgraph</em> containing only edges whose weights are strictly less than <code>limit</code>.</li>
+<li>Perform a BFS or DFS starting from <code>p</code> in this subgraph to see if <code>q</code> is reachable.</li>
+</ol>
+<p><strong>Time Complexity Analysis</strong>:</p>
+<ul>
+<li>For each query, constructing the subgraph might involve iterating through all <code>E</code> edges.</li>
+<li>A BFS/DFS on a graph with <code>V</code> nodes and <code>E'</code> edges takes <code>O(V + E')</code> time. In the worst case, <code>E'</code> could be <code>O(E)</code>.</li>
+<li>If there are <code>Q</code> queries, the total time complexity would be <code>O(Q * (E + V + E))</code>, which simplifies to <code>O(Q * (V + E))</code>.</li>
+</ul>
+<p><strong>Space Complexity Analysis</strong>:</p>
+<ul>
+<li>For each query, constructing an adjacency list for the subgraph might take <code>O(V + E)</code> space. The visited array for BFS/DFS takes <code>O(V)</code> space.</li>
+<li>Total space would be <code>O(V + E)</code> per query if the subgraph is rebuilt, or <code>O(V + E)</code> overall if the original graph is filtered on the fly.</li>
+</ul>
+<p><strong>Why it's inefficient</strong>:</p>
+<p>Given typical constraints where <code>N</code> (nodes) can be up to <code>10^5</code>, <code>E</code> (edges) up to <code>10^5</code>, and <code>Q</code> (queries) up to <code>10^5</code>, a solution of <code>O(Q * (V + E))</code> would be roughly <code>10^5 * (10^5 + 10^5) = 2 * 10^{10}</code> operations in the worst case. This is far too slow and would lead to a Time Limit Exceeded (TLE) error. The problem lies in repeatedly building subgraphs and running searches for each query independently. We need a way to reuse computations.</p>
 <h2 id="the-optimized-approach-offline-processing-with-dsu">The Optimized Approach: Offline Processing with DSU</h2>
 <p>The key to solving <code>1697. Checking Existence of Edge Length Limited Paths</code> efficiently lies in two powerful techniques: <strong>offline processing</strong> and the <strong>Disjoint Set Union (DSU)</strong> data structure.</p>
 <p>Offline processing means that we don't process queries in the order they are given. Instead, we reorder them to facilitate a more efficient global strategy. For this problem, it involves sorting both the queries and the graph edges.</p>
@@ -409,15 +415,15 @@ Given typical constraints where <code>N</code> (nodes) can be up to <code>10^5</
 <p>The queries are given as <code>[p_j, q_j, limit_j]</code>. When we sort them, we'll lose their original indices, which are necessary to store results in the correct order in the <code>answer</code> array. Therefore, the first step is to augment each query with its original index.
 So, each query <code>[p, q, limit]</code> becomes <code>[limit, p, q, original_index]</code>.</p>
 <p>After augmentation, sort the <code>queries</code> list in ascending order based on their <code>limit</code>.</p>
-<p><strong>Example:</strong>
-Original queries: <code>[[0, 2, 5], [0, 2, 3]]</code>
+<p><strong>Example:</strong></p>
+<p>Original queries: <code>[[0, 2, 5], [0, 2, 3]]</code>
 Augmented queries: <code>[[5, 0, 2, 0], [3, 0, 2, 1]]</code>
 Sorted augmented queries: <code>[[3, 0, 2, 1], [5, 0, 2, 0]]</code></p>
 <h3 id="step-2-sort-graph-edges">Step 2: Sort Graph Edges</h3>
 <p>Sort the <code>edges</code> list in ascending order based on their <code>weight</code>.
 So, each edge <code>[u, v, weight]</code> becomes <code>[weight, u, v]</code>.</p>
-<p><strong>Example:</strong>
-Original edges: <code>[[0, 1, 2], [1, 2, 4]]</code>
+<p><strong>Example:</strong></p>
+<p>Original edges: <code>[[0, 1, 2], [1, 2, 4]]</code>
 Sorted edges: <code>[[2, 0, 1], [4, 1, 2]]</code></p>
 <h3 id="step-3-initialize-disjoint-set-union-dsu">Step 3: Initialize Disjoint Set Union (DSU)</h3>
 <p>Initialize a DSU structure for <code>n</code> nodes. Each node <code>i</code> starts as its own parent (<code>parent[i] = i</code>), and its component size is <code>1</code> (<code>size[i] = 1</code>). This setup represents <code>n</code> distinct components, one for each node.</p>
@@ -450,13 +456,17 @@ Sorted edges: <code>[[2, 0, 1], [4, 1, 2]]</code></p>
 <p>Initialize <code>answer = [False] * len(queries)</code> to store the results.
 Also, initialize an <code>edge_idx = 0</code> pointer to keep track of the current edge we are considering from the sorted <code>edges</code> list.</p>
 <p>Now, iterate through the <code>sorted_queries</code>:
-For each <code>current_query</code> (which is <code>[limit, p, q, original_index]</code>):
-1.  <strong>Add eligible edges</strong>: While <code>edge_idx</code> is less than the total number of edges AND the weight of <code>sorted_edges[edge_idx]</code> is strictly less than <code>current_query.limit</code>:
-    *   Take the edge <code>[weight, u, v]</code> from <code>sorted_edges[edge_idx]</code>.
-    *   Perform <code>dsu.union(u, v)</code>. This merges the connected components of <code>u</code> and <code>v</code> if they are not already connected.
-    *   Increment <code>edge_idx</code>.
-2.  <strong>Check connectivity for the current query</strong>: After adding all relevant edges, check if <code>p</code> and <code>q</code> are in the same connected component using <code>dsu.find(p) == dsu.find(q)</code>.
-3.  <strong>Store result</strong>: Set <code>answer[original_index]</code> to the result of this connectivity check.</p>
+For each <code>current_query</code> (which is <code>[limit, p, q, original_index]</code>):</p>
+<ol>
+<li><strong>Add eligible edges</strong>: While <code>edge_idx</code> is less than the total number of edges AND the weight of <code>sorted_edges[edge_idx]</code> is strictly less than <code>current_query.limit</code>:<ul>
+<li>Take the edge <code>[weight, u, v]</code> from <code>sorted_edges[edge_idx]</code>.</li>
+<li>Perform <code>dsu.union(u, v)</code>. This merges the connected components of <code>u</code> and <code>v</code> if they are not already connected.</li>
+<li>Increment <code>edge_idx</code>.</li>
+</ul>
+</li>
+<li><strong>Check connectivity for the current query</strong>: After adding all relevant edges, check if <code>p</code> and <code>q</code> are in the same connected component using <code>dsu.find(p) == dsu.find(q)</code>.</li>
+<li><strong>Store result</strong>: Set <code>answer[original_index]</code> to the result of this connectivity check.</li>
+</ol>
 <h3 id="step-5-return-the-result-array">Step 5: Return the Result Array</h3>
 <p>After processing all queries, the <code>answer</code> array will contain the boolean results in the original order. Return this <code>answer</code> array.</p>
 <h2 id="detailed-example-walkthrough">Detailed Example Walkthrough</h2>
@@ -722,12 +732,12 @@ Since <code>alpha(N)</code> is practically a constant (less than 5 for any reali
 <p>What if, instead of strictly less than, the condition was "at most <code>limit</code>"? Or "at least <code>limit</code>"? These variations would only require minor tweaks to the sorting order or comparison operator, but they are good thought experiments to ensure full understanding. What if we wanted the path with the <em>minimum</em> maximum edge weight? This directly leads to concepts like bottleneck paths, which often reduce to finding paths within the Minimum Spanning Tree. Other LeetCode graph problems, such as <a href="/leetcode-1976-number-of-ways-arrive-destination-tutorial/">Leetcode 1976: Number of Ways to Arrive at Destination Explained</a>, which involves counting shortest paths, demonstrate how different constraints require distinct algorithmic approaches beyond basic connectivity.</p>
 <p>Exploring these related problems and variations will solidify your understanding of graph algorithms, DSU, and efficient query processing, extending your skills far beyond <code>1697. Checking Existence of Edge Length Limited Paths</code>.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Q: What is the main challenge of LeetCode problem 1697, Checking Existence of Edge Length Limited Paths?</strong>
-A: The core challenge is efficiently checking connectivity between nodes while adhering to a strict edge length limit for each path. Naive BFS/DFS for every query is too slow for large graphs and numerous queries, necessitating a more optimized approach.</p>
-<p><strong>Q: Why is the Disjoint Set Union (DSU) data structure crucial for solving this problem?</strong>
-A: DSU efficiently manages connected components. By integrating edges into the DSU structure as their weights become eligible (i.e., less than a query's limit), we can quickly determine if two nodes are in the same component, indicating a valid path.</p>
-<p><strong>Q: How does offline processing improve the efficiency of solving this problem?</strong>
-A: Offline processing involves sorting both graph edges by weight and queries by their limit. This allows us to process queries in a way that incrementally builds connectivity with DSU, reusing computations and avoiding repeated subgraph constructions or traversals for each query.</p>
+<p><strong>Q: What is the main challenge of LeetCode problem 1697, Checking Existence of Edge Length Limited Paths?</strong></p>
+<p>A: The core challenge is efficiently checking connectivity between nodes while adhering to a strict edge length limit for each path. Naive BFS/DFS for every query is too slow for large graphs and numerous queries, necessitating a more optimized approach.</p>
+<p><strong>Q: Why is the Disjoint Set Union (DSU) data structure crucial for solving this problem?</strong></p>
+<p>A: DSU efficiently manages connected components. By integrating edges into the DSU structure as their weights become eligible (i.e., less than a query's limit), we can quickly determine if two nodes are in the same component, indicating a valid path.</p>
+<p><strong>Q: How does offline processing improve the efficiency of solving this problem?</strong></p>
+<p>A: Offline processing involves sorting both graph edges by weight and queries by their limit. This allows us to process queries in a way that incrementally builds connectivity with DSU, reusing computations and avoiding repeated subgraph constructions or traversals for each query.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Tackling <code>1697. Checking Existence of Edge Length Limited Paths</code> serves as an excellent benchmark for proficiency in intermediate to advanced graph algorithms. We've explored how a naive, brute-force approach quickly succumbs to performance limitations due to redundant computations. The elegant and efficient solution hinges on two core principles: <strong>offline processing</strong> and the <strong>Disjoint Set Union (DSU)</strong> data structure.</p>
 <p>By augmenting queries with their original indices and sorting both queries (by <code>limit</code>) and edges (by <code>weight</code>), we enable a single, progressive pass over the edges. This allows us to incrementally build up connected components using DSU. For each query, we incorporate all edges whose weights fall below the current limit into our DSU structure and then perform a quick <code>find</code> operation to check connectivity. This strategy avoids repeatedly scanning the graph for each query, leading to an optimal time complexity of <code>O(Q log Q + E log E + (E + Q) * alpha(N))</code> and space complexity of <code>O(N + E + Q)</code>.</p>

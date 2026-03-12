@@ -135,7 +135,7 @@
     "https://analyticsdrive.tech/images/01-matrix-problem-shortest-distance-bfs-dp-explained.webp"
   ],
   "datePublished": "2026-02-13T15:40:00+00:00",
-  "dateModified": "2026-03-07T00:04:33.719020+00:00",
+  "dateModified": "2026-03-12T16:24:21.418475+00:00",
   "author": {
     "@type": "Person",
     "name": "Admin",
@@ -251,6 +251,26 @@
 
   <div class="post-content">
     <p>The "01 Matrix" problem (LeetCode 542) is a fundamental challenge that effectively tests your graph traversal and dynamic programming skills. Beyond a typical academic exercise, mastering such problems provides a robust foundation for tackling complex shortest path scenarios in real-world applications, spanning from image processing to logistics. In this post, we will dissect this intriguing problem, explore elegant solutions, and equip you with the knowledge to approach similar challenges confidently.</p>
+<div class="toc">
+<ul>
+<li><a href="#what-is-the-01-matrix-problem">What is the 01 Matrix Problem?</a></li>
+<li><a href="#approach-1-multi-source-breadth-first-search-bfs">Approach 1: Multi-Source Breadth-First Search (BFS)</a><ul>
+<li><a href="#the-core-idea">The Core Idea</a></li>
+<li><a href="#step-by-step-breakdown">Step-by-Step Breakdown</a></li>
+<li><a href="#python-code-example-multi-source-bfs">Python Code Example (Multi-Source BFS)</a></li>
+<li><a href="#complexity-analysis-bfs">Complexity Analysis (BFS)</a></li>
+</ul>
+</li>
+<li><a href="#approach-2-dynamic-programming-dp">Approach 2: Dynamic Programming (DP)</a><ul>
+<li><a href="#step-by-step-breakdown_1">Step-by-Step Breakdown</a></li>
+<li><a href="#python-code-example-dynamic-programming">Python Code Example (Dynamic Programming)</a></li>
+<li><a href="#complexity-analysis-dp">Complexity Analysis (DP)</a></li>
+</ul>
+</li>
+<li><a href="#bfs-vs-dp-which-one-to-choose">BFS vs. DP: Which One to Choose?</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div>
 <h2 id="what-is-the-01-matrix-problem">What is the 01 Matrix Problem?</h2>
 <p>The "01 Matrix" problem presents a binary matrix, meaning a grid filled with only <code>0</code>s and <code>1</code>s. Your task is to transform this matrix into one where each cell indicates the distance to its nearest <code>0</code>.</p>
 <p><strong>Key Definition:</strong> The "distance" between two adjacent cells (horizontally or vertically) is 1. We seek the shortest distance, often referred to as the Manhattan distance in a grid context.</p>
@@ -362,10 +382,14 @@
 <p>While BFS is intuitive for shortest paths, dynamic programming offers an alternative perspective, especially useful in grid problems where dependencies are directional. The core principle is that a cell's distance to the nearest <code>0</code> depends on its neighbors' distances.</p>
 <p>The challenge is that you cannot access all neighbors simultaneously if you are building up the solution. We solve this by doing <em>two passes</em>:</p>
 <ol>
-<li><strong>First Pass (Top-Left to Bottom-Right):</strong> For each cell, we consider its distance from <code>0</code>s that are <em>above</em> or to its <em>left</em>.
-    <code>dp[r][c] = min(dp[r][c], dp[r-1][c] + 1, dp[r][c-1] + 1)</code></li>
-<li><strong>Second Pass (Bottom-Right to Top-Left):</strong> For each cell, we then refine its distance by considering <code>0</code>s that are <em>below</em> or to its <em>right</em>.
-    <code>dp[r][c] = min(dp[r][c], dp[r+1][c] + 1, dp[r][c+1] + 1)</code></li>
+<li>
+<p><strong>First Pass (Top-Left to Bottom-Right):</strong> For each cell, we consider its distance from <code>0</code>s that are <em>above</em> or to its <em>left</em>.
+    <code>dp[r][c] = min(dp[r][c], dp[r-1][c] + 1, dp[r][c-1] + 1)</code></p>
+</li>
+<li>
+<p><strong>Second Pass (Bottom-Right to Top-Left):</strong> For each cell, we then refine its distance by considering <code>0</code>s that are <em>below</em> or to its <em>right</em>.
+    <code>dp[r][c] = min(dp[r][c], dp[r+1][c] + 1, dp[r][c+1] + 1)</code></p>
+</li>
 </ol>
 <h3 id="step-by-step-breakdown_1">Step-by-Step Breakdown</h3>
 <ol>

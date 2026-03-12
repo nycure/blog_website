@@ -133,7 +133,7 @@
     "https://analyticsdrive.tech/images/mastering-depth-first-search.webp"
   ],
   "datePublished": "2026-02-16T01:33:00+00:00",
-  "dateModified": "2026-03-07T00:04:33.786002+00:00",
+  "dateModified": "2026-03-12T16:24:21.537997+00:00",
   "author": {
     "@type": "Person",
     "name": "Admin",
@@ -249,6 +249,33 @@
 
   <div class="post-content">
     <p>Graphs are powerful tools for modeling relationships, from social networks to intricate computer systems. To make sense of these complex structures, we need efficient ways to explore them. Enter Depth-First Search (DFS), a fundamental algorithm that allows us to systematically traverse a graph.</p>
+<div class="toc">
+<ul>
+<li><a href="#what-is-depth-first-search-dfs">What is Depth-First Search (DFS)?</a></li>
+<li><a href="#how-dfs-works-the-core-mechanic">How DFS Works: The Core Mechanic</a><ul>
+<li><a href="#a-walkthrough-example">A Walkthrough Example</a></li>
+</ul>
+</li>
+<li><a href="#implementing-dfs">Implementing DFS</a><ul>
+<li><a href="#1-recursive-implementation">1. Recursive Implementation</a></li>
+<li><a href="#2-iterative-implementation-using-a-stack">2. Iterative Implementation (using a Stack)</a></li>
+</ul>
+</li>
+<li><a href="#characteristics-of-dfs">Characteristics of DFS</a></li>
+<li><a href="#powerful-applications-of-dfs">Powerful Applications of DFS</a><ul>
+<li><a href="#1-finding-connected-components">1. Finding Connected Components</a></li>
+<li><a href="#2-topological-sorting">2. Topological Sorting</a></li>
+<li><a href="#3-cycle-detection">3. Cycle Detection</a></li>
+<li><a href="#4-pathfinding-maze-solving">4. Pathfinding (Maze Solving)</a></li>
+<li><a href="#5-strongly-connected-components-tarjans-kosarajus-algorithms">5. Strongly Connected Components (Tarjan's, Kosaraju's Algorithms)</a></li>
+<li><a href="#6-biconnectivity-and-cut-vertices">6. Biconnectivity and Cut Vertices</a></li>
+</ul>
+</li>
+<li><a href="#dfs-vs-bfs-when-to-use-which">DFS vs. BFS: When to Use Which?</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#further-reading-resources">Further Reading &amp; Resources</a></li>
+</ul>
+</div>
 <p>If you've ever gotten lost in a maze, always choosing to go as far as possible down one path before backtracking, you've intuitively performed a depth-first search! In this post, we'll unravel the mysteries of DFS, understanding how it works, how to implement it, and its vast applications.</p>
 <h2 id="what-is-depth-first-search-dfs">What is Depth-First Search (DFS)?</h2>
 <p>Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root (or an arbitrary node) and explores as far as possible along each branch before backtracking. It's like exploring a labyrinth: you pick a path and follow it until you hit a dead end, then you retrace your steps to find an alternative route.</p>
@@ -265,21 +292,23 @@
 <h3 id="a-walkthrough-example">A Walkthrough Example</h3>
 <p>Imagine a simple graph with nodes A, B, C, D, E.
 Edges: (A, B), (A, C), (B, D), (C, E)</p>
-<p>Starting DFS from A:
-1.  Visit A. Mark A as visited.
-2.  Neighbors of A: B, C. Pick B.
-3.  Visit B. Mark B as visited.
-4.  Neighbors of B: D. Pick D.
-5.  Visit D. Mark D as visited.
-6.  Neighbors of D: None. Backtrack to B.
-7.  All neighbors of B (D) visited. Backtrack to A.
-8.  Neighbors of A: C (B already visited). Pick C.
-9.  Visit C. Mark C as visited.
-10. Neighbors of C: E. Pick E.
-11. Visit E. Mark E as visited.
-12. Neighbors of E: None. Backtrack to C.
-13. All neighbors of C (E) visited. Backtrack to A.
-14. All neighbors of A (B, C) visited. DFS complete.</p>
+<p>Starting DFS from A:</p>
+<ol>
+<li>Visit A. Mark A as visited.</li>
+<li>Neighbors of A: B, C. Pick B.</li>
+<li>Visit B. Mark B as visited.</li>
+<li>Neighbors of B: D. Pick D.</li>
+<li>Visit D. Mark D as visited.</li>
+<li>Neighbors of D: None. Backtrack to B.</li>
+<li>All neighbors of B (D) visited. Backtrack to A.</li>
+<li>Neighbors of A: C (B already visited). Pick C.</li>
+<li>Visit C. Mark C as visited.</li>
+<li>Neighbors of C: E. Pick E.</li>
+<li>Visit E. Mark E as visited.</li>
+<li>Neighbors of E: None. Backtrack to C.</li>
+<li>All neighbors of C (E) visited. Backtrack to A.</li>
+<li>All neighbors of A (B, C) visited. DFS complete.</li>
+</ol>
 <p>The order of traversal could be A -&gt; B -&gt; D -&gt; C -&gt; E. (Note: Order depends on neighbor processing order).</p>
 <h2 id="implementing-dfs">Implementing DFS</h2>
 <p>DFS can be implemented in two primary ways: recursively or iteratively using a stack. Both achieve the same result.</p>

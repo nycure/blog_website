@@ -133,7 +133,7 @@
     "https://analyticsdrive.tech/images/leetcode-185-department-top-three-salaries-mysql-tutorial.webp"
   ],
   "datePublished": "2026-02-26T11:46:00+00:00",
-  "dateModified": "2026-03-10T21:52:25.303548+00:00",
+  "dateModified": "2026-03-12T16:24:21.515821+00:00",
   "author": {
     "@type": "Person",
     "name": "Admin",
@@ -249,6 +249,38 @@
 
   <div class="post-content">
     <h2 id="leetcode-185-department-top-three-salaries-mysql-a-comprehensive-tutorial">LeetCode 185 Department Top Three Salaries MySQL: A Comprehensive Tutorial</h2>
+<div class="toc">
+<ul>
+<li><a href="#leetcode-185-department-top-three-salaries-mysql-a-comprehensive-tutorial">LeetCode 185 Department Top Three Salaries MySQL: A Comprehensive Tutorial</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#understanding-the-problem-leetcode-185-department-top-three-salaries-mysql">Understanding the Problem: LeetCode 185 Department Top Three Salaries MySQL</a></li>
+<li><a href="#approach-1-solving-leetcode-185-with-window-functions-in-mysql">Approach 1: Solving LeetCode 185 with Window Functions in MySQL</a><ul>
+<li><a href="#introduction-to-window-functions-for-ranking">Introduction to Window Functions for Ranking</a></li>
+<li><a href="#step-1-partitioning-data-by-department">Step 1: Partitioning Data by Department</a></li>
+<li><a href="#step-2-filtering-for-the-top-three-salaries-per-department">Step 2: Filtering for the Top Three Salaries per Department</a></li>
+<li><a href="#step-3-selecting-and-renaming-final-columns">Step 3: Selecting and Renaming Final Columns</a></li>
+<li><a href="#advantages-of-window-functions">Advantages of Window Functions</a></li>
+</ul>
+</li>
+<li><a href="#approach-2-leetcode-185-department-top-three-salaries-a-traditional-self-join-approach">Approach 2: LeetCode 185 Department Top Three Salaries: A Traditional Self-Join Approach</a><ul>
+<li><a href="#the-core-idea-counting-distinct-higher-salaries">The Core Idea: Counting Distinct Higher Salaries</a></li>
+<li><a href="#step-1-self-joining-the-employee-table">Step 1: Self-Joining the Employee Table</a></li>
+<li><a href="#step-2-counting-distinct-salaries-within-each-department">Step 2: Counting Distinct Salaries within Each Department</a></li>
+<li><a href="#step-3-filtering-for-top-three-salaries">Step 3: Filtering for Top Three Salaries</a></li>
+<li><a href="#step-4-retrieving-department-names">Step 4: Retrieving Department Names</a></li>
+<li><a href="#disadvantages-of-the-self-join-approach">Disadvantages of the Self-Join Approach</a></li>
+</ul>
+</li>
+<li><a href="#common-mistakes-and-optimization-tips">Common Mistakes and Optimization Tips</a><ul>
+<li><a href="#common-mistakes">Common Mistakes</a></li>
+<li><a href="#optimization-tips">Optimization Tips</a></li>
+</ul>
+</li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a href="#further-reading-resources">Further Reading &amp; Resources</a></li>
+</ul>
+</div>
 <p>Welcome to this in-depth tutorial on solving one of LeetCode's classic SQL problems: <strong>LeetCode 185 Department Top Three Salaries MySQL</strong>. This problem challenges your understanding of SQL ranking functions, subqueries, and table joins, making it a frequent topic in developer interviews. Successfully tackling this problem demonstrates a solid grasp of complex data retrieval and manipulation. Throughout this guide, we'll explore multiple robust approaches to help you master this challenge, providing clear explanations and practical code examples to enhance your understanding of database queries and efficient data handling.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Before diving into the solution, ensure you have a foundational understanding of the following SQL concepts:</p>
@@ -469,10 +501,12 @@ Each row of this table indicates the ID and name of a department.</p>
 </tr>
 </tbody>
 </table>
-<p>Notice a few critical aspects from the example:
-*   <strong>Ties:</strong> If multiple employees have the same salary, and that salary falls within the top three, all those employees should be included. For instance, in the 'IT' department, Joe and Randy both earn 85000 and are in the top three. This implies we need a ranking function that handles ties appropriately.
-*   <strong>Fewer than Three:</strong> If a department has fewer than three employees, all of them should be listed. The 'Sales' department demonstrates this with only two employees.
-*   <strong>Output Format:</strong> The final output requires the Department Name, Employee Name, and Salary. This means we will need to join the <code>Employee</code> and <code>Department</code> tables.</p>
+<p>Notice a few critical aspects from the example:</p>
+<ul>
+<li><strong>Ties:</strong> If multiple employees have the same salary, and that salary falls within the top three, all those employees should be included. For instance, in the 'IT' department, Joe and Randy both earn 85000 and are in the top three. This implies we need a ranking function that handles ties appropriately.</li>
+<li><strong>Fewer than Three:</strong> If a department has fewer than three employees, all of them should be listed. The 'Sales' department demonstrates this with only two employees.</li>
+<li><strong>Output Format:</strong> The final output requires the Department Name, Employee Name, and Salary. This means we will need to join the <code>Employee</code> and <code>Department</code> tables.</li>
+</ul>
 <p>These nuances make the problem more intricate than a simple <code>ORDER BY</code> and <code>LIMIT</code> clause, requiring more advanced SQL techniques. We will explore two primary methods to solve this: one leveraging modern SQL window functions and another using a more traditional self-join and subquery approach.</p>
 <h2 id="approach-1-solving-leetcode-185-with-window-functions-in-mysql">Approach 1: Solving LeetCode 185 with Window Functions in MySQL</h2>
 <p>Window functions are a powerful feature in SQL that perform calculations across a set of table rows that are somehow related to the current row. For ranking problems like <strong>LeetCode 185 Department Top Three Salaries MySQL</strong>, they are often the most elegant and efficient solution. MySQL has supported window functions since version 8.0, making them a standard tool for such tasks.</p>
@@ -599,12 +633,14 @@ Each row of this table indicates the ID and name of a department.</p>
 <span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="n">er</span><span class="p">.</span><span class="n">Salary</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 </code></pre></div>
 
-<p>In this final query:
-*   We aliased the <code>Employee</code> table as <code>e</code> and <code>Department</code> table as <code>d</code> for brevity.
-*   We selected <code>d.Name</code> as <code>Department</code>, <code>er.Employee</code> (which was aliased <code>Name</code> from the <code>Employee</code> table), and <code>er.Salary</code>.
-*   We performed an <code>INNER JOIN</code> between <code>EmployeeRanked</code> (our CTE) and <code>Department</code> on their respective <code>DepartmentId</code> and <code>Id</code> columns.
-*   The <code>WHERE er.rn &lt;= 3</code> clause remains crucial for filtering.
-*   An <code>ORDER BY</code> clause is added to present the results cleanly, first by department name, then by salary in descending order within each department. This isn't strictly necessary for correctness on LeetCode but is good practice for readable output.</p>
+<p>In this final query:</p>
+<ul>
+<li>We aliased the <code>Employee</code> table as <code>e</code> and <code>Department</code> table as <code>d</code> for brevity.</li>
+<li>We selected <code>d.Name</code> as <code>Department</code>, <code>er.Employee</code> (which was aliased <code>Name</code> from the <code>Employee</code> table), and <code>er.Salary</code>.</li>
+<li>We performed an <code>INNER JOIN</code> between <code>EmployeeRanked</code> (our CTE) and <code>Department</code> on their respective <code>DepartmentId</code> and <code>Id</code> columns.</li>
+<li>The <code>WHERE er.rn &lt;= 3</code> clause remains crucial for filtering.</li>
+<li>An <code>ORDER BY</code> clause is added to present the results cleanly, first by department name, then by salary in descending order within each department. This isn't strictly necessary for correctness on LeetCode but is good practice for readable output.</li>
+</ul>
 <p>This window function approach is generally preferred for its clarity, conciseness, and often better performance on modern database systems compared to older methods involving extensive self-joins.</p>
 <h3 id="advantages-of-window-functions">Advantages of Window Functions</h3>
 <p>The window function approach offers several compelling benefits:</p>
@@ -618,12 +654,14 @@ Each row of this table indicates the ID and name of a department.</p>
 <p>Before the widespread adoption of window functions, solving ranking problems like <strong>LeetCode 185 Department Top Three Salaries MySQL</strong> often involved clever use of self-joins and subqueries. This traditional method, while sometimes more verbose, is still valuable to understand as it showcases fundamental SQL logic and can be necessary in environments where window functions are not supported (e.g., older MySQL versions).</p>
 <h3 id="the-core-idea-counting-distinct-higher-salaries">The Core Idea: Counting Distinct Higher Salaries</h3>
 <p>The fundamental principle behind this approach is to count, for each employee, how many other employees in the <em>same department</em> have a <em>higher or equal</em> salary. If an employee has fewer than three (i.e., 0, 1, or 2) other employees with a higher or equal distinct salary within their department, then that employee is in the top three.</p>
-<p>Let's illustrate with an example:
-*   Max (IT, 90000): In the IT department, there are no employees with a salary higher than 90000. So, count is 1 (Max's own salary). Max is in the top 3.
-*   Joe (IT, 85000): In the IT department, only Max has a salary higher than 85000. Joe himself has 85000. The distinct salaries higher than or equal to Joe's are 90000 and 85000. Count = 2. Joe is in the top 3.
-*   Randy (IT, 85000): Same as Joe, distinct salaries higher than or equal to Randy's are 90000 and 85000. Count = 2. Randy is in the top 3.
-*   Will (IT, 70000): In the IT department, Max (90000), Joe (85000), and Randy (85000) have salaries higher than 70000. Will himself has 70000. The distinct salaries higher than or equal to Will's are 90000, 85000, and 70000. Count = 3. Will is in the top 3.
-*   Janet (IT, 69000): In the IT department, Max (90000), Joe (85000), Randy (85000), and Will (70000) have salaries higher than 69000. Janet herself has 69000. The distinct salaries higher than or equal to Janet's are 90000, 85000, 70000, and 69000. Count = 4. Janet is NOT in the top 3.</p>
+<p>Let's illustrate with an example:</p>
+<ul>
+<li>Max (IT, 90000): In the IT department, there are no employees with a salary higher than 90000. So, count is 1 (Max's own salary). Max is in the top 3.</li>
+<li>Joe (IT, 85000): In the IT department, only Max has a salary higher than 85000. Joe himself has 85000. The distinct salaries higher than or equal to Joe's are 90000 and 85000. Count = 2. Joe is in the top 3.</li>
+<li>Randy (IT, 85000): Same as Joe, distinct salaries higher than or equal to Randy's are 90000 and 85000. Count = 2. Randy is in the top 3.</li>
+<li>Will (IT, 70000): In the IT department, Max (90000), Joe (85000), and Randy (85000) have salaries higher than 70000. Will himself has 70000. The distinct salaries higher than or equal to Will's are 90000, 85000, and 70000. Count = 3. Will is in the top 3.</li>
+<li>Janet (IT, 69000): In the IT department, Max (90000), Joe (85000), Randy (85000), and Will (70000) have salaries higher than 69000. Janet herself has 69000. The distinct salaries higher than or equal to Janet's are 90000, 85000, 70000, and 69000. Count = 4. Janet is NOT in the top 3.</li>
+</ul>
 <p>This logic correctly handles ties because we are counting <em>distinct</em> salaries. If Joe and Randy both earn 85000, the salary 85000 is only counted once for the purpose of establishing a distinct rank.</p>
 <h3 id="step-1-self-joining-the-employee-table">Step 1: Self-Joining the Employee Table</h3>
 <p>We need to join the <code>Employee</code> table with itself. Let's call the first instance <code>e1</code> and the second <code>e2</code>.</p>
@@ -725,12 +763,16 @@ Each row of this table indicates the ID and name of a department.</p>
 </ol>
 <h3 id="optimization-tips">Optimization Tips</h3>
 <ol>
-<li><strong>Indexing:</strong> For optimal performance, especially with large datasets, ensure that your <code>Employee</code> table has appropriate indexes. An index on <code>(DepartmentId, Salary)</code> is crucial for both window function and self-join approaches.<ul>
+<li>
+<p><strong>Indexing:</strong> For optimal performance, especially with large datasets, ensure that your <code>Employee</code> table has appropriate indexes. An index on <code>(DepartmentId, Salary)</code> is crucial for both window function and self-join approaches.</p>
+<ul>
 <li><code>CREATE INDEX idx_department_salary ON Employee (DepartmentId, Salary DESC);</code>
 This index allows the database to quickly group by <code>DepartmentId</code> and then efficiently order by <code>Salary</code> within each department, which is fundamental to both ranking methods.</li>
 </ul>
 </li>
-<li><strong>Use CTEs for Readability:</strong> While subqueries work, Common Table Expressions (CTEs) using the <code>WITH</code> clause significantly improve the readability and maintainability of complex SQL queries. Break down your logic into smaller, named, logical steps.</li>
+<li>
+<p><strong>Use CTEs for Readability:</strong> While subqueries work, Common Table Expressions (CTEs) using the <code>WITH</code> clause significantly improve the readability and maintainability of complex SQL queries. Break down your logic into smaller, named, logical steps.</p>
+</li>
 <li><strong>Understand Your Database's Capabilities:</strong> Be aware of the SQL features supported by your specific database version. MySQL 8.0+ supports window functions, but older versions do not. Knowing this will guide you in choosing the appropriate solution. For other algorithmic challenges, exploring problems like <a href="/leetcode-127-word-ladder-bfs-tutorial/">Leetcode 127 Word Ladder: Master the BFS Approach Easily</a> can broaden your problem-solving toolkit.</li>
 <li><strong>Test with Edge Cases:</strong> Always test your solution with various edge cases:<ul>
 <li>Departments with fewer than three employees.</li>
@@ -745,12 +787,12 @@ This index allows the database to quickly group by <code>DepartmentId</code> and
 <p>Solving <strong>LeetCode 185 Department Top Three Salaries MySQL</strong> is an excellent way to solidify your SQL skills and prepare for technical interviews. We've explored two primary methods to conquer this challenge: the elegant and modern window function approach, leveraging <code>DENSE_RANK()</code>, and the traditional self-join with subquery method. Each approach offers unique insights into SQL's capabilities for complex data manipulation.</p>
 <p>The window function approach, particularly with <code>DENSE_RANK()</code>, stands out for its clarity, conciseness, and often superior performance on modern database systems due to optimized internal handling. It's generally the recommended solution when supported. However, understanding the self-join method is equally valuable, demonstrating fundamental SQL logic and proving useful in environments with older database versions. By mastering both techniques and being mindful of common pitfalls and optimization strategies, you're well-equipped to tackle similar ranking problems in any SQL context. Continued practice with varied LeetCode problems will further sharpen your database query prowess. Additionally, consider exploring broader career paths outlined in a <a href="/data-analyst-career-roadmap-infographic/">Data Analyst Career Roadmap</a> to see how these SQL skills fit into the larger data ecosystem.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Q: Why is DENSE_RANK() preferred over RANK() or ROW_NUMBER() for this problem?</strong>
-A: <code>DENSE_RANK()</code> is preferred because it assigns the same rank to employees with identical salaries (handling ties correctly) and then continues the ranking sequentially without gaps. <code>ROW_NUMBER()</code> would give unique ranks even to tied salaries, potentially excluding some top earners, while <code>RANK()</code> would introduce gaps in the ranking (e.g., 1, 1, 3 instead of 1, 1, 2), which doesn't align with the "top three" count including all tied individuals.</p>
-<p><strong>Q: Can I solve this problem without window functions in older MySQL versions?</strong>
-A: Yes, the "Traditional Self-Join Approach" detailed in this tutorial is specifically designed for environments where window functions are not available, such as MySQL versions prior to 8.0. It leverages self-joins, <code>GROUP BY</code>, and <code>COUNT(DISTINCT)</code> to achieve the same ranking logic.</p>
-<p><strong>Q: What are the performance considerations between the window function and self-join approaches?</strong>
-A: Generally, for modern database systems (MySQL 8.0+), the window function approach is often more performant and efficient, especially with large datasets, due to highly optimized internal implementations. The self-join approach, while functional, can sometimes lead to more resource-intensive queries involving multiple table scans and complex aggregations, potentially being slower on very large tables without proper indexing.</p>
+<p><strong>Q: Why is DENSE_RANK() preferred over RANK() or ROW_NUMBER() for this problem?</strong></p>
+<p>A: <code>DENSE_RANK()</code> is preferred because it assigns the same rank to employees with identical salaries (handling ties correctly) and then continues the ranking sequentially without gaps. <code>ROW_NUMBER()</code> would give unique ranks even to tied salaries, potentially excluding some top earners, while <code>RANK()</code> would introduce gaps in the ranking (e.g., 1, 1, 3 instead of 1, 1, 2), which doesn't align with the "top three" count including all tied individuals.</p>
+<p><strong>Q: Can I solve this problem without window functions in older MySQL versions?</strong></p>
+<p>A: Yes, the "Traditional Self-Join Approach" detailed in this tutorial is specifically designed for environments where window functions are not available, such as MySQL versions prior to 8.0. It leverages self-joins, <code>GROUP BY</code>, and <code>COUNT(DISTINCT)</code> to achieve the same ranking logic.</p>
+<p><strong>Q: What are the performance considerations between the window function and self-join approaches?</strong></p>
+<p>A: Generally, for modern database systems (MySQL 8.0+), the window function approach is often more performant and efficient, especially with large datasets, due to highly optimized internal implementations. The self-join approach, while functional, can sometimes lead to more resource-intensive queries involving multiple table scans and complex aggregations, potentially being slower on very large tables without proper indexing.</p>
 <h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
 <ul>
 <li><a href="https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html">MySQL 8.0 Reference Manual - Window Functions</a></li>

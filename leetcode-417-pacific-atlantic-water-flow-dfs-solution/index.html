@@ -134,7 +134,7 @@
     "https://analyticsdrive.tech/images/leetcode-417-pacific-atlantic-water-flow-dfs-solution.webp"
   ],
   "datePublished": "2026-02-13T11:13:00+00:00",
-  "dateModified": "2026-03-07T00:04:33.782121+00:00",
+  "dateModified": "2026-03-12T16:24:21.527767+00:00",
   "author": {
     "@type": "Person",
     "name": "Admin",
@@ -250,14 +250,34 @@
 
   <div class="post-content">
     <h2 id="navigating-the-continental-divide-understanding-leetcode-417">Navigating the Continental Divide: Understanding LeetCode 417</h2>
+<div class="toc">
+<ul>
+<li><a href="#navigating-the-continental-divide-understanding-leetcode-417">Navigating the Continental Divide: Understanding LeetCode 417</a></li>
+<li><a href="#unpacking-the-problem-statement">Unpacking the Problem Statement</a><ul>
+<li><a href="#why-this-problem-is-tricky">Why This Problem is Tricky</a></li>
+</ul>
+</li>
+<li><a href="#the-eureka-moment-flowing-upstream">The Eureka Moment: Flowing Upstream</a></li>
+<li><a href="#algorithm-breakdown-dfs-to-the-rescue">Algorithm Breakdown: DFS to the Rescue</a><ul>
+<li><a href="#step-by-step-implementation">Step-by-Step Implementation</a></li>
+<li><a href="#python-code-implementation">Python Code Implementation</a></li>
+</ul>
+</li>
+<li><a href="#complexity-analysis">Complexity Analysis</a></li>
+<li><a href="#why-this-approach-shines">Why This Approach Shines</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div>
 <p>Welcome, fellow coding adventurers! Today, we're setting our compass for a fascinating journey into LeetCode problem 417: "Pacific Atlantic Water Flow." This problem is a brilliant test of your graph traversal skills, specifically your mastery of Depth-First Search (DFS) or Breadth-First Search (BFS). It's a common pattern in technical interviews, making it a crucial concept to grasp.</p>
 <p>Imagine a continent represented by a grid of varying heights. On one side, the mighty Pacific Ocean laps at its shores. On the other, the vast Atlantic Ocean stretches out. Our challenge? To find all the cells on this continent from which water can flow to <em>both</em> oceans.</p>
 <p>Let's dive in and explore the terrain!</p>
 <h2 id="unpacking-the-problem-statement">Unpacking the Problem Statement</h2>
 <p>We are given an <code>m x n</code> integer matrix, <code>heights</code>, where <code>heights[r][c]</code> represents the height of the cell at coordinate <code>(r, c)</code>.</p>
-<p>Here's how the oceans are defined:
-*   <strong>Pacific Ocean:</strong> Touches the top (<code>r=0</code>) and left (<code>c=0</code>) edges of the matrix.
-*   <strong>Atlantic Ocean:</strong> Touches the bottom (<code>r=m-1</code>) and right (<code>c=n-1</code>) edges of the matrix.</p>
+<p>Here's how the oceans are defined:</p>
+<ul>
+<li><strong>Pacific Ocean:</strong> Touches the top (<code>r=0</code>) and left (<code>c=0</code>) edges of the matrix.</li>
+<li><strong>Atlantic Ocean:</strong> Touches the bottom (<code>r=m-1</code>) and right (<code>c=n-1</code>) edges of the matrix.</li>
+</ul>
 <p>Water can flow from a cell to an adjacent cell (up, down, left, right) if the adjacent cell's height is less than or equal to the current cell's height. Think of it like a topographic map – water always flows downhill or stays level.</p>
 <p>Our ultimate goal is to return a list of <code>[r, c]</code> coordinates for all cells from which water can reach <em>both</em> the Pacific and Atlantic oceans.</p>
 <h3 id="why-this-problem-is-tricky">Why This Problem is Tricky</h3>
@@ -265,10 +285,12 @@
 <h2 id="the-eureka-moment-flowing-upstream">The Eureka Moment: Flowing Upstream</h2>
 <p>The key insight to efficiently solve this problem lies in <strong>reversing the perspective of water flow</strong>. Instead of trying to determine where water <em>can flow to</em> from a source cell, let's determine which cells <em>can be reached from</em> the oceans.</p>
 <p>Think about it: if water can flow from cell <code>A</code> to cell <code>B</code> (meaning <code>height[A] &gt;= height[B]</code>), then conversely, we can say that cell <code>A</code> is "reachable" from cell <code>B</code> if we imagine water flowing <em>uphill</em>.</p>
-<p>This leads us to our core strategy:
-1.  <strong>Identify all cells reachable by the Pacific Ocean:</strong> Start a traversal (DFS or BFS) from all cells bordering the Pacific Ocean. During this traversal, mark all cells from which water <em>could have originated</em> and flowed into the Pacific.
-2.  <strong>Identify all cells reachable by the Atlantic Ocean:</strong> Do the same for the Atlantic Ocean, starting from its borders and marking all cells that could flow into the Atlantic.
-3.  <strong>Find the Intersection:</strong> The cells that are marked as reachable by <em>both</em> the Pacific and Atlantic oceans are our answer!</p>
+<p>This leads us to our core strategy:</p>
+<ol>
+<li><strong>Identify all cells reachable by the Pacific Ocean:</strong> Start a traversal (DFS or BFS) from all cells bordering the Pacific Ocean. During this traversal, mark all cells from which water <em>could have originated</em> and flowed into the Pacific.</li>
+<li><strong>Identify all cells reachable by the Atlantic Ocean:</strong> Do the same for the Atlantic Ocean, starting from its borders and marking all cells that could flow into the Atlantic.</li>
+<li><strong>Find the Intersection:</strong> The cells that are marked as reachable by <em>both</em> the Pacific and Atlantic oceans are our answer!</li>
+</ol>
 <h2 id="algorithm-breakdown-dfs-to-the-rescue">Algorithm Breakdown: DFS to the Rescue</h2>
 <p>We'll use Depth-First Search (DFS) for this traversal, but BFS would work equally well.</p>
 <h3 id="step-by-step-implementation">Step-by-Step Implementation</h3>

@@ -388,7 +388,9 @@
 <li><strong>Accessibility:</strong> Respects the user's default browser font size. If the root <code>html</code> element's font size is based on the browser default (e.g., <code>16px</code>), then all <code>em</code> units derived from it will also scale relative to that user preference.</li>
 </ul>
 </li>
-<li><strong>Cons:</strong><ul>
+<li>
+<p><strong>Cons:</strong></p>
+<ul>
 <li><strong>Compounding Issue (Cascading Problem):</strong> This is the biggest drawback. Because <code>em</code> is relative to the <em>parent</em>, nested elements using <code>em</code> can lead to unexpected and rapidly compounding font sizes.
     <code>css
     .parent { font-size: 1.2em; /* relative to parent of .parent */ }
@@ -396,7 +398,9 @@
     This "em-soup" makes it hard to predict the final rendered size and maintain.</li>
 </ul>
 </li>
-<li><strong>Best Use Case:</strong> Excellent for spacing relative to the current text size (e.g., <code>margin-bottom: 0.5em;</code> for paragraphs). Also useful for components where all text inside should scale together based on a single declaration (e.g., a button where padding and text size are related). Generally, <code>rem</code> is preferred for primary font sizing due to the <code>em</code> compounding issue.</li>
+<li>
+<p><strong>Best Use Case:</strong> Excellent for spacing relative to the current text size (e.g., <code>margin-bottom: 0.5em;</code> for paragraphs). Also useful for components where all text inside should scale together based on a single declaration (e.g., a button where padding and text size are related). Generally, <code>rem</code> is preferred for primary font sizing due to the <code>em</code> compounding issue.</p>
+</li>
 </ul>
 <h4 id="rem-root-em"><code>rem</code> (Root <code>em</code>)</h4>
 <p>The <code>rem</code> unit (root <code>em</code>) is relative to the <code>font-size</code> of the <em>root <code>html</code> element</em> of the document. This makes it far more predictable than <code>em</code>. If <code>html { font-size: 16px; }</code>, then <code>1rem</code> will always be <code>16px</code> everywhere in the document, regardless of parent elements.</p>
@@ -465,11 +469,13 @@
 <p>The first and most critical step in using <code>rem</code> effectively is to set a foundational <code>font-size</code> on the <code>html</code> (root) element. This single declaration will then dictate the <code>1rem</code> value for the entire document, making all other <code>rem</code>-based font sizes predictable and easy to manage.</p>
 <h4 id="why-html-font-size-625">Why <code>html { font-size: 62.5%; }</code>?</h4>
 <p>By default, most browsers set the base font size to <code>16px</code>. This means <code>1rem</code> would equal <code>16px</code>. While perfectly valid, working with <code>16px</code> as the base often leads to less intuitive <code>rem</code> values (e.g., <code>18px</code> becomes <code>1.125rem</code>, <code>14px</code> becomes <code>0.875rem</code>).</p>
-<p>A common and highly recommended practice is to set the <code>html</code> font size to <code>62.5%</code>. Why?
-*   <code>62.5%</code> of the default <code>16px</code> (browser base) is <code>10px</code> (<code>16 * 0.625 = 10</code>).
-*   This makes <code>1rem = 10px</code>.
-*   Now, <code>1.6rem</code> is <code>16px</code>, <code>2.4rem</code> is <code>24px</code>, and <code>3.2rem</code> is <code>32px</code>.
-*   This significantly simplifies calculations, as you can easily convert pixel values to <code>rem</code> by simply dividing by 10 (e.g., <code>20px</code> becomes <code>2rem</code>).</p>
+<p>A common and highly recommended practice is to set the <code>html</code> font size to <code>62.5%</code>. Why?</p>
+<ul>
+<li><code>62.5%</code> of the default <code>16px</code> (browser base) is <code>10px</code> (<code>16 * 0.625 = 10</code>).</li>
+<li>This makes <code>1rem = 10px</code>.</li>
+<li>Now, <code>1.6rem</code> is <code>16px</code>, <code>2.4rem</code> is <code>24px</code>, and <code>3.2rem</code> is <code>32px</code>.</li>
+<li>This significantly simplifies calculations, as you can easily convert pixel values to <code>rem</code> by simply dividing by 10 (e.g., <code>20px</code> becomes <code>2rem</code>).</li>
+</ul>
 <p><strong>Code Example:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c">/* Step 1: Establish a Base Font Size */</span>
 <span class="nt">html</span><span class="w"> </span><span class="p">{</span>
@@ -487,12 +493,14 @@
 <p>In this setup, <code>1.6rem</code> for the <code>body</code> element means the body text will render at <code>16px</code>, which is a widely accepted comfortable reading size on most devices.</p>
 <h3 id="step-2-define-major-type-scales">Step 2: Define Major Type Scales</h3>
 <p>Once your base <code>rem</code> is established, you can define the font sizes for your main typographic elements (headings, paragraphs, small text) using <code>rem</code> units. This creates a consistent and scalable type scale across your entire site.</p>
-<p>Consider your design system. You might have:
-*   <code>h1</code>: Primary headlines, very large.
-*   <code>h2</code>: Section titles.
-*   <code>h3</code>, <code>h4</code>: Subheadings.
-*   <code>p</code>: Body text.
-*   <code>small</code>, <code>caption</code>: Ancillary text.</p>
+<p>Consider your design system. You might have:</p>
+<ul>
+<li><code>h1</code>: Primary headlines, very large.</li>
+<li><code>h2</code>: Section titles.</li>
+<li><code>h3</code>, <code>h4</code>: Subheadings.</li>
+<li><code>p</code>: Body text.</li>
+<li><code>small</code>, <code>caption</code>: Ancillary text.</li>
+</ul>
 <p><strong>Code Example:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c">/* Step 2: Define Major Type Scales using rem */</span>
 <span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
@@ -535,12 +543,14 @@
 <p>With a robust <code>rem</code> type scale, the next step is to make it responsive by adjusting the <em>base</em> <code>html</code> font size at different breakpoints using media queries. This scales all <code>rem</code>-defined elements proportionally without needing to redefine each element's size individually at every breakpoint.</p>
 <p>A mobile-first approach is highly recommended. This means styling for the smallest screens first, then progressively enhancing for larger screens.</p>
 <h4 id="choosing-appropriate-breakpoints">Choosing Appropriate Breakpoints</h4>
-<p>Common breakpoints for responsive design typically include:
-*   <strong>Small Mobile:</strong> Up to 320px - 480px
-*   <strong>Large Mobile / Small Tablet:</strong> 481px - 767px
-*   <strong>Tablet / Small Desktop:</strong> 768px - 1023px
-*   <strong>Desktop:</strong> 1024px - 1439px
-*   <strong>Large Desktop:</strong> 1440px+</p>
+<p>Common breakpoints for responsive design typically include:</p>
+<ul>
+<li><strong>Small Mobile:</strong> Up to 320px - 480px</li>
+<li><strong>Large Mobile / Small Tablet:</strong> 481px - 767px</li>
+<li><strong>Tablet / Small Desktop:</strong> 768px - 1023px</li>
+<li><strong>Desktop:</strong> 1024px - 1439px</li>
+<li><strong>Large Desktop:</strong> 1440px+</li>
+</ul>
 <p>The key is to choose breakpoints that make sense for your content, not just arbitrary device sizes. Breakpoints should be where your layout or typography starts to look awkward.</p>
 <p><strong>Code Example (Mobile-First):</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c">/* Step 3: Adjust base HTML font size at breakpoints */</span>
@@ -643,11 +653,13 @@
 <li><code>max-size</code>: The largest font size allowed.</li>
 </ul>
 <p>The browser will use the <code>preferred-size</code> if it falls between <code>min-size</code> and <code>max-size</code>. If <code>preferred-size</code> calculates to be smaller than <code>min-size</code>, <code>min-size</code> is used. If <code>preferred-size</code> calculates to be larger than <code>max-size</code>, <code>max-size</code> is used.</p>
-<p><strong>Advantages of <code>clamp()</code>:</strong>
-*   <strong>Smooth Scaling:</strong> Fonts scale smoothly without abrupt changes at breakpoints.
-*   <strong>Viewport-Aware:</strong> Responds directly to viewport width.
-*   <strong>Bounded Control:</strong> Prevents text from becoming too small or too large, addressing the main drawback of <code>vw</code> units alone.
-*   <strong>Reduced Media Queries:</strong> Can sometimes reduce the number of media queries needed for font sizes.</p>
+<p><strong>Advantages of <code>clamp()</code>:</strong></p>
+<ul>
+<li><strong>Smooth Scaling:</strong> Fonts scale smoothly without abrupt changes at breakpoints.</li>
+<li><strong>Viewport-Aware:</strong> Responds directly to viewport width.</li>
+<li><strong>Bounded Control:</strong> Prevents text from becoming too small or too large, addressing the main drawback of <code>vw</code> units alone.</li>
+<li><strong>Reduced Media Queries:</strong> Can sometimes reduce the number of media queries needed for font sizes.</li>
+</ul>
 <p><strong>Code Example:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c">/* Step 5: Incorporating Fluid Typography with clamp() */</span>
 
@@ -732,10 +744,12 @@
 </ul>
 </li>
 </ul>
-<p><strong>Best Practice:</strong>
-*   Always use <code>rem</code> for primary font sizing and general text content to respect user preferences.
-*   Design your layouts to be fluid. Avoid fixed widths wherever possible. If you must use fixed widths, ensure they are within a <code>max-width</code> that is small enough for mobile.
-*   Test your website by increasing the browser's default font size (e.g., in Chrome: Settings &gt; Appearance &gt; Font size) and by zooming the page. Ensure content remains readable and layouts don't break.</p>
+<p><strong>Best Practice:</strong></p>
+<ul>
+<li>Always use <code>rem</code> for primary font sizing and general text content to respect user preferences.</li>
+<li>Design your layouts to be fluid. Avoid fixed widths wherever possible. If you must use fixed widths, ensure they are within a <code>max-width</code> that is small enough for mobile.</li>
+<li>Test your website by increasing the browser's default font size (e.g., in Chrome: Settings &gt; Appearance &gt; Font size) and by zooming the page. Ensure content remains readable and layouts don't break.</li>
+</ul>
 <h3 id="line-length-and-readability">Line Length and Readability</h3>
 <p>The length of a line of text significantly impacts reading comfort and comprehension. Lines that are too short force the eye to jump back frequently, while lines that are too long make it difficult to track from the end of one line to the beginning of the next.</p>
 <ul>
@@ -750,14 +764,18 @@
 <li>
 <p><strong>Achieving Optimal Line Length:</strong></p>
 <ul>
-<li><strong><code>max-width</code> with <code>ch</code> units:</strong> The <code>ch</code> unit, which represents the width of the "0" character, is perfect for setting line lengths because it's directly related to character count.
+<li>
+<p><strong><code>max-width</code> with <code>ch</code> units:</strong> The <code>ch</code> unit, which represents the width of the "0" character, is perfect for setting line lengths because it's directly related to character count.
     <code>css
     p {
       max-width: 65ch; /* Ensures paragraphs don't exceed ~65 characters wide */
       margin-left: auto;
       margin-right: auto; /* Centers the paragraph if in a wider container */
-    }</code></li>
-<li><strong><code>max-width</code> with <code>rem</code>:</strong> You can also use <code>rem</code> for <code>max-width</code>, which will scale with your base font size, but it's less precise for character count than <code>ch</code>.</li>
+    }</code></p>
+</li>
+<li>
+<p><strong><code>max-width</code> with <code>rem</code>:</strong> You can also use <code>rem</code> for <code>max-width</code>, which will scale with your base font size, but it's less precise for character count than <code>ch</code>.</p>
+</li>
 <li><strong>Column Layouts:</strong> For very wide screens, consider using multi-column layouts (<code>column-count</code> CSS property) to break up long blocks of text into more readable segments.</li>
 </ul>
 </li>
@@ -831,12 +849,12 @@
 </ul>
 <p>Avoiding these common mistakes will help you build a more robust, accessible, and maintainable responsive typography system that genuinely enhances the user experience across all devices.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Q: Why is responsive font sizing important for websites?</strong>
-A: Responsive font sizing is crucial for enhancing user experience, improving accessibility, and boosting SEO. It ensures text is readable across diverse devices, preventing frustration from too small or too large fonts and accommodating users with visual impairments.</p>
-<p><strong>Q: What are the best CSS units for responsive font sizes?</strong>
-A: The <code>rem</code> unit is generally considered the best for primary font sizing due to its predictability, scalability, and respect for user browser settings. <code>em</code> is useful for component-level scaling, and <code>clamp()</code> (combining <code>vw</code> with <code>min/max</code> bounds) can provide fluid scaling for headlines.</p>
-<p><strong>Q: How do media queries help in responsive typography?</strong>
-A: Media queries allow developers to apply different CSS rules, including font sizes, based on screen characteristics like width. By adjusting the base <code>html</code> font size at various breakpoints, media queries enable proportional scaling of all <code>rem</code>-defined elements, adapting typography to different device sizes.</p>
+<p><strong>Q: Why is responsive font sizing important for websites?</strong></p>
+<p>A: Responsive font sizing is crucial for enhancing user experience, improving accessibility, and boosting SEO. It ensures text is readable across diverse devices, preventing frustration from too small or too large fonts and accommodating users with visual impairments.</p>
+<p><strong>Q: What are the best CSS units for responsive font sizes?</strong></p>
+<p>A: The <code>rem</code> unit is generally considered the best for primary font sizing due to its predictability, scalability, and respect for user browser settings. <code>em</code> is useful for component-level scaling, and <code>clamp()</code> (combining <code>vw</code> with <code>min/max</code> bounds) can provide fluid scaling for headlines.</p>
+<p><strong>Q: How do media queries help in responsive typography?</strong></p>
+<p>A: Media queries allow developers to apply different CSS rules, including font sizes, based on screen characteristics like width. By adjusting the base <code>html</code> font size at various breakpoints, media queries enable proportional scaling of all <code>rem</code>-defined elements, adapting typography to different device sizes.</p>
 <h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-size">MDN Web Docs: font-size</a></li>

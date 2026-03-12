@@ -135,7 +135,7 @@
     "https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial.webp"
   ],
   "datePublished": "2026-02-26T15:02:00+00:00",
-  "dateModified": "2026-03-07T00:04:33.779037+00:00",
+  "dateModified": "2026-03-12T16:24:21.519967+00:00",
   "author": {
     "@type": "Person",
     "name": "Admin",
@@ -251,6 +251,43 @@
 
   <div class="post-content">
     <p>When tackling advanced graph problems on platforms like Leetcode, you often encounter scenarios that push beyond the standard textbook algorithms. One such intriguing challenge is <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong>. This problem asks us to find not just the shortest time to reach a specific point in a city, but also the total count of distinct paths that achieve that exact minimum travel time. This comprehensive tutorial will guide you through understanding, approaching, and implementing a solution to effectively solve this problem, ensuring you grasp the nuances of modifying classic algorithms for modern challenges. By the end of this guide, you will have a clear understanding of how to combine shortest path algorithms with dynamic programming principles to solve problems requiring the computation of multiple optimal paths.</p>
+<div class="toc">
+<ul>
+<li><a href="#prerequisites-for-tackling-leetcode-1976">Prerequisites for Tackling Leetcode 1976</a><ul>
+<li><a href="#graph-theory-fundamentals">Graph Theory Fundamentals</a></li>
+<li><a href="#dijkstras-algorithm">Dijkstra's Algorithm</a></li>
+<li><a href="#dynamic-programming-concepts">Dynamic Programming Concepts</a></li>
+<li><a href="#modular-arithmetic">Modular Arithmetic</a></li>
+</ul>
+</li>
+<li><a href="#understanding-leetcode-1976-number-of-ways-to-arrive-at-destination">Understanding Leetcode 1976: Number of Ways to Arrive at Destination</a></li>
+<li><a href="#core-idea-and-algorithm-approach">Core Idea and Algorithm Approach</a></li>
+<li><a href="#detailed-steps-for-solving-leetcode-1976">Detailed Steps for Solving Leetcode 1976</a><ul>
+<li><a href="#step-1-represent-the-graph">Step 1: Represent the Graph</a></li>
+<li><a href="#step-2-initialize-data-structures">Step 2: Initialize Data Structures</a></li>
+<li><a href="#step-3-implement-modified-dijkstras-algorithm">Step 3: Implement Modified Dijkstra's Algorithm</a></li>
+<li><a href="#step-4-return-the-result">Step 4: Return the Result</a></li>
+<li><a href="#complete-code-implementation-python">Complete Code Implementation (Python)</a></li>
+<li><a href="#example-walkthrough">Example Walkthrough</a></li>
+</ul>
+</li>
+<li><a href="#complexity-analysis">Complexity Analysis</a><ul>
+<li><a href="#time-complexity">Time Complexity</a></li>
+<li><a href="#space-complexity">Space Complexity</a></li>
+</ul>
+</li>
+<li><a href="#common-mistakes-and-troubleshooting">Common Mistakes and Troubleshooting</a><ul>
+<li><a href="#1-incorrectly-handling-new_time-min_timev">1. Incorrectly Handling new_time == min_time[v]</a></li>
+<li><a href="#2-forgetting-modular-arithmetic">2. Forgetting Modular Arithmetic</a></li>
+<li><a href="#3-incorrect-graph-representation">3. Incorrect Graph Representation</a></li>
+<li><a href="#4-initialization-errors">4. Initialization Errors</a></li>
+<li><a href="#5-stale-entries-in-priority-queue-less-common-with-proper-checks">5. Stale Entries in Priority Queue (Less common with proper checks)</a></li>
+</ul>
+</li>
+<li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a href="#further-reading-resources">Further Reading &amp; Resources</a></li>
+</ul>
+</div>
 <h2 id="prerequisites-for-tackling-leetcode-1976">Prerequisites for Tackling Leetcode 1976</h2>
 <p>Before diving into the solution for "Number of Ways to Arrive at Destination," a solid understanding of several fundamental concepts is crucial. These prerequisites form the bedrock upon which our optimized algorithm will be built. Familiarity with these topics will ensure you can fully grasp the intricacies of the problem and its solution.</p>
 <h3 id="graph-theory-fundamentals">Graph Theory Fundamentals</h3>
@@ -310,14 +347,22 @@ If there's a path <code>0 -&gt; A -&gt; D</code> taking 10 minutes and another p
 <ul>
 <li>It will still use a min-priority queue to explore nodes. The elements in the priority queue will be <code>(current_time, u)</code>, representing that we have found a path to node <code>u</code> taking <code>current_time</code> minutes. The priority queue ensures we always process the node that is closest to the source first.</li>
 <li>When we extract a node <code>u</code> with <code>current_time</code> from the priority queue, we know <code>current_time</code> is the <em>definite</em> shortest time to reach <code>u</code> (just like in standard Dijkstra's). This is because Dijkstra's algorithm processes nodes in increasing order of their shortest path distances.</li>
-<li>For each neighbor <code>v</code> of <code>u</code> connected by an edge of weight <code>w</code>:<ul>
+<li>
+<p>For each neighbor <code>v</code> of <code>u</code> connected by an edge of weight <code>w</code>:</p>
+<ul>
 <li>Calculate the time to reach <code>v</code> via <code>u</code>: <code>new_time = current_time + w</code>.</li>
-<li><strong>Case 1: <code>new_time &lt; min_time[v]</code></strong>
-    This means we've found a <em>strictly shorter</em> path to <code>v</code>. We update <code>min_time[v]</code> to <code>new_time</code>. Crucially, since this is a new shortest path, the number of ways to reach <code>v</code> must now be the same as the number of ways to reach <code>u</code>. So, <code>ways[v] = ways[u]</code>. Then, we add <code>(new_time, v)</code> to the priority queue to explore paths originating from <code>v</code>.</li>
-<li><strong>Case 2: <code>new_time == min_time[v]</code></strong>
-    This is the critical modification. We've found an <em>alternative path</em> to <code>v</code> that takes the <em>exact same minimum time</em> as an existing shortest path. This means we've discovered additional ways to reach <code>v</code> in the minimum time. Therefore, we <em>add</em> the number of ways to reach <code>u</code> (<code>ways[u]</code>) to <code>ways[v]</code>. So, <code>ways[v] = (ways[v] + ways[u]) % MOD</code>. We also add <code>(new_time, v)</code> to the priority queue, as this path could lead to shortest paths for other nodes, and its contribution to the <code>ways</code> count needs to be propagated.</li>
-<li><strong>Case 3: <code>new_time &gt; min_time[v]</code></strong>
-    This path is longer than an already known shortest path to <code>v</code>. We simply ignore it, as it cannot contribute to the shortest time or the ways to achieve it.</li>
+<li>
+<p><strong>Case 1: <code>new_time &lt; min_time[v]</code></strong>
+    This means we've found a <em>strictly shorter</em> path to <code>v</code>. We update <code>min_time[v]</code> to <code>new_time</code>. Crucially, since this is a new shortest path, the number of ways to reach <code>v</code> must now be the same as the number of ways to reach <code>u</code>. So, <code>ways[v] = ways[u]</code>. Then, we add <code>(new_time, v)</code> to the priority queue to explore paths originating from <code>v</code>.</p>
+</li>
+<li>
+<p><strong>Case 2: <code>new_time == min_time[v]</code></strong>
+    This is the critical modification. We've found an <em>alternative path</em> to <code>v</code> that takes the <em>exact same minimum time</em> as an existing shortest path. This means we've discovered additional ways to reach <code>v</code> in the minimum time. Therefore, we <em>add</em> the number of ways to reach <code>u</code> (<code>ways[u]</code>) to <code>ways[v]</code>. So, <code>ways[v] = (ways[v] + ways[u]) % MOD</code>. We also add <code>(new_time, v)</code> to the priority queue, as this path could lead to shortest paths for other nodes, and its contribution to the <code>ways</code> count needs to be propagated.</p>
+</li>
+<li>
+<p><strong>Case 3: <code>new_time &gt; min_time[v]</code></strong>
+    This path is longer than an already known shortest path to <code>v</code>. We simply ignore it, as it cannot contribute to the shortest time or the ways to achieve it.</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -497,20 +542,26 @@ Source: <code>0</code>, Destination: <code>2</code></p>
 <p><strong>Pop <code>(0, 0)</code> from <code>pq</code>. <code>u = 0</code>, <code>current_time = 0</code>.</strong></p>
 <ul>
 <li><code>min_time[0] = 0</code>, <code>ways[0] = 1</code>. (<code>current_time</code> is not greater than <code>min_time[0]</code>, so not stale).</li>
-<li>Neighbors of <code>0</code>: <code>(1, 10)</code>, <code>(2, 20)</code> (neighbor node, travel time)<ul>
-<li><strong>Neighbor <code>v = 1</code>, <code>travel_time = 10</code></strong>:
+<li>
+<p>Neighbors of <code>0</code>: <code>(1, 10)</code>, <code>(2, 20)</code> (neighbor node, travel time)</p>
+<ul>
+<li>
+<p><strong>Neighbor <code>v = 1</code>, <code>travel_time = 10</code></strong>:
     <code>new_time = 0 + 10 = 10</code>.
     <code>10 &lt; min_time[1]</code> (<code>inf</code>):
     <code>min_time[1] = 10</code>
     <code>ways[1] = ways[0] = 1</code>
-    <code>heapq.heappush(pq, (10, 1))</code></li>
-<li><strong>Neighbor <code>v = 2</code>, <code>travel_time = 20</code></strong>:
+    <code>heapq.heappush(pq, (10, 1))</code></p>
+</li>
+<li>
+<p><strong>Neighbor <code>v = 2</code>, <code>travel_time = 20</code></strong>:
     <code>new_time = 0 + 20 = 20</code>.
     <code>20 &lt; min_time[2]</code> (<code>inf</code>):
     <code>min_time[2] = 20</code>
     <code>ways[2] = ways[0] = 1</code>
     <code>heapq.heappush(pq, (20, 2))</code>
-<code>pq</code> is now <code>[(10, 1), (20, 2)]</code> (order might vary slightly for equal priorities, but for distinct times it's stable).</li>
+    <code>pq</code> is now <code>[(10, 1), (20, 2)]</code> (order might vary slightly for equal priorities, but for distinct times it's stable).</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -519,18 +570,24 @@ Source: <code>0</code>, Destination: <code>2</code></p>
 <p><strong>Pop <code>(10, 1)</code> from <code>pq</code>. <code>u = 1</code>, <code>current_time = 10</code>.</strong></p>
 <ul>
 <li><code>min_time[1] = 10</code>, <code>ways[1] = 1</code>. (<code>current_time == min_time[1]</code>, not stale).</li>
-<li>Neighbors of <code>1</code>: <code>(0, 10)</code>, <code>(2, 10)</code><ul>
-<li><strong>Neighbor <code>v = 0</code>, <code>travel_time = 10</code></strong>:
+<li>
+<p>Neighbors of <code>1</code>: <code>(0, 10)</code>, <code>(2, 10)</code></p>
+<ul>
+<li>
+<p><strong>Neighbor <code>v = 0</code>, <code>travel_time = 10</code></strong>:
     <code>new_time = 10 + 10 = 20</code>.
-    <code>20 &gt; min_time[0]</code> (<code>0</code>): Ignore (this path is longer than already known shortest path to 0).</li>
-<li><strong>Neighbor <code>v = 2</code>, <code>travel_time = 10</code></strong>:
+    <code>20 &gt; min_time[0]</code> (<code>0</code>): Ignore (this path is longer than already known shortest path to 0).</p>
+</li>
+<li>
+<p><strong>Neighbor <code>v = 2</code>, <code>travel_time = 10</code></strong>:
     <code>new_time = 10 + 10 = 20</code>.
     Compare <code>new_time</code> with <code>min_time[2]</code> (which is <code>20</code>):
     <code>new_time == min_time[2]</code> (both are <code>20</code>):
     This is an alternative shortest path to <code>v=2</code>.
     <code>ways[2] = (ways[2] + ways[1]) % MOD = (1 + 1) % MOD = 2</code>.
     <code>heapq.heappush(pq, (20, 2))</code>
-<code>pq</code> is now <code>[(20, 2), (20, 2)]</code>. (Note: The specific order of two entries with identical priority might vary slightly, but both will be processed).</li>
+    <code>pq</code> is now <code>[(20, 2), (20, 2)]</code>. (Note: The specific order of two entries with identical priority might vary slightly, but both will be processed).</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -539,14 +596,20 @@ Source: <code>0</code>, Destination: <code>2</code></p>
 <p><strong>Pop <code>(20, 2)</code> from <code>pq</code>. <code>u = 2</code>, <code>current_time = 20</code>.</strong></p>
 <ul>
 <li><code>min_time[2] = 20</code>, <code>ways[2] = 2</code>. (<code>current_time == min_time[2]</code>, not stale).</li>
-<li>Neighbors of <code>2</code>: <code>(0, 20)</code>, <code>(1, 10)</code><ul>
-<li><strong>Neighbor <code>v = 0</code>, <code>travel_time = 20</code></strong>:
+<li>
+<p>Neighbors of <code>2</code>: <code>(0, 20)</code>, <code>(1, 10)</code></p>
+<ul>
+<li>
+<p><strong>Neighbor <code>v = 0</code>, <code>travel_time = 20</code></strong>:
     <code>new_time = 20 + 20 = 40</code>.
-    <code>40 &gt; min_time[0]</code> (<code>0</code>): Ignore.</li>
-<li><strong>Neighbor <code>v = 1</code>, <code>travel_time = 10</code></strong>:
+    <code>40 &gt; min_time[0]</code> (<code>0</code>): Ignore.</p>
+</li>
+<li>
+<p><strong>Neighbor <code>v = 1</code>, <code>travel_time = 10</code></strong>:
     <code>new_time = 20 + 10 = 30</code>.
     <code>30 &gt; min_time[1]</code> (<code>10</code>): Ignore.
-<code>pq</code> is now <code>[(20, 2)]</code>.</li>
+    <code>pq</code> is now <code>[(20, 2)]</code>.</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -564,9 +627,11 @@ Source: <code>0</code>, Destination: <code>2</code></p>
 <p>Final State:
 <code>min_time = [0, 10, 20]</code>
 <code>ways = [1, 1, 2]</code></p>
-<p>Result: <code>ways[n-1]</code> (i.e., <code>ways[2]</code>) is <code>2</code>. This correctly identifies two paths that achieve the minimum time of 20 minutes to reach node 2:
-1.  <code>0 -&gt; 2</code> (direct path, time 20)
-2.  <code>0 -&gt; 1 -&gt; 2</code> (via node 1, time 10 + 10 = 20)</p>
+<p>Result: <code>ways[n-1]</code> (i.e., <code>ways[2]</code>) is <code>2</code>. This correctly identifies two paths that achieve the minimum time of 20 minutes to reach node 2:</p>
+<ol>
+<li><code>0 -&gt; 2</code> (direct path, time 20)</li>
+<li><code>0 -&gt; 1 -&gt; 2</code> (via node 1, time 10 + 10 = 20)</li>
+</ol>
 <p>This example clearly illustrates how the <code>ways</code> count is accumulated when multiple paths yield the same minimum time.</p>
 <h2 id="complexity-analysis">Complexity Analysis</h2>
 <p>Understanding the performance characteristics of our solution is vital for competitive programming and software engineering.</p>
@@ -635,12 +700,12 @@ Source: <code>0</code>, Destination: <code>2</code></p>
 </ul>
 <p>By carefully considering these common mistakes and adhering to the detailed steps, you can confidently implement a correct and efficient solution for <strong>Leetcode 1976: Number of Ways to Arrive at Destination</strong>.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<p><strong>Q: Why can't a standard Dijkstra's algorithm solve Leetcode 1976 directly?</strong>
-A: A standard Dijkstra's algorithm is designed to find only one shortest path (or the shortest distance) from a source to all other nodes. It doesn't inherently track or count multiple distinct paths that might achieve the exact same minimum distance. Leetcode 1976 requires counting all such paths, which necessitates additional logic beyond basic shortest path discovery.</p>
-<p><strong>Q: Why is modular arithmetic necessary in this problem?</strong>
-A: The problem statement specifies that the "number of ways" can be very large. Without modular arithmetic (e.g., modulo <code>10^9 + 7</code>), the count of paths could exceed the maximum value representable by standard integer data types, leading to integer overflow and incorrect results. Applying the modulo operation at each addition keeps the numbers within a manageable range.</p>
-<p><strong>Q: What is the time complexity of this modified Dijkstra's solution, and what contributes to it?</strong>
-A: The time complexity is typically <code>O(E log V)</code> or <code>O(E log E)</code> when using a binary heap. This comes from building the adjacency list (<code>O(V+E)</code>) and the Dijkstra's traversal itself. Each edge <code>E</code> can potentially lead to a relaxation (distance update) and a push operation on the priority queue, which takes <code>O(log K)</code> time, where <code>K</code> is the size of the priority queue, bounded by <code>E</code>.</p>
+<p><strong>Q: Why can't a standard Dijkstra's algorithm solve Leetcode 1976 directly?</strong></p>
+<p>A: A standard Dijkstra's algorithm is designed to find only one shortest path (or the shortest distance) from a source to all other nodes. It doesn't inherently track or count multiple distinct paths that might achieve the exact same minimum distance. Leetcode 1976 requires counting all such paths, which necessitates additional logic beyond basic shortest path discovery.</p>
+<p><strong>Q: Why is modular arithmetic necessary in this problem?</strong></p>
+<p>A: The problem statement specifies that the "number of ways" can be very large. Without modular arithmetic (e.g., modulo <code>10^9 + 7</code>), the count of paths could exceed the maximum value representable by standard integer data types, leading to integer overflow and incorrect results. Applying the modulo operation at each addition keeps the numbers within a manageable range.</p>
+<p><strong>Q: What is the time complexity of this modified Dijkstra's solution, and what contributes to it?</strong></p>
+<p>A: The time complexity is typically <code>O(E log V)</code> or <code>O(E log E)</code> when using a binary heap. This comes from building the adjacency list (<code>O(V+E)</code>) and the Dijkstra's traversal itself. Each edge <code>E</code> can potentially lead to a relaxation (distance update) and a push operation on the priority queue, which takes <code>O(log K)</code> time, where <code>K</code> is the size of the priority queue, bounded by <code>E</code>.</p>
 <h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
 <ul>
 <li><strong>Dijkstra's Algorithm on Wikipedia:</strong> <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm</a></li>
