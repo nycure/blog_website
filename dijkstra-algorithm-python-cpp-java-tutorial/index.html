@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide
+</title>
+
+    <!-- Canonical URL -->
+    <link href="https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/" rel="canonical"/>
+
+    <!-- Favicon -->
+    <link href="https://analyticsdrive.tech/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="https://analyticsdrive.tech/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+    <link href="https://analyticsdrive.tech/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+    <link href="https://analyticsdrive.tech/site.webmanifest" rel="manifest"/>
+    <link href="https://analyticsdrive.tech/favicon.ico" rel="icon" type="image/x-icon">
+
+    <!-- RSS Feed -->
+    <link href="https://analyticsdrive.tech/feeds/all.atom.xml" rel="alternate" title="Analytics Drive Atom Feed" type="application/atom+xml">
+
+    <!-- SEO Meta Tags -->
+    <meta content="Master the Dijkstra Algorithm in Python, C++, and Java with this comprehensive guide. Learn its principles, step-by-step implementation, and real-world applications." name="description"/>
+    <meta content="Analytics Drive Editorial Team" name="author"/>
+
+    <!-- Open Graph -->
+    <meta content="Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide" property="og:title"/>
+    <meta content="Master the Dijkstra Algorithm in Python, C++, and Java with this comprehensive guide. Learn its principles, step-by-step implementation, and real-world applications." property="og:description"/>
+    <meta content="article
+" property="og:type"/>
+    <meta content="https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/" property="og:url"/>
+    <meta content="https://analyticsdrive.tech/images/dijkstra-algorithm-python-cpp-java-tutorial.webp" property="og:image"/>
+
+    <!-- Twitter Card -->
+    <meta content="summary_large_image" name="twitter:card"/>
+    <meta content="@analyticsdrive" name="twitter:site"/>
+    <meta content="Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide" name="twitter:title"/>
+    <meta content="Master the Dijkstra Algorithm in Python, C++, and Java with this comprehensive guide. Learn its principles, step-by-step implementation, and real-world applications." name="twitter:description"/>
+    <meta content="https://analyticsdrive.tech/images/dijkstra-algorithm-python-cpp-java-tutorial.webp" name="twitter:image"/>
+
+    <!-- Deferred Google Tag Manager -->
+    <script>
+        (function() {
+            let gtmLoaded = false;
+            function loadGTM() {
+                if (gtmLoaded) return;
+                gtmLoaded = true;
+                let script = document.createElement('script');
+                script.src = "https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9";
+                script.async = true;
+                document.head.appendChild(script);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-P1LT4885S9');
+            }
+            ['scroll', 'touchstart', 'mousemove'].forEach(event => {
+                window.addEventListener(event, loadGTM, { passive: true, once: true });
+            });
+        })();
+    </script>
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://analyticsdrive.tech/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Algorithms",
+    "item": "https://analyticsdrive.tech/category/algorithms.html"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide",
+    "item": "https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/"
+  }]
+}
+</script>
+<meta content="2026-02-26T15:15:00+05:30" property="article:published_time"/>
+<meta content="Algorithms" property="article:section"/>
+<meta content="Algorithms" property="article:tag"/>
+<meta content="Python" property="article:tag"/>
+<meta content="C Plus Plus" property="article:tag"/>
+
+<!-- Twitter Player Card -->
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://analyticsdrive.tech/#website",
+          "url": "https://analyticsdrive.tech/",
+          "name": "Analytics Drive",
+          "description": "Analytics Drive is your destination for breaking news, in-depth tech tutorials, and expert analysis on AI and Geopolitics. Stay informed with investigations and opinions from the front lines of innovation.",
+          "publisher": { "@id": "https://analyticsdrive.tech/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://analyticsdrive.tech/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://analyticsdrive.tech/#organization",
+          "name": "Analytics Drive",
+          "url": "https://analyticsdrive.tech/",
+          "logo": {
+            "@type": "ImageObject",
+            "@id": "https://analyticsdrive.tech/#logo",
+            "url": "https://analyticsdrive.tech/android-chrome-512x512.png",
+            "width": 512,
+            "height": 512,
+            "caption": "Analytics Drive"
+          },
+          "image": { "@id": "https://analyticsdrive.tech/#logo" },
+          "sameAs": [
+            "https://twitter.com/analyticsdrive",            "https://www.facebook.com/profile.php?id=61588072082428",            "https://www.instagram.com/analyticsdrive",            "https://www.reddit.com/r/Analyticsdrive/"          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://analyticsdrive.tech/#sitenav",
+          "name": "Site Navigation",
+          "itemListElement": [
+            {
+              "@type": "SiteNavigationElement",
+              "position": 1,
+              "name": "Home",
+              "url": "https://analyticsdrive.tech/"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 2,
+              "name": "Politics & Geopolitics",
+              "url": "https://analyticsdrive.tech/category/politics-geopolitics.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 3,
+              "name": "Artificial Intelligence",
+              "url": "https://analyticsdrive.tech/category/artificial-intelligence.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 4,
+              "name": "World News",
+              "url": "https://analyticsdrive.tech/category/world-news.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 5,
+              "name": "About",
+              "url": "https://analyticsdrive.tech/about/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Render-blocking CSS Eliminated: Inlined style.css -->
+    <style>
+:root {
+    --bg-paper: #ffffff;
+    --text-ink: #2a2a2a;
+    --text-muted: #666;
+    --border-line: #e0e0e0;
+    --accent: #000;
+    --link-color: #005b96;
+    --font-masthead: 'UnifrakturMaguntia', cursive;
+    --font-headline: 'Playfair Display', serif;
+    --font-body: 'Libre Baskerville', serif;
+    --font-ui: 'Libre Franklin', sans-serif;
+    --max-width: 1100px;
+    --spacing: 2rem;
+    --bg-footer: #f9f9f9;
+    --text-summary: #444444;
+}
+
+[data-theme="dark"] {
+    --bg-paper: #121212;
+    --text-ink: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-line: #333333;
+    --accent: #ffffff;
+    --link-color: #64b5f6;
+    --bg-footer: #1e1e1e;
+    --text-summary: #d0d0d0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-paper);
+    color: var(--text-ink);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #003366;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing);
+}
+
+.site-header {
+    padding: 2rem 0 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--accent);
+    position: relative;
+    z-index: 100;
+}
+
+.site-header .logo {
+    font-family: var(--font-masthead);
+    font-size: 4rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.site-header .logo .dot {
+    display: none;
+}
+
+.main-nav {
+    border-top: 1px solid var(--border-line);
+    border-bottom: 3px double var(--border-line);
+    padding: 0.75rem 0;
+    position: relative;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.main-nav a {
+    color: var(--text-ink);
+    text-decoration: none;
+}
+
+.main-nav a:hover {
+    color: #555;
+    text-decoration: underline;
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-ink);
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-50%) rotate(15deg);
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-line);
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-family: var(--font-headline);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.hero p {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 3rem 0;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.pagination a {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--border-line);
+    color: var(--text-ink);
+    transition: 0.2s;
+}
+
+.pagination a:hover {
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-color: var(--accent);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding-bottom: 4rem;
+}
+
+.post-card {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.post-meta {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.post-meta .category a {
+    color: #d00;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.post-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.post-card h3 a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.post-card h3 a:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+.post-card p {
+    color: var(--text-summary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.read-more {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--link-color);
+}
+
+.single-post header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 2rem;
+}
+
+.single-post h1 {
+    font-family: var(--font-headline);
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.single-post .post-meta {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.featured-image {
+    max-width: 740px;
+    margin: 0 auto 2rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-card-image {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.post-card-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover .post-card-image img {
+    transform: scale(1.05);
+}
+
+.post-content {
+    max-width: 740px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    background: transparent;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.post-content>p:first-of-type::first-letter {
+    float: left;
+    font-family: var(--font-headline);
+    font-size: 4.5rem;
+    line-height: 0.8;
+    padding-right: 12px;
+    padding-top: 4px;
+    color: var(--accent);
+}
+
+.post-content h2,
+.post-content h3 {
+    font-family: var(--font-headline);
+    color: var(--accent);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-ink);
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem auto;
+    border-radius: 8px;
+}
+
+.post-content pre {
+    background: #282C34;
+    border-left: 4px solid #61AFEF;
+    border-radius: 6px;
+    margin: 2rem 0;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #ABB2BF;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+}
+
+.post-content pre code {
+    background: transparent;
+    color: #ABB2BF;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+.post-content code {
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    color: #E06C75;
+    background: rgba(40, 44, 52, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    word-break: break-word;
+}
+
+[data-theme="dark"] .post-content code {
+    background: rgba(97, 175, 239, 0.1);
+    color: #E06C75;
+}
+
+.post-content .highlight {
+    background: #282C34;
+    border-left: 4px solid #61AFEF;
+    border-radius: 6px;
+    margin: 2rem 0;
+    overflow-x: auto;
+}
+
+.post-content .highlight pre {
+    background: transparent;
+    border: none;
+    margin: 0;
+}
+
+.post-content pre .c,
+.post-content pre .ch,
+.post-content pre .cm,
+.post-content pre .cp,
+.post-content pre .c1,
+.post-content pre .cs,
+.post-content pre .cpf,
+.highlight .c,
+.highlight .ch,
+.highlight .cm,
+.highlight .cp,
+.highlight .c1,
+.highlight .cs {
+    color: #7F848E;
+}
+
+.post-content pre .k,
+.post-content pre .kd,
+.post-content pre .kn,
+.post-content pre .kp,
+.post-content pre .kr,
+.highlight .k,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr {
+    color: #C678DD;
+}
+
+.post-content pre .kc,
+.post-content pre .kt,
+.post-content pre .nb,
+.post-content pre .nc,
+.post-content pre .bp,
+.highlight .kc,
+.highlight .kt,
+.highlight .nb,
+.highlight .nc,
+.highlight .bp {
+    color: #E5C07B;
+}
+
+.post-content pre .s,
+.post-content pre .s1,
+.post-content pre .s2,
+.post-content pre .sa,
+.post-content pre .sb,
+.post-content pre .sc,
+.post-content pre .se,
+.post-content pre .sh,
+.post-content pre .si,
+.post-content pre .sr,
+.post-content pre .ss,
+.post-content pre .sx,
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sa,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sr,
+.highlight .ss,
+.highlight .sx {
+    color: #98C379;
+}
+
+.post-content pre .m,
+.post-content pre .mb,
+.post-content pre .mf,
+.post-content pre .mh,
+.post-content pre .mi,
+.post-content pre .mo,
+.post-content pre .il,
+.highlight .m,
+.highlight .mb,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il {
+    color: #D19A66;
+}
+
+.post-content pre .nf,
+.post-content pre .nd,
+.post-content pre .fm,
+.highlight .nf,
+.highlight .nd,
+.highlight .fm {
+    color: #61AFEF;
+    font-weight: bold;
+}
+
+.post-content pre .o,
+.post-content pre .ow,
+.highlight .o,
+.highlight .ow {
+    color: #56B6C2;
+}
+
+.post-content pre .n,
+.post-content pre .na,
+.post-content pre .ni,
+.post-content pre .nl,
+.post-content pre .nn,
+.post-content pre .no,
+.post-content pre .nt,
+.post-content pre .nv,
+.post-content pre .nx,
+.post-content pre .ne,
+.post-content pre .vc,
+.post-content pre .vg,
+.post-content pre .vi,
+.post-content pre .vm,
+.highlight .na,
+.highlight .ni,
+.highlight .no,
+.highlight .nt,
+.highlight .nv,
+.highlight .ne,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+    color: #E06C75;
+}
+
+.post-content pre .p,
+.post-content pre .w,
+.highlight .p,
+.highlight .w {
+    color: #ABB2BF;
+}
+
+.post-content pre .hll,
+.highlight .hll {
+    background-color: #3E4451;
+}
+
+.post-content pre .err,
+.highlight .err {
+    color: #ABB2BF;
+}
+
+.article-footer-meta {
+    max-width: 740px;
+    margin: 4rem auto 0;
+    border-top: 4px solid var(--accent);
+    padding-top: 2rem;
+}
+
+.article-footer-meta strong {
+    color: var(--accent);
+}
+
+.accent-text {
+    color: var(--link-color);
+}
+
+.breadcrumb {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.breadcrumb a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .sep {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 0.2rem 0.7rem;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tag:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    text-decoration: none;
+}
+
+[data-theme="dark"] .tag {
+    background: #2a2a2a;
+    color: #ccc;
+    border-color: #444;
+}
+
+[data-theme="dark"] .tag:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.site-footer {
+    margin-top: 5rem;
+    border-top: 1px solid var(--accent);
+    padding: 3rem 0;
+    background: var(--bg-footer);
+    text-align: center;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Mobile Menu Base Styles */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001; /* Above nav */
+}
+
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--text-ink);
+    transition: all 0.3s ease-in-out;
+    border-radius: 2px;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width:768px) {
+    .site-header {
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
+    }
+
+    .site-header .logo {
+        font-size: 2.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .single-post h1 {
+        font-size: 2.25rem;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 2rem;
+        left: 1rem;
+    }
+
+    .main-nav {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100vh;
+        background: var(--bg-paper);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        padding: 2rem;
+        border-top: none;
+        border-bottom: none;
+        border-right: 1px solid var(--border-line);
+    }
+
+    [data-theme="dark"] .main-nav {
+        box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+
+    .main-nav.menu-open {
+        transform: translateX(0);
+    }
+
+    .main-nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+        text-align: center;
+        overflow-x: visible;
+        white-space: normal;
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-nav ul li a {
+        font-size: 1.25rem;
+    }
+
+    .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        transform: none;
+        margin-left: 0;
+    }
+
+    .theme-toggle:hover {
+        transform: rotate(15deg);
+    }
+}
+
+@media (max-width: 900px) {
+    .related-posts__grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .related-post-card {
+        min-height: 80px;
+    }
+
+    .related-post-card__img-wrap {
+        flex: 0 0 80px;
+        width: 80px;
+    }
+
+    .related-post-card__title {
+        font-size: 0.85rem;
+    }
+
+    .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        transform: none;
+        margin-left: 0;
+    }
+
+    .theme-toggle:hover {
+        transform: rotate(15deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .related-post-card__title {
+        font-size: 0.78rem;
+    }
+}
+
+/* --- Footer Legal Links --- */
+.footer-legal {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.footer-legal a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin: 0 0.75rem;
+    font-weight: 500;
+}
+
+.footer-legal a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* ── Related & Latest Articles Cards ──────────────────────── */
+.related-posts {
+    max-width: 740px;
+    margin: 4rem auto 0;
+    padding-top: 3rem;
+    border-top: 2px solid var(--accent);
+}
+
+.related-posts h3 {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.related-posts h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border-line), transparent);
+}
+
+/* 2-column grid on desktop */
+.related-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.related-posts:first-of-type .related-posts__grid {
+    grid-template-columns: 1fr; /* Keep Related as single column for focus */
+}
+
+/* Modern Card Design */
+.related-post-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 100px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-line);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+[data-theme="dark"] .related-post-card {
+    background: var(--bg-footer);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.related-post-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    border-color: var(--link-color);
+    text-decoration: none;
+}
+
+[data-theme="dark"] .related-post-card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* Thumbnail with Badge */
+.related-post-card__img-wrap {
+    flex: 0 0 110px;
+    width: 110px;
+    position: relative;
+    overflow: hidden;
+    background: var(--border-line);
+}
+
+.related-post-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.related-post-card:hover .related-post-card__img-wrap img {
+    transform: scale(1.1);
+}
+
+.category-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: var(--link-color);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Content Area */
+.related-post-card__content {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.related-post-card__title {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+}
+
+.related-post-card:hover .related-post-card__title {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+}
+
+
+/* --- Social Share Sidebar (Desktop) --- */
+.share-sidebar {
+    position: fixed;
+    top: 50%;
+    left: 2rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 100;
+}
+
+.share-sidebar__label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.share-sidebar__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-paper);
+    color: var(--text-ink);
+    border: 1px solid var(--border-line);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.share-sidebar__btn:hover {
+    transform: translateX(5px);
+    color: #fff;
+}
+
+.share-sidebar__btn--twitter:hover { background: #000; border-color: #000; }
+.share-sidebar__btn--facebook:hover { background: #1877f2; border-color: #1877f2; }
+.share-sidebar__btn--reddit:hover { background: #ff4500; border-color: #ff4500; }
+.share-sidebar__btn--whatsapp:hover { background: #25d366; border-color: #25d366; }
+
+[data-theme="dark"] .share-sidebar__btn {
+    background: var(--bg-footer);
+}
+
+[data-theme="dark"] .share-sidebar__btn--twitter:hover {
+    background: #fff; color: #000; border-color: #fff;
+}
+
+/* --- Social Share Buttons (Mobile/Inline) --- */
+.share-buttons {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-line);
+}
+
+.share-label {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--text-ink);
+}
+
+.share-btn {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+.share-btn:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 1200px) {
+    .share-sidebar {
+        display: none;
+    }
+    .share-buttons {
+        display: flex;
+    }
+}    </style>
+    <!-- Optimized Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;family=Libre+Franklin:wght@300;500;700&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=UnifrakturMaguntia&amp;text=Analytics%20Drive&amp;display=swap" rel="preload"/>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;family=Libre+Franklin:wght@300;500;700&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=UnifrakturMaguntia&amp;text=Analytics%20Drive&amp;display=swap" media="print" onload="this.media='all'" rel="stylesheet"/>
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;family=Libre+Franklin:wght@300;500;700&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=UnifrakturMaguntia&amp;text=Analytics%20Drive&amp;display=swap" rel="stylesheet"/>
+    </noscript>
+</link></link></head>
+
+<body>
+    <header class="site-header">
+        <button aria-expanded="false" aria-label="Toggle Mobile Menu" class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <a class="logo" href="https://analyticsdrive.tech/">Analytics Drive<span class="dot">.</span></a>
+        <nav aria-label="Main Navigation" class="main-nav" id="main-nav" itemscope="" itemtype="https://schema.org/SiteNavigationElement">
+            <ul>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/" itemprop="url">Home</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/archives.html" itemprop="url">Archives</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/categories.html" itemprop="url">Categories</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/tags.html" itemprop="url">Tags</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/about/" itemprop="url">About</a></li>
+            </ul>
+            <button aria-label="Toggle Dark Mode" class="theme-toggle" id="theme-toggle">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/"
+  },
+  "headline": "Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide",
+  "description": "Master the Dijkstra Algorithm in Python, C++, and Java with this comprehensive guide. Learn its principles, step-by-step implementation, and real-world applications.",
+  "image": [
+    "https://analyticsdrive.tech/images/dijkstra-algorithm-python-cpp-java-tutorial.webp"
+  ],
+  "datePublished": "2026-02-26T15:15:00+05:30",
+  "dateModified": "2026-03-15T03:20:01.011665+05:30",
+  "author": {
+    "@type": "Organization",
+    "name": "Analytics Drive Editorial Team",
+    "url": "https://analyticsdrive.tech/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/android-chrome-512x512.png"
+    }
+  }
+}
+</script>
+
+
+
+<!-- Floating Sticky Share Sidebar (desktop only) -->
+<aside aria-label="Share this article" class="share-sidebar">
+  <span class="share-sidebar__label">Share</span>
+
+  <!-- X (Twitter) -->
+  <a aria-label="Share on X" class="share-sidebar__btn share-sidebar__btn--twitter" href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/&amp;text=Dijkstra%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Comprehensive%20Guide" rel="noopener noreferrer" target="_blank">
+    <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+    </svg>
+  </a>
+
+  <!-- Facebook -->
+  <a aria-label="Share on Facebook" class="share-sidebar__btn share-sidebar__btn--facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/" rel="noopener noreferrer" target="_blank">
+    <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+    </svg>
+  </a>
+
+  <!-- Reddit -->
+  <a aria-label="Share on Reddit" class="share-sidebar__btn share-sidebar__btn--reddit" href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/&amp;title=Dijkstra%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Comprehensive%20Guide" rel="noopener noreferrer" target="_blank">
+    <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"></path>
+    </svg>
+  </a>
+
+  <!-- WhatsApp -->
+  <a aria-label="Share on WhatsApp" class="share-sidebar__btn share-sidebar__btn--whatsapp" href="https://wa.me/?text=Dijkstra%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Comprehensive%20Guide%20https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/" rel="noopener noreferrer" target="_blank">
+    <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"></path>
+    </svg>
+  </a>
+</aside>
+
+<article class="single-post">
+  <!-- Breadcrumb -->
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <a href="https://analyticsdrive.tech/">Home</a>
+    <span class="sep">›</span>
+    <a href="https://analyticsdrive.tech/category/algorithms.html">Algorithms</a>
+    <span class="sep">›</span>
+    <span class="current" title="Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide">Dijkstra Algorithm in Python, C++, Java: A...</span>
+  </nav>
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2026-02-26T15:15:00+05:30">Thu 26 February 2026</time>
+    </div>
+    <h1>Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide</h1>
+  </header>
+
+
+  <figure class="featured-image">
+    <img alt="Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide" class="image-process-article_hero" fetchpriority="high" height="630" src="https://analyticsdrive.tech/images/derivatives/article_hero/1200w/dijkstra-algorithm-python-cpp-java-tutorial.webp" srcset="https://analyticsdrive.tech/images/derivatives/article_hero/400w/dijkstra-algorithm-python-cpp-java-tutorial.webp 400w, https://analyticsdrive.tech/images/derivatives/article_hero/800w/dijkstra-algorithm-python-cpp-java-tutorial.webp 800w, https://analyticsdrive.tech/images/derivatives/article_hero/1200w/dijkstra-algorithm-python-cpp-java-tutorial.webp 1200w" width="1200"/>
+  </figure>
+
+  <div class="post-content">
+    <p>The realm of graph theory is vast, and within it, finding the shortest path between two points is a fundamental problem with countless applications. From GPS navigation systems to network routing protocols, efficient shortest path algorithms are crucial. Among these, the <strong>Dijkstra Algorithm</strong> stands out as a classic, renowned for its elegance and effectiveness in solving the single-source shortest path problem for graphs with non-negative edge weights. This <strong>comprehensive guide</strong> will walk you through understanding its core principles and implementing the <strong>Dijkstra Algorithm in Python, C++, and Java</strong>, equipping you with practical skills in these popular programming languages.</p>
+<div class="toc">
+<ul>
+<li><a href="#introduction-to-dijkstras-algorithm">Introduction to Dijkstra's Algorithm</a></li>
+<li><a href="#prerequisites-for-understanding-dijkstras-algorithm">Prerequisites for Understanding Dijkstra's Algorithm</a><ul>
+<li><a href="#graphs-and-their-components">Graphs and Their Components</a></li>
+<li><a href="#priority-queues">Priority Queues</a></li>
+<li><a href="#basic-programming-concepts">Basic Programming Concepts</a></li>
+</ul>
+</li>
+<li><a href="#what-is-dijkstras-algorithm-a-conceptual-deep-dive">What is Dijkstra's Algorithm? A Conceptual Deep Dive</a></li>
+<li><a href="#how-dijkstras-algorithm-works-step-by-step-logic">How Dijkstra's Algorithm Works: Step-by-Step Logic</a><ul>
+<li><a href="#1-initialize-distances-and-structures">1. Initialize Distances and Structures</a></li>
+<li><a href="#2-process-nodes-using-the-priority-queue">2. Process Nodes Using the Priority Queue</a></li>
+<li><a href="#3-check-for-visited-nodes">3. Check for Visited Nodes</a></li>
+<li><a href="#4-mark-node-as-visited">4. Mark Node as Visited</a></li>
+<li><a href="#5-explore-neighbors-and-update-distances-relaxation">5. Explore Neighbors and Update Distances (Relaxation)</a></li>
+<li><a href="#6-repeat-until-completion">6. Repeat Until Completion</a></li>
+</ul>
+</li>
+<li><a href="#dijkstras-algorithm-implementation-in-python">Dijkstra's Algorithm Implementation in Python</a><ul>
+<li><a href="#1-graph-representation">1. Graph Representation</a></li>
+<li><a href="#2-using-pythons-heapq-for-priority-queue">2. Using Python's heapq for Priority Queue</a></li>
+<li><a href="#3-full-code-for-dijkstras-algorithm-in-python">3. Full Code for Dijkstra's Algorithm in Python</a></li>
+</ul>
+</li>
+<li><a href="#dijkstras-algorithm-implementation-in-c">Dijkstra's Algorithm Implementation in C++</a><ul>
+<li><a href="#1-graph-representation_1">1. Graph Representation</a></li>
+<li><a href="#2-using-stdpriority_queue">2. Using std::priority_queue</a></li>
+<li><a href="#3-full-code-for-dijkstras-algorithm-in-c">3. Full Code for Dijkstra's Algorithm in C++</a></li>
+</ul>
+</li>
+<li><a href="#dijkstras-algorithm-implementation-in-java">Dijkstra's Algorithm Implementation in Java</a><ul>
+<li><a href="#1-graph-representation_2">1. Graph Representation</a></li>
+<li><a href="#2-using-javas-priorityqueue">2. Using Java's PriorityQueue</a></li>
+<li><a href="#3-full-code-for-dijkstras-algorithm-in-java">3. Full Code for Dijkstra's Algorithm in Java</a></li>
+</ul>
+</li>
+<li><a href="#time-and-space-complexity-of-dijkstras-algorithm">Time and Space Complexity of Dijkstra's Algorithm</a><ul>
+<li><a href="#time-complexity">Time Complexity</a></li>
+<li><a href="#space-complexity">Space Complexity</a></li>
+</ul>
+</li>
+<li><a href="#common-mistakes-and-considerations">Common Mistakes and Considerations</a><ul>
+<li><a href="#1-negative-edge-weights">1. Negative Edge Weights</a></li>
+<li><a href="#2-disconnected-graphs">2. Disconnected Graphs</a></li>
+<li><a href="#3-graph-representation-efficiency">3. Graph Representation Efficiency</a></li>
+<li><a href="#4-priority-queue-implementation">4. Priority Queue Implementation</a></li>
+<li><a href="#5-handling-duplicate-entries-in-priority-queue">5. Handling Duplicate Entries in Priority Queue</a></li>
+</ul>
+</li>
+<li><a href="#real-world-applications-of-dijkstras-algorithm">Real-World Applications of Dijkstra's Algorithm</a></li>
+<li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a href="#further-reading-resources">Further Reading &amp; Resources</a></li>
+</ul>
+</div>
+<h2 id="introduction-to-dijkstras-algorithm">Introduction to Dijkstra's Algorithm</h2>
+<p>Dijkstra's Algorithm, named after its inventor Edsger W. Dijkstra, is a greedy algorithm designed to find the shortest paths from a single source node to all other nodes in a graph. It works by iteratively exploring the most promising unvisited node, ensuring that each step takes the locally optimal choice in the hope that it will lead to a globally optimal solution. This approach is guaranteed to find the true shortest path as long as all edge weights are non-negative. The algorithm maintains a set of visited nodes and a set of unvisited nodes, alongside an array of tentative distances from the source to every other node. It continuously selects the unvisited node with the smallest tentative distance, adds it to the visited set, and then updates the distances of its neighbors. This process continues until all nodes have been visited or all reachable nodes have been processed.</p>
+<h2 id="prerequisites-for-understanding-dijkstras-algorithm">Prerequisites for Understanding Dijkstra's Algorithm</h2>
+<p>Before diving into the implementation details, it's beneficial to have a foundational understanding of a few key concepts. A solid grasp of these building blocks will make the logic of Dijkstra's Algorithm much clearer.</p>
+<h3 id="graphs-and-their-components">Graphs and Their Components</h3>
+<p>A graph consists of nodes (or vertices) and edges. Edges can be directed (one-way connections) or undirected (two-way connections), and in the context of Dijkstra's, they almost always have associated weights, representing cost, distance, time, or any other metric. These weights are crucial as Dijkstra's seeks to minimize the cumulative weight along a path. Graphs can be represented programmatically using an adjacency list (more memory-efficient for sparse graphs) or an adjacency matrix (better for dense graphs). Understanding these representations is key to translating the theoretical algorithm into executable code. For other graph traversal problems, especially those on a grid or where edge weights are uniform, algorithms like Breadth-First Search (BFS) are often employed, such as when finding the shortest path of <code>1</code>s from <code>0</code>s in the <a href="/01-matrix-problem-shortest-distance-bfs-dp-explained/">01 Matrix problem</a>.</p>
+<h3 id="priority-queues">Priority Queues</h3>
+<p>A priority queue is an abstract data type where each element has a "priority." Elements with higher priority are served before elements with lower priority. For Dijkstra's Algorithm, a min-priority queue is essential, as it allows us to efficiently retrieve the unvisited node with the smallest known distance from the source. This ability to quickly access the minimum element is what makes Dijkstra's efficient, especially for larger graphs. Without an efficient priority queue, the algorithm's performance would degrade significantly.</p>
+<h3 id="basic-programming-concepts">Basic Programming Concepts</h3>
+<p>Familiarity with fundamental data structures like arrays, lists, and maps (dictionaries) is important. A grasp of object-oriented programming (classes, objects) will also be helpful, especially for C++ and Java implementations, where custom data types are often used to represent edges or nodes in the priority queue. Understanding loops, conditionals, and functions/methods is also a given.</p>
+<h2 id="what-is-dijkstras-algorithm-a-conceptual-deep-dive">What is Dijkstra's Algorithm? A Conceptual Deep Dive</h2>
+<p>At its core, Dijkstra's Algorithm is a systematic way to explore a graph to find the cheapest path from a starting point to all other reachable points. Imagine you're trying to find the quickest route from your home to several friends' houses. You start by assuming the time to reach any friend is infinite, except for your own house, which takes zero time.</p>
+<p>The algorithm uses three main pieces of information:</p>
+<ul>
+<li><strong>Distances</strong>: An array or map that stores the shortest known distance from the source node to every other node. Initially, the source node's distance is 0, and all other nodes have an infinite distance. This array is continuously updated as shorter paths are discovered.</li>
+<li><strong>Visited Set</strong>: A set of nodes for which the shortest path from the source has already been finalized. Once a node is added to this set, its distance is considered final and will not be updated again. This is crucial for the algorithm's correctness, preventing redundant processing and ensuring optimality.</li>
+<li><strong>Priority Queue</strong>: A min-priority queue that stores pairs of <code>(distance, node)</code>. This allows the algorithm to always extract the unvisited node that currently has the smallest tentative distance, making the algorithm greedy. The "greedy" aspect comes from always picking the currently shortest path, believing it will lead to the overall shortest path because edge weights are non-negative.</li>
+</ul>
+<p>The beauty of Dijkstra's lies in its greedy approach. By always picking the unvisited node with the smallest current distance, the algorithm ensures that once a node is processed and added to the <code>visited</code> set, its path from the source is indeed the shortest. This holds true because all edge weights are non-negative; adding any additional edges to an already finalized path segment would only increase the path length, never decrease it. This guarantee is fundamental to Dijkstra's correctness.</p>
+<h2 id="how-dijkstras-algorithm-works-step-by-step-logic">How Dijkstra's Algorithm Works: Step-by-Step Logic</h2>
+<p>Let's break down the execution flow of the algorithm into digestible steps:</p>
+<h3 id="1-initialize-distances-and-structures">1. Initialize Distances and Structures</h3>
+<p>Create a <code>distance</code> map (or array) where <code>distance[source_node] = 0</code> and <code>distance[other_nodes] = infinity</code>. Also, initialize a <code>priority_queue</code> and add the <code>(0, source_node)</code> pair to it. Keep track of <code>visited</code> nodes, initially an empty set or boolean array. This setup establishes the initial conditions before exploration begins.</p>
+<h3 id="2-process-nodes-using-the-priority-queue">2. Process Nodes Using the Priority Queue</h3>
+<p>While the <code>priority_queue</code> is not empty, extract the node <code>u</code> with the smallest <code>distance</code> value. This is the core greedy step where the algorithm decides which node to explore next. The priority queue efficiently provides this node, ensuring we always expand from the closest unvisited node.</p>
+<h3 id="3-check-for-visited-nodes">3. Check for Visited Nodes</h3>
+<p>If <code>u</code> has already been visited, skip it. This check is necessary because a node might be added to the priority queue multiple times with different (but always non-increasing) distances as new, shorter paths to it are discovered. We only care about the first time we finalize its shortest path.</p>
+<h3 id="4-mark-node-as-visited">4. Mark Node as Visited</h3>
+<p>Mark node <code>u</code> as visited. Its <code>distance[u]</code> is now finalized as the shortest path from the source. At this point, no other path through an unvisited node could possibly be shorter due to the non-negative edge weight constraint.</p>
+<h3 id="5-explore-neighbors-and-update-distances-relaxation">5. Explore Neighbors and Update Distances (Relaxation)</h3>
+<p>For each neighbor <code>v</code> of node <code>u</code>:</p>
+<div class="highlight"><pre><span></span><code>*   Calculate the `new_distance = distance[u] + weight(u, v)`. This represents the path distance from the source to `v` going through `u`.
+*   If `new_distance` is less than `distance[v]`, it means we found a shorter path to `v` through `u`. This process is called "relaxation."
+*   Update `distance[v] = new_distance`.
+*   Add `(new_distance, v)` to the `priority_queue`. This neighbor `v` now has an updated, potentially shorter path, making it a candidate for future processing.
+</code></pre></div>
+
+<h3 id="6-repeat-until-completion">6. Repeat Until Completion</h3>
+<p>Continue steps 2-5 until the <code>priority_queue</code> is empty. At this point, all reachable nodes will have had their shortest paths finalized, and the <code>distance</code> map will contain the shortest path distances from the source to all reachable nodes.</p>
+<h2 id="dijkstras-algorithm-implementation-in-python">Dijkstra's Algorithm Implementation in Python</h2>
+<p>Python's flexibility and built-in data structures make implementing Dijkstra's relatively straightforward. We'll use a dictionary to represent the graph as an adjacency list and Python's <code>heapq</code> module for the priority queue.</p>
+<h3 id="1-graph-representation">1. Graph Representation</h3>
+<p>In Python, an adjacency list can be represented using a dictionary where keys are nodes and values are lists of <code>(neighbor, weight)</code> tuples.</p>
+<div class="highlight"><pre><span></span><code><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'A'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'B'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)],</span>
+    <span class="s1">'B'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">'D'</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>
+    <span class="s1">'C'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'A'</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">'D'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="s1">'D'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'B'</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="2-using-pythons-heapq-for-priority-queue">2. Using Python's <code>heapq</code> for Priority Queue</h3>
+<p>The <code>heapq</code> module provides an implementation of the heap queue algorithm, also known as the priority queue algorithm. It allows us to push and pop elements efficiently. Since <code>heapq</code> is a min-heap, it's perfect for our needs. We'll store tuples <code>(distance, node)</code> in the heap, and it will automatically prioritize by the first element (distance).</p>
+<h3 id="3-full-code-for-dijkstras-algorithm-in-python">3. Full Code for Dijkstra's Algorithm in Python</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">heapq</span>
+
+<span class="k">def</span> <span class="nf">dijkstra_python</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start_node</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Implements Dijkstra's Algorithm to find the shortest paths</span>
+<span class="sd">    from a start_node to all other nodes in a graph.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graph (dict): Adjacency list representation of the graph.</span>
+<span class="sd">                      e.g., {'A': [('B', 1), ('C', 4)], ...}</span>
+<span class="sd">        start_node (str): The starting node for the algorithm.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: A dictionary mapping each node to its shortest distance</span>
+<span class="sd">              from the start_node. Returns float('inf') for unreachable nodes.</span>
+<span class="sd">    """</span>
+    <span class="c1"># Step 1: Initialize distances and structures</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">}</span>
+    <span class="n">distances</span><span class="p">[</span><span class="n">start_node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Priority queue stores (distance, node) tuples</span>
+    <span class="n">priority_queue</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_node</span><span class="p">)]</span>
+
+    <span class="c1"># Keep track of visited nodes to avoid redundant processing</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="c1"># Step 2: Process nodes using the priority queue</span>
+    <span class="k">while</span> <span class="n">priority_queue</span><span class="p">:</span>
+        <span class="c1"># Extract the node with the smallest distance</span>
+        <span class="n">current_distance</span><span class="p">,</span> <span class="n">current_node</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">priority_queue</span><span class="p">)</span>
+
+        <span class="c1"># Step 3: Check for visited nodes</span>
+        <span class="c1"># If we've already found the shortest path to this node, skip it</span>
+        <span class="k">if</span> <span class="n">current_node</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Step 4: Mark node as visited</span>
+        <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+
+        <span class="c1"># Step 5: Explore neighbors and update distances (Relaxation)</span>
+        <span class="k">for</span> <span class="n">neighbor</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">current_node</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="c1"># Only consider unvisited neighbors for relaxation</span>
+            <span class="k">if</span> <span class="n">neighbor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">current_distance</span> <span class="o">+</span> <span class="n">weight</span>
+                <span class="c1"># If a shorter path to the neighbor is found</span>
+                <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="n">distances</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]:</span>
+                    <span class="n">distances</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+                    <span class="c1"># Add/update neighbor in the priority queue</span>
+                    <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">priority_queue</span><span class="p">,</span> <span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">))</span>
+
+    <span class="c1"># Step 6: Return the final distances</span>
+    <span class="k">return</span> <span class="n">distances</span>
+
+<span class="c1"># Step 7: Example Usage</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">example_graph</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'A'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'B'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)],</span>
+        <span class="s1">'B'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">'D'</span><span class="p">,</span> <span class="mi">5</span><span class="p">)],</span>
+        <span class="s1">'C'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'A'</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">'D'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+        <span class="s1">'D'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'B'</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">'E'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
+        <span class="s1">'E'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'D'</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s1">'F'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+        <span class="s1">'F'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'E'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+    <span class="p">}</span>
+
+    <span class="n">start_node_py</span> <span class="o">=</span> <span class="s1">'A'</span>
+    <span class="n">shortest_paths_py</span> <span class="o">=</span> <span class="n">dijkstra_python</span><span class="p">(</span><span class="n">example_graph</span><span class="p">,</span> <span class="n">start_node_py</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dijkstra's Algorithm in Python (starting from </span><span class="si">{</span><span class="n">start_node_py</span><span class="si">}</span><span class="s2">):"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">shortest_paths_py</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Shortest path from </span><span class="si">{</span><span class="n">start_node_py</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">dist</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="c1"># Example with a disconnected node</span>
+    <span class="n">disconnected_graph</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'A'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'B'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+        <span class="s1">'B'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+        <span class="s1">'C'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'D'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+        <span class="s1">'D'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'C'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Dijkstra's Algorithm in Python (disconnected graph, starting from A):"</span><span class="p">)</span>
+    <span class="n">disconnected_paths</span> <span class="o">=</span> <span class="n">dijkstra_python</span><span class="p">(</span><span class="n">disconnected_graph</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">disconnected_paths</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Shortest path from A to </span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">dist</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This Python implementation provides a clear, concise, and efficient way to compute the shortest paths using Dijkstra's algorithm. The use of <code>heapq</code> streamlines the priority queue operations, making the code quite readable.</p>
+<h2 id="dijkstras-algorithm-implementation-in-c">Dijkstra's Algorithm Implementation in C++</h2>
+<p>C++ offers powerful standard library containers and algorithms, making it an excellent choice for implementing graph algorithms. We'll use <code>std::vector</code> for adjacency lists, <code>std::priority_queue</code> for the priority queue, and <code>std::vector</code> for distances and tracking.</p>
+<h3 id="1-graph-representation_1">1. Graph Representation</h3>
+<p>In C++, an adjacency list can be represented as <code>std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt;&gt;&gt;</code>. Each inner vector stores pairs of <code>(neighbor_node, weight)</code>. We'll typically map node names (e.g., characters) to integer indices for easier array/vector access.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Example graph representation for 5 nodes (0-4)</span>
+<span class="c1">// Node 0: (Neighbor 1, Weight 1), (Neighbor 2, Weight 4)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">;</span>
+<span class="c1">// To populate:</span>
+<span class="c1">// adj[0].push_back({1, 1});</span>
+<span class="c1">// adj[0].push_back({2, 4});</span>
+</code></pre></div>
+
+<h3 id="2-using-stdpriority_queue">2. Using <code>std::priority_queue</code></h3>
+<p>C++'s <code>std::priority_queue</code> is a max-heap by default. To make it a min-heap for <code>(distance, node)</code> pairs, we can store <code>(negative_distance, node)</code> or use a custom comparator. A common trick for min-heap behavior with pairs is to store <code>std::pair&lt;int, int&gt;</code> as <code>(distance, node)</code> and use <code>std::greater&lt;std::pair&lt;int, int&gt;&gt;</code> as the comparator, or simply store <code>(-distance, node)</code> and extract the max. We will use the <code>std::greater</code> trick, which naturally orders pairs by their first element in ascending order.</p>
+<h3 id="3-full-code-for-dijkstras-algorithm-in-c">3. Full Code for Dijkstra's Algorithm in C++</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;queue&gt;</span><span class="c1">      // For std::priority_queue</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;limits&gt;</span><span class="c1">     // For std::numeric_limits&lt;int&gt;::max()</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;map&gt;</span><span class="c1">        // For mapping char nodes to int indices</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;tuple&gt;</span><span class="c1">      // For std::tuple in example usage</span>
+
+<span class="c1">// Define a struct to hold edge information</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Edge</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">to</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Define a struct for nodes in the priority queue</span>
+<span class="c1">// The first element is distance, second is node index</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">NodeDist</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">node_idx</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Custom comparator for min-priority queue</span>
+<span class="w">    </span><span class="c1">// This makes std::priority_queue act as a min-heap for NodeDist objects</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">NodeDist</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dist</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">dist</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">dijkstra_cpp</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;&amp;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">start_node_idx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">num_nodes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Step 1: Initialize distances and structures</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">distances</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">());</span>
+<span class="w">    </span><span class="n">distances</span><span class="p">[</span><span class="n">start_node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Min-priority queue: stores {distance, node_index}</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">priority_queue</span><span class="o">&lt;</span><span class="n">NodeDist</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">NodeDist</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">greater</span><span class="o">&lt;</span><span class="n">NodeDist</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">pq</span><span class="p">;</span>
+<span class="w">    </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">start_node_idx</span><span class="p">});</span>
+
+<span class="w">    </span><span class="c1">// An explicit 'visited' set/array can also be used, but checking</span>
+<span class="w">    </span><span class="c1">// `current_distance &gt; distances[current_node_idx]` upon extraction</span>
+<span class="w">    </span><span class="c1">// is a common and valid way to handle redundant entries in the PQ.</span>
+
+<span class="w">    </span><span class="c1">// Step 2: Process nodes using the priority queue</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">NodeDist</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+<span class="w">        </span><span class="n">pq</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">current_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="n">dist</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">current_node_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="n">node_idx</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Step 3: Check if this path is already longer than a known shortest path</span>
+<span class="w">        </span><span class="c1">// If we extracted a node with a distance greater than what's already known</span>
+<span class="w">        </span><span class="c1">// (due to a previous shorter path being found and added to PQ), skip it.</span>
+<span class="w">        </span><span class="c1">// This effectively handles "visited" nodes or redundant entries.</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current_distance</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">current_node_idx</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Step 4: No explicit mark as visited needed here due to the check above.</span>
+<span class="w">        </span><span class="c1">// Conceptually, distances[current_node_idx] is now finalized.</span>
+
+<span class="w">        </span><span class="c1">// Step 5: Explore neighbors and update distances (Relaxation)</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Edge</span><span class="o">&amp;</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">adj</span><span class="p">[</span><span class="n">current_node_idx</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">neighbor_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">to</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="n">weight</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Calculate new distance to neighbor through current_node</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">current_node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="c1">// Ensure current_node is reachable</span>
+<span class="w">                </span><span class="n">distances</span><span class="p">[</span><span class="n">current_node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">neighbor_idx</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">distances</span><span class="p">[</span><span class="n">neighbor_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">current_node_idx</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="w">                </span><span class="n">pq</span><span class="p">.</span><span class="n">push</span><span class="p">({</span><span class="n">distances</span><span class="p">[</span><span class="n">neighbor_idx</span><span class="p">],</span><span class="w"> </span><span class="n">neighbor_idx</span><span class="p">});</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Step 6: Print results</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Dijkstra's Algorithm in C++ (starting from node "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">start_node_idx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"):</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_nodes</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"  Shortest path from "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">start_node_idx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">" to "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">": "</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Unreachable</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Step 7: Example Usage</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Map char nodes to int indices for easier use with vector</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">node_to_idx</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">idx_to_node</span><span class="p">;</span><span class="w"> </span><span class="c1">// To map back from index to char for printing</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">next_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">get_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="kt">char</span><span class="w"> </span><span class="n">node_char</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">node_to_idx</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">node_char</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">node_to_idx</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">node_to_idx</span><span class="p">[</span><span class="n">node_char</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next_idx</span><span class="o">++</span><span class="p">;</span>
+<span class="w">            </span><span class="n">idx_to_node</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node_char</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">node_to_idx</span><span class="p">[</span><span class="n">node_char</span><span class="p">];</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Define graph edges</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">{</span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="sc">'F'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="sc">'F'</span><span class="p">,</span><span class="w"> </span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Populate node indices and determine total number of nodes</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">edge_tuple</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">get_idx</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">edge_tuple</span><span class="p">));</span>
+<span class="w">        </span><span class="n">get_idx</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">edge_tuple</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">num_nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next_idx</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Create adjacency list</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">edge_tuple</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">u_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_idx</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">edge_tuple</span><span class="p">));</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">v_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_idx</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">edge_tuple</span><span class="p">));</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">edge_tuple</span><span class="p">);</span>
+<span class="w">        </span><span class="n">adj</span><span class="p">[</span><span class="n">u_idx</span><span class="p">].</span><span class="n">push_back</span><span class="p">({</span><span class="n">v_idx</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">start_node_char</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">'A'</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">start_node_idx_cpp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_to_idx</span><span class="p">[</span><span class="n">start_node_char</span><span class="p">];</span>
+
+<span class="w">    </span><span class="n">dijkstra_cpp</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">start_node_idx_cpp</span><span class="p">,</span><span class="w"> </span><span class="n">num_nodes</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The C++ implementation is more verbose due to explicit memory management, types, and the need for custom comparators for <code>std::priority_queue</code>. However, it offers high performance and fine-grained control, which are often critical in large-scale applications. Note the use of <code>std::numeric_limits&lt;int&gt;::max()</code> for infinity and the <code>NodeDist</code> struct with overloaded <code>operator&gt;</code> for the priority queue.</p>
+<h2 id="dijkstras-algorithm-implementation-in-java">Dijkstra's Algorithm Implementation in Java</h2>
+<p>Java's robust ecosystem and object-oriented nature make it well-suited for implementing graph algorithms. We'll leverage <code>ArrayList</code> for adjacency lists, <code>PriorityQueue</code> for the priority queue, and arrays for distances and visited status.</p>
+<h3 id="1-graph-representation_2">1. Graph Representation</h3>
+<p>In Java, an adjacency list can be represented as <code>ArrayList&lt;ArrayList&lt;Edge&gt;&gt;</code> or <code>HashMap&lt;Integer, ArrayList&lt;Edge&gt;&gt;</code>. A custom <code>Edge</code> class or a <code>Pair</code> class for <code>(neighbor, weight)</code> is typically used.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Example for 5 nodes (0-4)</span>
+<span class="kd">class</span> <span class="nc">Edge</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">to</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Edge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">to</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">to</span><span class="p">;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="c1">// To populate:</span>
+<span class="c1">// adj.get(0).add(new Edge(1, 1));</span>
+<span class="c1">// adj.get(0).add(new Edge(2, 4));</span>
+</code></pre></div>
+
+<h3 id="2-using-javas-priorityqueue">2. Using Java's <code>PriorityQueue</code></h3>
+<p>Java's <code>java.util.PriorityQueue</code> is a min-priority queue by default for objects that implement <code>Comparable</code> or are constructed with a <code>Comparator</code>. We'll define a <code>NodeDist</code> class (or similar) to store <code>(distance, node_index)</code> and implement <code>Comparable</code> to prioritize by distance.</p>
+<h3 id="3-full-code-for-dijkstras-algorithm-in-java">3. Full Code for Dijkstra's Algorithm in Java</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.*</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.util.function.Function</span><span class="p">;</span><span class="w"> </span><span class="c1">// For the lambda in main example</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DijkstraJava</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// Helper class to represent an edge in the graph</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Edge</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">to</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="nf">Edge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">to</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">to</span><span class="p">;</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Helper class for nodes in the priority queue</span>
+<span class="w">    </span><span class="c1">// Stores (distance, node_index) and implements Comparable for min-priority queue</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">NodeDist</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Comparable</span><span class="o">&lt;</span><span class="n">NodeDist</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nodeIdx</span><span class="p">;</span>
+
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="nf">NodeDist</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">dist</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">nodeIdx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">dist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="p">;</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="na">nodeIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodeIdx</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Compare by distance for min-priority queue behavior</span>
+<span class="w">        </span><span class="nd">@Override</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">compareTo</span><span class="p">(</span><span class="n">NodeDist</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">dist</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="na">dist</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">dijkstra_java</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">numNodes</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">startNodeIdx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Step 1: Initialize distances and structures</span>
+<span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">distances</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">numNodes</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">);</span><span class="w"> </span><span class="c1">// Represents infinity</span>
+<span class="w">        </span><span class="n">distances</span><span class="o">[</span><span class="n">startNodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Min-priority queue: stores {distance, node_index}</span>
+<span class="w">        </span><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">NodeDist</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">pq</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">NodeDist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">startNodeIdx</span><span class="p">));</span>
+
+<span class="w">        </span><span class="c1">// Boolean array to keep track of visited nodes.</span>
+<span class="w">        </span><span class="c1">// This helps avoid reprocessing nodes whose shortest path is already finalized.</span>
+<span class="w">        </span><span class="kt">boolean</span><span class="o">[]</span><span class="w"> </span><span class="n">visited</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">boolean</span><span class="o">[</span><span class="n">numNodes</span><span class="o">]</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Step 2: Process nodes using the priority queue</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pq</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">NodeDist</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="na">poll</span><span class="p">();</span><span class="w"> </span><span class="c1">// Get node with smallest distance</span>
+
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">currentDist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="na">dist</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">currentNodeIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current</span><span class="p">.</span><span class="na">nodeIdx</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Step 3: Check for visited nodes or redundant entries</span>
+<span class="w">            </span><span class="c1">// If we've already found a shorter path to this node, or processed it, skip it.</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">visited</span><span class="o">[</span><span class="n">currentNodeIdx</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="c1">// Step 4: Mark node as visited</span>
+<span class="w">            </span><span class="n">visited</span><span class="o">[</span><span class="n">currentNodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+
+<span class="w">            </span><span class="c1">// Step 5: Explore neighbors and update distances (Relaxation)</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Edge</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">currentNodeIdx</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">neighborIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">to</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">weight</span><span class="p">;</span>
+
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">visited</span><span class="o">[</span><span class="n">neighborIdx</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Only consider unvisited neighbors for relaxation</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">distances</span><span class="o">[</span><span class="n">currentNodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="c1">// Ensure current_node is reachable</span>
+<span class="w">                        </span><span class="n">distances</span><span class="o">[</span><span class="n">currentNodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">distances</span><span class="o">[</span><span class="n">neighborIdx</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">distances</span><span class="o">[</span><span class="n">neighborIdx</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">distances</span><span class="o">[</span><span class="n">currentNodeIdx</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">weight</span><span class="p">;</span>
+<span class="w">                        </span><span class="n">pq</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">NodeDist</span><span class="p">(</span><span class="n">distances</span><span class="o">[</span><span class="n">neighborIdx</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">neighborIdx</span><span class="p">));</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Step 6: Return the final distances array</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">distances</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Step 7: Example Usage</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// We'll use character mapping like C++ example for clarity</span>
+<span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nodeToIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span><span class="w"> </span><span class="n">idxToNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// To map back from index to char for printing</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nextIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Helper to get integer index for a char node, creating new if not exists</span>
+<span class="w">        </span><span class="n">Function</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">nodeChar</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">nodeToIdx</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="n">nodeChar</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">nodeToIdx</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">nodeChar</span><span class="p">,</span><span class="w"> </span><span class="n">nextIdx</span><span class="o">++</span><span class="p">);</span>
+<span class="w">                </span><span class="n">idxToNode</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">nodeChar</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">nodeToIdx</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">nodeChar</span><span class="p">);</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="c1">// Define graph edges as tuples (source_char, dest_char, weight)</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'A'</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'B'</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'C'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'F'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)),</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'F'</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="sc">'E'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<span class="w">        </span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Populate node indices and determine total number of nodes</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">getIdx</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="na">getKey</span><span class="p">());</span>
+<span class="w">            </span><span class="n">getIdx</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">getKey</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">numNodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nextIdx</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Create adjacency list</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">adj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">numNodes</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numNodes</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">adj</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">SimpleEntry</span><span class="o">&lt;</span><span class="n">Character</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">edge</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">edges</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">uIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getIdx</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="na">getKey</span><span class="p">());</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">vIdx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getIdx</span><span class="p">.</span><span class="na">apply</span><span class="p">(</span><span class="n">edge</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">getKey</span><span class="p">());</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">edge</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">getValue</span><span class="p">();</span>
+<span class="w">            </span><span class="n">adj</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">uIdx</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Edge</span><span class="p">(</span><span class="n">vIdx</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">char</span><span class="w"> </span><span class="n">startNodeChar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">'A'</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">startNodeIdxJava</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodeToIdx</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">startNodeChar</span><span class="p">);</span>
+
+<span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">shortestPathsJava</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dijkstra_java</span><span class="p">(</span><span class="n">numNodes</span><span class="p">,</span><span class="w"> </span><span class="n">adj</span><span class="p">,</span><span class="w"> </span><span class="n">startNodeIdxJava</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Dijkstra's Algorithm in Java (starting from "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">startNodeChar</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"):"</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">numNodes</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">"  Shortest path from "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">startNodeChar</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" to "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">idxToNode</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">": "</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">shortestPathsJava</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Unreachable"</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">shortestPathsJava</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The Java implementation mirrors the C++ logic but uses Java's object-oriented features more prominently for defining <code>Edge</code> and <code>NodeDist</code> classes. The <code>Comparable</code> interface is crucial for <code>PriorityQueue</code> to correctly order elements.</p>
+<h2 id="time-and-space-complexity-of-dijkstras-algorithm">Time and Space Complexity of Dijkstra's Algorithm</h2>
+<p>Understanding the efficiency of Dijkstra's Algorithm is crucial for choosing the right tool for the job. Its complexity depends heavily on the graph representation and the priority queue implementation. Let <code>V</code> be the number of vertices (nodes) and <code>E</code> be the number of edges.</p>
+<h3 id="time-complexity">Time Complexity</h3>
+<ul>
+<li><strong>Without a Priority Queue</strong>: If the algorithm uses a simple array or list to find the minimum distance node in each step, iterating through all unvisited nodes to find the minimum would take <code>O(V)</code> time. Since there are <code>V</code> nodes, this search is performed <code>V</code> times, leading to a total time complexity of <code>O(V^2)</code>. This approach is generally less efficient but can be acceptable for very dense graphs where <code>E</code> is close to <code>V^2</code>.</li>
+<li><strong>With a Binary Heap (Priority Queue)</strong>: This is the most common and efficient implementation for general graphs.<ul>
+<li>Extracting the minimum element from the priority queue takes <code>O(log V)</code> time. This operation occurs <code>V</code> times (once for each node when its shortest path is finalized).</li>
+<li>Updating the distance of a neighbor (a "decrease-key" operation, which typically involves removing and re-inserting in a binary heap) and adding it to the priority queue also takes <code>O(log V)</code> time. In the worst case, every edge <code>E</code> might cause a priority queue insertion or update.</li>
+<li>Therefore, the total time complexity is <code>O(E log V + V log V)</code>, which simplifies to <code>O(E log V)</code> since <code>E</code> is typically greater than or equal to <code>V-1</code> for a connected graph. For sparse graphs (where <code>E</code> is much smaller than <code>V^2</code>), this is significantly better than <code>O(V^2)</code>.</li>
+</ul>
+</li>
+<li><strong>With a Fibonacci Heap</strong>: A more advanced priority queue, a Fibonacci heap, can further optimize the "decrease-key" operation to an amortized <code>O(1)</code>. This leads to a theoretical time complexity of <code>O(E + V log V)</code>. However, Fibonacci heaps are notoriously complex to implement, and their constant factors are often large, making binary heaps usually preferred in practice unless <code>E</code> is exceedingly large compared to <code>V</code>, where the theoretical advantage might outweigh implementation complexity.</li>
+</ul>
+<h3 id="space-complexity">Space Complexity</h3>
+<ul>
+<li>The space complexity is <code>O(V + E)</code>.<ul>
+<li><code>O(V)</code> for storing distances (e.g., in an array or map) and <code>O(V)</code> for the visited status.</li>
+<li><code>O(V + E)</code> for the adjacency list representation of the graph itself.</li>
+<li><code>O(V)</code> for the priority queue in the worst case (when all nodes are in the queue simultaneously, such as in a star graph).</li>
+</ul>
+</li>
+</ul>
+<h2 id="common-mistakes-and-considerations">Common Mistakes and Considerations</h2>
+<p>While Dijkstra's Algorithm is powerful, it comes with specific limitations and common pitfalls that developers must be aware of to ensure correct and efficient usage.</p>
+<h3 id="1-negative-edge-weights">1. Negative Edge Weights</h3>
+<p>Dijkstra's Algorithm <strong>does not work correctly with negative edge weights</strong>. Its greedy approach assumes that once a node's distance is finalized and added to the <code>visited</code> set, it cannot be improved further. However, a negative edge originating from an already visited node could potentially reduce the path to an unvisited neighbor, and subsequently, through that neighbor, to other nodes, including those that were supposedly "finalized." This violates the core assumption of Dijkstra's. For graphs with negative weights (but no negative cycles), algorithms like Bellman-Ford or SPFA are appropriate. For unweighted graphs, a simpler approach like <a href="/leetcode-127-word-ladder-bfs-tutorial/">Breadth-First Search (BFS)</a> can suffice to find the shortest path.</p>
+<h3 id="2-disconnected-graphs">2. Disconnected Graphs</h3>
+<p>If the graph contains disconnected components, Dijkstra's Algorithm will only find shortest paths to nodes within the component reachable from the source node. Nodes in other components will retain their initial "infinity" distance. The provided implementations correctly handle this by leaving unreachable nodes with <code>float('inf')</code> or <code>Integer.MAX_VALUE</code>. It's important to interpret these "infinity" values correctly in the results.</p>
+<h3 id="3-graph-representation-efficiency">3. Graph Representation Efficiency</h3>
+<p>Choosing an efficient graph representation is crucial for performance. For sparse graphs (where <code>E &lt;&lt; V^2</code>), an adjacency list is significantly more memory and time-efficient than an adjacency matrix. For very dense graphs, an adjacency matrix might be competitive in terms of <code>O(V^2)</code> complexity, but typically, adjacency lists combined with priority queues offer better asymptotic performance.</p>
+<h3 id="4-priority-queue-implementation">4. Priority Queue Implementation</h3>
+<p>A poorly implemented priority queue (e.g., manually searching for the minimum in an unsorted list in each step) can degrade the time complexity from an optimal <code>O(E log V)</code> to <code>O(V^2)</code>. Always use optimized priority queue data structures provided by standard libraries (<code>heapq</code> in Python, <code>std::priority_queue</code> in C++, <code>java.util.PriorityQueue</code> in Java) for efficient performance.</p>
+<h3 id="5-handling-duplicate-entries-in-priority-queue">5. Handling Duplicate Entries in Priority Queue</h3>
+<p>When a node's distance is updated (i.e., a shorter path to it is found), it might be re-added to the priority queue with its new, smaller distance. This creates duplicate entries for the same node in the queue, where older entries have larger distances. The algorithm must handle these correctly. A common and efficient way is to check if <code>current_distance &gt; distances[current_node]</code> <em>when extracting</em> from the priority queue; if true, it means a shorter path to <code>current_node</code> has already been processed (or an even shorter path was found and is already in the <code>distances</code> array), so the current (longer) entry can be safely skipped. Our C++ and Java examples implicitly handle this by this check, while the Python example uses an explicit <code>visited</code> set to achieve a similar effect. Both approaches are valid.</p>
+<h2 id="real-world-applications-of-dijkstras-algorithm">Real-World Applications of Dijkstra's Algorithm</h2>
+<p>The utility of Dijkstra's Algorithm extends far beyond academic exercises and forms the backbone of many critical systems we use daily:</p>
+<ul>
+<li><strong>GPS Navigation and Mapping Services</strong>: Every time you request directions for the shortest or fastest route between two locations, algorithms similar to Dijkstra's are at work. They calculate optimal paths on road networks where edge weights represent distances, travel times, or even traffic conditions.</li>
+<li><strong>Network Routing Protocols</strong>: In computer networks, routers use shortest path algorithms to determine the most efficient routes for data packets to travel from source to destination. OSPF (Open Shortest Path First) is a prominent example of a routing protocol that relies on Dijkstra's Algorithm to build and maintain routing tables.</li>
+<li><strong>Telephone Networks</strong>: Used for finding the shortest path for voice and data connections, ensuring efficient call routing and data transmission.</li>
+<li><strong>Social Network Analysis</strong>: Can be used to find the "shortest chain" of connections (or degrees of separation) between two people, which is related to the "six degrees of separation" concept. This helps in understanding influence and connectivity within networks.</li>
+<li><strong>Resource Allocation</strong>: Optimizing the flow of resources in various systems, such as logistics, supply chain management, or even urban planning, where edges represent costs, capacities, or distances between resource points.</li>
+<li><strong>Image Processing</strong>: In medical imaging and computer vision, Dijkstra's algorithm can be used for tasks like finding the "shortest path" for a cut in image segmentation algorithms, helping to delineate objects within an image.</li>
+<li><strong>Gaming AI</strong>: Non-player characters (NPCs) in video games often use pathfinding algorithms, including variants of Dijkstra's, to navigate complex game environments efficiently to reach a destination or avoid obstacles.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: What are the main limitations of Dijkstra's Algorithm?</strong></p>
+<p>A: Dijkstra's Algorithm's primary limitation is its inability to correctly handle graphs with negative edge weights. Its greedy approach relies on the assumption that once a node's shortest path is found, it cannot be improved, an assumption violated by negative edges. Additionally, it can be less efficient than specialized algorithms for extremely sparse or dense graphs in specific scenarios.</p>
+<p><strong>Q: When should I use Dijkstra's Algorithm instead of BFS or DFS?</strong></p>
+<p>A: Use Dijkstra's Algorithm when you need to find the single-source shortest paths in a graph where edges have <strong>non-negative weights</strong>. If the graph has <strong>unweighted edges</strong>, Breadth-First Search (BFS) is simpler and more efficient for finding shortest paths. Depth-First Search (DFS) is typically used for traversal, cycle detection, or topological sorting, not for shortest path problems.</p>
+<p><strong>Q: What data structure is crucial for an efficient Dijkstra implementation?</strong></p>
+<p>A: A <strong>min-priority queue</strong> is crucial for an efficient Dijkstra implementation. It allows the algorithm to quickly extract the unvisited node with the smallest tentative distance from the source in <code>O(log V)</code> time, leading to an overall time complexity of <code>O(E log V)</code> for a graph with V vertices and E edges. Without it, the complexity can degrade to <code>O(V^2)</code>.</p>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
+<ul>
+<li><strong>Wikipedia - Dijkstra's Algorithm</strong>: <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm</a></li>
+<li><strong>GeeksforGeeks - Dijkstra's shortest path algorithm</strong>: <a href="https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/">https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/</a></li>
+<li><strong>Programiz - Dijkstra's Algorithm</strong>: <a href="https://www.programiz.com/dsa/dijkstra-algorithm">https://www.programiz.com/dsa/dijkstra-algorithm</a></li>
+<li><strong>Python <code>heapq</code> module documentation</strong>: <a href="https://docs.python.org/3/library/heapq.html">https://docs.python.org/3/library/heapq.html</a></li>
+<li><strong>C++ <code>std::priority_queue</code> documentation (cppreference)</strong>: <a href="https://en.cppreference.com/w/cpp/container/priority_queue">https://en.cppreference.com/w/cpp/container/priority_queue</a></li>
+</ul>
+  </div>
+
+  <!-- Social Share Buttons -->
+  <div class="share-buttons">
+    <span class="share-label">Share:</span>
+
+    <!-- X (Twitter) -->
+    <a aria-label="Share on X" class="share-btn share-btn--twitter" href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/&amp;text=Dijkstra%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Comprehensive%20Guide" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a aria-label="Share on Facebook" class="share-btn share-btn--facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a aria-label="Share on Reddit" class="share-btn share-btn--reddit" href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/&amp;title=Dijkstra%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Comprehensive%20Guide" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"></path>
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a aria-label="Share on WhatsApp" class="share-btn share-btn--whatsapp" href="https://wa.me/?text=Dijkstra%20Algorithm%20in%20Python%2C%20C%2B%2B%2C%20Java%3A%20A%20Comprehensive%20Guide%20https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/" rel="noopener noreferrer" target="_blank">
+      <svg fill="currentColor" height="28" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2008/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"></path>
+      </svg>
+    </a>
+  </div>
+
+  <div class="article-footer-meta">
+    <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/algorithms.html">Algorithms</a></p>
+    <p itemprop="author" itemscope="" itemtype="https://schema.org/Organization">
+      <strong>Author:</strong>
+      <a href="https://analyticsdrive.tech/about/" itemprop="url">
+        <span itemprop="name">Analytics Drive Editorial Team</span>
+      </a>
+    </p>
+    <div class="tags-list">
+      <strong>Tags:</strong>
+      <a class="tag" href="https://analyticsdrive.tech/tag/algorithms.html">#Algorithms</a>
+      <a class="tag" href="https://analyticsdrive.tech/tag/python.html">#Python</a>
+      <a class="tag" href="https://analyticsdrive.tech/tag/c-plus-plus.html">#C Plus Plus</a>
+    </div>
+  </div>
+
+  <div class="related-posts">
+    <h3>Related Articles</h3>
+    <div class="related-posts__grid">
+      <a class="related-post-card" href="https://analyticsdrive.tech/839-similar-string-groups-leetcode-python-cpp-java-tutorial/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Algorithms</span>
+            <img alt="839 Similar String Groups LeetCode: Python, C++, Java Solutions" loading="lazy" src="https://analyticsdrive.tech/images/839-similar-string-groups-leetcode-python-cpp-java-tutorial.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">839 Similar String Groups LeetCode: Python, C++, Java Solutions</div>
+          <div class="related-post-card__meta">
+            <span>Algorithms</span>
+            <span class="dot">•</span>
+            <span>5 days ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/number-of-islands-graph-traversal-tutorial/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Algorithms</span>
+            <img alt="Number Of Islands: A Deep Dive into Graph Traversal Algorithms" loading="lazy" src="https://analyticsdrive.tech/images/number-of-islands-graph-traversal-tutorial.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Number Of Islands: A Deep Dive into Graph Traversal Algorithms</div>
+          <div class="related-post-card__meta">
+            <span>Algorithms</span>
+            <span class="dot">•</span>
+            <span>5 days ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/1697-checking-existence-edge-length-limited-paths/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Competitive Programming</span>
+            <img alt="1697. Checking Existence of Edge Length Limited Paths: A Deep Dive" loading="lazy" src="https://analyticsdrive.tech/images/1697-checking-existence-edge-length-limited-paths.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">1697. Checking Existence of Edge Length Limited Paths: A Deep Dive</div>
+          <div class="related-post-card__meta">
+            <span>Competitive Programming</span>
+            <span class="dot">•</span>
+            <span>5 days ago</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="related-posts">
+    <h3>Latest Articles</h3>
+    <div class="related-posts__grid">
+      <a class="related-post-card" href="https://analyticsdrive.tech/400-killed-pakistan-strike-kabul-hospital/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">World News</span>
+            <img alt="400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage" loading="lazy" src="https://analyticsdrive.tech/images/400-killed-pakistan-strike-kabul-hospital-hero.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage</div>
+          <div class="related-post-card__meta">
+            <span>World News</span>
+            <span class="dot">•</span>
+            <span>21 hours ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/unpacking-global-geopolitical-shifts-new-era/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Politics &amp; Geopolitics</span>
+            <img alt="Unpacking Global Geopolitical Shifts: A New Era Unfolds" loading="lazy" src="https://analyticsdrive.tech/images/unpacking-global-geopolitical-shifts-new-era-hero.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Unpacking Global Geopolitical Shifts: A New Era Unfolds</div>
+          <div class="related-post-card__meta">
+            <span>Politics &amp; Geopolitics</span>
+            <span class="dot">•</span>
+            <span>1 day ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/ai-automation-business-growth/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Artificial Intelligence</span>
+            <img alt="Powering Growth: The Rise of AI Automation for Business" loading="lazy" src="https://analyticsdrive.tech/images/ai-automation-business-growth.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Powering Growth: The Rise of AI Automation for Business</div>
+          <div class="related-post-card__meta">
+            <span>Artificial Intelligence</span>
+            <span class="dot">•</span>
+            <span>1 day ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/how-to-use-ai-for-coding-developer-guide/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Artificial Intelligence</span>
+            <img alt="How to Use AI for Coding: A Practical Developer's Guide" loading="lazy" src="https://analyticsdrive.tech/images/how-to-use-ai-for-coding-developer-guide.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Use AI for Coding: A Practical Developer's Guide</div>
+          <div class="related-post-card__meta">
+            <span>Artificial Intelligence</span>
+            <span class="dot">•</span>
+            <span>1 day ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/is-blogging-dead-in-2026/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Technology</span>
+            <img alt="Is Blogging Dead in 2026? Unpacking the Digital Landscape" loading="lazy" src="https://analyticsdrive.tech/images/is-blogging-dead-in-2026-hero.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Is Blogging Dead in 2026? Unpacking the Digital Landscape</div>
+          <div class="related-post-card__meta">
+            <span>Technology</span>
+            <span class="dot">•</span>
+            <span>2 days ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/from-season-4-trailer-launch-release-date-clues/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Entertainment</span>
+            <img alt="FROM Season 4 Trailer Launch: Release Date &amp; Terrifying New Clues" loading="lazy" src="https://analyticsdrive.tech/images/from-season-4-trailer-launch-release-date-clues-hero.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">FROM Season 4 Trailer Launch: Release Date &amp; Terrifying New Clues</div>
+          <div class="related-post-card__meta">
+            <span>Entertainment</span>
+            <span class="dot">•</span>
+            <span>2 days ago</span>
+          </div>
+        </div>
+      </a>
+      <a class="related-post-card" href="https://analyticsdrive.tech/how-to-make-money-online-guide/">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Lifestyle</span>
+            <img alt="How to Make Money Online: Your Ultimate Guide to Digital Income" loading="lazy" src="https://analyticsdrive.tech/images/how-to-make-money-online-guide.webp"/>
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Make Money Online: Your Ultimate Guide to Digital Income</div>
+          <div class="related-post-card__meta">
+            <span>Lifestyle</span>
+            <span class="dot">•</span>
+            <span>3 days ago</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="post-footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-line);">
+    <span style="visibility: hidden;">Placeholder</span>
+    
+    <a class="back-link" href="https://analyticsdrive.tech/">Back to Home</a>
+
+    <span style="visibility: hidden;">Placeholder</span>
+  </div>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2026 Analytics Drive Editorial Team.
+            </p>
+            <div class="footer-legal">
+                <a href="https://analyticsdrive.tech/privacy-policy/">Privacy Policy</a> |                 <a href="https://analyticsdrive.tech/disclaimer/">Disclaimer</a> |                 <a href="https://analyticsdrive.tech/terms-and-conditions/">Terms &amp; Conditions</a> |                 <a href="https://analyticsdrive.tech/contact/">Contact Us</a>            </div>
+            <div class="social-links">
+                <a aria-label="Twitter" href="https://twitter.com/analyticsdrive" target="_blank">
+                    <svg fill="currentColor" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                    </svg>
+                </a>
+                <a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank">
+                    <svg fill="currentColor" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+                    </svg>
+                </a>
+                <a aria-label="Instagram" href="https://www.instagram.com/analyticsdrive" target="_blank">
+                    <svg fill="currentColor" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path>
+                    </svg>
+                </a>
+                <a aria-label="Reddit" href="https://www.reddit.com/r/Analyticsdrive/" target="_blank">
+                    <svg fill="currentColor" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '🌙';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        });
+
+        // --- External Link Hygiene ---
+        // Adds rel="noopener noreferrer" + target="_blank" to all external links
+        (function () {
+            const siteHost = window.location.hostname;
+            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                try {
+                    const linkHost = new URL(link.href).hostname;
+                    if (linkHost !== siteHost) {
+                        link.setAttribute('rel', 'noopener noreferrer');
+                        link.setAttribute('target', '_blank');
+                    }
+                } catch (e) { }
+            });
+        })();
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        if (mobileMenuToggle && mainNav) {
+            mobileMenuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+                mainNav.classList.toggle('menu-open');
+                mobileMenuToggle.classList.toggle('is-active');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (mainNav.classList.contains('menu-open') && !mainNav.contains(e.target)) {
+                    mainNav.classList.remove('menu-open');
+                    mobileMenuToggle.classList.remove('is-active');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Prevent closing when clicking inside the menu
+            mainNav.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+    </script>
+
+</body>
+
+</html>
