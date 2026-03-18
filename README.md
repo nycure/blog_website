@@ -1,59 +1,45 @@
-# Zero Cost AI Blog
+# Analytics Drive | Modern Digital Magazine
 
-This project is a fully automated blog system using:
-- **Pelican**: Static Site Generator (Python)
-- **GitHub Pages**: Free Hosting
-- **Gemini 2.5 Flash**: AI Content Generation
-- **Google GenAI SDK**: For communicating with Gemini
+Analytics Drive is a high-performance digital publication delivering comprehensive coverage across multiple verticals. From breaking World News, cutting-edge Artificial Intelligence, and detailed Technology tutorials to dynamic Sports coverage and the latest in Entertainment and Culture.
 
-## Setup
+👉 **[Visit Analytics Drive Live](https://analyticsdrive.tech)**
 
-1.  **Clone/Create Repo**:
-    Ensure this folder is a Git repository and linked to GitHub.
-    ```bash
-    git init
-    git remote add origin https://github.com/nycure/blog_website.git
-    ```
+---
 
-2.  **Setup Environment**:
-    You can run the included batch file to automatically set up the environment and run the tool:
-    ```cmd
-    run_blog.bat
-    ```
-    
-    Or manually:
-    ```bash
-    python -m venv venv
-    venv\Scripts\activate
-    pip install -r requirements.txt
-    ```
+## 🌎 Content Ecosystem
 
-3.  **Environment Variables**:
-    Create a `.env` file and add your Gemini API key:
-    ```
-    GEMINI_API_KEY=your_actual_api_key_here
-    ```
+We continuously publish in-depth, high-quality articles across the following categories:
 
-## Usage
+*   **Global Insights:** World News, Politics, & Geopolitics
+*   **Tech & AI:** Artificial Intelligence, Data Structures, SQL, & Algorithms
+*   **Sports & Action:** Cricket and global sports updates
+*   **Entertainment & Culture:** Movies, TV, and India & Culture
 
-Run the master script to generate a post, build the site, and deploy it:
+---
 
-```bash
-# Windows
-run_blog.bat
+## ⚡ Under the Hood (Performance & Architecture)
 
-# Or manually
-venv\Scripts\python auto_blog.py
-```
+Analytics Drive is engineered for maximum speed, accessibility, and SEO performance. 
 
-### Manual Commands
+*   **Static Architecture:** Built on a decoupled static generation framework (Python/Jinja2 outputting pure HTML/CSS).
+*   **Extreme Performance:** Achieves 90+ Lighthouse mobile performance scores through aggressive CSS inlining and deferred script loading.
+*   **Media Delivery:** All media is dynamically sized, optimized, and served in next-generation WebP formats to reduce payload size.
+*   **Technical SEO:** Includes automated sitemap generation, comprehensive Open Graph tags, canonical URLs, and pre-calculated Read Times built directly into the core structure.
 
-- **Generate Content**: `python generate_post.py`
-- **Build Site**: `pelican content`
-- **Preview Locally**: `pelican --listen` (then go to http://localhost:8000)
-- **Deploy**: `ghp-import output -b gh-pages -p -f`
+---
 
-## Customization
+## 🔐 Repository Architecture
 
-- **Theme**: You can install Pelican themes and set `THEME = 'path/to/theme'` in `pelicanconf.py`.
-- **Settings**: Edit `pelicanconf.py` for site name, author, etc.
+To protect proprietary data, source templates, and operational pipelines, **this specific repository is utilized exclusively as a CI/CD deployment endpoint.** 
+
+It hosts only the compiled HTML/CSS static footprint of the site to ensure maximum global delivery speed via GitHub Pages. The raw source code, generation tools, and backend databases are maintained securely in a separate, completely private repository environment.
+
+---
+
+## ⚖️ Legal & Compliance
+
+*   [Privacy Policy](https://analyticsdrive.tech/privacy_policy.html)
+*   [Terms and Conditions](https://analyticsdrive.tech/Terms_and_Conditions.html)
+*   [Disclaimer](https://analyticsdrive.tech/Disclaimer.html)
+
+*(c) 2026 Analytics Drive. All Rights Reserved.*
