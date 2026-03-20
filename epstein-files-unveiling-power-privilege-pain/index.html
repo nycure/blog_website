@@ -183,7 +183,7 @@
     --font-headline: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
     --font-ui: 'Libre Franklin', sans-serif;
-    --max-width: 1300px;
+    --max-width: 1500px;
     --spacing: 2rem;
     --bg-footer: #f9f9f9;
     --text-summary: #444444;
@@ -1217,10 +1217,10 @@ a:hover {
 @media (min-width: 1024px) {
     .post-layout-container {
         display: grid;
-        grid-template-columns: 1fr 900px 1fr;
+        grid-template-columns: minmax(300px, 1fr) 900px 1fr;
         gap: 0;
         align-items: flex-start;
-        max-width: 1300px;
+        max-width: var(--max-width);
         margin: 0 auto;
     }
 
@@ -1242,7 +1242,8 @@ a:hover {
         grid-column: 1;
         position: sticky;
         top: 2rem;
-        padding-right: 2rem;
+        padding-right: 3rem;
+        padding-left: 1rem;
     }
 
     .post-content,
@@ -1290,9 +1291,14 @@ a:hover {
     display: inline-block;
 }
 
-.toc a:hover {
+.toc a:hover,
+.toc a.active-toc-link {
     color: var(--link-color);
     transform: translateX(3px);
+}
+
+.toc a.active-toc-link {
+    font-weight: 700;
 }
 
 /* Mobile Accordion Style */
@@ -1344,6 +1350,8 @@ a:hover {
         border: 1px solid var(--border-line);
         box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         backdrop-filter: blur(8px);
+        max-height: calc(100vh - 6rem);
+        overflow-y: auto;
     }
     
     [data-theme="dark"] #toc-sidebar-target .toc {
@@ -1568,6 +1576,36 @@ a:hover {
         // Desktop: Move TOC to sidebar
         target.appendChild(toc);
         toc.classList.add('toc-sidebar--active');
+
+        // --- ScrollSpy Logic ---
+        const observerOptions = {
+          root: null,
+          rootMargin: '-10% 0px -80% 0px', // Near top of screen
+          threshold: 0
+        };
+
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            if (entry.isIntersecting && id) {
+              // Remove active from all
+              document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active-toc-link'));
+              // Add to current
+              const link = document.querySelector(`.toc a[href="#${id}"]`);
+              if (link) {
+                link.classList.add('active-toc-link');
+                // Scroll the TOC sidebar if link is out of view
+                link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+          });
+        }, observerOptions);
+
+        // Watch all H2 and H3 headings
+        document.querySelectorAll('.post-content h2, .post-content h3').forEach(section => {
+          observer.observe(section);
+        });
+
       } else {
         // Mobile: Wrap in Accordion
         const details = document.createElement('details');
