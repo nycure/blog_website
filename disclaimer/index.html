@@ -525,6 +525,51 @@ a:hover {
     border-radius: 8px;
 }
 
+/* --- Pinterest "Save" Overlay --- */
+.featured-image-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.pinterest-pin-it {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: #E60023;
+    color: #ffffff !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.featured-image-wrapper:hover .pinterest-pin-it {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pinterest-pin-it:hover {
+    background: #bd081c;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+}
+
+.pinterest-pin-it svg {
+    width: 18px;
+    height: 18px;
+}
+
 .post-content pre {
     background: #282C34;
     border-left: 4px solid #61AFEF;
@@ -1320,6 +1365,146 @@ a:hover {
     line-height: 1.4;
 }
 
+/* --- Newsletter Capture Eco-system --- */
+
+/* 1. Footer Subscription Form */
+.footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 3rem;
+}
+
+.footer-column-newsletter h3 {
+    font-family: var(--font-headline);
+    margin-bottom: 1rem;
+}
+
+.footer-column-newsletter p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.newsletter-form-footer {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.newsletter-form-footer input {
+    background: var(--bg-paper);
+    border: 1px solid var(--border-line);
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    color: var(--text-ink);
+    font-family: var(--font-ui);
+}
+
+.newsletter-form-footer button {
+    background: var(--accent);
+    color: var(--bg-paper);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.newsletter-form-footer button:hover {
+    transform: translateY(-2px);
+}
+
+/* 2. Article 'Lead Magnet' CTA */
+.newsletter-cta {
+    background: var(--accent);
+    color: var(--bg-paper);
+    padding: 4rem 2rem;
+    border-radius: 12px;
+    margin: 4rem 0;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.newsletter-cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-cta h3 {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.newsletter-cta p {
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.newsletter-form-article {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.newsletter-form-article input {
+    flex: 1;
+    min-width: 280px;
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1rem;
+}
+
+.newsletter-form-article button {
+    background: #61AFEF; /* Signature Blue for high-intent action */
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.newsletter-form-article button:hover {
+    background: #4a90e2;
+    transform: scale(1.05);
+}
+
+.newsletter-footer-note {
+    font-size: 0.8rem !important;
+    opacity: 0.7 !important;
+    margin-top: 1.5rem !important;
+}
+
+[data-theme="dark"] .newsletter-cta {
+    background: #1a1a1a;
+    border: 1px solid var(--border-line);
+}
+
+[data-theme="dark"] .newsletter-cta h3 {
+    color: #fff;
+}
+
+[data-theme="dark"] .newsletter-cta p {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .newsletter-form-article input {
+    background: #252525;
+    color: #fff;
+    border: 1px solid #333;
+}
+
 .toc a {
     color: var(--text-muted);
     opacity: 0.6;
@@ -1495,6 +1680,20 @@ a:hover {
 
     <footer class="site-footer">
         <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column-about">
+                    <h3>About Analytics Drive</h3>
+                    <p>Analytics Drive is your destination for breaking news, in-depth tech tutorials, and expert analysis on AI and...</p>
+                </div>
+                <div class="footer-column-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Get the latest AI & Tech insights delivered to your inbox.</p>
+                    <form class="newsletter-form-footer">
+                        <input type="email" placeholder="email@example.com" required aria-label="Email Address">
+                        <button type="submit">Join</button>
+                    </form>
+                </div>
+            </div>
             <p>&copy; 2026 Analytics Drive Editorial Team.
             </p>
             <div class="footer-legal">
