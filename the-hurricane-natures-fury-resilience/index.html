@@ -477,16 +477,6 @@ a:hover {
     word-break: break-word;
 }
 
-.post-content>p:first-of-type::first-letter {
-    float: left;
-    font-family: var(--font-headline);
-    font-size: 4.5rem;
-    line-height: 0.8;
-    padding-right: 12px;
-    padding-top: 4px;
-    color: var(--accent);
-}
-
 .post-content h2,
 .post-content h3 {
     font-family: var(--font-headline);
@@ -1223,15 +1213,154 @@ a:hover {
     }
 }
 
-/* --- Desktop Body Expansion --- */
+/* --- Desktop Body Expansion & TOC Sidebar --- */
 @media (min-width: 1024px) {
+    .post-layout-container {
+        display: flex;
+        gap: 4rem;
+        align-items: flex-start;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .post-content-column {
+        flex: 0 0 900px;
+        min-width: 0;
+    }
+
+    .post-layout-container.no-toc {
+        justify-content: center;
+    }
+
+    .post-layout-container.no-toc .post-sidebar-column {
+        display: none;
+    }
+
+    .post-sidebar-column {
+        flex: 1;
+        position: sticky;
+        top: 2rem;
+        min-width: 220px;
+    }
+
     .post-content,
     .featured-image,
     .article-footer-meta {
         max-width: 900px;
+        margin-left: 0;
+        margin-right: 0;
     }
+
     body, .post-content {
         font-size: 18px;
+    }
+}
+
+/* --- Hybrid TOC Styling --- */
+.toc {
+    font-family: var(--font-ui);
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 1.25rem;
+    margin: 0;
+    border-left: 1px solid var(--border-line);
+}
+
+.toc > ul {
+    padding-left: 0;
+    border-left: none;
+}
+
+.toc li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.toc a {
+    color: var(--text-ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.toc a:hover {
+    color: var(--link-color);
+    transform: translateX(3px);
+}
+
+/* Mobile Accordion Style */
+.toc-mobile-accordion {
+    background: var(--bg-footer);
+    border: 1px solid var(--border-line);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.toc-mobile-accordion summary {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--accent);
+    outline: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toc-mobile-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.toc-mobile-accordion summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.toc-mobile-accordion[open] summary::after {
+    content: '−';
+}
+
+.toc-mobile-accordion .toc {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Desktop Sidebar TOC Card */
+@media (min-width: 1024px) {
+    #toc-sidebar-target .toc {
+        background: var(--bg-paper);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid var(--border-line);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        backdrop-filter: blur(8px);
+    }
+    
+    [data-theme="dark"] #toc-sidebar-target .toc {
+        background: rgba(30, 30, 30, 0.8);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    #toc-sidebar-target .toc::before {
+        content: 'Contents';
+        display: block;
+        font-family: var(--font-ui);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-line);
     }
 }    </style>
     <!-- Optimized Google Fonts -->
@@ -1379,8 +1508,10 @@ a:hover {
     </figcaption>
   </figure>
 
-  <div class="post-content">
-    <p>The roar of the wind, the relentless drumming of rain, the ominous quiet of the eye – these are the hallmarks of a hurricane, one of nature's most formidable and destructive forces. These colossal weather systems, born from the warm embrace of tropical oceans, command our attention and respect, leaving indelible marks on landscapes and lives.</p>
+  <div class="post-layout-container">
+    <div class="post-content-column">
+      <div class="post-content">
+        <p>The roar of the wind, the relentless drumming of rain, the ominous quiet of the eye – these are the hallmarks of a hurricane, one of nature's most formidable and destructive forces. These colossal weather systems, born from the warm embrace of tropical oceans, command our attention and respect, leaving indelible marks on landscapes and lives.</p>
 <div class="toc">
 <ul>
 <li><a href="#what-is-a-hurricane-natures-grand-whirlwind">What is a Hurricane? Nature's Grand Whirlwind</a></li>
@@ -1443,7 +1574,44 @@ a:hover {
 <p>The discussion around hurricanes is increasingly intertwined with climate change. While the number of hurricanes might not be increasing significantly, there's growing evidence that climate change is influencing their intensity, the amount of rainfall they produce, and the potential for more rapid intensification. Understanding these dynamics is crucial as we adapt to a world where extreme weather events may become more frequent and severe.</p>
 <h3 id="conclusion-respect-prepare-and-rebuild">Conclusion: Respect, Prepare, and Rebuild</h3>
 <p>Hurricanes are a stark reminder of nature's raw power. They demand our respect, meticulous preparation, and unwavering resilience. By understanding their nature, taking proactive steps for preparedness, and fostering strong community bonds, we can mitigate their impact and ensure that even in the face of such overwhelming forces, we stand ready to rebuild, recover, and emerge stronger. Let the lessons of each storm guide us toward a safer, more resilient future.</p>
+      </div>
+    </div>
+    
+    <aside class="post-sidebar-column">
+      <div id="toc-sidebar-target"></div>
+    </aside>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toc = document.querySelector('.post-content .toc');
+      const container = document.querySelector('.post-layout-container');
+      
+      if (!toc) {
+        if (container) container.classList.add('no-toc');
+        return;
+      }
+
+      const target = document.getElementById('toc-sidebar-target');
+      const isDesktop = window.innerWidth >= 1024;
+
+      if (isDesktop && target) {
+        // Desktop: Move TOC to sidebar
+        target.appendChild(toc);
+        toc.classList.add('toc-sidebar--active');
+      } else {
+        // Mobile: Wrap in Accordion
+        const details = document.createElement('details');
+        details.className = 'toc-mobile-accordion';
+        const summary = document.createElement('summary');
+        summary.innerHTML = 'Table of Contents';
+        
+        toc.parentNode.insertBefore(details, toc);
+        details.appendChild(summary);
+        details.appendChild(toc);
+      }
+    });
+  </script>
 
   <!-- Social Share Buttons -->
   <div class="share-buttons">
@@ -1515,7 +1683,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>Algorithms & Data Structures</span>
             <span class="dot">•</span>
-            <span>today</span>
+            <span>7 hours ago</span>
           </div>
         </div>
       </a>
@@ -1529,7 +1697,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>SQL & Databases</span>
             <span class="dot">•</span>
-            <span>15 hours ago</span>
+            <span>22 hours ago</span>
           </div>
         </div>
       </a>

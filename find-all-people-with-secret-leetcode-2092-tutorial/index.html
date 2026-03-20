@@ -480,16 +480,6 @@ a:hover {
     word-break: break-word;
 }
 
-.post-content>p:first-of-type::first-letter {
-    float: left;
-    font-family: var(--font-headline);
-    font-size: 4.5rem;
-    line-height: 0.8;
-    padding-right: 12px;
-    padding-top: 4px;
-    color: var(--accent);
-}
-
 .post-content h2,
 .post-content h3 {
     font-family: var(--font-headline);
@@ -1226,15 +1216,154 @@ a:hover {
     }
 }
 
-/* --- Desktop Body Expansion --- */
+/* --- Desktop Body Expansion & TOC Sidebar --- */
 @media (min-width: 1024px) {
+    .post-layout-container {
+        display: flex;
+        gap: 4rem;
+        align-items: flex-start;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .post-content-column {
+        flex: 0 0 900px;
+        min-width: 0;
+    }
+
+    .post-layout-container.no-toc {
+        justify-content: center;
+    }
+
+    .post-layout-container.no-toc .post-sidebar-column {
+        display: none;
+    }
+
+    .post-sidebar-column {
+        flex: 1;
+        position: sticky;
+        top: 2rem;
+        min-width: 220px;
+    }
+
     .post-content,
     .featured-image,
     .article-footer-meta {
         max-width: 900px;
+        margin-left: 0;
+        margin-right: 0;
     }
+
     body, .post-content {
         font-size: 18px;
+    }
+}
+
+/* --- Hybrid TOC Styling --- */
+.toc {
+    font-family: var(--font-ui);
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 1.25rem;
+    margin: 0;
+    border-left: 1px solid var(--border-line);
+}
+
+.toc > ul {
+    padding-left: 0;
+    border-left: none;
+}
+
+.toc li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.toc a {
+    color: var(--text-ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.toc a:hover {
+    color: var(--link-color);
+    transform: translateX(3px);
+}
+
+/* Mobile Accordion Style */
+.toc-mobile-accordion {
+    background: var(--bg-footer);
+    border: 1px solid var(--border-line);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.toc-mobile-accordion summary {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--accent);
+    outline: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toc-mobile-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.toc-mobile-accordion summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.toc-mobile-accordion[open] summary::after {
+    content: '−';
+}
+
+.toc-mobile-accordion .toc {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Desktop Sidebar TOC Card */
+@media (min-width: 1024px) {
+    #toc-sidebar-target .toc {
+        background: var(--bg-paper);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid var(--border-line);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        backdrop-filter: blur(8px);
+    }
+    
+    [data-theme="dark"] #toc-sidebar-target .toc {
+        background: rgba(30, 30, 30, 0.8);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    #toc-sidebar-target .toc::before {
+        content: 'Contents';
+        display: block;
+        font-family: var(--font-ui);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-line);
     }
 }    </style>
     <!-- Optimized Google Fonts -->
@@ -1411,8 +1540,10 @@ a:hover {
     </figcaption>
   </figure>
 
-  <div class="post-content">
-    <p>This tutorial provides a comprehensive guide to solving the 2092. Find All People With Secret leetcode question in c++, python,java, offering efficient strategies and complete code implementations for competitive programming enthusiasts. Understanding how secrets propagate among individuals is a fascinating problem that often appears in competitive programming challenges. One such intriguing scenario is presented in LeetCode problem 2092, aptly titled "Find All People With Secret". By the end of this tutorial, you will have a solid understanding of the problem's nuances, the critical algorithms involved, and how to implement a robust solution to find all people with secret knowledge, starting from an initial set of secret holders. We'll explore the core concepts and techniques required to tackle this problem effectively.</p>
+  <div class="post-layout-container">
+    <div class="post-content-column">
+      <div class="post-content">
+        <p>This tutorial provides a comprehensive guide to solving the 2092. Find All People With Secret leetcode question in c++, python,java, offering efficient strategies and complete code implementations for competitive programming enthusiasts. Understanding how secrets propagate among individuals is a fascinating problem that often appears in competitive programming challenges. One such intriguing scenario is presented in LeetCode problem 2092, aptly titled "Find All People With Secret". By the end of this tutorial, you will have a solid understanding of the problem's nuances, the critical algorithms involved, and how to implement a robust solution to find all people with secret knowledge, starting from an initial set of secret holders. We'll explore the core concepts and techniques required to tackle this problem effectively.</p>
 <div class="toc">
 <ul>
 <li><a href="#understanding-the-find-all-people-with-secret-problem">Understanding the "Find All People With Secret" Problem</a><ul>
@@ -2004,7 +2135,44 @@ We can use a pointer to iterate through the sorted <code>meetings</code> list, p
 <h2 id="conclusion">Conclusion</h2>
 <p>The 2092. Find All People With Secret leetcode question in c++, python,java presents a stimulating challenge that effectively tests your ability to combine sorting, graph theory concepts, and the powerful Disjoint Set Union (DSU) data structure. We've explored a comprehensive, step-by-step approach that leverages the chronological order of meetings to accurately model secret propagation. The key insights involve sorting meetings by time, using DSU to track connections, and crucially, resetting the DSU state for individuals who participate in meetings but do not acquire the secret through a valid path to an initial secret holder at that specific time.</p>
 <p>By understanding the importance of the time dimension and correctly applying DSU with path compression and union by rank/size, you can develop an efficient solution that handles the constraints effectively. The provided C++, Python, and Java implementations demonstrate how to translate this logic into robust, working code. Remember that mastering problems like "Find All People With Secret" not only enhances your algorithmic toolkit but also sharpens your problem-solving skills, preparing you for more complex challenges in competitive programming and software development. Continue to practice and apply these fundamental concepts, and you'll find yourself capable of tackling an ever- broader range of algorithmic puzzles.</p>
+      </div>
+    </div>
+    
+    <aside class="post-sidebar-column">
+      <div id="toc-sidebar-target"></div>
+    </aside>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toc = document.querySelector('.post-content .toc');
+      const container = document.querySelector('.post-layout-container');
+      
+      if (!toc) {
+        if (container) container.classList.add('no-toc');
+        return;
+      }
+
+      const target = document.getElementById('toc-sidebar-target');
+      const isDesktop = window.innerWidth >= 1024;
+
+      if (isDesktop && target) {
+        // Desktop: Move TOC to sidebar
+        target.appendChild(toc);
+        toc.classList.add('toc-sidebar--active');
+      } else {
+        // Mobile: Wrap in Accordion
+        const details = document.createElement('details');
+        details.className = 'toc-mobile-accordion';
+        const summary = document.createElement('summary');
+        summary.innerHTML = 'Table of Contents';
+        
+        toc.parentNode.insertBefore(details, toc);
+        details.appendChild(summary);
+        details.appendChild(toc);
+      }
+    });
+  </script>
 
   <!-- Social Share Buttons -->
   <div class="share-buttons">
@@ -2126,7 +2294,7 @@ We can use a pointer to iterate through the sorted <code>meetings</code> list, p
           <div class="related-post-card__meta">
             <span>Algorithms & Data Structures</span>
             <span class="dot">•</span>
-            <span>today</span>
+            <span>7 hours ago</span>
           </div>
         </div>
       </a>
@@ -2140,7 +2308,7 @@ We can use a pointer to iterate through the sorted <code>meetings</code> list, p
           <div class="related-post-card__meta">
             <span>SQL & Databases</span>
             <span class="dot">•</span>
-            <span>15 hours ago</span>
+            <span>22 hours ago</span>
           </div>
         </div>
       </a>
