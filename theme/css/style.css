@@ -71,7 +71,7 @@ a:hover {
     text-transform: uppercase;
     overflow: hidden;
     position: relative;
-    z-index: 1000;
+    z-index: 50; /* Lower than header to prevent blocking clicks */
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
@@ -296,7 +296,7 @@ a:hover {
     text-align: center;
     border-bottom: 1px solid var(--accent);
     position: relative;
-    z-index: 100;
+    z-index: 1000; /* Ensure header is above ticker */
 }
 
 .site-header .logo {
@@ -343,38 +343,41 @@ a:hover {
 }
 
 .theme-toggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 3.5rem;
-    height: 3.5rem;
-    background: var(--bg-paper);
-    color: var(--text-ink);
-    border: 1px solid var(--border-line);
-    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    z-index: 2000;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    color: var(--text-ink);
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    z-index: 100;
+    transition: transform 0.3s ease;
 }
 
 .theme-toggle:hover {
-    transform: scale(1.1) rotate(15deg);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-    background: var(--accent);
-    color: var(--bg-paper);
-    border-color: var(--accent);
+    transform: translateY(-50%) rotate(15deg);
+    color: var(--accent);
 }
 
-[data-theme="dark"] .theme-toggle {
-    background: #1e1e1e;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+@media (max-width: 900px) {
+    .theme-toggle {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-top: 2rem;
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid var(--border-line);
+        padding: 1rem 0;
+    }
+    .theme-toggle:hover {
+        transform: rotate(5deg);
+    }
 }
 
 .hero {
@@ -1038,7 +1041,7 @@ a:hover {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        z-index: 999;
+        z-index: 1100; /* Higher than header and ticker */
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
         box-shadow: 2px 0 10px rgba(0,0,0,0.1);

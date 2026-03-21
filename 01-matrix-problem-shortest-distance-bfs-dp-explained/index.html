@@ -247,7 +247,7 @@ a:hover {
     text-transform: uppercase;
     overflow: hidden;
     position: relative;
-    z-index: 1000;
+    z-index: 50; /* Lower than header to prevent blocking clicks */
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
@@ -472,7 +472,7 @@ a:hover {
     text-align: center;
     border-bottom: 1px solid var(--accent);
     position: relative;
-    z-index: 100;
+    z-index: 1000; /* Ensure header is above ticker */
 }
 
 .site-header .logo {
@@ -519,38 +519,41 @@ a:hover {
 }
 
 .theme-toggle {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 3.5rem;
-    height: 3.5rem;
-    background: var(--bg-paper);
-    color: var(--text-ink);
-    border: 1px solid var(--border-line);
-    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    z-index: 2000;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    color: var(--text-ink);
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    z-index: 100;
+    transition: transform 0.3s ease;
 }
 
 .theme-toggle:hover {
-    transform: scale(1.1) rotate(15deg);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-    background: var(--accent);
-    color: var(--bg-paper);
-    border-color: var(--accent);
+    transform: translateY(-50%) rotate(15deg);
+    color: var(--accent);
 }
 
-[data-theme="dark"] .theme-toggle {
-    background: #1e1e1e;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+@media (max-width: 900px) {
+    .theme-toggle {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-top: 2rem;
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid var(--border-line);
+        padding: 1rem 0;
+    }
+    .theme-toggle:hover {
+        transform: rotate(5deg);
+    }
 }
 
 .hero {
@@ -1214,7 +1217,7 @@ a:hover {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        z-index: 999;
+        z-index: 1100; /* Higher than header and ticker */
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
         box-shadow: 2px 0 10px rgba(0,0,0,0.1);
@@ -2037,6 +2040,9 @@ a:hover {
                 <li itemprop="name"><a href="https://analyticsdrive.tech/tags.html" itemprop="url">Tags</a></li>
                 <li itemprop="name"><a href="https://analyticsdrive.tech/about/" itemprop="url">About</a></li>
             </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
         </nav>
     </header>
 
@@ -2630,7 +2636,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>Geopolitics</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 h</span>
           </div>
         </div>
       </a>
@@ -2644,7 +2650,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>Artificial Intelligence</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 h</span>
           </div>
         </div>
       </a>
@@ -2751,103 +2757,97 @@ a:hover {
     </footer>
 
     <script>
-        const toggleButton = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const html = document.documentElement;
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const html = document.documentElement;
 
-        // Check local storage or system preference
-        const savedTheme = localStorage.getItem('theme');
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            // Check local storage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-            html.setAttribute('data-theme', 'dark');
-            themeIcon.textContent = '☀️';
-        }
-
-        toggleButton.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                html.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-                themeIcon.textContent = '🌙';
-            } else {
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
                 html.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                themeIcon.textContent = '☀️';
+                if (themeIcon) themeIcon.textContent = '☀️';
             }
-        });
 
-        // --- External Link Hygiene ---
-        // Adds rel="noopener noreferrer" + target="_blank" to all external links
-        (function () {
-            const siteHost = window.location.hostname;
-            document.querySelectorAll('a[href^="http"]').forEach(function (link) {
-                try {
-                    const linkHost = new URL(link.href).hostname;
-                    if (linkHost !== siteHost) {
-                        link.setAttribute('rel', 'noopener noreferrer');
-                        link.setAttribute('target', '_blank');
+            if (toggleButton) {
+                toggleButton.addEventListener('click', () => {
+                    const currentTheme = html.getAttribute('data-theme');
+                    if (currentTheme === 'dark') {
+                        html.removeAttribute('data-theme');
+                        localStorage.setItem('theme', 'light');
+                        if (themeIcon) themeIcon.textContent = '🌙';
+                    } else {
+                        html.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        if (themeIcon) themeIcon.textContent = '☀️';
                     }
-                } catch (e) { }
-            });
-        })();
+                });
+            }
 
-        // --- Mobile Menu Toggle ---
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mainNav = document.getElementById('main-nav');
-
-        if (mobileMenuToggle && mainNav) {
-            mobileMenuToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
-                mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
-                mainNav.classList.toggle('menu-open');
-                mobileMenuToggle.classList.toggle('is-active');
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (mainNav.classList.contains('menu-open') && !mainNav.contains(e.target)) {
-                    mainNav.classList.remove('menu-open');
-                    mobileMenuToggle.classList.remove('is-active');
-                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
-                }
-            });
-
-            // Prevent closing when clicking inside the menu
-            mainNav.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-        }
-
-        // --- Category Filtering ---
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const postCards = document.querySelectorAll('#main-post-list .post-card');
-
-        if (tabBtns.length > 0 && postCards.length > 0) {
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Update active button
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const category = btn.getAttribute('data-category');
-
-                    postCards.forEach(card => {
-                        if (category === 'all' || card.getAttribute('data-category') === category) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
+            // --- External Link Hygiene ---
+            (function () {
+                const siteHost = window.location.hostname;
+                document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                    try {
+                        const linkHost = new URL(link.href).hostname;
+                        if (linkHost !== siteHost) {
+                            link.setAttribute('rel', 'noopener noreferrer');
+                            link.setAttribute('target', '_blank');
                         }
+                    } catch (e) { }
+                });
+            })();
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (mobileMenuToggle && mainNav) {
+                mobileMenuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                    mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+                    mainNav.classList.toggle('menu-open');
+                    mobileMenuToggle.classList.toggle('is-active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (mainNav.classList.contains('menu-open') && !mainNav.contains(e.target)) {
+                        mainNav.classList.remove('menu-open');
+                        mobileMenuToggle.classList.remove('is-active');
+                        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                mainNav.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            // --- Category Filtering ---
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const postCards = document.querySelectorAll('#main-post-list .post-card');
+
+            if (tabBtns.length > 0 && postCards.length > 0) {
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const category = btn.getAttribute('data-category');
+                        postCards.forEach(card => {
+                            if (category === 'all' || card.getAttribute('data-category') === category) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
                     });
                 });
-            });
-        }
+            }
+        });
     </script>
-
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
-        <span id="theme-icon">🌙</span>
-    </button>
 
 </body>
 
