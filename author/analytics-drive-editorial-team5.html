@@ -203,23 +203,63 @@ a:hover {
 
 /* --- Breaking Ticker --- */
 .breaking-ticker {
-    background: #d00;
+    background: linear-gradient(90deg, #b00, #d00);
     color: #fff;
-    padding: 0.5rem 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
     font-family: var(--font-ui);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
     overflow: hidden;
-    white-space: nowrap;
     position: relative;
     z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.breaking-label {
+    background: #000;
+    padding: 0 1.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 20;
+    white-space: nowrap;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff;
+    animation: live-pulse 1.5s infinite;
+}
+
+@keyframes live-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.ticker-viewport {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
 }
 
 .ticker-content {
     display: inline-block;
     padding-left: 100%;
-    animation: ticker-animation 60s linear infinite;
+    white-space: nowrap;
+    animation: ticker-animation 80s linear infinite;
+    display: flex;
+    align-items: center;
 }
 
 .ticker-content:hover {
@@ -227,17 +267,43 @@ a:hover {
 }
 
 .ticker-item {
-    display: inline-block;
-    padding-right: 4rem;
+    display: flex;
+    align-items: center;
+    padding-right: 3rem;
 }
 
 .ticker-item a {
     color: #fff;
     text-decoration: none;
+    margin: 0 0.75rem;
+    transition: color 0.2s;
 }
 
 .ticker-item a:hover {
-    text-decoration: underline;
+    color: #ffd700;
+}
+
+.cat-pill {
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Category Specific Pills */
+.cat-pill.world-news { background: #0066cc; }
+.cat-pill.geopolitics { background: #663399; }
+.cat-pill.politics { background: #cc3300; }
+.cat-pill.india { background: #ff9933; color: #000; }
+.cat-pill.sports, .cat-pill.cricket { background: #228b22; }
+.cat-pill.entertainment { background: #ff1493; }
+
+.ticker-sep {
+    color: #ffd700;
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
 @keyframes ticker-animation {
@@ -1774,37 +1840,72 @@ a:hover {
 
 <body>
     <div class="breaking-ticker" aria-label="Breaking News">
-        <div class="ticker-content">
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/">March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/400-killed-pakistan-strike-kabul-hospital/">400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/unpacking-global-geopolitical-shifts-new-era/">Unpacking Global Geopolitical Shifts: A New Era Unfolds</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/from-season-4-trailer-launch-release-date-clues/">FROM Season 4 Trailer Launch: Release Date & Terrifying New Clues</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/15-days-iran-war-update-tensions-middle-east/">15 Days Passed Since Iran War Update: Tensions Grip Middle East</a>
-            </span>
-            <span class="ticker-item">
-                <a href="https://analyticsdrive.tech/two-lpg-ships-hormuz-india-lpg-crisis/">Two LPG Ships Sail Through Hormuz to India Amid LPG Crisis</a>
-            </span>
+        <div class="breaking-label">
+            <span class="live-dot"></span> BREAKING
+        </div>
+        <div class="ticker-viewport">
+            <div class="ticker-content">
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/">March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/400-killed-pakistan-strike-kabul-hospital/">400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/unpacking-global-geopolitical-shifts-new-era/">Unpacking Global Geopolitical Shifts: A New Era Unfolds</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/from-season-4-trailer-launch-release-date-clues/">FROM Season 4 Trailer Launch: Release Date & Terrifying New Clues</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/15-days-iran-war-update-tensions-middle-east/">15 Days Passed Since Iran War Update: Tensions Grip Middle East</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/two-lpg-ships-hormuz-india-lpg-crisis/">Two LPG Ships Sail Through Hormuz to India Amid LPG Crisis</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/lpg-gas-prices-skyrocketing-india-iran-war-chaos/">LPG Gas Prices Skyrocketing in India: Chaos Amid Iran War</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/iran-vs-israel-war-escalation-global-repercussions/">Iran Vs Israel War: Escalation and Global Repercussions</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+            </div>
         </div>
     </div>
     <header class="site-header">
@@ -1836,6 +1937,10 @@ a:hover {
         <h2>Tech & AI</h2>
             <div class="side-post">
                 <span class="post-meta">Sat 21 March 2026</span>
+                <h3><a href="https://analyticsdrive.tech/what-is-generative-ai-models-concepts-future/">What is Generative AI? Models, Concepts, & The Future Ahead</a></h3>
+            </div>
+            <div class="side-post">
+                <span class="post-meta">Sat 21 March 2026</span>
                 <h3><a href="https://analyticsdrive.tech/hash-tables-comprehensive-guide-real-world-uses/">Hash Tables: Comprehensive Guide & Real-World Uses</a></h3>
             </div>
             <div class="side-post">
@@ -1854,10 +1959,6 @@ a:hover {
                 <span class="post-meta">Sat 21 March 2026</span>
                 <h3><a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/">AI Shifts Focus: Efficiency Trumps Scale in New Models</a></h3>
             </div>
-            <div class="side-post">
-                <span class="post-meta">Sat 21 March 2026</span>
-                <h3><a href="https://analyticsdrive.tech/bezos-blue-origin-space-data-race-vs-spacex/">Bezos' Blue Origin Enters Space Data Race vs. SpaceX: New Era Unfolds</a></h3>
-            </div>
     </aside>
 
     <!-- Center Column: Main Feed -->
@@ -1875,11 +1976,28 @@ a:hover {
                 <article class="post-card" data-category="Algorithms & Data Structures">
                     <div class="post-card-image">
                         <img 
+                          src="https://analyticsdrive.tech/images/dijkstra-algorithm-python-cpp-java-tutorial.webp" 
+                          srcset="https://analyticsdrive.tech/images/dijkstra-algorithm-python-cpp-java-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/dijkstra-algorithm-python-cpp-java-tutorial-mobile.webp 400w"
+                          sizes="(max-width: 600px) 100vw, 600px"
+                          alt="Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide" 
+fetchpriority="high" width="600" height="338" />
+                    </div>
+                    <div class="post-meta">
+                        <time datetime="2026-02-26T15:15:00+05:30">Thu 26 February 2026</time>
+                        <span class="category"><a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a></span>
+                    </div>
+                    <h3><a href="https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/">Dijkstra Algorithm in Python, C++, Java: A Comprehensive Guide</a></h3>
+                    <p>Master the Dijkstra Algorithm in Python, C++, and Java with this comprehensive guide. Learn its principles, step-by-step implementation,...</p>
+                    <a href="https://analyticsdrive.tech/dijkstra-algorithm-python-cpp-java-tutorial/" class="read-more">Read Article &rarr;</a>
+                </article>
+                <article class="post-card" data-category="Algorithms & Data Structures">
+                    <div class="post-card-image">
+                        <img 
                           src="https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial.webp" 
                           srcset="https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/leetcode-1976-number-of-ways-arrive-destination-tutorial-mobile.webp 400w"
                           sizes="(max-width: 600px) 100vw, 600px"
                           alt="Leetcode 1976: Number of Ways to Arrive at Destination Explained" 
-fetchpriority="high" width="600" height="338" />
+loading="lazy" />
                     </div>
                     <div class="post-meta">
                         <time datetime="2026-02-26T15:02:00+05:30">Thu 26 February 2026</time>
@@ -2195,23 +2313,6 @@ loading="lazy" />
                     <p>Explore the remarkable political journey of Donald Trump, from real estate mogul to a historic non-consecutive second term as the 47th...</p>
                     <a href="https://analyticsdrive.tech/donald-trumps-unprecedented-second-act/" class="read-more">Read Article &rarr;</a>
                 </article>
-                <article class="post-card" data-category="Space">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/HBXbTZNWMAAIdZU.jpg" 
-                          srcset="https://analyticsdrive.tech/images/HBXbTZNWMAAIdZU-tablet.jpg 800w, https://analyticsdrive.tech/images/HBXbTZNWMAAIdZU-mobile.jpg 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Punch's Journey: A Baby Monkey's Social Leap" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-02-21T16:00:00+05:30">Sat 21 February 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/space.html">Space</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/punch-baby-monkey-social-leap/">Punch's Journey: A Baby Monkey's Social Leap</a></h3>
-                    <p>Follow the heartwarming and sometimes challenging journey of Punch, the baby macaque, as he integrates into his troop and learns the...</p>
-                    <a href="https://analyticsdrive.tech/punch-baby-monkey-social-leap/" class="read-more">Read Article &rarr;</a>
-                </article>
             </div>
         </div>
 
@@ -2261,6 +2362,10 @@ loading="lazy" />
         <div style="margin-top: 3rem;">
             <h2>Must Reads</h2>
                 <div class="side-post">
+                    <h3><a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/">Green Innovations: AI Drives Sustainable Tech Revolution Forward</a></h3>
+                    <span class="post-meta">Technology</span>
+                </div>
+                <div class="side-post">
                     <h3><a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a></h3>
                     <span class="post-meta">Politics</span>
                 </div>
@@ -2275,10 +2380,6 @@ loading="lazy" />
                 <div class="side-post">
                     <h3><a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/">GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech</a></h3>
                     <span class="post-meta">Artificial Intelligence</span>
-                </div>
-                <div class="side-post">
-                    <h3><a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a></h3>
-                    <span class="post-meta">Entertainment</span>
                 </div>
         </div>
     </aside>
