@@ -509,22 +509,38 @@ a:hover {
 }
 
 .theme-toggle {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    cursor: pointer;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--bg-paper);
     color: var(--text-ink);
-    font-size: 1.25rem;
-    padding: 0.5rem;
-    z-index: 100;
-    transition: transform 0.3s ease;
+    border: 1px solid var(--border-line);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    z-index: 2000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .theme-toggle:hover {
-    transform: translateY(-50%) rotate(15deg);
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    background: var(--accent);
+    color: var(--bg-paper);
+    border-color: var(--accent);
+}
+
+[data-theme="dark"] .theme-toggle {
+    background: #1e1e1e;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
 .hero {
@@ -2011,9 +2027,6 @@ a:hover {
                 <li itemprop="name"><a href="https://analyticsdrive.tech/tags.html" itemprop="url">Tags</a></li>
                 <li itemprop="name"><a href="https://analyticsdrive.tech/about/" itemprop="url">About</a></li>
             </ul>
-            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
-                <span id="theme-icon">🌙</span>
-            </button>
         </nav>
     </header>
 
@@ -2456,6 +2469,10 @@ a:hover {
             });
         }
     </script>
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+        <span id="theme-icon">🌙</span>
+    </button>
 
 </body>
 
