@@ -1,0 +1,3242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window Functions in SQL: Advanced Data Analysis Guide
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="https://analyticsdrive.tech/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+    <meta name="application-name" content="Analytics Drive">
+    <meta name="msapplication-TileColor" content="#005b96">
+    <meta name="msapplication-TileImage" content="https://analyticsdrive.tech/mstile-150x150.png">
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master advanced data analysis with Window Functions in SQL. This comprehensive guide covers their mechanics, syntax, and real-world applications for tech-sav..." />
+    <meta name="author" content="Analytics Drive Editorial Team" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Window Functions in SQL: Advanced Data Analysis Guide" />
+    <meta property="og:description"
+        content="Master advanced data analysis with Window Functions in SQL. This comprehensive guide covers their mechanics, syntax, and real-world applications for tech-sav..." />
+    <meta property="og:type" content="article
+" />
+    <meta property="og:url"
+        content="https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/window-functions-sql-advanced-data-analysis-guide.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Window Functions in SQL: Advanced Data Analysis Guide" />
+    <meta name="twitter:description" content="Master advanced data analysis with Window Functions in SQL. This comprehensive guide covers their mechanics, syntax, and real-world applications for tech-sav..." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/window-functions-sql-advanced-data-analysis-guide.webp" />
+
+    <!-- Deferred Google Tag Manager -->
+    <script>
+        (function() {
+            let gtmLoaded = false;
+            function loadGTM() {
+                if (gtmLoaded) return;
+                gtmLoaded = true;
+                let script = document.createElement('script');
+                script.src = "https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9";
+                script.async = true;
+                document.head.appendChild(script);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-P1LT4885S9');
+            }
+            ['scroll', 'touchstart', 'mousemove'].forEach(event => {
+                window.addEventListener(event, loadGTM, { passive: true, once: true });
+            });
+        })();
+    </script>
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://analyticsdrive.tech/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "SQL \u0026 Databases",
+    "item": "https://analyticsdrive.tech/category/sql-databases.html"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Window Functions in SQL: Advanced Data Analysis Guide",
+    "item": "https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/"
+  }]
+}
+</script>
+<meta property="article:published_time" content="2026-03-23T00:18:00+05:30" />
+<meta property="article:section" content="SQL & Databases" />
+<meta property="article:tag" content="SQL" />
+<meta property="article:tag" content="Technology" />
+<meta property="article:tag" content="Machine Learning" />
+<meta property="article:tag" content="Artificial Intelligence" />
+
+<!-- Twitter Player Card -->
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://analyticsdrive.tech/#website",
+          "url": "https://analyticsdrive.tech/",
+          "name": "Analytics Drive",
+          "description": "Analytics Drive is your destination for breaking news, in-depth tech tutorials, and expert analysis on AI and Geopolitics. Stay informed with investigations and opinions from the front lines of innovation.",
+          "publisher": { "@id": "https://analyticsdrive.tech/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://analyticsdrive.tech/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://analyticsdrive.tech/#organization",
+          "name": "Analytics Drive",
+          "url": "https://analyticsdrive.tech/",
+          "logo": {
+            "@type": "ImageObject",
+            "@id": "https://analyticsdrive.tech/#logo",
+            "url": "https://analyticsdrive.tech/android-chrome-512x512.png",
+            "width": 512,
+            "height": 512,
+            "caption": "Analytics Drive"
+          },
+          "image": { "@id": "https://analyticsdrive.tech/#logo" },
+          "sameAs": [
+            "https://twitter.com/analyticsdrive",            "https://www.facebook.com/profile.php?id=61588072082428",            "https://www.instagram.com/analyticsdrive",            "https://www.reddit.com/r/Analyticsdrive/",            "https://t.me/analyticsdrive"          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://analyticsdrive.tech/#sitenav",
+          "name": "Site Navigation",
+          "itemListElement": [
+            {
+              "@type": "SiteNavigationElement",
+              "position": 1,
+              "name": "Home",
+              "url": "https://analyticsdrive.tech/"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 2,
+              "name": "Geopolitics",
+              "url": "https://analyticsdrive.tech/category/geopolitics.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 3,
+              "name": "Artificial Intelligence",
+              "url": "https://analyticsdrive.tech/category/artificial-intelligence.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 4,
+              "name": "World News",
+              "url": "https://analyticsdrive.tech/category/world-news.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 5,
+              "name": "About",
+              "url": "https://analyticsdrive.tech/about/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Render-blocking CSS Eliminated: Inlined style.css -->
+    <style>
+:root {
+    --bg-paper: #ffffff;
+    --text-ink: #2a2a2a;
+    --text-muted: #666;
+    --border-line: #e0e0e0;
+    --accent: #000;
+    --link-color: #005b96;
+    --font-masthead: 'UnifrakturMaguntia', cursive;
+    --font-headline: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-ui: 'Libre Franklin', sans-serif;
+    --max-width: 1500px;
+    --spacing: 2rem;
+    --bg-footer: #f9f9f9;
+    --text-summary: #444444;
+}
+
+[data-theme="dark"] {
+    --bg-paper: #121212;
+    --text-ink: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-line: #333333;
+    --accent: #ffffff;
+    --link-color: #64b5f6;
+    --bg-footer: #1e1e1e;
+    --text-summary: #d0d0d0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-paper);
+    color: var(--text-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.8;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #003366;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing);
+}
+
+/* --- Breaking Ticker --- */
+.breaking-ticker {
+    background: linear-gradient(90deg, #b00, #d00);
+    color: #fff;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    overflow: hidden;
+    position: relative;
+    z-index: 50; /* Lower than header to prevent blocking clicks */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.breaking-label {
+    background: #000;
+    padding: 0 1.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 20;
+    white-space: nowrap;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff;
+    animation: live-pulse 1.5s infinite;
+}
+
+@keyframes live-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.ticker-viewport {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.ticker-content {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: ticker-animation 100s linear infinite; /* Increase time for 2x content */
+}
+
+.ticker-content:hover {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    display: flex;
+    align-items: center;
+    padding-right: 3rem;
+}
+
+.ticker-item a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 0.75rem;
+    transition: color 0.2s;
+}
+
+.ticker-item a:hover {
+    color: #ffd700;
+}
+
+.cat-pill {
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Category Specific Pills */
+.cat-pill.world-news { background: #0066cc; }
+.cat-pill.geopolitics { background: #663399; }
+.cat-pill.politics { background: #cc3300; }
+.cat-pill.india { background: #ff9933; color: #000; }
+.cat-pill.sports, .cat-pill.cricket { background: #228b22; }
+.cat-pill.entertainment { background: #ff1493; }
+
+.ticker-sep {
+    color: #ffd700;
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes ticker-animation {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); } /* Loop halfway for seamless transition */
+}
+
+/* --- Triple Column Grid --- */
+.home-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 4rem;
+}
+
+.side-column {
+    position: sticky;
+    top: 2rem;
+}
+
+.side-column h2 {
+    font-family: var(--font-headline);
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+}
+
+.side-post {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.side-post h3 {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+.side-post h3 a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.side-post .post-meta {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* --- Category Tabs --- */
+.category-tabs {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-line);
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.tab-btn:hover {
+    color: var(--accent);
+}
+
+.tab-btn.active {
+    color: var(--accent);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--accent);
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 1300px) {
+    .home-grid {
+        grid-template-columns: 1fr 280px;
+    }
+    .left-column {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .home-grid {
+        grid-template-columns: 1fr;
+    }
+    .side-column {
+        position: static;
+        margin-top: 2rem;
+    }
+    .breaking-label {
+        padding: 0 0.75rem;
+        font-size: 0; /* Hides the word 'BREAKING' */
+    }
+    .live-dot {
+        margin: 0;
+    }
+}
+
+.site-header {
+    padding: 2rem 0 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--accent);
+    position: relative;
+    z-index: 1000; /* Ensure header is above ticker */
+}
+
+.site-header .logo {
+    font-family: var(--font-masthead);
+    font-size: 4rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.site-header .logo .dot {
+    display: none;
+}
+
+.main-nav {
+    border-top: 1px solid var(--border-line);
+    border-bottom: 3px double var(--border-line);
+    padding: 0.75rem 0;
+    position: relative;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.main-nav a {
+    color: var(--text-ink);
+    text-decoration: none;
+}
+
+.main-nav a:hover {
+    color: #555;
+    text-decoration: underline;
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-ink);
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-50%) rotate(15deg);
+    color: var(--accent);
+}
+
+@media (max-width: 900px) {
+    .theme-toggle {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-top: 2rem;
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid var(--border-line);
+        padding: 1rem 0;
+    }
+    .theme-toggle:hover {
+        transform: rotate(5deg);
+    }
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-line);
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-family: var(--font-headline);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.hero p {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 3rem 0;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.pagination a {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--border-line);
+    color: var(--text-ink);
+    transition: 0.2s;
+}
+
+.pagination a:hover {
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-color: var(--accent);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding-bottom: 4rem;
+}
+
+.post-card {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.post-meta {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.post-meta .category a {
+    color: #d00;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.post-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.post-card h3 a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.post-card h3 a:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+.post-card p {
+    font-family: var(--font-ui);
+    color: var(--text-summary);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.read-more {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--link-color);
+}
+
+.single-post header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 2rem;
+}
+
+.single-post h1 {
+    font-family: var(--font-headline);
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.single-post .post-meta {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.featured-image {
+    max-width: 740px;
+    margin: 0 auto 2rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-card-image {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.post-card-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover .post-card-image img {
+    transform: scale(1.05);
+}
+
+.post-content {
+    max-width: 100%;
+    font-size: 1.1rem;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    background: transparent;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.post-content h2,
+.post-content h3 {
+    font-family: var(--font-headline);
+    color: var(--accent);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-ink);
+}
+
+/* --- Table Essentials --- */
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    display: block;
+    overflow-x: auto; /* Responsive Mobile Support */
+}
+
+.post-content th,
+.post-content td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-line);
+    text-align: left;
+    min-width: 150px;
+}
+
+.post-content th {
+    background: rgba(0, 0, 0, 0.03);
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+[data-theme="dark"] .post-content th {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.post-content tr:hover {
+    background: rgba(0, 0, 0, 0.01);
+}
+
+[data-theme="dark"] .post-content tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem auto;
+    border-radius: 8px;
+}
+
+/* --- Pinterest "Save" Overlay --- */
+.featured-image-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.pinterest-pin-it {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: #E60023;
+    color: #ffffff !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.featured-image-wrapper:hover .pinterest-pin-it {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pinterest-pin-it:hover {
+    background: #bd081c;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+}
+
+.pinterest-pin-it svg {
+    width: 18px;
+    height: 18px;
+}
+
+.post-content pre {
+    background: #282C34;
+    border-left: 4px solid #61AFEF;
+    border-radius: 6px;
+    margin: 2rem 0;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #ABB2BF;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+}
+
+.post-content pre code {
+    background: transparent;
+    color: #ABB2BF;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+.post-content code {
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    color: #E06C75;
+    background: rgba(40, 44, 52, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    word-break: break-word;
+}
+
+[data-theme="dark"] .post-content code {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-line);
+    color: #E06C75;
+}
+
+.post-content .highlight {
+    background: #282C34;
+    border-left: 4px solid #61AFEF;
+    border-radius: 6px;
+    margin: 2rem 0;
+    overflow-x: auto;
+}
+
+.post-content .highlight pre {
+    background: transparent;
+    border: none;
+    margin: 0;
+}
+
+.post-content pre .c,
+.post-content pre .ch,
+.post-content pre .cm,
+.post-content pre .cp,
+.post-content pre .c1,
+.post-content pre .cs,
+.post-content pre .cpf,
+.highlight .c,
+.highlight .ch,
+.highlight .cm,
+.highlight .cp,
+.highlight .c1,
+.highlight .cs {
+    color: #7F848E;
+}
+
+.post-content pre .k,
+.post-content pre .kd,
+.post-content pre .kn,
+.post-content pre .kp,
+.post-content pre .kr,
+.highlight .k,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr {
+    color: #C678DD;
+}
+
+.post-content pre .kc,
+.post-content pre .kt,
+.post-content pre .nb,
+.post-content pre .nc,
+.post-content pre .bp,
+.highlight .kc,
+.highlight .kt,
+.highlight .nb,
+.highlight .nc,
+.highlight .bp {
+    color: #E5C07B;
+}
+
+.post-content pre .s,
+.post-content pre .s1,
+.post-content pre .s2,
+.post-content pre .sa,
+.post-content pre .sb,
+.post-content pre .sc,
+.post-content pre .se,
+.post-content pre .sh,
+.post-content pre .si,
+.post-content pre .sr,
+.post-content pre .ss,
+.post-content pre .sx,
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sa,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sr,
+.highlight .ss,
+.highlight .sx {
+    color: #98C379;
+}
+
+.post-content pre .m,
+.post-content pre .mb,
+.post-content pre .mf,
+.post-content pre .mh,
+.post-content pre .mi,
+.post-content pre .mo,
+.post-content pre .il,
+.highlight .m,
+.highlight .mb,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il {
+    color: #D19A66;
+}
+
+.post-content pre .nf,
+.post-content pre .nd,
+.post-content pre .fm,
+.highlight .nf,
+.highlight .nd,
+.highlight .fm {
+    color: #61AFEF;
+    font-weight: bold;
+}
+
+.post-content pre .o,
+.post-content pre .ow,
+.highlight .o,
+.highlight .ow {
+    color: #56B6C2;
+}
+
+.post-content pre .n,
+.post-content pre .na,
+.post-content pre .ni,
+.post-content pre .nl,
+.post-content pre .nn,
+.post-content pre .no,
+.post-content pre .nt,
+.post-content pre .nv,
+.post-content pre .nx,
+.post-content pre .ne,
+.post-content pre .vc,
+.post-content pre .vg,
+.post-content pre .vi,
+.post-content pre .vm,
+.highlight .na,
+.highlight .ni,
+.highlight .no,
+.highlight .nt,
+.highlight .nv,
+.highlight .ne,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+    color: #E06C75;
+}
+
+.post-content pre .p,
+.post-content pre .w,
+.highlight .p,
+.highlight .w {
+    color: #ABB2BF;
+}
+
+.post-content pre .hll,
+.highlight .hll {
+    background-color: transparent;
+}
+
+.post-content pre .err,
+.highlight .err {
+    color: #ABB2BF;
+}
+
+/* Global Dark Mode Code Blocks */
+[data-theme="dark"] .post-content pre,
+[data-theme="dark"] .post-content .highlight {
+    background: #1a1a1a;
+    border: 1px solid var(--border-line);
+    border-left: 4px solid #61AFEF;
+}
+
+.article-footer-meta {
+    max-width: 740px;
+    margin: 4rem auto 0;
+    border-top: 4px solid var(--accent);
+    padding-top: 2rem;
+}
+
+.article-footer-meta strong {
+    color: var(--accent);
+}
+
+.accent-text {
+    color: var(--link-color);
+}
+
+.breadcrumb {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.breadcrumb a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .sep {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 0.2rem 0.7rem;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tag:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    text-decoration: none;
+}
+
+[data-theme="dark"] .tag {
+    background: #2a2a2a;
+    color: #ccc;
+    border-color: #444;
+}
+
+[data-theme="dark"] .tag:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.site-footer {
+    margin-top: 5rem;
+    border-top: 1px solid var(--accent);
+    padding: 3rem 0;
+    background: var(--bg-footer);
+    text-align: center;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Mobile Menu Base Styles */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001; /* Above nav */
+}
+
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--text-ink);
+    transition: all 0.3s ease-in-out;
+    border-radius: 2px;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width:768px) {
+    .site-header {
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
+    }
+
+    .site-header .logo {
+        font-size: 2.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .single-post h1 {
+        font-size: 2.25rem;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 2rem;
+        left: 1rem;
+    }
+
+    .main-nav {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100vh;
+        background: var(--bg-paper);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1100; /* Higher than header and ticker */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        padding: 2rem;
+        border-top: none;
+        border-bottom: none;
+        border-right: 1px solid var(--border-line);
+    }
+
+    [data-theme="dark"] .main-nav {
+        box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+
+    .main-nav.menu-open {
+        transform: translateX(0);
+    }
+
+    .main-nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+        text-align: center;
+        overflow-x: visible;
+        white-space: normal;
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-nav ul li a {
+        font-size: 1.25rem;
+    }
+
+    .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        transform: none;
+        margin-left: 0;
+    }
+
+    .theme-toggle:hover {
+        transform: rotate(15deg);
+    }
+}
+
+@media (max-width: 900px) {
+    .related-posts__grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .related-post-card {
+        min-height: 80px;
+    }
+
+    .related-post-card__img-wrap {
+        flex: 0 0 80px;
+        width: 80px;
+    }
+
+    .related-post-card__title {
+        font-size: 0.85rem;
+    }
+
+    .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        transform: none;
+        margin-left: 0;
+    }
+
+    .theme-toggle:hover {
+        transform: rotate(15deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .related-post-card__title {
+        font-size: 0.78rem;
+    }
+}
+
+/* --- Footer Legal Links --- */
+.footer-legal {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.footer-legal a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin: 0 0.75rem;
+    font-weight: 500;
+}
+
+.footer-legal a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* ── Related & Latest Articles Cards ──────────────────────── */
+.related-posts {
+    max-width: 740px;
+    margin: 4rem auto 0;
+    padding-top: 3rem;
+    border-top: 2px solid var(--accent);
+}
+
+.related-posts h3 {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.related-posts h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border-line), transparent);
+}
+
+/* 2-column grid on desktop */
+.related-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.related-posts:first-of-type .related-posts__grid {
+    grid-template-columns: 1fr; /* Keep Related as single column for focus */
+}
+
+/* Modern Card Design */
+.related-post-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 100px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-line);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+[data-theme="dark"] .related-post-card {
+    background: var(--bg-footer);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.related-post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--link-color);
+    text-decoration: none;
+}
+
+[data-theme="dark"] .related-post-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Thumbnail with Badge */
+.related-post-card__img-wrap {
+    flex: 0 0 110px;
+    width: 110px;
+    position: relative;
+    overflow: hidden;
+    background: var(--border-line);
+}
+
+.related-post-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.related-post-card:hover .related-post-card__img-wrap img {
+    transform: scale(1.1);
+}
+
+.category-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: rgba(0, 91, 150, 0.7); /* fallback */
+    background: color-mix(in srgb, var(--link-color), transparent 30%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Content Area */
+.related-post-card__content {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.related-post-card__title {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+}
+
+.related-post-card:hover .related-post-card__title {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+}
+
+
+/* --- Social Share Sidebar (Desktop) --- */
+.share-sidebar {
+    position: fixed;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 100;
+}
+
+.share-sidebar__label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.share-sidebar__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-paper);
+    color: var(--text-ink);
+    border: 1px solid var(--border-line);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.share-sidebar__btn:hover {
+    transform: translateX(5px);
+    color: #fff;
+}
+
+.share-sidebar__btn--twitter:hover { background: #000; border-color: #000; }
+.share-sidebar__btn--facebook:hover { background: #1877f2; border-color: #1877f2; }
+.share-sidebar__btn--reddit:hover { background: #ff4500; border-color: #ff4500; }
+.share-sidebar__btn--whatsapp:hover { background: #25d366; border-color: #25d366; }
+
+[data-theme="dark"] .share-sidebar__btn {
+    background: var(--bg-footer);
+}
+
+[data-theme="dark"] .share-sidebar__btn--twitter:hover {
+    background: #fff; color: #000; border-color: #fff;
+}
+
+/* --- Social Share Buttons (Mobile/Inline) --- */
+.share-buttons {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-line);
+}
+
+.share-label {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--text-ink);
+}
+
+.share-btn {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+.share-btn:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 1200px) {
+    .share-sidebar {
+        display: none;
+    }
+    .share-buttons {
+        display: flex;
+    }
+}
+
+/* --- Desktop Body Expansion & TOC Sidebar --- */
+@media (min-width: 1024px) {
+    .post-layout-container {
+        display: grid;
+        grid-template-columns: minmax(300px, 1fr) 900px 1fr;
+        gap: 0;
+        align-items: flex-start;
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    .post-content-column {
+        grid-column: 2;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .post-layout-container.no-toc {
+        justify-content: center;
+    }
+
+    .post-layout-container.no-toc .post-sidebar-column {
+        display: none;
+    }
+
+    .post-sidebar-column {
+        grid-column: 1;
+        position: sticky;
+        top: 2rem;
+        padding-right: 3rem;
+        padding-left: 1rem;
+    }
+
+    .post-layout-container .post-content,
+    .post-layout-container .featured-image,
+    .post-layout-container .article-footer-meta,
+    .post-layout-container .related-posts {
+        max-width: 900px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    body, .post-content {
+        font-size: 18px;
+    }
+}
+
+/* --- Hybrid TOC Styling --- */
+.toc {
+    font-family: var(--font-ui);
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 1.25rem;
+    margin: 0;
+    border-left: 1px solid var(--border-line);
+}
+
+.toc > ul {
+    padding-left: 0;
+    border-left: none;
+}
+
+.toc li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* --- Newsletter Capture Eco-system --- */
+
+/* 1. Footer Subscription Form */
+.footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 3rem;
+}
+
+.footer-column-newsletter h3 {
+    font-family: var(--font-headline);
+    margin-bottom: 1rem;
+}
+
+.footer-column-newsletter p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.newsletter-form-footer {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.newsletter-form-footer input {
+    background: var(--bg-paper);
+    border: 1px solid var(--border-line);
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    color: var(--text-ink);
+    font-family: var(--font-ui);
+}
+
+.newsletter-form-footer button {
+    background: var(--accent);
+    color: var(--bg-paper);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.newsletter-form-footer button:hover {
+    transform: translateY(-2px);
+}
+
+/* 2. Article 'Lead Magnet' CTA */
+.newsletter-cta {
+    background: var(--accent);
+    color: var(--bg-paper);
+    padding: 4rem 2rem;
+    border-radius: 12px;
+    margin: 4rem 0;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.newsletter-cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-cta h3 {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.newsletter-cta p {
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.newsletter-form-article {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.newsletter-form-article input {
+    flex: 1;
+    min-width: 280px;
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1rem;
+}
+
+.newsletter-form-article button {
+    background: #61AFEF; /* Signature Blue for high-intent action */
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.newsletter-form-article button:hover {
+    background: #4a90e2;
+    transform: scale(1.05);
+}
+
+.newsletter-footer-note {
+    font-size: 0.8rem !important;
+    opacity: 0.7 !important;
+    margin-top: 1.5rem !important;
+}
+
+[data-theme="dark"] .newsletter-cta {
+    background: #1a1a1a;
+    border: 1px solid var(--border-line);
+}
+
+[data-theme="dark"] .newsletter-cta h3 {
+    color: #fff;
+}
+
+[data-theme="dark"] .newsletter-cta p {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .newsletter-form-article input {
+    background: #252525;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+.toc a {
+    color: var(--text-muted);
+    opacity: 0.6;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.toc a:hover,
+.toc a.active-toc-link {
+    color: var(--accent);
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.toc a.active-toc-link {
+    font-weight: 700;
+}
+
+/* Mobile Accordion Style */
+.toc-mobile-accordion {
+    background: var(--bg-footer);
+    border: 1px solid var(--border-line);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.toc-mobile-accordion summary {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--accent);
+    outline: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toc-mobile-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.toc-mobile-accordion summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.toc-mobile-accordion[open] summary::after {
+    content: '−';
+}
+
+.toc-mobile-accordion .toc {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Desktop Sidebar TOC Card */
+@media (min-width: 1024px) {
+    #toc-sidebar-target .toc {
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        max-height: calc(100vh - 6rem);
+        overflow-y: auto;
+        /* Firefox */
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-line) transparent;
+    }
+
+    /* WebKit (Chrome, Safari, Edge) Scrollbar */
+    #toc-sidebar-target .toc::-webkit-scrollbar {
+        width: 5px;
+    }
+    #toc-sidebar-target .toc::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    #toc-sidebar-target .toc::-webkit-scrollbar-thumb {
+        background: var(--border-line);
+        border-radius: 10px;
+    }
+    
+    [data-theme="dark"] #toc-sidebar-target .toc {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    #toc-sidebar-target .toc::before {
+        content: 'Contents';
+        display: block;
+        font-family: var(--font-ui);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-line);
+    }
+}    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <div class="breaking-ticker" aria-label="Breaking News">
+        <div class="breaking-label">
+            <span class="live-dot"></span> BREAKING
+        </div>
+        <div class="ticker-viewport">
+            <div class="ticker-content">
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-sweet-16-elite-8-showdowns-ignite-courts/">March Madness: Sweet 16 & Elite 8 Showdowns Ignite Courts</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/">Geopolitical Tensions Reshape Global Landscape: A Global Analysis</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/japan-claims-womens-asian-cup-title-thrilling-victory/">Japan Claims Women's Asian Cup Title in Thrilling Victory</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/">Middle East Tensions Soar: Israel Strikes, Iran Retaliates</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/">March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/400-killed-pakistan-strike-kabul-hospital/">400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/unpacking-global-geopolitical-shifts-new-era/">Unpacking Global Geopolitical Shifts: A New Era Unfolds</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/from-season-4-trailer-launch-release-date-clues/">FROM Season 4 Trailer Launch: Release Date & Terrifying New Clues</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-sweet-16-elite-8-showdowns-ignite-courts/">March Madness: Sweet 16 & Elite 8 Showdowns Ignite Courts</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/">Geopolitical Tensions Reshape Global Landscape: A Global Analysis</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/japan-claims-womens-asian-cup-title-thrilling-victory/">Japan Claims Women's Asian Cup Title in Thrilling Victory</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/">Middle East Tensions Soar: Israel Strikes, Iran Retaliates</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/">March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/400-killed-pakistan-strike-kabul-hospital/">400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/unpacking-global-geopolitical-shifts-new-era/">Unpacking Global Geopolitical Shifts: A New Era Unfolds</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/from-season-4-trailer-launch-release-date-clues/">FROM Season 4 Trailer Launch: Release Date & Terrifying New Clues</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <header class="site-header">
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav id="main-nav" class="main-nav" aria-label="Main Navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
+            <ul>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/" itemprop="url">Home</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/archives.html" itemprop="url">Archives</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/categories.html" itemprop="url">Categories</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/tags.html" itemprop="url">Tags</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/about/" itemprop="url">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/"
+  },
+  "headline": "Window Functions in SQL: Advanced Data Analysis Guide",
+  "description": "Master advanced data analysis with Window Functions in SQL. This comprehensive guide covers their mechanics, syntax, and real-world applications for tech-sav...",
+  "image": [
+    "https://analyticsdrive.tech/images/window-functions-sql-advanced-data-analysis-guide.webp"
+  ],
+  "datePublished": "2026-03-23T00:18:00+05:30",
+  "dateModified": "2026-03-23T00:18:00+05:30",
+  "author": {
+    "@type": "Organization",
+    "name": "Analytics Drive Editorial Team",
+    "url": "https://analyticsdrive.tech/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/android-chrome-512x512.png"
+    }
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the main difference between a window function and a GROUP BY clause?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A window function performs calculations across a set of rows without collapsing the original rows, adding contextual columns. A GROUP BY clause aggregates rows into a single summary row per group, reducing output rows."
+      }
+    },    {
+      "@type": "Question",
+      "name": "When should I use the PARTITION BY clause in a window function?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use PARTITION BY to divide your dataset into logical groups, applying the window function independently to each group. It\u0027s essential for calculations like running totals or ranks specific to a category."
+      }
+    },    {
+      "@type": "Question",
+      "name": "What is the purpose of LAG() and LEAD() functions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LAG() and LEAD() access data from preceding or succeeding rows within an ordered partition. They are crucial for comparing values across rows, calculating differences, or analyzing trends."
+      }
+    }  ]
+}
+</script>
+
+
+<!-- Floating Sticky Share Sidebar (desktop only) -->
+<aside class="share-sidebar" aria-label="Share this article">
+  <span class="share-sidebar__label">Share</span>
+
+  <!-- X (Twitter) -->
+  <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/&text=Window%20Functions%20in%20SQL%3A%20Advanced%20Data%20Analysis%20Guide"
+    target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+    aria-label="Share on X">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  </a>
+
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" target="_blank"
+    rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </svg>
+  </a>
+
+  <!-- Reddit -->
+  <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/&title=Window%20Functions%20in%20SQL%3A%20Advanced%20Data%20Analysis%20Guide"
+    target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+    aria-label="Share on Reddit">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+    </svg>
+  </a>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/?text=Window%20Functions%20in%20SQL%3A%20Advanced%20Data%20Analysis%20Guide%20https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" target="_blank"
+    rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+    </svg>
+  </a>
+</aside>
+
+<article class="single-post">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="https://analyticsdrive.tech/">Home</a>
+    <span class="sep">›</span>
+    <a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a>
+    <span class="sep">›</span>
+    <span class="current" title="Window Functions in SQL: Advanced Data Analysis Guide">Window Functions in SQL: Advanced Data Analysis Guide</span>
+  </nav>
+
+  <div class="post-layout-container">
+    <aside class="post-sidebar-column">
+      <div id="toc-sidebar-target"></div>
+    </aside>
+
+    <div class="post-content-column">
+      <header class="post-header">
+        <div class="post-meta">
+          <time datetime="2026-03-23T00:18:00+05:30">Mon 23 March 2026</time>
+        </div>
+        <h1>Window Functions in SQL: Advanced Data Analysis Guide</h1>
+      </header>
+
+
+  <div class="featured-image">
+          <img src="https://analyticsdrive.tech/images/window-functions-sql-advanced-data-analysis-guide.webp"
+               srcset="https://analyticsdrive.tech/images/window-functions-sql-advanced-data-analysis-guide-tablet.webp 800w, https://analyticsdrive.tech/images/window-functions-sql-advanced-data-analysis-guide-mobile.webp 400w"
+               sizes="(max-width: 800px) 100vw, 1200px"
+               alt="A data scientist meticulously analyzing complex SQL queries on a futuristic holographic display, with intricate data patterns and "window" visualizations. Focus on a high-tech, analytical environment with deep blue and green hues."
+               class="hero-img"
+               itemprop="image"
+               loading="eager">
+      <figcaption style="text-align: center; font-size: 0.9rem; color: var(--text-muted); padding: 0.5rem 0; font-style: italic;">
+        A data scientist meticulously analyzing complex SQL queries on a futuristic holographic display, with intricate data patterns and "window" visualizations. Focus on a high-tech, analytical environment with deep blue and green hues.
+      </figcaption>
+    </figure>
+    <a href="https://www.pinterest.com/pin/create/button/?url=https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/&media=https://analyticsdrive.tech/images/window-functions-sql-advanced-data-analysis-guide.webp&description=Window%20Functions%20in%20SQL%3A%20Advanced%20Data%20Analysis%20Guide" 
+       class="pinterest-pin-it" target="_blank" rel="noopener noreferrer">
+       <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.991 3.993-.283 1.194.597 2.169 1.775 2.169 2.128 0 3.768-2.244 3.768-5.483 0-2.868-2.061-4.873-5.004-4.873-3.41 0-5.411 2.558-5.411 5.199 0 1.03.397 2.135.892 2.735.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.261 7.929-7.261 4.162 0 7.397 2.966 7.397 6.93 0 4.135-2.607 7.462-6.223 7.462-1.215 0-2.358-.631-2.75-1.378l-.748 2.853c-.271 1.032-1.002 2.324-1.492 3.121C11.171 23.904 12.065 24 13 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+       Save
+    </a>
+  </div>
+
+      <div class="post-content">
+        <p>In the realm of modern data analytics, raw data is merely a starting point. To truly extract insights and drive informed decisions, analysts and developers must possess a toolkit capable of transforming disparate figures into meaningful patterns. This is where the power of <strong>Window Functions in SQL: Advanced Data Analysis Guide</strong> comes into play. These sophisticated SQL constructs allow you to perform calculations across a set of table rows that are related to the current row, without collapsing the individual rows into a single output, a key differentiator from traditional <code>GROUP BY</code> aggregations. Traditionally, achieving this in SQL would involve complex subqueries, self-joins, or multiple aggregation steps that could often collapse your detailed transactional data. For more on combining data from multiple tables, explore our <a href="/sql-joins-explained-complete-guide/">SQL Joins Explained: A Complete Guide for Beginners</a>. This comprehensive guide will equip tech-savvy readers with the knowledge to master these advanced data analysis techniques, enabling more nuanced and powerful data manipulation.</p>
+<div class="toc">
+<ul>
+<li><a href="#what-are-window-functions-in-sql-a-foundational-understanding">What are Window Functions in SQL? A Foundational Understanding</a></li>
+<li><a href="#the-anatomy-of-a-window-function-deconstructing-the-over-clause">The Anatomy of a Window Function: Deconstructing the OVER() Clause</a><ul>
+<li><a href="#window_functionexpression">WINDOW_FUNCTION(&lt;expression&gt;)</a></li>
+<li><a href="#over-clause">OVER() Clause</a></li>
+<li><a href="#partition-by-column_list">PARTITION BY &lt;column_list&gt;</a></li>
+<li><a href="#order-by-column_list-ascdesc">ORDER BY &lt;column_list&gt; [ASC|DESC]</a></li>
+<li><a href="#window_frame_clause">WINDOW_FRAME_CLAUSE</a></li>
+</ul>
+</li>
+<li><a href="#setting-up-our-data-a-practical-foundation-for-advanced-data-analysis-guide">Setting Up Our Data: A Practical Foundation for Advanced Data Analysis Guide</a></li>
+<li><a href="#exploring-common-window-functions-with-practical-examples">Exploring Common Window Functions with Practical Examples</a><ul>
+<li><a href="#running-totals-and-moving-averages">Running Totals and Moving Averages</a></li>
+<li><a href="#ranking-data-within-groups">Ranking Data within Groups</a></li>
+<li><a href="#comparing-values-across-rows-lag-and-lead">Comparing Values Across Rows: LAG() and LEAD()</a></li>
+<li><a href="#first-and-last-values-in-a-partition-first_value-and-last_value">First and Last Values in a Partition: FIRST_VALUE() and LAST_VALUE()</a></li>
+<li><a href="#nth-value-nth_value">Nth Value: NTH_VALUE()</a></li>
+</ul>
+</li>
+<li><a href="#advanced-windowing-techniques-mastering-complexity">Advanced Windowing Techniques: Mastering Complexity</a><ul>
+<li><a href="#using-window-functions-with-common-table-expressions-ctes">Using Window Functions with Common Table Expressions (CTEs)</a></li>
+<li><a href="#complex-window-frames-with-range">Complex Window Frames with RANGE</a></li>
+</ul>
+</li>
+<li><a href="#real-world-applications-for-window-functions">Real-World Applications for Window Functions</a></li>
+<li><a href="#challenges-and-best-practices-with-window-functions">Challenges and Best Practices with Window Functions</a><ul>
+<li><a href="#performance-considerations">Performance Considerations</a></li>
+<li><a href="#choosing-the-right-window-frame">Choosing the Right Window Frame</a></li>
+<li><a href="#readability-and-complexity">Readability and Complexity</a></li>
+<li><a href="#when-to-use-group-by-vs-window-functions">When to Use GROUP BY vs. Window Functions</a></li>
+<li><a href="#database-specific-implementations">Database-Specific Implementations</a></li>
+</ul>
+</li>
+<li><a href="#beyond-the-basics-further-exploration-future-trends">Beyond the Basics: Further Exploration &amp; Future Trends</a><ul>
+<li><a href="#database-specific-extensions">Database-Specific Extensions</a></li>
+<li><a href="#integration-with-business-intelligence-bi-and-data-visualization-tools">Integration with Business Intelligence (BI) and Data Visualization Tools</a></li>
+<li><a href="#feature-engineering-for-machine-learning">Feature Engineering for Machine Learning</a></li>
+</ul>
+</li>
+<li><a href="#conclusion-mastering-advanced-data-analysis-with-window-functions-in-sql">Conclusion: Mastering Advanced Data Analysis with Window Functions in SQL</a></li>
+<li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a href="#further-reading-resources">Further Reading &amp; Resources</a></li>
+</ul>
+</div>
+<hr>
+<h2 id="what-are-window-functions-in-sql-a-foundational-understanding">What are Window Functions in SQL? A Foundational Understanding</h2>
+<p>Imagine you're reviewing a spreadsheet of sales data. You want to see each individual sale, but alongside it, you also want to know the total sales for that month, or perhaps the average sale amount for the region, or even how that sale ranks compared to others by the same salesperson. Traditionally, achieving this in SQL would involve complex subqueries, self-joins, or multiple aggregation steps that could often collapse your detailed transactional data.</p>
+<p>Window functions offer a more elegant and powerful solution. At their core, a window function performs a calculation across a set of table rows that are somehow related to the current row. This "set of rows" is called a "window" or "frame." Crucially, unlike <code>GROUP BY</code> clauses, window functions do not reduce the number of rows returned by the query. Instead, they add contextual, calculated columns to each row, providing richer insights without losing granular detail.</p>
+<p>Think of it like putting a magnifying glass over your data. For each row, you define a specific "window" of other rows to look at. This window can encompass all rows in the dataset, all rows within a specific group (like a department or a region), or even a rolling set of rows (like the previous 7 days' sales). The function then operates <em>within</em> that defined window, returning a value that is appended to the current row. This ability to perform calculations over a flexible, defined set of rows while retaining individual row detail is what makes window functions indispensable for advanced data analysis.</p>
+<hr>
+<h2 id="the-anatomy-of-a-window-function-deconstructing-the-over-clause">The Anatomy of a Window Function: Deconstructing the <code>OVER()</code> Clause</h2>
+<p>Understanding how window functions work begins with grasping their syntax, which revolves entirely around the <code>OVER()</code> clause. This clause is what transforms a regular aggregate function into a window function and defines the "window" of rows on which the function operates.</p>
+<p>The general syntax for a window function looks like this:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="n">WINDOW_FUNCTION</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">expression</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">[</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="o">&lt;</span><span class="n">column_list</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">[</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="o">&lt;</span><span class="n">column_list</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="k">ASC</span><span class="o">|</span><span class="k">DESC</span><span class="p">]]</span>
+<span class="w">    </span><span class="p">[</span><span class="o">&lt;</span><span class="n">WINDOW_FRAME_CLAUSE</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Let's break down each component:</p>
+<h3 id="window_functionexpression"><code>WINDOW_FUNCTION(&lt;expression&gt;)</code></h3>
+<p>This is the actual function you want to apply. It can be:</p>
+<ol>
+<li><strong>Aggregate Functions</strong>: <code>SUM()</code>, <code>AVG()</code>, <code>COUNT()</code>, <code>MIN()</code>, <code>MAX()</code>. When used with <code>OVER()</code>, they no longer collapse rows but compute the aggregate over the defined window for each row.</li>
+<li><strong>Ranking Functions</strong>: <code>ROW_NUMBER()</code>, <code>RANK()</code>, <code>DENSE_RANK()</code>, <code>NTILE()</code>. These assign ranks or numbers to rows within a window.</li>
+<li><strong>Analytic Functions</strong>: <code>LEAD()</code>, <code>LAG()</code>, <code>FIRST_VALUE()</code>, <code>LAST_VALUE()</code>, <code>NTH_VALUE()</code>. These allow you to access data from preceding or succeeding rows within the window, or specific values from the window.</li>
+</ol>
+<h3 id="over-clause"><code>OVER()</code> Clause</h3>
+<p>This is the heart of the window function, indicating that the function should operate as a window function rather than a standard aggregate. Everything inside the parentheses of <code>OVER()</code> defines the window.</p>
+<h3 id="partition-by-column_list"><code>PARTITION BY &lt;column_list&gt;</code></h3>
+<ul>
+<li><strong>Purpose</strong>: This clause divides the query's result set into partitions (or groups) to which the window function is applied independently. It's conceptually similar to the <code>GROUP BY</code> clause, but with a critical distinction: <code>PARTITION BY</code> does not collapse the rows.</li>
+<li><strong>Analogy</strong>: Think of it as creating distinct "sub-tables" in memory, and the window function then operates independently within each sub-table. If you <code>PARTITION BY department</code>, the function calculates independently for each department.</li>
+<li><strong>Omission</strong>: If <code>PARTITION BY</code> is omitted, the entire result set is treated as a single partition.</li>
+</ul>
+<h3 id="order-by-column_list-ascdesc"><code>ORDER BY &lt;column_list&gt; [ASC|DESC]</code></h3>
+<ul>
+<li><strong>Purpose</strong>: This clause specifies the logical order of rows within each partition (or within the entire result set if <code>PARTITION BY</code> is omitted). This ordering is crucial for many window functions, especially ranking functions (<code>ROW_NUMBER</code>, <code>RANK</code>), and functions that depend on sequence (<code>LAG</code>, <code>LEAD</code>, cumulative sums).</li>
+<li><strong>Analogy</strong>: It's like sorting the "sub-tables" created by <code>PARTITION BY</code>. The order defines "what comes before what" or "what comes after what" for functions that look at adjacent rows.</li>
+<li><strong>Omission</strong>: If <code>ORDER BY</code> is omitted, the order of rows within a partition is non-deterministic, and some window functions (like <code>ROW_NUMBER</code>, <code>LAG</code>, <code>LEAD</code>) may produce inconsistent results. Aggregate window functions (<code>SUM</code>, <code>AVG</code>) without <code>ORDER BY</code> will consider all rows in the partition for their calculation.</li>
+</ul>
+<h3 id="window_frame_clause"><code>WINDOW_FRAME_CLAUSE</code></h3>
+<ul>
+<li><strong>Purpose</strong>: This optional clause defines the specific "frame" or sub-set of rows within the current partition that the window function should consider. It refines the window even further than <code>PARTITION BY</code> and <code>ORDER BY</code>.</li>
+<li><strong>Key Keywords</strong>:<ul>
+<li><code>ROWS</code>: Defines the frame based on a fixed number of rows preceding or following the current row.</li>
+<li><code>RANGE</code>: Defines the frame based on a logical offset from the current row's value in the <code>ORDER BY</code> column (e.g., all rows with a date within 7 days of the current row's date).</li>
+</ul>
+</li>
+<li><strong>Common Frame Definitions</strong>:<ul>
+<li><code>ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>: This is the default for ordered window functions (when <code>ORDER BY</code> is present). It creates a "cumulative" window, including all rows from the beginning of the partition up to the current row.</li>
+<li><code>ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code>: Includes all rows in the current partition. This is the default for unordered window functions (when <code>ORDER BY</code> is absent).</li>
+<li><code>ROWS BETWEEN &lt;N&gt; PRECEDING AND &lt;M&gt; FOLLOWING</code>: Includes N rows before the current row and M rows after it.</li>
+<li><code>ROWS BETWEEN &lt;N&gt; PRECEDING AND CURRENT ROW</code>: Includes N rows before and the current row.</li>
+<li><code>ROWS BETWEEN CURRENT ROW AND &lt;N&gt; FOLLOWING</code>: Includes the current row and N rows after it.</li>
+<li><code>ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code>: All rows in the partition.</li>
+</ul>
+</li>
+</ul>
+<p>Understanding these components is crucial because their combination dictates the precise behavior of the window function, allowing for highly flexible and targeted data analysis.</p>
+<hr>
+<h2 id="setting-up-our-data-a-practical-foundation-for-advanced-data-analysis-guide">Setting Up Our Data: A Practical Foundation for Advanced Data Analysis Guide</h2>
+<p>To demonstrate the practical application of window functions, we'll use a simple <code>Sales</code> table. This table tracks individual sales transactions, including the <code>SaleID</code>, <code>SaleDate</code>, <code>Region</code>, <code>ProductID</code>, and <code>SaleAmount</code>. We'll also include an <code>EmployeeID</code> to show partitioning by employees.</p>
+<p>Let's create the table and populate it with some sample data.</p>
+<p><strong>SQL Table Creation:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="w"> </span><span class="nb">DATE</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Region</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ProductID</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<p><strong>SQL Data Insertion:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="p">(</span><span class="n">SaleID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">,</span><span class="w"> </span><span class="n">Region</span><span class="p">,</span><span class="w"> </span><span class="n">ProductID</span><span class="p">,</span><span class="w"> </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;East&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P001&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-01-05&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;West&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P002&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-01-10&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;East&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P001&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">120</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-01-12&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;South&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P003&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="p">,</span><span class="w"> </span><span class="mi">300</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-01-15&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;West&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P002&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-01-20&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;East&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P004&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">180</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-01-25&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;North&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P005&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-02-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;East&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P001&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">160</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-02-03&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;West&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P002&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">220</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-02-08&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;South&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P003&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="p">,</span><span class="w"> </span><span class="mi">350</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-02-10&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;East&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P004&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">190</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-02-15&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;North&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P005&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="p">,</span><span class="w"> </span><span class="mi">420</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-02-20&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;West&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P002&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">280</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-03-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;East&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P001&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">170</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-03-05&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;South&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P003&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="p">,</span><span class="w"> </span><span class="mi">310</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-03-10&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;West&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P002&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">260</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-03-15&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;East&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P004&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2023-03-20&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;North&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;P005&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="p">,</span><span class="w"> </span><span class="mi">450</span><span class="p">.</span><span class="mi">00</span><span class="p">);</span>
+</code></pre></div>
+
+<p>This dataset will allow us to demonstrate various window function capabilities, from calculating running totals for employees to ranking sales within regions and comparing sequential sales for products.</p>
+<hr>
+<h2 id="exploring-common-window-functions-with-practical-examples">Exploring Common Window Functions with Practical Examples</h2>
+<p>Let's dive into some of the most frequently used window functions and see how they solve common analytical problems.</p>
+<h3 id="running-totals-and-moving-averages">Running Totals and Moving Averages</h3>
+<p>One of the most common applications for window functions is calculating running totals or moving averages, essential for trend analysis.</p>
+<p><strong>Scenario</strong>: Calculate the running total of sales for each employee, ordered by <code>SaleDate</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">RunningTotalSales</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li><code>PARTITION BY EmployeeID</code>: This ensures the running total resets for each new employee.</li>
+<li><code>ORDER BY SaleDate</code>: This dictates the order in which sales are summed, ensuring the total accumulates chronologically.</li>
+<li>The default window frame for <code>ORDER BY</code> is <code>ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>, which is exactly what we need for a running total.</li>
+</ul>
+<p><strong>Sample Output (partial for EmployeeID 101):</strong></p>
+<div class="highlight"><pre><span></span><code>SaleID | SaleDate   | EmployeeID | SaleAmount | RunningTotalSales
+-------|------------|------------|------------|------------------
+1      | 2023-01-01 | 101        | 150.00     | 150.00
+3      | 2023-01-10 | 101        | 120.00     | 270.00
+6      | 2023-01-20 | 101        | 180.00     | 450.00
+8      | 2023-02-01 | 101        | 160.00     | 610.00
+11     | 2023-02-10 | 101        | 190.00     | 800.00
+14     | 2023-03-01 | 101        | 170.00     | 970.00
+17     | 2023-03-15 | 101        | 200.00     | 1170.00
+...    | ...        | ...        | ...        | ...
+</code></pre></div>
+
+<p><strong>Scenario</strong>: Calculate a 3-day moving average of sales for each employee.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span>
+<span class="w">        </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span>
+<span class="w">        </span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">MovingAverage3Day</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li><code>ROWS BETWEEN 2 PRECEDING AND CURRENT ROW</code>: This defines the window frame to include the current row and the two preceding rows within each <code>EmployeeID</code> partition, ordered by <code>SaleDate</code>. This creates a 3-day moving average (current day + 2 previous days).</li>
+</ul>
+<p><strong>Sample Output (partial for EmployeeID 101):</strong></p>
+<div class="highlight"><pre><span></span><code>SaleID | SaleDate   | EmployeeID | SaleAmount | MovingAverage3Day
+-------|------------|------------|------------|------------------
+1      | 2023-01-01 | 101        | 150.00     | 150.00
+3      | 2023-01-10 | 101        | 120.00     | 135.00
+6      | 2023-01-20 | 101        | 180.00     | 150.00
+8      | 2023-02-01 | 101        | 160.00     | 153.33
+...    | ...        | ...        | ...        | ...
+</code></pre></div>
+
+<h3 id="ranking-data-within-groups">Ranking Data within Groups</h3>
+<p>Ranking functions are critical for identifying top performers, analyzing competitive positions, or simply segmenting data into ordered tiers.</p>
+<p><strong>Scenario</strong>: Rank sales for each employee based on <code>SaleAmount</code> (highest first).</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleAmount</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SalesRank</span><span class="p">,</span>
+<span class="w">    </span><span class="n">DENSE_RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleAmount</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SalesDenseRank</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleAmount</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SalesRowNumber</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleAmount</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation of Ranking Functions</strong>:</p>
+<ul>
+<li><code>RANK()</code>: Assigns a rank to each row within its partition. If two or more rows have the same value in the <code>ORDER BY</code> clause, they receive the same rank, and the next rank in the sequence is skipped (e.g., 1, 1, 3).</li>
+<li><code>DENSE_RANK()</code>: Similar to <code>RANK()</code>, but it does not skip ranks. If two or more rows have the same value, they receive the same rank, and the next rank is consecutive (e.g., 1, 1, 2).</li>
+<li><code>ROW_NUMBER()</code>: Assigns a unique, sequential integer to each row within its partition, starting from 1. If rows have identical values in the <code>ORDER BY</code> clause, their order within the partition is arbitrary.</li>
+</ul>
+<p><strong>Sample Output (partial for EmployeeID 101):</strong></p>
+<div class="highlight"><pre><span></span><code>SaleID | SaleDate   | EmployeeID | SaleAmount | SalesRank | SalesDenseRank | SalesRowNumber
+-------|------------|------------|------------|-----------|----------------|---------------
+17     | 2023-03-15 | 101        | 200.00     | 1         | 1              | 1
+11     | 2023-02-10 | 101        | 190.00     | 2         | 2              | 2
+6      | 2023-01-20 | 101        | 180.00     | 3         | 3              | 3
+14     | 2023-03-01 | 101        | 170.00     | 4         | 4              | 4
+8      | 2023-02-01 | 101        | 160.00     | 5         | 5              | 5
+1      | 2023-01-01 | 101        | 150.00     | 6         | 6              | 6
+3      | 2023-01-10 | 101        | 120.00     | 7         | 7              | 7
+...    | ...        | ...        | ...        | ...       | ...            | ...
+</code></pre></div>
+
+<h3 id="comparing-values-across-rows-lag-and-lead">Comparing Values Across Rows: <code>LAG()</code> and <code>LEAD()</code></h3>
+<p><code>LAG()</code> and <code>LEAD()</code> functions are incredibly useful for comparing a row's value with a preceding or succeeding row's value, respectively. This is vital for time-series analysis, calculating differences, or identifying trends.</p>
+<p><strong>Scenario</strong>: For each sale, find the previous sale amount by the same employee and calculate the difference.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LAG</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">PreviousSaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">LAG</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SaleDifferenceFromPrevious</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li><code>LAG(SaleAmount, 1, 0)</code>:<ul>
+<li><code>SaleAmount</code>: The column whose value we want from the previous row.</li>
+<li><code>1</code>: The <code>offset</code> (how many rows back to look). <code>1</code> means the immediate preceding row.</li>
+<li><code>0</code>: The <code>default_value</code> if there is no preceding row (e.g., for the first sale by an employee). This prevents <code>NULL</code> from breaking calculations.</li>
+</ul>
+</li>
+<li><code>PARTITION BY EmployeeID ORDER BY SaleDate</code>: Ensures we're comparing sales within the same employee's timeline.</li>
+</ul>
+<p><strong>Sample Output (partial for EmployeeID 101):</strong></p>
+<div class="highlight"><pre><span></span><code>SaleID | SaleDate   | EmployeeID | SaleAmount | PreviousSaleAmount | SaleDifferenceFromPrevious
+-------|------------|------------|--------------------|---------------------------
+1      | 2023-01-01 | 101        | 150.00     | 0.00               | 150.00
+3      | 2023-01-10 | 101        | 120.00     | 150.00             | -30.00
+6      | 2023-01-20 | 101        | 180.00     | 120.00             | 60.00
+8      | 2023-02-01 | 101        | 160.00     | 180.00             | -20.00
+...    | ...        | ...        | ...        | ...                | ...
+</code></pre></div>
+
+<p>Similarly, <code>LEAD()</code> works by looking forward in the sequence:</p>
+<p><strong>Scenario</strong>: For each sale, find the next sale amount by the same employee.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LEAD</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NextSaleAmount</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">;</span>
+</code></pre></div>
+
+<h3 id="first-and-last-values-in-a-partition-first_value-and-last_value">First and Last Values in a Partition: <code>FIRST_VALUE()</code> and <code>LAST_VALUE()</code></h3>
+<p>These functions retrieve the value of an expression from the first or last row in the window frame, respectively. They are useful for establishing baselines or identifying final states within a group.</p>
+<p><strong>Scenario</strong>: For each sale, find the earliest sale amount for that employee and their latest sale amount.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FIRST_VALUE</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">FirstSaleAmountByEmployee</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span><span class="w"> </span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">UNBOUNDED</span><span class="w"> </span><span class="n">FOLLOWING</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">LastSaleAmountByEmployee</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li><code>FIRST_VALUE(SaleAmount) OVER (PARTITION BY EmployeeID ORDER BY SaleDate)</code>: By default, the window frame for <code>FIRST_VALUE</code> (when <code>ORDER BY</code> is present) is <code>ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>. This correctly retrieves the first value in the partition.</li>
+<li><code>LAST_VALUE(SaleAmount) OVER (PARTITION BY EmployeeID ORDER BY SaleDate ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)</code>: For <code>LAST_VALUE</code>, the default frame <code>ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code> would only show the <em>current</em> row's value as the last. To get the actual last value <em>in the entire partition</em>, you must explicitly define the frame as <code>ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING</code> (or <code>UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code>). This is a common gotcha!</li>
+</ul>
+<p><strong>Sample Output (partial for EmployeeID 101):</strong></p>
+<div class="highlight"><pre><span></span><code>SaleID | SaleDate   | EmployeeID | SaleAmount | FirstSaleAmountByEmployee | LastSaleAmountByEmployee
+-------|------------|------------|------------|---------------------------|-------------------------
+1      | 2023-01-01 | 101        | 150.00     | 150.00                    | 200.00
+3      | 2023-01-10 | 101        | 120.00     | 150.00                    | 200.00
+6      | 2023-01-20 | 101        | 180.00     | 150.00                    | 200.00
+8      | 2023-02-01 | 101        | 160.00     | 150.00                    | 200.00
+11     | 2023-02-10 | 101        | 190.00     | 150.00                    | 200.00
+14     | 2023-03-01 | 101        | 170.00     | 150.00                    | 200.00
+17     | 2023-03-15 | 101        | 200.00     | 150.00                    | 200.00
+...    | ...        | ...        | ...        | ...                       | ...
+</code></pre></div>
+
+<h3 id="nth-value-nth_value">Nth Value: <code>NTH_VALUE()</code></h3>
+<p>This function returns the value of an expression from the Nth row in the window frame. This is useful for picking out specific elements from an ordered sequence.</p>
+<p><strong>Scenario</strong>: Find the second highest sale amount for each employee.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="n">NTH_VALUE</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleAmount</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SecondHighestSaleAmount</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li><code>NTH_VALUE(SaleAmount, 2)</code>: We want the value of <code>SaleAmount</code> from the 2nd row in the window.</li>
+<li><code>PARTITION BY EmployeeID ORDER BY SaleAmount DESC</code>: This orders sales by amount in descending order within each employee's partition, so the 2nd row will indeed represent the second highest sale. The default window frame (all preceding and current row) is sufficient here.</li>
+</ul>
+<p><strong>Sample Output (partial for EmployeeID 101):</strong></p>
+<div class="highlight"><pre><span></span><code>SaleID | SaleDate   | EmployeeID | SaleAmount | SecondHighestSaleAmount
+-------|------------|------------|------------|------------------------
+17     | 2023-03-15 | 101        | 200.00     | 190.00
+11     | 2023-02-10 | 101        | 190.00     | 190.00
+6      | 2023-01-20 | 101        | 180.00     | 190.00
+14     | 2023-03-01 | 101        | 170.00     | 190.00
+8      | 2023-02-01 | 101        | 160.00     | 190.00
+1      | 2023-01-01 | 101        | 150.00     | 190.00
+3      | 2023-01-10 | 101        | 120.00     | 190.00
+...    | ...        | ...        | ...        | ...
+</code></pre></div>
+
+<p>Notice how the <code>SecondHighestSaleAmount</code> remains constant for all rows within employee 101's partition, as it's looking for the 2nd highest value <em>in that entire partition</em>.</p>
+<hr>
+<h2 id="advanced-windowing-techniques-mastering-complexity">Advanced Windowing Techniques: Mastering Complexity</h2>
+<p>Beyond the basic applications, window functions can be combined with other SQL features or used with more intricate frame definitions to solve highly complex analytical challenges.</p>
+<h3 id="using-window-functions-with-common-table-expressions-ctes">Using Window Functions with Common Table Expressions (CTEs)</h3>
+<p>CTEs are powerful for breaking down complex queries into logical, readable steps. This is especially true when working with multiple window functions or when you need to filter results based on a window function's output.</p>
+<p><strong>Scenario</strong>: Find the top 2 sales employees per region based on their total sales.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">EmployeeRegionSales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Region</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSales</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">Sales</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">Region</span>
+<span class="p">),</span>
+<span class="n">RankedEmployeeSales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Region</span><span class="p">,</span>
+<span class="w">        </span><span class="n">TotalSales</span><span class="p">,</span>
+<span class="w">        </span><span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Region</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">TotalSales</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">RegionRank</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">EmployeeRegionSales</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Region</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TotalSales</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">RankedEmployeeSales</span>
+<span class="k">WHERE</span>
+<span class="w">    </span><span class="n">RegionRank</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">Region</span><span class="p">,</span><span class="w"> </span><span class="n">TotalSales</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:</p>
+<ol>
+<li><code>EmployeeRegionSales</code> CTE first aggregates the total sales for each employee within each region using a standard <code>GROUP BY</code>.</li>
+<li><code>RankedEmployeeSales</code> CTE then applies the <code>RANK()</code> window function to this aggregated data. It partitions by <code>Region</code> and orders by <code>TotalSales</code> descending to rank employees within their respective regions.</li>
+<li>Finally, the outer query filters these ranked results to select only the top 2 employees (<code>RegionRank &lt;= 2</code>) for each region.</li>
+</ol>
+<p>This approach demonstrates how CTEs enhance readability and manageability when chaining analytical operations involving window functions.</p>
+<h3 id="complex-window-frames-with-range">Complex Window Frames with <code>RANGE</code></h3>
+<p>While <code>ROWS</code> frames define windows based on a fixed count of rows, <code>RANGE</code> frames define windows based on a logical offset of values in the <code>ORDER BY</code> clause. This is particularly useful for date-based or value-based analysis.</p>
+<p><strong>Scenario</strong>: Calculate the sum of sales for each employee for all sales within the same month as the current sale, even if those sales are not immediately adjacent by date.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">SaleID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SaleAmount</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">STRFTIME</span><span class="p">(</span><span class="s1">&#39;%Y-%m&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">)</span><span class="w"> </span><span class="c1">-- Group by year-month</span>
+<span class="w">        </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span>
+<span class="w">        </span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="n">UNBOUNDED</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">UNBOUNDED</span><span class="w"> </span><span class="n">FOLLOWING</span><span class="w"> </span><span class="c1">-- Consider all sales in the month</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">MonthlyTotalSales</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">SaleAmount</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmployeeID</span>
+<span class="w">        </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SaleDate</span>
+<span class="w">        </span><span class="n">RANGE</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;7&#39;</span><span class="w"> </span><span class="k">DAY</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="c1">-- Average for sales within 7 days</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AverageSalesLast7Days</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">Sales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">SaleDate</span><span class="p">;</span>
+</code></pre></div>
+
+<p><em>Note: <code>STRFTIME('%Y-%m', SaleDate)</code> is specific to SQLite. For PostgreSQL, use <code>TO_CHAR(SaleDate, 'YYYY-MM')</code>. For SQL Server, <code>FORMAT(SaleDate, 'yyyy-MM')</code> or <code>CONVERT(VARCHAR(7), SaleDate, 120)</code>.</em></p>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li><code>SUM(SaleAmount) OVER (PARTITION BY EmployeeID, STRFTIME('%Y-%m', SaleDate) ...)</code>: Here, the partition is defined not just by <code>EmployeeID</code> but also by the <code>year-month</code> of the <code>SaleDate</code>. This effectively groups all sales within the same month for a given employee. The <code>ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code> ensures that all sales within that month are included in the sum, regardless of their specific <code>SaleDate</code> order.</li>
+<li><code>AVG(SaleAmount) OVER (... RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND CURRENT ROW)</code>: This demonstrates a <code>RANGE</code> frame for a moving average. Instead of counting 7 <em>rows</em>, it considers all rows where the <code>SaleDate</code> falls within 7 days <em>before</em> the current row's <code>SaleDate</code> (inclusive). This is powerful for true date-based windows.</li>
+</ul>
+<p>These advanced techniques, especially when combined with careful consideration of <code>PARTITION BY</code>, <code>ORDER BY</code>, and the <code>WINDOW_FRAME_CLAUSE</code>, unlock the full potential of Window Functions in SQL: Advanced Data Analysis Guide.</p>
+<hr>
+<h2 id="real-world-applications-for-window-functions">Real-World Applications for Window Functions</h2>
+<p>Window functions are not just theoretical constructs; they are indispensable tools in a variety of analytical scenarios across industries. Their ability to perform contextual calculations without losing row-level detail makes them incredibly versatile.</p>
+<p>Here are some real-world applications:</p>
+<ol>
+<li>
+<p><strong>Financial Analysis</strong>:</p>
+<ul>
+<li><strong>Stock Performance</strong>: Calculating rolling averages of stock prices to identify trends, comparing a stock's current price to its average over the last 30 or 90 days.</li>
+<li><strong>Portfolio Growth</strong>: Tracking cumulative investment growth over time for individual assets or entire portfolios.</li>
+<li><strong>Transaction Analysis</strong>: Identifying sequential transactions by a customer or account, such as finding the difference between consecutive deposits or withdrawals.</li>
+</ul>
+</li>
+<li>
+<p><strong>E-commerce and Retail</strong>:</p>
+<ul>
+<li><strong>Customer Behavior</strong>: Analyzing customer purchase history to determine the average order value for a customer over their lifetime, or finding their first and last purchase dates.</li>
+<li><strong>Product Performance</strong>: Ranking products by sales within categories or regions, identifying top-selling items over specific periods.</li>
+<li><strong>Promotional Effectiveness</strong>: Comparing sales during a promotional period to sales in the preceding <code>N</code> days using <code>LAG()</code> or <code>LEAD()</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Log Analysis and IT Monitoring</strong>:</p>
+<ul>
+<li><strong>Error Rate Trends</strong>: Calculating a moving average of error occurrences in system logs to detect emerging issues.</li>
+<li><strong>User Sessions</strong>: Grouping log entries into user sessions, then analyzing the duration or sequence of actions within each session.</li>
+<li><strong>State Changes</strong>: Identifying when a system or device changes state (e.g., online to offline) by comparing current status with the previous log entry.</li>
+</ul>
+</li>
+<li>
+<p><strong>Human Resources (HR) Analytics</strong>:</p>
+<ul>
+<li><strong>Employee Performance</strong>: Ranking employees by their performance metrics within departments or teams.</li>
+<li><strong>Compensation Analysis</strong>: Comparing an employee's salary to the average salary in their department or across similar roles.</li>
+<li><strong>Tenure Tracking</strong>: Calculating employee tenure and comparing it to the first hire date or identifying milestones.</li>
+</ul>
+</li>
+<li>
+<p><strong>Sports Analytics</strong>:</p>
+<ul>
+<li><strong>Player Performance</strong>: Ranking players based on statistics within a game, season, or across their career.</li>
+<li><strong>Team Streaks</strong>: Identifying winning or losing streaks by comparing game results sequentially.</li>
+<li><strong>Cumulative Statistics</strong>: Calculating running totals for points, assists, or other metrics during a game or season.</li>
+</ul>
+</li>
+<li>
+<p><strong>Supply Chain and Logistics</strong>:</p>
+<ul>
+<li><strong>Inventory Movement</strong>: Tracking the cumulative quantity of items in a warehouse over time.</li>
+<li><strong>Delivery Performance</strong>: Analyzing the average delivery time for specific routes or carriers over a rolling window.</li>
+</ul>
+</li>
+</ol>
+<p>In each of these scenarios, the ability of window functions to perform calculations over related subsets of data while preserving the original row structure provides a significant advantage, simplifying complex queries and enabling deeper analytical insights.</p>
+<hr>
+<h2 id="challenges-and-best-practices-with-window-functions">Challenges and Best Practices with Window Functions</h2>
+<p>While incredibly powerful, window functions can present challenges if not used judiciously. Understanding these pitfalls and adopting best practices will help you write more efficient, readable, and accurate SQL queries.</p>
+<h3 id="performance-considerations">Performance Considerations</h3>
+<ul>
+<li><strong>Large Datasets</strong>: Window functions, especially those with complex <code>PARTITION BY</code> or <code>ORDER BY</code> clauses on very large tables, can be resource-intensive. They often require sorting and partitioning data, which can consume significant memory and CPU.</li>
+<li><strong>Indexing</strong>: Ensure that the columns used in <code>PARTITION BY</code> and <code>ORDER BY</code> clauses are properly indexed. This can drastically improve performance by allowing the database to retrieve and sort data more efficiently. For broader strategies on improving query performance, consider our guide on <a href="/sql-query-optimization-database-performance-guide/">SQL Query Optimization: Boost Database Performance Now</a>.</li>
+<li><strong>Window Frame Complexity</strong>: <code>RANGE</code> frames, particularly with non-integer offsets (like date intervals), can be more complex for the optimizer than <code>ROWS</code> frames. Test performance thoroughly with your specific database system.</li>
+</ul>
+<h3 id="choosing-the-right-window-frame">Choosing the Right Window Frame</h3>
+<ul>
+<li><strong>Default Behavior</strong>: Remember that if <code>ORDER BY</code> is present, the default frame is <code>ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</code>. If <code>ORDER BY</code> is omitted, the default is <code>ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</code>. Be explicit if these defaults don't match your analytical goal.</li>
+<li><strong><code>LAST_VALUE()</code> Gotcha</strong>: As noted earlier, <code>LAST_VALUE()</code> usually requires an explicit frame like <code>ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING</code> to retrieve the actual last value in the partition, rather than just the last value up to the current row.</li>
+<li><strong><code>RANGE</code> vs. <code>ROWS</code></strong>:<ul>
+<li>Use <code>ROWS</code> when you need a fixed number of physical rows (e.g., "the last 3 orders").</li>
+<li>Use <code>RANGE</code> when you need rows based on a logical offset of values, especially dates (e.g., "all orders within the last 7 days"). <code>RANGE</code> frames typically require the <code>ORDER BY</code> clause to be on a single numeric or date column.</li>
+</ul>
+</li>
+</ul>
+<h3 id="readability-and-complexity">Readability and Complexity</h3>
+<ul>
+<li><strong>CTEs (Common Table Expressions)</strong>: As demonstrated in advanced examples, using CTEs is a best practice for breaking down complex window function logic into smaller, more manageable, and readable steps. This improves query comprehension and debugging.</li>
+<li><strong>Aliases</strong>: Use descriptive aliases for your window function columns (e.g., <code>AS RunningTotalSales</code>) to make the output easier to understand.</li>
+<li><strong>Comments</strong>: For particularly intricate window function definitions, add comments to explain the logic of the <code>PARTITION BY</code>, <code>ORDER BY</code>, and <code>WINDOW_FRAME_CLAUSE</code>.</li>
+</ul>
+<h3 id="when-to-use-group-by-vs-window-functions">When to Use <code>GROUP BY</code> vs. Window Functions</h3>
+<ul>
+<li><strong><code>GROUP BY</code></strong>: Use when you need to <em>aggregate rows and reduce the number of output rows</em> to one per group (e.g., total sales per region).</li>
+<li><strong>Window Functions</strong>: Use when you need to <em>perform calculations over groups of rows but retain all original detail rows</em> (e.g., show each individual sale and its running total within its region).</li>
+<li><strong>Combined Use</strong>: Often, <code>GROUP BY</code> is used in a subquery or CTE to pre-aggregate data, and then window functions are applied to the aggregated results (as seen in the "Top N per Group" example).</li>
+</ul>
+<h3 id="database-specific-implementations">Database-Specific Implementations</h3>
+<ul>
+<li>While the core <code>OVER()</code> clause and main functions (<code>SUM</code>, <code>RANK</code>, <code>LAG</code>, <code>LEAD</code>) are standard SQL, some advanced functions or specific <code>WINDOW_FRAME_CLAUSE</code> behaviors might vary slightly between database systems (PostgreSQL, SQL Server, Oracle, MySQL 8+, SQLite). Always consult your database's documentation for specific nuances.</li>
+</ul>
+<p>By keeping these best practices and potential challenges in mind, you can harness the full analytical power of window functions, writing more effective and robust SQL queries for your advanced data analysis needs.</p>
+<hr>
+<h2 id="beyond-the-basics-further-exploration-future-trends">Beyond the Basics: Further Exploration &amp; Future Trends</h2>
+<p>Having explored the fundamentals and practical applications of Window Functions in SQL: Advanced Data Analysis Guide, it's clear their utility extends far beyond simple aggregations. For the tech-savvy professional, continued exploration can lead to even more sophisticated insights and improved data pipeline efficiency.</p>
+<h3 id="database-specific-extensions">Database-Specific Extensions</h3>
+<p>While ANSI SQL defines the core set of window functions, many modern relational database management systems (RDBMS) offer additional, specialized analytical functions that leverage the <code>OVER()</code> clause.</p>
+<ul>
+<li><strong>Oracle</strong>: Known for its rich set of analytic functions, including statistical functions like <code>CORR</code> (correlation), <code>COVAR_POP</code> (population covariance), <code>REGR_R2</code> (coefficient of determination), and pattern matching functions like <code>MATCH_RECOGNIZE</code>.</li>
+<li><strong>SQL Server</strong>: Offers functions like <code>PERCENT_RANK</code>, <code>CUME_DIST</code> (cumulative distribution), and <code>PERCENTILE_CONT</code>/<code>PERCENTILE_DISC</code> for calculating percentiles.</li>
+<li><strong>PostgreSQL</strong>: Also provides <code>PERCENT_RANK</code>, <code>CUME_DIST</code>, and percentile functions, aligning closely with the SQL standard.</li>
+<li><strong>MySQL (8.0+)</strong>: Has significantly enhanced its window function support in recent versions, bringing it closer to other major RDBMS platforms.</li>
+</ul>
+<p>Exploring these database-specific extensions can unlock even more granular and specialized analysis capabilities, tailoring your SQL solutions to the strengths of your chosen data platform.</p>
+<h3 id="integration-with-business-intelligence-bi-and-data-visualization-tools">Integration with Business Intelligence (BI) and Data Visualization Tools</h3>
+<p>Window functions are often the unsung heroes behind sophisticated dashboards and reports in BI tools like Tableau, Power BI, and Looker. By pre-calculating metrics such as running totals, moving averages, year-over-year growth, or top-N rankings directly in the SQL query that feeds these tools, you:</p>
+<ul>
+<li><strong>Improve Performance</strong>: Offload complex calculations from the BI tool's engine to the database, where SQL is often optimized for such operations.</li>
+<li><strong>Ensure Consistency</strong>: Standardize metric definitions at the data source level, ensuring that all reports and dashboards using that data display the same calculated values.</li>
+<li><strong>Simplify Tool Logic</strong>: Reduce the need for complex table calculations or custom formulas within the BI tool itself, making dashboards easier to build and maintain.</li>
+</ul>
+<p>This integration highlights window functions as a foundational layer for robust data reporting.</p>
+<h3 id="feature-engineering-for-machine-learning">Feature Engineering for Machine Learning</h3>
+<p>In the world of machine learning, creating relevant features from raw data is often more critical than the algorithm itself. Window functions play a pivotal role in <strong>feature engineering</strong>, especially for time-series data or sequential events:</p>
+<ul>
+<li><strong>Lagged Features</strong>: Using <code>LAG()</code> to create features representing previous values (e.g., previous day's sales as a predictor for current day's sales).</li>
+<li><strong>Rolling Statistics</strong>: Generating features like 7-day moving averages or 30-day sum of transactions, which capture trends and seasonality.</li>
+<li><strong>Relative Ranks/Percentiles</strong>: Creating features that indicate how a particular observation ranks within its group, which can be highly predictive.</li>
+</ul>
+<p>By engineering these features directly in SQL before feeding data into machine learning models, data scientists can enrich their datasets and improve model performance significantly. For a deeper dive into foundational AI concepts, see <a href="/what-is-machine-learning-beginners-guide/">What is Machine Learning? A Comprehensive Beginner's Guide</a>.</p>
+<p>The continuous evolution of SQL standards and database technologies means window functions will only become more integrated and essential for data professionals. Staying current with these capabilities ensures you can leverage the full analytical power available in your database environment.</p>
+<hr>
+<h2 id="conclusion-mastering-advanced-data-analysis-with-window-functions-in-sql">Conclusion: Mastering Advanced Data Analysis with Window Functions in SQL</h2>
+<p>Window functions represent a paradigm shift in how we approach advanced data analysis within SQL. By allowing calculations over related sets of rows without collapsing the underlying data, they bridge the gap between simple aggregations and complex procedural logic. We've journeyed through their fundamental structure, dissected the pivotal <code>OVER()</code> clause, and explored a rich set of practical examples, from calculating running totals and moving averages to sophisticated ranking and row-to-row comparisons.</p>
+<p>The versatility of these functions makes them indispensable across various domains, empowering analysts, data scientists, and developers to extract deeper, more contextual insights from their data. Whether you're tracking financial trends, optimizing e-commerce performance, or engineering features for machine learning models, the ability to wield window functions effectively will significantly enhance your analytical prowess.</p>
+<p>While challenges like performance on massive datasets and the nuances of window frame definitions exist, adherence to best practices—such as using CTEs for readability, appropriate indexing, and careful frame selection—mitigates these hurdles. The continuous evolution of SQL further solidifies the role of <strong>Window Functions in SQL: Advanced Data Analysis Guide</strong> as a cornerstone for modern data manipulation. Embrace them, practice with them, and unlock a new dimension of data insight in your analytical toolkit.</p>
+<hr>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: What is the main difference between a window function and a GROUP BY clause?</strong></p>
+<p>A: A window function performs calculations across a set of rows related to the current row without collapsing the original rows, adding contextual columns to each output row. A <code>GROUP BY</code> clause, on the other hand, aggregates rows into a single summary row for each group, thereby reducing the overall number of output rows.</p>
+<p><strong>Q: When should I use the <code>PARTITION BY</code> clause in a window function?</strong></p>
+<p>A: You should use <code>PARTITION BY</code> when you want to divide your dataset into logical groups or segments and apply the window function independently to each of these groups. This is essential for scenarios like calculating running totals, rankings, or averages specific to a category such as an employee, region, or product.</p>
+<p><strong>Q: What is the purpose of <code>LAG()</code> and <code>LEAD()</code> functions?</strong></p>
+<p>A: The <code>LAG()</code> and <code>LEAD()</code> functions are used to access data from a preceding or succeeding row, respectively, within the same ordered partition. They are crucial for analytical tasks that involve comparing values across rows, calculating period-over-period differences, or analyzing trends in time-series or sequential data.</p>
+<hr>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
+<ul>
+<li><a href="https://www.sqlshack.com/sql-window-functions-the-ultimate-guide/">SQL Window Functions: The Ultimate Guide</a></li>
+<li><a href="https://www.postgresql.org/docs/current/tutorial-window.html">PostgreSQL Window Functions Documentation</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql?view=sql-server-ver16">SQL Server Window Functions Documentation</a></li>
+<li><a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Analytic-Functions.html">Oracle Database SQL Language Reference - Analytic Functions</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/window-functions.html">MySQL Window Functions Documentation</a></li>
+</ul>
+      </div>
+
+      <!-- Lead Magnet Newsletter -->
+      <section class="newsletter-cta">
+        <div class="newsletter-cta-content">
+            <h3>Join the Analytics Drive Intel Pool</h3>
+            <p>Every week, we condense complex AI breakthroughs and geopolitical shifts into a 5-minute digest. No noise, just the intel you need to stay ahead.</p>
+            <form class="newsletter-form-article">
+                <input type="email" placeholder="Enter your best email" required aria-label="Subscription Email">
+                <button type="submit">Get the Intel</button>
+            </form>
+            <p class="newsletter-footer-note">Join 10,000+ technical professionals. Unsubscribe anytime.</p>
+        </div>
+      </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toc = document.querySelector('.post-content .toc');
+      const container = document.querySelector('.post-layout-container');
+      
+      if (!toc) {
+        if (container) container.classList.add('no-toc');
+        return;
+      }
+
+      const target = document.getElementById('toc-sidebar-target');
+      const isDesktop = window.innerWidth >= 1024;
+
+      if (isDesktop && target) {
+        // Desktop: Move TOC to sidebar
+        target.appendChild(toc);
+        toc.classList.add('toc-sidebar--active');
+
+        // --- ScrollSpy Logic ---
+        const observerOptions = {
+          root: null,
+          rootMargin: '-10% 0px -80% 0px', // Near top of screen
+          threshold: 0
+        };
+
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            if (entry.isIntersecting && id) {
+              // Remove active from all
+              document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active-toc-link'));
+              // Add to current
+              const link = document.querySelector(`.toc a[href="#${id}"]`);
+              if (link) {
+                link.classList.add('active-toc-link');
+                // Scroll the TOC sidebar if link is out of view
+                link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+          });
+        }, observerOptions);
+
+        // Watch all H2 and H3 headings
+        document.querySelectorAll('.post-content h2, .post-content h3').forEach(section => {
+          observer.observe(section);
+        });
+
+      } else {
+        // Mobile: Wrap in Accordion
+        const details = document.createElement('details');
+        details.className = 'toc-mobile-accordion';
+        const summary = document.createElement('summary');
+        summary.innerHTML = 'Table of Contents';
+        
+        // Find first paragraph for mobile placement
+        const firstP = document.querySelector('.post-content p');
+        if (firstP) {
+          firstP.after(details);
+        } else {
+          toc.parentNode.insertBefore(details, toc);
+        }
+        
+        details.appendChild(summary);
+        details.appendChild(toc);
+      }
+    });
+  </script>
+
+  <!-- Social Share Buttons -->
+  <div class="share-buttons">
+    <span class="share-label">Share:</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/&text=Window%20Functions%20in%20SQL%3A%20Advanced%20Data%20Analysis%20Guide"
+      target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" target="_blank"
+      rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/&title=Window%20Functions%20in%20SQL%3A%20Advanced%20Data%20Analysis%20Guide"
+      target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Window%20Functions%20in%20SQL%3A%20Advanced%20Data%20Analysis%20Guide%20https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" target="_blank"
+      rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2008/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="article-footer-meta">
+    <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a></p>
+    <p itemprop="author" itemscope itemtype="https://schema.org/Organization">
+      <strong>Author:</strong>
+      <a itemprop="url" href="https://analyticsdrive.tech/about/">
+        <span itemprop="name">Analytics Drive Editorial Team</span>
+      </a>
+    </p>
+    <div class="tags-list">
+      <strong>Tags:</strong>
+      <a href="https://analyticsdrive.tech/tag/sql.html" class="tag">#SQL</a>
+      <a href="https://analyticsdrive.tech/tag/technology.html" class="tag">#Technology</a>
+      <a href="https://analyticsdrive.tech/tag/machine-learning.html" class="tag">#Machine Learning</a>
+      <a href="https://analyticsdrive.tech/tag/artificial-intelligence.html" class="tag">#Artificial Intelligence</a>
+    </div>
+  </div>
+
+  <div class="related-posts">
+    <h3>Related Articles</h3>
+    <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/how-to-make-money-online-guide/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Lifestyle</span>
+            <img src="https://analyticsdrive.tech/images/how-to-make-money-online-guide.webp" alt="How to Make Money Online: Your Ultimate Guide to Digital Income" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Make Money Online: Your Ultimate Guide to Digital Income</div>
+          <div class="related-post-card__meta">
+            <span>Lifestyle</span>
+            <span class="dot">•</span>
+            <span>1 W</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/how-to-optimize-sql-queries-peak-performance/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/how-to-optimize-sql-queries-peak-performance.webp" alt="How to Optimize SQL Queries for Peak Performance" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Optimize SQL Queries for Peak Performance</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/sql-joins-explained-inner-left-right-full-tutorial/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/sql-joins-explained-inner-left-right-full-tutorial.webp" alt="SQL Joins Explained: Inner, Left, Right, Full Tutorial" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">SQL Joins Explained: Inner, Left, Right, Full Tutorial</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="related-posts">
+    <h3>Latest Articles</h3>
+    <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/recursive-functions-how-to-solve-problems-elegantly-a-deep-dive/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Algorithms & Data Structures</span>
+            <img src="https://analyticsdrive.tech/images/new-post.webp" alt="Recursive Functions: How to Solve Problems Elegantly – A Deep Dive" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Recursive Functions: How to Solve Problems Elegantly – A Deep Dive</div>
+          <div class="related-post-card__meta">
+            <span>Algorithms & Data Structures</span>
+            <span class="dot">•</span>
+            <span>now</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/what-is-a-hash-map-hashing-concepts/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Algorithms & Data Structures</span>
+            <img src="https://analyticsdrive.tech/images/what-is-a-hash-map-hashing-concepts.webp" alt="What is a Hash Map? Deep Dive into Hashing Concepts Unveiled" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">What is a Hash Map? Deep Dive into Hashing Concepts Unveiled</div>
+          <div class="related-post-card__meta">
+            <span>Algorithms & Data Structures</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/how-to-optimize-sql-queries-peak-performance/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/how-to-optimize-sql-queries-peak-performance.webp" alt="How to Optimize SQL Queries for Peak Performance" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Optimize SQL Queries for Peak Performance</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/what-is-machine-learning-beginners-guide/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Artificial Intelligence</span>
+            <img src="https://analyticsdrive.tech/images/what-is-machine-learning-beginners-guide.webp" alt="What is Machine Learning? A Comprehensive Beginner's Guide" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">What is Machine Learning? A Comprehensive Beginner's Guide</div>
+          <div class="related-post-card__meta">
+            <span>Artificial Intelligence</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/how-to-implement-binary-search-tree-python/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Algorithms & Data Structures</span>
+            <img src="https://analyticsdrive.tech/images/how-to-implement-binary-search-tree-python.webp" alt="How to Implement a Binary Search Tree in Python: A Deep Dive" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Implement a Binary Search Tree in Python: A Deep Dive</div>
+          <div class="related-post-card__meta">
+            <span>Algorithms & Data Structures</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/sql-joins-explained-inner-left-right-full-tutorial/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/sql-joins-explained-inner-left-right-full-tutorial.webp" alt="SQL Joins Explained: Inner, Left, Right, Full Tutorial" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">SQL Joins Explained: Inner, Left, Right, Full Tutorial</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/march-madness-sweet-16-elite-8-showdowns-ignite-courts/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Sports</span>
+            <img src="https://analyticsdrive.tech/images/march-madness-sweet-16-elite-8-showdowns-ignite-courts.webp" alt="March Madness: Sweet 16 & Elite 8 Showdowns Ignite Courts" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">March Madness: Sweet 16 & Elite 8 Showdowns Ignite Courts</div>
+          <div class="related-post-card__meta">
+            <span>Sports</span>
+            <span class="dot">•</span>
+            <span>2 h</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+      <div class="post-footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-line);">
+        <span style="visibility: hidden;">Placeholder</span>
+        
+        <a href="https://analyticsdrive.tech/" class="back-link">Back to Home</a>
+
+        <span style="visibility: hidden;">Placeholder</span>
+      </div>
+    </div>  </div></article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column-about">
+                    <h3>About Analytics Drive</h3>
+                    <p>Analytics Drive is your destination for breaking news, in-depth tech tutorials, and expert analysis on AI and tech.</p>
+                </div>
+                <div class="footer-column-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Get the latest AI & Tech insights delivered to your inbox.</p>
+                    <form class="newsletter-form-footer">
+                        <input type="email" placeholder="email@example.com" required aria-label="Email Address">
+                        <button type="submit">Join</button>
+                    </form>
+                </div>
+            </div>
+            <p>&copy; 2026 Analytics Drive Editorial Team.
+            </p>
+            <div class="footer-legal">
+                <a href="https://analyticsdrive.tech/privacy-policy/">Privacy Policy</a> |                 <a href="https://analyticsdrive.tech/disclaimer/">Disclaimer</a> |                 <a href="https://analyticsdrive.tech/terms-and-conditions/">Terms & Conditions</a> |                 <a href="https://analyticsdrive.tech/contact/">Contact Us</a>            </div>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.688-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+                <a href="https://t.me/analyticsdrive" target="_blank" aria-label="Telegram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M11.944 0C5.346 0 0 5.348 0 11.944s5.346 11.944 11.944 11.944 11.944-5.348 11.944-11.944S18.542 0 11.944 0zm5.83 7.218l-2.004 9.456c-.149.659-.538.822-1.09.511l-3.054-2.25-1.472 1.417c-.163.163-.3.298-.614.298l.218-3.102 5.641-5.101c.245-.218-.054-.338-.378-.123l-6.974 4.39-3.004-.94c-.654-.205-.667-.654.137-.967l11.737-4.524c.544-.205 1.018.123.857.834z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const html = document.documentElement;
+
+            // Check local storage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                html.setAttribute('data-theme', 'dark');
+                if (themeIcon) themeIcon.textContent = '☀️';
+            }
+
+            if (toggleButton) {
+                toggleButton.addEventListener('click', () => {
+                    const currentTheme = html.getAttribute('data-theme');
+                    if (currentTheme === 'dark') {
+                        html.removeAttribute('data-theme');
+                        localStorage.setItem('theme', 'light');
+                        if (themeIcon) themeIcon.textContent = '🌙';
+                    } else {
+                        html.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        if (themeIcon) themeIcon.textContent = '☀️';
+                    }
+                });
+            }
+
+            // --- External Link Hygiene ---
+            (function () {
+                const siteHost = window.location.hostname;
+                document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                    try {
+                        const linkHost = new URL(link.href).hostname;
+                        if (linkHost !== siteHost) {
+                            link.setAttribute('rel', 'noopener noreferrer');
+                            link.setAttribute('target', '_blank');
+                        }
+                    } catch (e) { }
+                });
+            })();
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (mobileMenuToggle && mainNav) {
+                mobileMenuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                    mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+                    mainNav.classList.toggle('menu-open');
+                    mobileMenuToggle.classList.toggle('is-active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (mainNav.classList.contains('menu-open') && !mainNav.contains(e.target)) {
+                        mainNav.classList.remove('menu-open');
+                        mobileMenuToggle.classList.remove('is-active');
+                        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                mainNav.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            // --- Category Filtering ---
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const postCards = document.querySelectorAll('#main-post-list .post-card');
+
+            if (tabBtns.length > 0 && postCards.length > 0) {
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const category = btn.getAttribute('data-category');
+                        postCards.forEach(card => {
+                            if (category === 'all' || card.getAttribute('data-category') === category) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
