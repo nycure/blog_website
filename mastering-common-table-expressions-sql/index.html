@@ -1,0 +1,3281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mastering Common Table Expressions in SQL for Advanced Querying
+</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://analyticsdrive.tech/mastering-common-table-expressions-sql/" />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://analyticsdrive.tech/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://analyticsdrive.tech/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="https://analyticsdrive.tech/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://analyticsdrive.tech/favicon-16x16.png">
+    <link rel="manifest" href="https://analyticsdrive.tech/site.webmanifest">
+    <link rel="icon" href="https://analyticsdrive.tech/favicon.ico" type="image/x-icon" />
+    <meta name="application-name" content="Analytics Drive">
+    <meta name="msapplication-TileColor" content="#005b96">
+    <meta name="msapplication-TileImage" content="https://analyticsdrive.tech/mstile-150x150.png">
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/atom+xml" title="Analytics Drive Atom Feed"
+        href="https://analyticsdrive.tech/feeds/all.atom.xml" />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master the power of Common Table Expressions (CTEs) in SQL. Explore syntax, advanced recursion, and best practices for cleaner, more efficient queries." />
+    <meta name="author" content="Analytics Drive Editorial Team" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Mastering Common Table Expressions in SQL for Advanced Querying" />
+    <meta property="og:description"
+        content="Master the power of Common Table Expressions (CTEs) in SQL. Explore syntax, advanced recursion, and best practices for cleaner, more efficient queries." />
+    <meta property="og:type" content="article
+" />
+    <meta property="og:url"
+        content="https://analyticsdrive.tech/mastering-common-table-expressions-sql/" />
+    <meta property="og:image" content="https://analyticsdrive.tech/images/mastering-common-table-expressions-sql.webp" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@analyticsdrive" />
+    <meta name="twitter:title" content="Mastering Common Table Expressions in SQL for Advanced Querying" />
+    <meta name="twitter:description" content="Master the power of Common Table Expressions (CTEs) in SQL. Explore syntax, advanced recursion, and best practices for cleaner, more efficient queries." />
+    <meta name="twitter:image" content="https://analyticsdrive.tech/images/mastering-common-table-expressions-sql.webp" />
+
+    <!-- Deferred Google Tag Manager -->
+    <script>
+        (function() {
+            let gtmLoaded = false;
+            function loadGTM() {
+                if (gtmLoaded) return;
+                gtmLoaded = true;
+                let script = document.createElement('script');
+                script.src = "https://www.googletagmanager.com/gtag/js?id=G-P1LT4885S9";
+                script.async = true;
+                document.head.appendChild(script);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-P1LT4885S9');
+            }
+            ['scroll', 'touchstart', 'mousemove'].forEach(event => {
+                window.addEventListener(event, loadGTM, { passive: true, once: true });
+            });
+        })();
+    </script>
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://analyticsdrive.tech/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "SQL \u0026 Databases",
+    "item": "https://analyticsdrive.tech/category/sql-databases.html"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Mastering Common Table Expressions in SQL for Advanced Querying",
+    "item": "https://analyticsdrive.tech/mastering-common-table-expressions-sql/"
+  }]
+}
+</script>
+<meta property="article:published_time" content="2026-03-24T09:43:00+05:30" />
+<meta property="article:section" content="SQL & Databases" />
+<meta property="article:tag" content="SQL" />
+<meta property="article:tag" content="Technology" />
+<meta property="article:tag" content="Competitive Programming" />
+<meta property="article:tag" content="Algorithms" />
+
+<!-- Twitter Player Card -->
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://analyticsdrive.tech/#website",
+          "url": "https://analyticsdrive.tech/",
+          "name": "Analytics Drive",
+          "description": "Analytics Drive is your destination for breaking news, in-depth tech tutorials, and expert analysis on AI and Geopolitics. Stay informed with investigations and opinions from the front lines of innovation.",
+          "publisher": { "@id": "https://analyticsdrive.tech/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://analyticsdrive.tech/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://analyticsdrive.tech/#organization",
+          "name": "Analytics Drive",
+          "url": "https://analyticsdrive.tech/",
+          "logo": {
+            "@type": "ImageObject",
+            "@id": "https://analyticsdrive.tech/#logo",
+            "url": "https://analyticsdrive.tech/android-chrome-512x512.png",
+            "width": 512,
+            "height": 512,
+            "caption": "Analytics Drive"
+          },
+          "image": { "@id": "https://analyticsdrive.tech/#logo" },
+          "sameAs": [
+            "https://twitter.com/analyticsdrive",            "https://www.facebook.com/profile.php?id=61588072082428",            "https://www.instagram.com/analyticsdrive",            "https://www.reddit.com/r/Analyticsdrive/",            "https://t.me/analyticsdrive"          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://analyticsdrive.tech/#sitenav",
+          "name": "Site Navigation",
+          "itemListElement": [
+            {
+              "@type": "SiteNavigationElement",
+              "position": 1,
+              "name": "Home",
+              "url": "https://analyticsdrive.tech/"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 2,
+              "name": "Geopolitics",
+              "url": "https://analyticsdrive.tech/category/geopolitics.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 3,
+              "name": "Artificial Intelligence",
+              "url": "https://analyticsdrive.tech/category/artificial-intelligence.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 4,
+              "name": "World News",
+              "url": "https://analyticsdrive.tech/category/world-news.html"
+            },
+            {
+              "@type": "SiteNavigationElement",
+              "position": 5,
+              "name": "About",
+              "url": "https://analyticsdrive.tech/about/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Render-blocking CSS Eliminated: Inlined style.css -->
+    <style>
+:root {
+    --bg-paper: #ffffff;
+    --text-ink: #2a2a2a;
+    --text-muted: #666;
+    --border-line: #e0e0e0;
+    --accent: #000;
+    --link-color: #005b96;
+    --font-masthead: 'UnifrakturMaguntia', cursive;
+    --font-headline: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-ui: 'Libre Franklin', sans-serif;
+    --max-width: 1500px;
+    --spacing: 2rem;
+    --bg-footer: #f9f9f9;
+    --text-summary: #444444;
+}
+
+[data-theme="dark"] {
+    --bg-paper: #121212;
+    --text-ink: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-line: #333333;
+    --accent: #ffffff;
+    --link-color: #64b5f6;
+    --bg-footer: #1e1e1e;
+    --text-summary: #d0d0d0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-paper);
+    color: var(--text-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.8;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #003366;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing);
+}
+
+/* --- Breaking Ticker --- */
+.breaking-ticker {
+    background: linear-gradient(90deg, #b00, #d00);
+    color: #fff;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    overflow: hidden;
+    position: relative;
+    z-index: 50; /* Lower than header to prevent blocking clicks */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.breaking-label {
+    background: #000;
+    padding: 0 1.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 20;
+    white-space: nowrap;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff;
+    animation: live-pulse 1.5s infinite;
+}
+
+@keyframes live-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.ticker-viewport {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.ticker-content {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: ticker-animation 100s linear infinite; /* Increase time for 2x content */
+}
+
+.ticker-content:hover {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    display: flex;
+    align-items: center;
+    padding-right: 3rem;
+}
+
+.ticker-item a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 0.75rem;
+    transition: color 0.2s;
+}
+
+.ticker-item a:hover {
+    color: #ffd700;
+}
+
+.cat-pill {
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Category Specific Pills */
+.cat-pill.world-news { background: #0066cc; }
+.cat-pill.geopolitics { background: #663399; }
+.cat-pill.politics { background: #cc3300; }
+.cat-pill.india { background: #ff9933; color: #000; }
+.cat-pill.sports, .cat-pill.cricket { background: #228b22; }
+.cat-pill.entertainment { background: #ff1493; }
+
+.ticker-sep {
+    color: #ffd700;
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes ticker-animation {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); } /* Loop halfway for seamless transition */
+}
+
+/* --- Triple Column Grid --- */
+.home-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 4rem;
+}
+
+.side-column {
+    position: sticky;
+    top: 2rem;
+}
+
+.side-column h2 {
+    font-family: var(--font-headline);
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+}
+
+.side-post {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.side-post h3 {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+.side-post h3 a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.side-post .post-meta {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* --- Category Tabs --- */
+.category-tabs {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-line);
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.tab-btn:hover {
+    color: var(--accent);
+}
+
+.tab-btn.active {
+    color: var(--accent);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--accent);
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 1300px) {
+    .home-grid {
+        grid-template-columns: 1fr 280px;
+    }
+    .left-column {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .home-grid {
+        grid-template-columns: 1fr;
+    }
+    .side-column {
+        position: static;
+        margin-top: 2rem;
+    }
+    .breaking-label {
+        padding: 0 0.75rem;
+        font-size: 0; /* Hides the word 'BREAKING' */
+    }
+    .live-dot {
+        margin: 0;
+    }
+}
+
+.site-header {
+    padding: 2rem 0 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--accent);
+    position: relative;
+    z-index: 1000; /* Ensure header is above ticker */
+}
+
+.site-header .logo {
+    font-family: var(--font-masthead);
+    font-size: 4rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.site-header .logo .dot {
+    display: none;
+}
+
+.main-nav {
+    border-top: 1px solid var(--border-line);
+    border-bottom: 3px double var(--border-line);
+    padding: 0.75rem 0;
+    position: relative;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.main-nav a {
+    color: var(--text-ink);
+    text-decoration: none;
+}
+
+.main-nav a:hover {
+    color: #555;
+    text-decoration: underline;
+}
+
+.theme-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-ink);
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-50%) rotate(15deg);
+    color: var(--accent);
+}
+
+@media (max-width: 900px) {
+    .theme-toggle {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-top: 2rem;
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid var(--border-line);
+        padding: 1rem 0;
+    }
+    .theme-toggle:hover {
+        transform: rotate(5deg);
+    }
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-line);
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-family: var(--font-headline);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.hero p {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 3rem 0;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.pagination a {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--border-line);
+    color: var(--text-ink);
+    transition: 0.2s;
+}
+
+.pagination a:hover {
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-color: var(--accent);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding-bottom: 4rem;
+}
+
+.post-card {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.post-meta {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.post-meta .category a {
+    color: #d00;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.post-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.post-card h3 a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.post-card h3 a:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+.post-card p {
+    font-family: var(--font-ui);
+    color: var(--text-summary);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.read-more {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--link-color);
+}
+
+.single-post header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 2rem;
+}
+
+.single-post h1 {
+    font-family: var(--font-headline);
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.single-post .post-meta {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.featured-image {
+    max-width: 740px;
+    margin: 0 auto 2rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post-card-image {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.post-card-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover .post-card-image img {
+    transform: scale(1.05);
+}
+
+.post-content {
+    max-width: 100%;
+    font-size: 1.1rem;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    background: transparent;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.post-content h2,
+.post-content h3 {
+    font-family: var(--font-headline);
+    color: var(--accent);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-ink);
+}
+
+/* --- Table Essentials --- */
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    display: block;
+    overflow-x: auto; /* Responsive Mobile Support */
+}
+
+.post-content th,
+.post-content td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-line);
+    text-align: left;
+    min-width: 150px;
+}
+
+.post-content th {
+    background: rgba(0, 0, 0, 0.03);
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+[data-theme="dark"] .post-content th {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.post-content tr:hover {
+    background: rgba(0, 0, 0, 0.01);
+}
+
+[data-theme="dark"] .post-content tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem auto;
+    border-radius: 8px;
+}
+
+/* --- Pinterest "Save" Overlay --- */
+.featured-image-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.pinterest-pin-it {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: #E60023;
+    color: #ffffff !important;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.featured-image-wrapper:hover .pinterest-pin-it {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pinterest-pin-it:hover {
+    background: #bd081c;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+}
+
+.pinterest-pin-it svg {
+    width: 18px;
+    height: 18px;
+}
+
+.post-content pre {
+    background: #282C34;
+    border-left: 4px solid #61AFEF;
+    border-radius: 6px;
+    margin: 2rem 0;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #ABB2BF;
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+}
+
+.post-content pre code {
+    background: transparent;
+    color: #ABB2BF;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+.post-content code {
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    color: #E06C75;
+    background: rgba(40, 44, 52, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    word-break: break-word;
+}
+
+[data-theme="dark"] .post-content code {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-line);
+    color: #E06C75;
+}
+
+.post-content .highlight {
+    background: #282C34;
+    border-left: 4px solid #61AFEF;
+    border-radius: 6px;
+    margin: 2rem 0;
+    overflow-x: auto;
+}
+
+.post-content .highlight pre {
+    background: transparent;
+    border: none;
+    margin: 0;
+}
+
+.post-content pre .c,
+.post-content pre .ch,
+.post-content pre .cm,
+.post-content pre .cp,
+.post-content pre .c1,
+.post-content pre .cs,
+.post-content pre .cpf,
+.highlight .c,
+.highlight .ch,
+.highlight .cm,
+.highlight .cp,
+.highlight .c1,
+.highlight .cs {
+    color: #7F848E;
+}
+
+.post-content pre .k,
+.post-content pre .kd,
+.post-content pre .kn,
+.post-content pre .kp,
+.post-content pre .kr,
+.highlight .k,
+.highlight .kd,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr {
+    color: #C678DD;
+}
+
+.post-content pre .kc,
+.post-content pre .kt,
+.post-content pre .nb,
+.post-content pre .nc,
+.post-content pre .bp,
+.highlight .kc,
+.highlight .kt,
+.highlight .nb,
+.highlight .nc,
+.highlight .bp {
+    color: #E5C07B;
+}
+
+.post-content pre .s,
+.post-content pre .s1,
+.post-content pre .s2,
+.post-content pre .sa,
+.post-content pre .sb,
+.post-content pre .sc,
+.post-content pre .se,
+.post-content pre .sh,
+.post-content pre .si,
+.post-content pre .sr,
+.post-content pre .ss,
+.post-content pre .sx,
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sa,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .se,
+.highlight .sh,
+.highlight .si,
+.highlight .sr,
+.highlight .ss,
+.highlight .sx {
+    color: #98C379;
+}
+
+.post-content pre .m,
+.post-content pre .mb,
+.post-content pre .mf,
+.post-content pre .mh,
+.post-content pre .mi,
+.post-content pre .mo,
+.post-content pre .il,
+.highlight .m,
+.highlight .mb,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il {
+    color: #D19A66;
+}
+
+.post-content pre .nf,
+.post-content pre .nd,
+.post-content pre .fm,
+.highlight .nf,
+.highlight .nd,
+.highlight .fm {
+    color: #61AFEF;
+    font-weight: bold;
+}
+
+.post-content pre .o,
+.post-content pre .ow,
+.highlight .o,
+.highlight .ow {
+    color: #56B6C2;
+}
+
+.post-content pre .n,
+.post-content pre .na,
+.post-content pre .ni,
+.post-content pre .nl,
+.post-content pre .nn,
+.post-content pre .no,
+.post-content pre .nt,
+.post-content pre .nv,
+.post-content pre .nx,
+.post-content pre .ne,
+.post-content pre .vc,
+.post-content pre .vg,
+.post-content pre .vi,
+.post-content pre .vm,
+.highlight .na,
+.highlight .ni,
+.highlight .no,
+.highlight .nt,
+.highlight .nv,
+.highlight .ne,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+    color: #E06C75;
+}
+
+.post-content pre .p,
+.post-content pre .w,
+.highlight .p,
+.highlight .w {
+    color: #ABB2BF;
+}
+
+.post-content pre .hll,
+.highlight .hll {
+    background-color: transparent;
+}
+
+.post-content pre .err,
+.highlight .err {
+    color: #ABB2BF;
+}
+
+/* Global Dark Mode Code Blocks */
+[data-theme="dark"] .post-content pre,
+[data-theme="dark"] .post-content .highlight {
+    background: #1a1a1a;
+    border: 1px solid var(--border-line);
+    border-left: 4px solid #61AFEF;
+}
+
+.article-footer-meta {
+    max-width: 740px;
+    margin: 4rem auto 0;
+    border-top: 4px solid var(--accent);
+    padding-top: 2rem;
+}
+
+.article-footer-meta strong {
+    color: var(--accent);
+}
+
+.accent-text {
+    color: var(--link-color);
+}
+
+.breadcrumb {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.breadcrumb a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .sep {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.75rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 0.2rem 0.7rem;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tag:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    text-decoration: none;
+}
+
+[data-theme="dark"] .tag {
+    background: #2a2a2a;
+    color: #ccc;
+    border-color: #444;
+}
+
+[data-theme="dark"] .tag:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.site-footer {
+    margin-top: 5rem;
+    border-top: 1px solid var(--accent);
+    padding: 3rem 0;
+    background: var(--bg-footer);
+    text-align: center;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Mobile Menu Base Styles */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001; /* Above nav */
+}
+
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--text-ink);
+    transition: all 0.3s ease-in-out;
+    border-radius: 2px;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.is-active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width:768px) {
+    .site-header {
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
+    }
+
+    .site-header .logo {
+        font-size: 2.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .single-post h1 {
+        font-size: 2.25rem;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 2rem;
+        left: 1rem;
+    }
+
+    .main-nav {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100vh;
+        background: var(--bg-paper);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1100; /* Higher than header and ticker */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        padding: 2rem;
+        border-top: none;
+        border-bottom: none;
+        border-right: 1px solid var(--border-line);
+    }
+
+    [data-theme="dark"] .main-nav {
+        box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+
+    .main-nav.menu-open {
+        transform: translateX(0);
+    }
+
+    .main-nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+        text-align: center;
+        overflow-x: visible;
+        white-space: normal;
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-nav ul li a {
+        font-size: 1.25rem;
+    }
+
+    .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        transform: none;
+        margin-left: 0;
+    }
+
+    .theme-toggle:hover {
+        transform: rotate(15deg);
+    }
+}
+
+@media (max-width: 900px) {
+    .related-posts__grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .related-post-card {
+        min-height: 80px;
+    }
+
+    .related-post-card__img-wrap {
+        flex: 0 0 80px;
+        width: 80px;
+    }
+
+    .related-post-card__title {
+        font-size: 0.85rem;
+    }
+
+    .theme-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        transform: none;
+        margin-left: 0;
+    }
+
+    .theme-toggle:hover {
+        transform: rotate(15deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .related-post-card__title {
+        font-size: 0.78rem;
+    }
+}
+
+/* --- Footer Legal Links --- */
+.footer-legal {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.footer-legal a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin: 0 0.75rem;
+    font-weight: 500;
+}
+
+.footer-legal a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* ── Related & Latest Articles Cards ──────────────────────── */
+.related-posts {
+    max-width: 740px;
+    margin: 4rem auto 0;
+    padding-top: 3rem;
+    border-top: 2px solid var(--accent);
+}
+
+.related-posts h3 {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.related-posts h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border-line), transparent);
+}
+
+/* 2-column grid on desktop */
+.related-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.related-posts:first-of-type .related-posts__grid {
+    grid-template-columns: 1fr; /* Keep Related as single column for focus */
+}
+
+/* Modern Card Design */
+.related-post-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 100px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-line);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+[data-theme="dark"] .related-post-card {
+    background: var(--bg-footer);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.related-post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--link-color);
+    text-decoration: none;
+}
+
+[data-theme="dark"] .related-post-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Thumbnail with Badge */
+.related-post-card__img-wrap {
+    flex: 0 0 110px;
+    width: 110px;
+    position: relative;
+    overflow: hidden;
+    background: var(--border-line);
+}
+
+.related-post-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.related-post-card:hover .related-post-card__img-wrap img {
+    transform: scale(1.1);
+}
+
+.category-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: rgba(0, 91, 150, 0.7); /* fallback */
+    background: color-mix(in srgb, var(--link-color), transparent 30%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Content Area */
+.related-post-card__content {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.related-post-card__title {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+}
+
+.related-post-card:hover .related-post-card__title {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+}
+
+
+/* --- Social Share Sidebar (Desktop) --- */
+.share-sidebar {
+    position: fixed;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 100;
+}
+
+.share-sidebar__label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.share-sidebar__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-paper);
+    color: var(--text-ink);
+    border: 1px solid var(--border-line);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.share-sidebar__btn:hover {
+    transform: translateX(5px);
+    color: #fff;
+}
+
+.share-sidebar__btn--twitter:hover { background: #000; border-color: #000; }
+.share-sidebar__btn--facebook:hover { background: #1877f2; border-color: #1877f2; }
+.share-sidebar__btn--reddit:hover { background: #ff4500; border-color: #ff4500; }
+.share-sidebar__btn--whatsapp:hover { background: #25d366; border-color: #25d366; }
+
+[data-theme="dark"] .share-sidebar__btn {
+    background: var(--bg-footer);
+}
+
+[data-theme="dark"] .share-sidebar__btn--twitter:hover {
+    background: #fff; color: #000; border-color: #fff;
+}
+
+/* --- Social Share Buttons (Mobile/Inline) --- */
+.share-buttons {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 3rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-line);
+}
+
+.share-label {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--text-ink);
+}
+
+.share-btn {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+.share-btn:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 1200px) {
+    .share-sidebar {
+        display: none;
+    }
+    .share-buttons {
+        display: flex;
+    }
+}
+
+/* --- Desktop Body Expansion & TOC Sidebar --- */
+@media (min-width: 1024px) {
+    .post-layout-container {
+        display: grid;
+        grid-template-columns: minmax(300px, 1fr) 900px 1fr;
+        gap: 0;
+        align-items: flex-start;
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    .post-content-column {
+        grid-column: 2;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .post-layout-container.no-toc {
+        justify-content: center;
+    }
+
+    .post-layout-container.no-toc .post-sidebar-column {
+        display: none;
+    }
+
+    .post-sidebar-column {
+        grid-column: 1;
+        position: sticky;
+        top: 2rem;
+        padding-right: 3rem;
+        padding-left: 1rem;
+    }
+
+    .post-layout-container .post-content,
+    .post-layout-container .featured-image,
+    .post-layout-container .article-footer-meta,
+    .post-layout-container .related-posts {
+        max-width: 900px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    body, .post-content {
+        font-size: 18px;
+    }
+}
+
+/* --- Hybrid TOC Styling --- */
+.toc {
+    font-family: var(--font-ui);
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 1.25rem;
+    margin: 0;
+    border-left: 1px solid var(--border-line);
+}
+
+.toc > ul {
+    padding-left: 0;
+    border-left: none;
+}
+
+.toc li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* --- Newsletter Capture Eco-system --- */
+
+/* 1. Footer Subscription Form */
+.footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 3rem;
+}
+
+.footer-column-newsletter h3 {
+    font-family: var(--font-headline);
+    margin-bottom: 1rem;
+}
+
+.footer-column-newsletter p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.newsletter-form-footer {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.newsletter-form-footer input {
+    background: var(--bg-paper);
+    border: 1px solid var(--border-line);
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    color: var(--text-ink);
+    font-family: var(--font-ui);
+}
+
+.newsletter-form-footer button {
+    background: var(--accent);
+    color: var(--bg-paper);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.newsletter-form-footer button:hover {
+    transform: translateY(-2px);
+}
+
+/* 2. Article 'Lead Magnet' CTA */
+.newsletter-cta {
+    background: var(--accent);
+    color: var(--bg-paper);
+    padding: 4rem 2rem;
+    border-radius: 12px;
+    margin: 4rem 0;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.newsletter-cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-cta h3 {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.newsletter-cta p {
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.newsletter-form-article {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.newsletter-form-article input {
+    flex: 1;
+    min-width: 280px;
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.1rem;
+}
+
+.newsletter-form-article button {
+    background: #61AFEF; /* Signature Blue for high-intent action */
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.newsletter-form-article button:hover {
+    background: #4a90e2;
+    transform: scale(1.05);
+}
+
+.newsletter-footer-note {
+    font-size: 0.8rem !important;
+    opacity: 0.7 !important;
+    margin-top: 1.5rem !important;
+}
+
+[data-theme="dark"] .newsletter-cta {
+    background: #1a1a1a;
+    border: 1px solid var(--border-line);
+}
+
+[data-theme="dark"] .newsletter-cta h3 {
+    color: #fff;
+}
+
+[data-theme="dark"] .newsletter-cta p {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .newsletter-form-article input {
+    background: #252525;
+    color: #fff;
+    border: 1px solid #333;
+}
+
+.toc a {
+    color: var(--text-muted);
+    opacity: 0.6;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.toc a:hover,
+.toc a.active-toc-link {
+    color: var(--accent);
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+.toc a.active-toc-link {
+    font-weight: 700;
+}
+
+/* Mobile Accordion Style */
+.toc-mobile-accordion {
+    background: var(--bg-footer);
+    border: 1px solid var(--border-line);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.toc-mobile-accordion summary {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--accent);
+    outline: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toc-mobile-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.toc-mobile-accordion summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.toc-mobile-accordion[open] summary::after {
+    content: '−';
+}
+
+.toc-mobile-accordion .toc {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Desktop Sidebar TOC Card */
+@media (min-width: 1024px) {
+    #toc-sidebar-target .toc {
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        max-height: calc(100vh - 6rem);
+        overflow-y: auto;
+        /* Firefox */
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-line) transparent;
+    }
+
+    /* WebKit (Chrome, Safari, Edge) Scrollbar */
+    #toc-sidebar-target .toc::-webkit-scrollbar {
+        width: 5px;
+    }
+    #toc-sidebar-target .toc::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    #toc-sidebar-target .toc::-webkit-scrollbar-thumb {
+        background: var(--border-line);
+        border-radius: 10px;
+    }
+    
+    [data-theme="dark"] #toc-sidebar-target .toc {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    #toc-sidebar-target .toc::before {
+        content: 'Contents';
+        display: block;
+        font-family: var(--font-ui);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-line);
+    }
+}    </style>
+    <!-- Optimized Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap">
+    </noscript>
+</head>
+
+<body>
+    <div class="breaking-ticker" aria-label="Breaking News">
+        <div class="breaking-label">
+            <span class="live-dot"></span> BREAKING
+        </div>
+        <div class="ticker-viewport">
+            <div class="ticker-content">
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis/">Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-sweet-16-elite-8-showdowns-ignite-courts/">March Madness: Sweet 16 & Elite 8 Showdowns Ignite Courts</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/">Geopolitical Tensions Reshape Global Landscape: A Global Analysis</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/japan-claims-womens-asian-cup-title-thrilling-victory/">Japan Claims Women's Asian Cup Title in Thrilling Victory</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/">Middle East Tensions Soar: Israel Strikes, Iran Retaliates</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/">March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/400-killed-pakistan-strike-kabul-hospital/">400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/unpacking-global-geopolitical-shifts-new-era/">Unpacking Global Geopolitical Shifts: A New Era Unfolds</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis/">Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-sweet-16-elite-8-showdowns-ignite-courts/">March Madness: Sweet 16 & Elite 8 Showdowns Ignite Courts</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/">Geopolitical Tensions Reshape Global Landscape: A Global Analysis</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/japan-claims-womens-asian-cup-title-thrilling-victory/">Japan Claims Women's Asian Cup Title in Thrilling Victory</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/">Middle East Tensions Soar: Israel Strikes, Iran Retaliates</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill sports">Sports</span>
+                    <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/">March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill entertainment">Entertainment</span>
+                    <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill politics">Politics</span>
+                    <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill world-news">World News</span>
+                    <a href="https://analyticsdrive.tech/400-killed-pakistan-strike-kabul-hospital/">400 Killed in Pakistan Strike on Kabul Hospital Sparks Outrage</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+                <span class="ticker-item">
+                    <span class="cat-pill geopolitics">Geopolitics</span>
+                    <a href="https://analyticsdrive.tech/unpacking-global-geopolitical-shifts-new-era/">Unpacking Global Geopolitical Shifts: A New Era Unfolds</a>
+                    <span class="ticker-sep">⚡</span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <header class="site-header">
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="dot">.</span></a>
+        <nav id="main-nav" class="main-nav" aria-label="Main Navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
+            <ul>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/" itemprop="url">Home</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/archives.html" itemprop="url">Archives</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/categories.html" itemprop="url">Categories</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/tags.html" itemprop="url">Tags</a></li>
+                <li itemprop="name"><a href="https://analyticsdrive.tech/about/" itemprop="url">About</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </nav>
+    </header>
+
+
+    <main class="container content-wrapper">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://analyticsdrive.tech/mastering-common-table-expressions-sql/"
+  },
+  "headline": "Mastering Common Table Expressions in SQL for Advanced Querying",
+  "description": "Master the power of Common Table Expressions (CTEs) in SQL. Explore syntax, advanced recursion, and best practices for cleaner, more efficient queries.",
+  "image": [
+    "https://analyticsdrive.tech/images/mastering-common-table-expressions-sql.webp"
+  ],
+  "datePublished": "2026-03-24T09:43:00+05:30",
+  "dateModified": "2026-03-24T09:43:00+05:30",
+  "author": {
+    "@type": "Organization",
+    "name": "Analytics Drive Editorial Team",
+    "url": "https://analyticsdrive.tech/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Analytics Drive",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://analyticsdrive.tech/android-chrome-512x512.png"
+    }
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a Common Table Expression (CTE) in SQL?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A CTE is a temporary, named result set referenced within a single SQL statement. It modularizes complex queries into readable, reusable logical steps, much like a temporary view."
+      }
+    },    {
+      "@type": "Question",
+      "name": "When should I use CTEs instead of subqueries or temporary tables?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use CTEs for readability, modularity, and recursion within a single query. Temporary tables suit large, indexed results or multi-statement use. Simple subqueries are fine for one-off logic."
+      }
+    },    {
+      "@type": "Question",
+      "name": "Do CTEs improve query performance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not always directly. They enhance readability and optimizability. Actual performance gains depend on the RDBMS optimizer and efficient indexing of underlying tables, not inherent materialization."
+      }
+    }  ]
+}
+</script>
+
+
+<!-- Floating Sticky Share Sidebar (desktop only) -->
+<aside class="share-sidebar" aria-label="Share this article">
+  <span class="share-sidebar__label">Share</span>
+
+  <!-- X (Twitter) -->
+  <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/mastering-common-table-expressions-sql/&text=Mastering%20Common%20Table%20Expressions%20in%20SQL%20for%20Advanced%20Querying"
+    target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--twitter"
+    aria-label="Share on X">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  </a>
+
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/mastering-common-table-expressions-sql/" target="_blank"
+    rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--facebook" aria-label="Share on Facebook">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </svg>
+  </a>
+
+  <!-- Reddit -->
+  <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/mastering-common-table-expressions-sql/&title=Mastering%20Common%20Table%20Expressions%20in%20SQL%20for%20Advanced%20Querying"
+    target="_blank" rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--reddit"
+    aria-label="Share on Reddit">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+    </svg>
+  </a>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/?text=Mastering%20Common%20Table%20Expressions%20in%20SQL%20for%20Advanced%20Querying%20https://analyticsdrive.tech/mastering-common-table-expressions-sql/" target="_blank"
+    rel="noopener noreferrer" class="share-sidebar__btn share-sidebar__btn--whatsapp" aria-label="Share on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+    </svg>
+  </a>
+</aside>
+
+<article class="single-post">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="https://analyticsdrive.tech/">Home</a>
+    <span class="sep">›</span>
+    <a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a>
+    <span class="sep">›</span>
+    <span class="current" title="Mastering Common Table Expressions in SQL for Advanced Querying">Mastering Common Table Expressions in SQL for...</span>
+  </nav>
+
+  <div class="post-layout-container">
+    <aside class="post-sidebar-column">
+      <div id="toc-sidebar-target"></div>
+    </aside>
+
+    <div class="post-content-column">
+      <header class="post-header">
+        <div class="post-meta">
+          <time datetime="2026-03-24T09:43:00+05:30">Tue 24 March 2026</time>
+        </div>
+        <h1>Mastering Common Table Expressions in SQL for Advanced Querying</h1>
+      </header>
+
+
+  <div class="featured-image">
+          <img src="https://analyticsdrive.tech/images/mastering-common-table-expressions-sql.webp"
+               srcset="https://analyticsdrive.tech/images/mastering-common-table-expressions-sql-tablet.webp 800w, https://analyticsdrive.tech/images/mastering-common-table-expressions-sql-mobile.webp 400w"
+               sizes="(max-width: 800px) 100vw, 1200px"
+               alt="A detailed, intricate SQL query on a glowing screen, with gears and interconnected data pipes symbolizing complex data flow and efficiency, dark tech background, cinematic lighting."
+               class="hero-img"
+               itemprop="image"
+               loading="eager">
+      <figcaption style="text-align: center; font-size: 0.9rem; color: var(--text-muted); padding: 0.5rem 0; font-style: italic;">
+        A detailed, intricate SQL query on a glowing screen, with gears and interconnected data pipes symbolizing complex data flow and efficiency, dark tech background, cinematic lighting.
+      </figcaption>
+    </figure>
+    <a href="https://www.pinterest.com/pin/create/button/?url=https://analyticsdrive.tech/mastering-common-table-expressions-sql/&media=https://analyticsdrive.tech/images/mastering-common-table-expressions-sql.webp&description=Mastering%20Common%20Table%20Expressions%20in%20SQL%20for%20Advanced%20Querying" 
+       class="pinterest-pin-it" target="_blank" rel="noopener noreferrer">
+       <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.991 3.993-.283 1.194.597 2.169 1.775 2.169 2.128 0 3.768-2.244 3.768-5.483 0-2.868-2.061-4.873-5.004-4.873-3.41 0-5.411 2.558-5.411 5.199 0 1.03.397 2.135.892 2.735.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.261 7.929-7.261 4.162 0 7.397 2.966 7.397 6.93 0 4.135-2.607 7.462-6.223 7.462-1.215 0-2.358-.631-2.75-1.378l-.748 2.853c-.271 1.032-1.002 2.324-1.492 3.121C11.171 23.904 12.065 24 13 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+       Save
+    </a>
+  </div>
+
+      <div class="post-content">
+        <p>In the world of database management and data analysis, writing clear, efficient, and maintainable SQL queries is a highly valued skill. As datasets grow in complexity and the demand for sophisticated reporting increases, the need for advanced SQL constructs becomes paramount. This article delves deep into <strong>Mastering Common Table Expressions in SQL</strong>, an essential feature that allows developers and data professionals to write more organized, readable, and often more performant queries. We will explore what CTEs are, how they work, their numerous benefits, and how they stack up against other SQL constructs for advanced querying. By the end of this comprehensive guide, you'll be well-equipped to leverage CTEs to transform your SQL workflows and unlock new levels of data manipulation prowess.</p>
+<div class="toc">
+<ul>
+<li><a href="#what-are-common-table-expressions-ctes">What are Common Table Expressions (CTEs)?</a><ul>
+<li><a href="#the-analogy-of-a-temporary-whiteboard">The Analogy of a "Temporary Whiteboard"</a></li>
+</ul>
+</li>
+<li><a href="#why-use-ctes-unpacking-their-advantages">Why Use CTEs? Unpacking Their Advantages</a><ul>
+<li><a href="#enhanced-readability-and-maintainability">Enhanced Readability and Maintainability</a></li>
+<li><a href="#improved-modularity-and-reusability-within-a-single-query">Improved Modularity and Reusability within a Single Query</a></li>
+<li><a href="#handling-recursive-queries">Handling Recursive Queries</a></li>
+<li><a href="#simplified-complex-logic">Simplified Complex Logic</a></li>
+<li><a href="#potential-for-performance-optimization">Potential for Performance Optimization</a></li>
+</ul>
+</li>
+<li><a href="#mastering-common-table-expressions-in-sql-syntax-and-structure">Mastering Common Table Expressions in SQL: Syntax and Structure</a><ul>
+<li><a href="#basic-syntax">Basic Syntax</a></li>
+<li><a href="#simple-example-filtering-and-aggregation">Simple Example: Filtering and Aggregation</a></li>
+</ul>
+</li>
+<li><a href="#practical-applications-of-ctes-real-world-scenarios">Practical Applications of CTEs: Real-World Scenarios</a><ul>
+<li><a href="#1-complex-joins-and-multi-step-aggregations">1. Complex Joins and Multi-Step Aggregations</a></li>
+<li><a href="#2-paginating-data-with-row-numbers">2. Paginating Data with Row Numbers</a></li>
+<li><a href="#3-calculating-running-totals-or-moving-averages">3. Calculating Running Totals or Moving Averages</a></li>
+</ul>
+</li>
+<li><a href="#advanced-cte-techniques-recursion-and-chaining">Advanced CTE Techniques: Recursion and Chaining</a><ul>
+<li><a href="#chaining-ctes">Chaining CTEs</a></li>
+<li><a href="#recursive-ctes">Recursive CTEs</a></li>
+</ul>
+</li>
+<li><a href="#ctes-vs-subqueries-vs-temporary-tables-a-comparative-analysis">CTEs vs. Subqueries vs. Temporary Tables: A Comparative Analysis</a><ul>
+<li><a href="#subqueries-derived-tables">Subqueries (Derived Tables)</a></li>
+<li><a href="#temporary-tables">Temporary Tables</a></li>
+<li><a href="#common-table-expressions-ctes-summary">Common Table Expressions (CTEs) Summary</a></li>
+</ul>
+</li>
+<li><a href="#best-practices-and-performance-considerations">Best Practices and Performance Considerations</a><ul>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#performance-considerations">Performance Considerations</a></li>
+</ul>
+</li>
+<li><a href="#mastering-common-table-expressions-in-sql-the-future-of-database-querying">Mastering Common Table Expressions in SQL: The Future of Database Querying</a></li>
+<li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
+<li><a href="#further-reading-resources">Further Reading &amp; Resources</a></li>
+</ul>
+</div>
+<h2 id="what-are-common-table-expressions-ctes">What are Common Table Expressions (CTEs)?</h2>
+<p>Common Table Expressions, often abbreviated as CTEs, are a powerful, temporary, named result set that you can reference within a single SQL statement (SELECT, INSERT, UPDATE, or DELETE). Think of them as defining a temporary, virtual table that exists only for the duration of that one query. They do not persist in the database, nor do they impact the database schema. This ephemeral nature is precisely what makes them so versatile and beneficial for structuring complex queries.</p>
+<p>CTEs were introduced in the SQL:1999 standard, also known as SQL3, and have since been widely adopted across major relational database management systems (RDBMS) like SQL Server, PostgreSQL, MySQL (8.0+), Oracle, and SQLite. Before CTEs, SQL developers often relied on subqueries or temporary tables to achieve similar results, but CTEs offer significant advantages in terms of readability, reusability within a single query, and manageability of complex logic. Understanding how tables interact is fundamental, and you can learn more about <a href="/sql-joins-explained-complete-guide-beginners/">SQL Joins Explained: A Complete Guide for Beginners</a> to build a solid foundation. CTEs essentially allow you to break down a large, intimidating query into smaller, logical, and more manageable steps, much like how functions or methods simplify code in programming languages.</p>
+<h3 id="the-analogy-of-a-temporary-whiteboard">The Analogy of a "Temporary Whiteboard"</h3>
+<p>To better understand CTEs, imagine you're trying to solve a complex mathematical problem involving several intermediate calculations. Instead of trying to hold all those calculations in your head or write them out haphazardly, you might use a whiteboard. On this whiteboard, you clearly label each intermediate step, showing its input and output. Once you've performed all the necessary intermediate steps and arrived at your final answer, you erase the whiteboard. The calculations on the whiteboard were temporary, designed solely to help you reach the final solution for that specific problem.</p>
+<p>A CTE functions precisely like this temporary whiteboard in SQL. You define a named result set (like a calculation step on the whiteboard), use it in subsequent parts of your main query, and then it vanishes once the query execution is complete. This temporary nature ensures your database isn't cluttered with unnecessary objects, while still giving you the structural benefits of named sub-queries.</p>
+<h2 id="why-use-ctes-unpacking-their-advantages">Why Use CTEs? Unpacking Their Advantages</h2>
+<p>The adoption of Common Table Expressions is not merely a stylistic choice; it brings tangible benefits to query development and database interaction. Understanding these advantages is key to appreciating their role in modern SQL practices.</p>
+<h3 id="enhanced-readability-and-maintainability">Enhanced Readability and Maintainability</h3>
+<p>Perhaps the most immediate and significant benefit of CTEs is the drastic improvement in query readability. Complex SQL queries, especially those involving multiple joins, aggregations, and subqueries, can quickly become difficult to decipher. CTEs allow you to decompose these intricate queries into logical, named steps. Each CTE can represent a distinct part of your data processing pipeline, making the overall query flow much easier to follow.</p>
+<p>Consider a scenario where you first need to filter data, then aggregate it, and finally join it with another dataset. Without CTEs, this might lead to deeply nested subqueries or repeated logic. With CTEs, each step can be defined as a separate, named block: <code>WITH FilteredData AS (...)</code>, <code>AggregatedData AS (...)</code>, and so on. This modular approach not only makes the query easier to read initially but also significantly simplifies maintenance and debugging. If a specific part of the logic needs adjustment, you can pinpoint the relevant CTE without sifting through a monolithic block of SQL.</p>
+<h3 id="improved-modularity-and-reusability-within-a-single-query">Improved Modularity and Reusability within a Single Query</h3>
+<p>While CTEs are temporary and local to a single statement, they introduce a form of reusability within that statement. A single CTE can be referenced multiple times within the subsequent CTEs or the final SELECT statement. This capability is invaluable when you need to perform multiple operations on the same intermediate result set without re-executing the entire subquery logic. For instance, if you calculate a complex metric and then need to use that metric in several different ways (e.g., for ranking, for filtering, and for final display), defining it once as a CTE prevents redundant computations and simplifies the query structure.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">MonthlySales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">order_date</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">sales_month</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_sales</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">orders</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">order_date</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="s1">&#39;2023-01-01&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="s1">&#39;2023-12-31&#39;</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="n">sales_month</span>
+<span class="p">),</span>
+<span class="n">AverageSales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="k">AVG</span><span class="p">(</span><span class="n">total_sales</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">overall_average_sales</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">MonthlySales</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">ms</span><span class="p">.</span><span class="n">sales_month</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ms</span><span class="p">.</span><span class="n">total_sales</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="n">ms</span><span class="p">.</span><span class="n">total_sales</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">overall_average_sales</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">AverageSales</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">sales_difference_from_average</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">MonthlySales</span><span class="w"> </span><span class="n">ms</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">ms</span><span class="p">.</span><span class="n">sales_month</span><span class="p">;</span>
+</code></pre></div>
+
+<p>In this example, <code>MonthlySales</code> is calculated once and then used both in the final <code>SELECT</code> statement and to derive <code>AverageSales</code>.</p>
+<h3 id="handling-recursive-queries">Handling Recursive Queries</h3>
+<p>One of the most powerful and unique applications of CTEs is their ability to handle recursive queries. Recursive CTEs allow you to query hierarchical data, such as organizational charts, bill of materials, network paths, or even genealogical trees. This is achieved by defining a CTE that refers to itself, iterating until a base condition is met. Before recursive CTEs, such queries were often cumbersome to write, requiring complex self-joins or proprietary vendor-specific extensions. The advent of recursive CTEs brought a standardized and elegant solution to a common and challenging database problem. We will delve into recursive CTEs in more detail in a later section.</p>
+<h3 id="simplified-complex-logic">Simplified Complex Logic</h3>
+<p>CTEs enable developers to progressively build up complex query logic. Each CTE can act as a stepping stone, preparing data for the next stage. This "divide and conquer" approach makes even the most intricate data transformations more approachable. For example, calculating running totals, performing window functions on specific subsets, or deriving complex metrics often becomes significantly simpler and more transparent when broken down into CTEs. For more advanced data analysis techniques, including a comprehensive look at how to leverage these powerful constructs, check out our guide on <a href="/mastering-sql-window-functions-advanced-analytics/">Mastering SQL Window Functions for Advanced Analytics: A Deep Dive</a>.</p>
+<h3 id="potential-for-performance-optimization">Potential for Performance Optimization</h3>
+<p>While CTEs are primarily a logical construct and don't inherently guarantee performance improvements over well-optimized subqueries, they can indirectly lead to better performance. By making queries more readable and maintainable, they facilitate easier identification of performance bottlenecks. More importantly, some database optimizers can process CTEs more efficiently than deeply nested subqueries, especially when a CTE is referenced multiple times. The optimizer might materialize the CTE once and reuse the result, avoiding redundant calculations. However, it's crucial to understand that CTEs are often treated by the optimizer like views, which means they might be merged into the main query rather than materialized. Performance gains are highly dependent on the specific RDBMS, query complexity, and data distribution. Benchmarking is always recommended for critical queries.</p>
+<h2 id="mastering-common-table-expressions-in-sql-syntax-and-structure">Mastering Common Table Expressions in SQL: Syntax and Structure</h2>
+<p>The syntax for Common Table Expressions is straightforward, yet flexible enough to accommodate simple and complex scenarios, including chaining and recursion. Understanding this fundamental structure is the first step to truly <strong>Mastering Common Table Expressions in SQL</strong>.</p>
+<h3 id="basic-syntax">Basic Syntax</h3>
+<p>A CTE begins with the <code>WITH</code> keyword, followed by the name you assign to your temporary result set, and then the <code>AS</code> keyword. Inside the parentheses after <code>AS</code>, you write a standard <code>SELECT</code> statement that defines the data for that CTE. After defining one or more CTEs, you write your final <code>SELECT</code> (or INSERT/UPDATE/DELETE) statement that references these CTEs.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">cte_name</span><span class="w"> </span><span class="p">(</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">-- Your SELECT statement that defines the CTE</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">expression1</span><span class="p">,</span>
+<span class="w">        </span><span class="n">expression2</span><span class="p">,</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">your_table</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">condition</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="p">),</span>
+<span class="c1">-- You can define multiple CTEs, separated by commas</span>
+<span class="n">another_cte_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">columnA</span><span class="p">,</span>
+<span class="w">        </span><span class="n">columnB</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">cte_name</span><span class="w"> </span><span class="c1">-- Referencing the previously defined CTE</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">another_condition</span>
+<span class="p">)</span>
+<span class="c1">-- Your final SELECT statement that uses one or more CTEs</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">final_column1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">final_column2</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">another_cte_name</span>
+<span class="k">WHERE</span>
+<span class="w">    </span><span class="n">final_condition</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+<li><strong><code>WITH</code> keyword:</strong> Initiates the CTE definition.</li>
+<li><strong><code>cte_name</code>:</strong> A unique, descriptive name for your Common Table Expression.</li>
+<li><strong><code>(column1, column2, ...)</code> (Optional):</strong> You can explicitly define the column names for the CTE. If omitted, the column names will be derived from the <code>SELECT</code> statement within the CTE. Explicitly naming columns is good practice for clarity, especially when expressions are used.</li>
+<li><strong><code>AS</code> keyword:</strong> Introduces the <code>SELECT</code> statement that defines the CTE's result set.</li>
+<li><strong><code>SELECT</code> statement:</strong> Any valid <code>SELECT</code> query can be used here. This query generates the data that the CTE will hold.</li>
+<li><strong>Comma Separation:</strong> If you define multiple CTEs, they are separated by commas.</li>
+<li><strong>Final Statement:</strong> After all CTEs are defined, the main query (SELECT, INSERT, UPDATE, or DELETE) must immediately follow, referencing the defined CTE(s).</li>
+</ul>
+<h3 id="simple-example-filtering-and-aggregation">Simple Example: Filtering and Aggregation</h3>
+<p>Let's illustrate with a common scenario: calculating the total sales for a specific product category and then finding the top-selling products within that category.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Assume a &#39;products&#39; table and an &#39;orders&#39; table</span>
+<span class="c1">-- products: product_id, product_name, category, price</span>
+<span class="c1">-- orders: order_id, product_id, quantity, order_date</span>
+
+<span class="k">WITH</span><span class="w"> </span><span class="n">ElectronicsSales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">-- First CTE: Filter orders for &#39;Electronics&#39; category and calculate line item total</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">o</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="n">product_name</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">quantity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">price</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_revenue</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span>
+<span class="w">    </span><span class="k">JOIN</span>
+<span class="w">        </span><span class="n">products</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">product_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Electronics&#39;</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="n">o</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">product_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">total_revenue</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">ElectronicsSales</span>
+<span class="k">WHERE</span>
+<span class="w">    </span><span class="n">total_revenue</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">total_revenue</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ElectronicsSales</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">total_revenue</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</code></pre></div>
+
+<p>In this example:</p>
+<ol>
+<li><code>ElectronicsSales</code> CTE is defined first, calculating the total revenue for each product in the 'Electronics' category.</li>
+<li>The final <code>SELECT</code> statement then uses <code>ElectronicsSales</code> to find products whose revenue exceeds the average revenue <em>within that same CTE</em>, and retrieves the top 5. Notice how <code>ElectronicsSales</code> is referenced twice in the final query.</li>
+</ol>
+<h2 id="practical-applications-of-ctes-real-world-scenarios">Practical Applications of CTEs: Real-World Scenarios</h2>
+<p>CTEs shine in various real-world scenarios, transforming complex, multi-step data manipulations into clear, logical progressions.</p>
+<h3 id="1-complex-joins-and-multi-step-aggregations">1. Complex Joins and Multi-Step Aggregations</h3>
+<p>When dealing with data from several tables that requires multiple levels of aggregation before a final join or analysis, CTEs simplify the process.</p>
+<p><strong>Scenario:</strong> Calculate the average order value for customers who have placed more than 3 orders in the last year.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">RecentCustomers</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">customer_id</span><span class="p">,</span>
+<span class="w">        </span><span class="k">COUNT</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">num_orders</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">orders</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">order_date</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">CURRENT_DATE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;1 year&#39;</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="n">customer_id</span>
+<span class="w">    </span><span class="k">HAVING</span>
+<span class="w">        </span><span class="k">COUNT</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">3</span>
+<span class="p">),</span>
+<span class="n">CustomerOrderValues</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">li</span><span class="p">.</span><span class="n">quantity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">li</span><span class="p">.</span><span class="n">price</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_total</span><span class="w"> </span><span class="c1">-- Assuming an order_items (li) table</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span>
+<span class="w">    </span><span class="k">JOIN</span>
+<span class="w">        </span><span class="n">order_items</span><span class="w"> </span><span class="n">li</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">li</span><span class="p">.</span><span class="n">order_id</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">RecentCustomers</span><span class="p">)</span><span class="w"> </span><span class="c1">-- Filter using the first CTE</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">rc</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">cov</span><span class="p">.</span><span class="n">order_total</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">average_order_value</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">RecentCustomers</span><span class="w"> </span><span class="n">rc</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">CustomerOrderValues</span><span class="w"> </span><span class="n">cov</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">rc</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cov</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">rc</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">average_order_value</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Here, <code>RecentCustomers</code> identifies our target audience, and <code>CustomerOrderValues</code> calculates individual order totals, filtered by the first CTE. The final <code>SELECT</code> combines these to get the average.</p>
+<h3 id="2-paginating-data-with-row-numbers">2. Paginating Data with Row Numbers</h3>
+<p>CTEs are excellent for use with window functions, especially <code>ROW_NUMBER()</code>, for pagination.</p>
+<p><strong>Scenario:</strong> Retrieve the third page of users, with 10 users per page, ordered by their registration date.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">RankedUsers</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">username</span><span class="p">,</span>
+<span class="w">        </span><span class="n">email</span><span class="p">,</span>
+<span class="w">        </span><span class="n">registration_date</span><span class="p">,</span>
+<span class="w">        </span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">registration_date</span><span class="w"> </span><span class="k">ASC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">rn</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">users</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">user_id</span><span class="p">,</span>
+<span class="w">    </span><span class="n">username</span><span class="p">,</span>
+<span class="w">    </span><span class="n">email</span><span class="p">,</span>
+<span class="w">    </span><span class="n">registration_date</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">RankedUsers</span>
+<span class="k">WHERE</span>
+<span class="w">    </span><span class="n">rn</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="c1">-- For page 3, 10 items per page</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">rn</span><span class="p">;</span>
+</code></pre></div>
+
+<p>The <code>RankedUsers</code> CTE assigns a row number to each user, and the outer query selects a specific range for pagination.</p>
+<h3 id="3-calculating-running-totals-or-moving-averages">3. Calculating Running Totals or Moving Averages</h3>
+<p>Window functions for running totals or moving averages can become unwieldy in a single query. CTEs make them more manageable.</p>
+<p><strong>Scenario:</strong> Calculate a running total of daily sales.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">DailySales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">order_date</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">daily_revenue</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">orders</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="n">order_date</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">order_date</span><span class="p">,</span>
+<span class="w">    </span><span class="n">daily_revenue</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">daily_revenue</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">order_date</span><span class="w"> </span><span class="k">ASC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">running_total_revenue</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">DailySales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">order_date</span><span class="p">;</span>
+</code></pre></div>
+
+<p><code>DailySales</code> aggregates revenue per day, and then the outer query applies the window function for the running total.</p>
+<h2 id="advanced-cte-techniques-recursion-and-chaining">Advanced CTE Techniques: Recursion and Chaining</h2>
+<p>Beyond basic single-level definitions, CTEs offer powerful capabilities for solving complex, iterative problems through chaining and, most notably, recursion.</p>
+<h3 id="chaining-ctes">Chaining CTEs</h3>
+<p>Chaining is simply the practice of defining multiple CTEs where a subsequent CTE refers to a previously defined CTE. We've seen examples of this already. This allows you to build complex logic step-by-step, where each step refines or processes the output of the previous one. This greatly enhances readability and simplifies debugging, as you can test each CTE independently before combining them.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Example of Chaining: Find customers who bought specific products in different categories</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">CustomerPurchases</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span>
+<span class="w">        </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="n">category</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span>
+<span class="w">    </span><span class="k">JOIN</span>
+<span class="w">        </span><span class="n">order_items</span><span class="w"> </span><span class="n">oi</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">order_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oi</span><span class="p">.</span><span class="n">order_id</span>
+<span class="w">    </span><span class="k">JOIN</span>
+<span class="w">        </span><span class="n">products</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">oi</span><span class="p">.</span><span class="n">product_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
+<span class="p">),</span>
+<span class="n">ElectronicsCustomers</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span>
+<span class="w">        </span><span class="n">customer_id</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">CustomerPurchases</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Electronics&#39;</span>
+<span class="p">),</span>
+<span class="n">BooksCustomers</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span>
+<span class="w">        </span><span class="n">customer_id</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">CustomerPurchases</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Books&#39;</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">ec</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">ElectronicsCustomers</span><span class="w"> </span><span class="n">ec</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="n">BooksCustomers</span><span class="w"> </span><span class="n">bc</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">ec</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bc</span><span class="p">.</span><span class="n">customer_id</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Here, <code>CustomerPurchases</code> is the base, then <code>ElectronicsCustomers</code> and <code>BooksCustomers</code> both build upon it, and finally, the outer query joins the results of those two.</p>
+<h3 id="recursive-ctes">Recursive CTEs</h3>
+<p>Recursive CTEs are a game-changer for querying hierarchical or graph-like data structures. They allow a CTE to refer to itself, enabling iterative processing. A recursive CTE consists of two main parts:</p>
+<ul>
+<li>
+<p><strong>Anchor Member:</strong>
+    The initial (non-recursive) <code>SELECT</code> statement that establishes the base result set for the recursion. This is the starting point.</p>
+</li>
+<li>
+<p><strong>Recursive Member:</strong>
+    A <code>SELECT</code> statement that references the CTE itself and builds upon the results generated by the anchor member or previous recursive steps. This part must typically include a <code>UNION ALL</code> (or <code>UNION DISTINCT</code>) operator to combine its results with the anchor member's results.</p>
+</li>
+<li>
+<p><strong>Termination Condition:</strong>
+    The recursive member must include a <code>WHERE</code> clause that eventually stops the recursion, preventing an infinite loop.</p>
+</li>
+</ul>
+<p>The general syntax is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span><span class="w"> </span><span class="n">recursive_cte_name</span><span class="w"> </span><span class="p">(</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">-- Anchor Member (Base case)</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">initial_column1</span><span class="p">,</span>
+<span class="w">        </span><span class="n">initial_column2</span><span class="p">,</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">base_table</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">initial_condition</span>
+
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+
+<span class="w">    </span><span class="c1">-- Recursive Member</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">next_column1</span><span class="p">,</span>
+<span class="w">        </span><span class="n">next_column2</span><span class="p">,</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">another_table_or_recursive_cte_name</span><span class="w"> </span><span class="c1">-- Joins with previous CTE output</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">termination_condition</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="o">*</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">recursive_cte_name</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Practical Example: Organizational Hierarchy</strong></p>
+<p>Imagine an <code>employees</code> table with <code>employee_id</code>, <code>employee_name</code>, and <code>manager_id</code> (where <code>manager_id</code> is null for the CEO). We want to retrieve all employees under a specific manager.</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">employee_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">employee_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="n">manager_id</span><span class="w"> </span><span class="nb">INT</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="p">(</span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span><span class="w"> </span><span class="n">manager_id</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Alice (CEO)&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">NULL</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Bob (VP Sales)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Charlie (VP Marketing)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;David (Sales Manager)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Eve (Sales Rep)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Frank (Sales Rep)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Grace (Marketing Manager)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Heidi (Marketing Specialist)&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="c1">-- Find all employees reporting to &#39;Bob (VP Sales)&#39; (employee_id = 2)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span><span class="w"> </span><span class="n">OrgHierarchy</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">-- Anchor member: Start with the specified manager</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">employee_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">employee_name</span><span class="p">,</span>
+<span class="w">        </span><span class="n">manager_id</span><span class="p">,</span>
+<span class="w">        </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">level</span><span class="w"> </span><span class="c1">-- Level 1 is the direct manager</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">employees</span>
+<span class="w">    </span><span class="k">WHERE</span>
+<span class="w">        </span><span class="n">employee_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="c1">-- Starting with Bob</span>
+
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+
+<span class="w">    </span><span class="c1">-- Recursive member: Find employees whose manager_id matches the current employee_id</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="n">employee_name</span><span class="p">,</span>
+<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="n">manager_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">oh</span><span class="p">.</span><span class="k">level</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">level</span>
+<span class="w">    </span><span class="k">FROM</span>
+<span class="w">        </span><span class="n">employees</span><span class="w"> </span><span class="n">e</span>
+<span class="w">    </span><span class="k">JOIN</span>
+<span class="w">        </span><span class="n">OrgHierarchy</span><span class="w"> </span><span class="n">oh</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">manager_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oh</span><span class="p">.</span><span class="n">employee_id</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">employee_id</span><span class="p">,</span>
+<span class="w">    </span><span class="n">employee_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">manager_id</span><span class="p">,</span>
+<span class="w">    </span><span class="k">level</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">OrgHierarchy</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation:</strong></p>
+<ol>
+<li><strong>Anchor:</strong> Selects the starting employee (Bob, <code>employee_id = 2</code>) and assigns <code>level = 1</code>.</li>
+<li><strong>Recursive:</strong> In each iteration, it joins the <code>employees</code> table with the <em>current result set</em> of <code>OrgHierarchy</code>. It finds employees whose <code>manager_id</code> matches an <code>employee_id</code> already in <code>OrgHierarchy</code>, and increments their <code>level</code>.</li>
+<li><strong>Termination:</strong> The recursion stops when the <code>JOIN</code> condition (<code>e.manager_id = oh.employee_id</code>) no longer finds any matches, meaning there are no more direct reports to the current set of employees.</li>
+</ol>
+<p>Recursive CTEs are indispensable for navigating hierarchies efficiently and declaratively within SQL.</p>
+<h2 id="ctes-vs-subqueries-vs-temporary-tables-a-comparative-analysis">CTEs vs. Subqueries vs. Temporary Tables: A Comparative Analysis</h2>
+<p>While CTEs offer significant advantages, it's important to understand how they relate to and differ from other SQL constructs that can achieve similar goals: subqueries and temporary tables. Each has its place, and the best choice depends on the specific use case, database system, and performance requirements.</p>
+<h3 id="subqueries-derived-tables">Subqueries (Derived Tables)</h3>
+<p>Subqueries are queries nested within another SQL query. They can be used in the <code>FROM</code> clause (as a derived table), <code>SELECT</code> clause (scalar subquery), <code>WHERE</code> clause (subquery for filtering), or <code>HAVING</code> clause.</p>
+<p><strong>Advantages of Subqueries:</strong></p>
+<ul>
+<li><strong>Simplicity for single-use cases:</strong> For very simple, one-off intermediate results, a subquery might be more concise than a CTE.</li>
+<li><strong>Widespread compatibility:</strong> Subqueries have been a fundamental part of SQL for a very long time and are supported by virtually all RDBMS versions.</li>
+</ul>
+<p><strong>Disadvantages of Subqueries:</strong></p>
+<ul>
+<li><strong>Readability:</strong> Deeply nested subqueries become extremely difficult to read and understand, leading to "SQL spaghetti code."</li>
+<li><strong>Reusability:</strong> A derived table or subquery cannot be referenced multiple times within the same parent query without being re-evaluated (potentially), or without repeating its definition.</li>
+<li><strong>Debugging:</strong> Debugging deeply nested subqueries is challenging, as you can't easily isolate and test intermediate steps.</li>
+<li><strong>No Recursion:</strong> Subqueries cannot handle recursive queries.</li>
+</ul>
+<p><strong>When to use Subqueries:</strong></p>
+<ul>
+<li>For simple filtering or single-step aggregations that are unlikely to be reused or extended.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Subquery example</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">p</span><span class="p">.</span><span class="n">product_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">p</span><span class="p">.</span><span class="n">price</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">products</span><span class="w"> </span><span class="n">p</span>
+<span class="k">WHERE</span>
+<span class="w">    </span><span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">oi</span><span class="p">.</span><span class="n">product_id</span>
+<span class="w">        </span><span class="k">FROM</span>
+<span class="w">            </span><span class="n">order_items</span><span class="w"> </span><span class="n">oi</span>
+<span class="w">        </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">            </span><span class="n">oi</span><span class="p">.</span><span class="n">product_id</span>
+<span class="w">        </span><span class="k">HAVING</span>
+<span class="w">            </span><span class="k">SUM</span><span class="p">(</span><span class="n">oi</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">    </span><span class="p">);</span>
+</code></pre></div>
+
+<h3 id="temporary-tables">Temporary Tables</h3>
+<p>Temporary tables are physical tables created in the database that exist for the duration of a session or a transaction. They are explicitly created and then usually dropped.</p>
+<p><strong>Advantages of Temporary Tables:</strong></p>
+<ul>
+<li><strong>Persistence (session/transactional):</strong> Unlike CTEs, temporary tables persist beyond a single statement and can be referenced by multiple subsequent queries within the same session.</li>
+<li><strong>Indexing:</strong> You can add indexes to temporary tables, which can significantly improve performance for complex subsequent operations, especially when dealing with large intermediate result sets.</li>
+<li><strong>Debugging:</strong> Being physical objects, temporary tables can be easily inspected after creation, which aids in debugging.</li>
+<li><strong>Memory vs. Disk:</strong> Depending on their size and RDBMS configuration, temporary tables can spill to disk, potentially handling larger datasets than memory-bound CTEs.</li>
+</ul>
+<p><strong>Disadvantages of Temporary Tables:</strong></p>
+<ul>
+<li><strong>Overhead:</strong> Creating, populating, and dropping temporary tables incurs I/O and locking overhead.</li>
+<li><strong>Resource Consumption:</strong> They consume database resources (storage, memory) and can potentially lead to contention if not managed carefully.</li>
+<li><strong>Code Clutter:</strong> They introduce more DDL (CREATE, INSERT, DROP) statements into your query logic, making scripts longer and potentially less clean.</li>
+<li><strong>Scope Management:</strong> You must explicitly manage their lifecycle (creating and dropping them).</li>
+</ul>
+<p><strong>When to use Temporary Tables:</strong></p>
+<ul>
+<li>When an intermediate result set is very large, needs to be indexed for subsequent complex joins/filters, or needs to be used across multiple distinct SQL statements within a single session.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Temporary table example (SQL Server syntax)</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">#</span><span class="n">HighVolumeProducts</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">product_id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">total_quantity</span><span class="w"> </span><span class="nb">INT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="o">#</span><span class="n">HighVolumeProducts</span><span class="w"> </span><span class="p">(</span><span class="n">product_id</span><span class="p">,</span><span class="w"> </span><span class="n">total_quantity</span><span class="p">)</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">product_id</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">quantity</span><span class="p">)</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">order_items</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">product_id</span>
+<span class="k">HAVING</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">quantity</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">p</span><span class="p">.</span><span class="n">product_name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">p</span><span class="p">.</span><span class="n">price</span><span class="p">,</span>
+<span class="w">    </span><span class="n">hvp</span><span class="p">.</span><span class="n">total_quantity</span>
+<span class="k">FROM</span>
+<span class="w">    </span><span class="n">products</span><span class="w"> </span><span class="n">p</span>
+<span class="k">JOIN</span>
+<span class="w">    </span><span class="o">#</span><span class="n">HighVolumeProducts</span><span class="w"> </span><span class="n">hvp</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hvp</span><span class="p">.</span><span class="n">product_id</span><span class="p">;</span>
+
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">#</span><span class="n">HighVolumeProducts</span><span class="p">;</span>
+</code></pre></div>
+
+<h3 id="common-table-expressions-ctes-summary">Common Table Expressions (CTEs) Summary</h3>
+<p><strong>Advantages of CTEs:</strong></p>
+<ul>
+<li><strong>Readability:</strong> Significantly improves the clarity of complex queries.</li>
+<li><strong>Modularity:</strong> Breaks down complex logic into manageable, named steps.</li>
+<li><strong>Reusability (within query):</strong> A single CTE can be referenced multiple times without re-evaluation (optimizer dependent).</li>
+<li><strong>Recursion:</strong> Enables elegant solutions for hierarchical data.</li>
+<li><strong>Non-persistent:</strong> No database clutter; exists only for the current statement.</li>
+<li><strong>Optimized:</strong> Can be optimized by the RDBMS for multiple references (optimizer dependent).</li>
+</ul>
+<p><strong>Disadvantages of CTEs:</strong></p>
+<ul>
+<li><strong>Scope:</strong> Limited to a single statement; cannot be used across multiple queries.</li>
+<li><strong>Indexing:</strong> Cannot be indexed directly; the optimizer decides if/how to materialize.</li>
+<li><strong>Performance:</strong> Not a guaranteed performance booster over well-written subqueries or temporary tables. If the intermediate result is huge and needs indexing, a temporary table might be better.</li>
+</ul>
+<p><strong>When to use CTEs:</strong></p>
+<ul>
+<li>For enhancing readability, handling recursive queries, improving modularity of complex logic, and reusing an intermediate result set multiple times within a single query. They are often the default choice for intermediate steps in complex queries unless specific performance or persistence needs dictate otherwise.</li>
+</ul>
+<p>The choice among CTEs, subqueries, and temporary tables boils down to balancing readability, scope, performance, and complexity. For most analytical and reporting tasks involving multi-step logic within a single query, CTEs are often the most elegant and efficient solution.</p>
+<h2 id="best-practices-and-performance-considerations">Best Practices and Performance Considerations</h2>
+<p>To truly excel at <strong>Mastering Common Table Expressions in SQL</strong>, it's not enough to know the syntax; you must also understand how to use them effectively and efficiently.</p>
+<h3 id="best-practices">Best Practices</h3>
+<ol>
+<li>
+<p><strong>Descriptive Naming:</strong>
+    Give your CTEs and their columns meaningful, descriptive names. This greatly enhances readability and understanding, especially for others who might later review your code. Instead of <code>C1</code>, use <code>CustomerMonthlySales</code>.</p>
+</li>
+<li>
+<p><strong>Keep CTEs Focused:</strong>
+    Each CTE should ideally perform a single, logical step of data transformation. Avoid trying to cram too much logic into one CTE. This reinforces modularity.</p>
+</li>
+<li>
+<p><strong>Explicit Column Listing:</strong>
+    Always explicitly list the columns in your CTE definition (e.g., <code>WITH MyCTE (ColA, ColB) AS (...)</code>). This makes the CTE's output explicit, protects against schema changes in the underlying tables, and helps readability.</p>
+</li>
+<li>
+<p><strong>Avoid Unnecessary CTEs:</strong>
+    While CTEs improve readability, don't use them for trivial operations that a simple subquery or direct join can handle more concisely without sacrificing clarity. The goal is clarity, not using CTEs everywhere.</p>
+</li>
+<li>
+<p><strong>Start Simple, Then Build:</strong>
+    When tackling a complex query, define your first CTE with a simple <code>SELECT *</code> from your base tables. Gradually add filters, joins, and aggregations in subsequent CTEs, testing each step as you go.</p>
+</li>
+<li>
+<p><strong>Use for Recursive Queries:</strong>
+    This is where CTEs are indispensable. Always opt for recursive CTEs for hierarchical data traversal.</p>
+</li>
+<li>
+<p><strong>Consider <code>UNION ALL</code> vs. <code>UNION</code> in Recursive CTEs:</strong>
+    For recursive CTEs, <code>UNION ALL</code> is generally faster than <code>UNION</code> because <code>UNION</code> implicitly performs a <code>DISTINCT</code> operation, which requires additional processing. Use <code>UNION ALL</code> unless you explicitly need to remove duplicates from the recursive output.</p>
+</li>
+</ol>
+<h3 id="performance-considerations">Performance Considerations</h3>
+<p>The performance of CTEs is a nuanced topic and depends heavily on the specific RDBMS and its query optimizer. For general strategies to enhance database efficiency, you might also find our article on <a href="/how-to-optimize-sql-queries-peak-performance/">How to Optimize SQL Queries for Peak Performance</a> valuable.</p>
+<ol>
+<li>
+<p><strong>Not Always Materialized:</strong>
+    Database optimizers often treat CTEs as merely syntactic sugar. They might inline the CTE's definition directly into the main query, essentially treating it like a derived table or a view. This means the query defined in the CTE might be re-executed multiple times if referenced repeatedly, <em>unless</em> the optimizer determines that materializing it once is more efficient.</p>
+</li>
+<li>
+<p><strong>Optimizer's Role:</strong>
+    Modern optimizers are sophisticated. For complex queries with multiple CTEs and references, they often do a good job of figuring out the most efficient execution plan. However, explicit hints or forcing materialization (if your RDBMS supports it, e.g., <code>OPTION (RECOMPILE)</code> in SQL Server or <code>/*+ MATERIALIZE */</code> in Oracle) might be necessary in rare, performance-critical scenarios.</p>
+</li>
+<li>
+<p><strong>Indexing:</strong>
+    Since CTEs are not physical tables, you cannot directly apply indexes to them. The performance of a CTE's internal <code>SELECT</code> statement relies on the indexes of the <em>underlying base tables</em>. Ensure your base tables are properly indexed for the operations (joins, filters, aggregations) occurring within your CTEs.</p>
+</li>
+<li>
+<p><strong>Reduce Data Early:</strong>
+    As with any SQL query, filter your data as early as possible within your CTEs. This reduces the amount of data processed in subsequent steps, leading to faster execution.</p>
+</li>
+<li>
+<p><strong>Monitor Execution Plans:</strong>
+    Always examine the query execution plan (EXPLAIN in PostgreSQL/MySQL, Execution Plan in SQL Server) for complex queries involving CTEs. This will reveal how the optimizer is actually processing your CTEs – whether they are being materialized, inlined, or if certain steps are causing bottlenecks. This is the ultimate tool for diagnosing performance issues.</p>
+</li>
+<li>
+<p><strong><code>TOP</code>/<code>LIMIT</code> in Recursive CTEs:</strong>
+    Be cautious with <code>TOP</code> or <code>LIMIT</code> clauses within the recursive member of a CTE. It might limit the number of rows returned at each recursive step, potentially truncating your results before the hierarchy is fully traversed. Apply <code>LIMIT</code> only in the final <code>SELECT</code> statement, if appropriate.</p>
+</li>
+</ol>
+<p>In essence, while CTEs are excellent for logical clarity, they are not a magic bullet for performance. Write clean, logical CTEs, optimize your underlying tables, and always profile your queries to ensure optimal performance.</p>
+<h2 id="mastering-common-table-expressions-in-sql-the-future-of-database-querying">Mastering Common Table Expressions in SQL: The Future of Database Querying</h2>
+<p>The journey towards <strong>Mastering Common Table Expressions in SQL</strong> is an ongoing one, as database technologies continue to evolve. CTEs have already established themselves as an indispensable tool for data professionals, and their importance is only set to grow.</p>
+<p>As data volumes explode and business intelligence demands become more intricate, the ability to write SQL that is both powerful and easily understandable becomes paramount. CTEs directly address this need by bridging the gap between raw data manipulation and clear logical expression. They democratize complex query writing, making advanced techniques accessible without resorting to overly arcane or vendor-specific syntax.</p>
+<p>The trend in modern SQL development points towards greater emphasis on code readability, maintainability, and declarative programming. CTEs align perfectly with these principles. They promote a functional approach to data transformation, where each CTE represents a distinct function or step in a data pipeline. This paradigm is increasingly favored over deeply nested imperative constructs.</p>
+<p>Furthermore, as cloud data warehouses and distributed SQL engines become the norm, the efficiency of query parsing and optimization grows in importance. Well-structured queries using CTEs provide clearer signals to query optimizers, potentially leading to more efficient execution plans, especially in complex, parallel processing environments. The clarity they offer also facilitates automated code generation and analysis, paving the way for more sophisticated data engineering tools.</p>
+<p>Looking ahead, we can expect continued refinement in how database systems handle CTEs, with optimizers becoming even smarter at materializing results and eliminating redundant computations. There might also be new extensions or features that build upon the CTE concept, further enhancing SQL's capabilities for graph traversal, advanced analytics, and machine learning feature engineering directly within the database.</p>
+<p>In conclusion, CTEs are far more than just a syntax feature; they represent a fundamental shift in how we approach complex data problems in SQL. By embracing and mastering CTEs, data professionals can write more robust, understandable, and future-proof queries, ensuring they remain at the forefront of effective database interaction in an increasingly data-driven world.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Q: What is a Common Table Expression (CTE) in SQL?</strong></p>
+<p>A: A CTE is a temporary, named result set that you can reference within a single SQL statement (SELECT, INSERT, UPDATE, or DELETE). It's essentially a virtual table that exists only for the duration of that one query, helping to break down complex logic into more readable, manageable, and reusable steps.</p>
+<p><strong>Q: When should I use CTEs instead of subqueries or temporary tables?</strong></p>
+<p>A: Use CTEs primarily for improving query readability, enhancing modularity within a single query, and crucially, for writing recursive queries to handle hierarchical data. For very large intermediate results that might benefit from explicit indexing, or when data needs to persist across multiple distinct SQL statements in a session, temporary tables might be a better choice. Simple, one-off filtering or calculations can often be handled concisely with subqueries.</p>
+<p><strong>Q: Do CTEs improve query performance?</strong></p>
+<p>A: Not inherently or directly. While CTEs can lead to more optimizable queries by improving readability and providing clearer logical structures to the database optimizer, their primary benefit is in code organization and maintainability. Any performance gains are highly dependent on the specific RDBMS and how its query optimizer processes the CTEs, including whether it chooses to materialize the intermediate results or inline them into the main query. Proper indexing of underlying base tables remains critical for overall performance.</p>
+<hr>
+<h2 id="further-reading-resources">Further Reading &amp; Resources</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql?view=sql-server-ver16">SQL Server CTE documentation</a></li>
+<li><a href="https://www.postgresql.org/docs/current/queries-with.html">PostgreSQL CTE documentation</a></li>
+<li><a href="https://docs.oracle.com/en/database/oracle/oracle-database/21/sqlrf/WITH.html#GUID-E664925A-A456-4299-8D17-F8077BF2E3E8">Oracle CTE documentation</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/with.html">MySQL CTE documentation</a></li>
+</ul>
+      </div>
+
+      <!-- Lead Magnet Newsletter -->
+      <section class="newsletter-cta">
+        <div class="newsletter-cta-content">
+            <h3>Join the Analytics Drive Intel Pool</h3>
+            <p>Every week, we condense complex AI breakthroughs and geopolitical shifts into a 5-minute digest. No noise, just the intel you need to stay ahead.</p>
+            <form class="newsletter-form-article">
+                <input type="email" placeholder="Enter your best email" required aria-label="Subscription Email">
+                <button type="submit">Get the Intel</button>
+            </form>
+            <p class="newsletter-footer-note">Join 10,000+ technical professionals. Unsubscribe anytime.</p>
+        </div>
+      </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toc = document.querySelector('.post-content .toc');
+      const container = document.querySelector('.post-layout-container');
+      
+      if (!toc) {
+        if (container) container.classList.add('no-toc');
+        return;
+      }
+
+      const target = document.getElementById('toc-sidebar-target');
+      const isDesktop = window.innerWidth >= 1024;
+
+      if (isDesktop && target) {
+        // Desktop: Move TOC to sidebar
+        target.appendChild(toc);
+        toc.classList.add('toc-sidebar--active');
+
+        // --- ScrollSpy Logic ---
+        const observerOptions = {
+          root: null,
+          rootMargin: '-10% 0px -80% 0px', // Near top of screen
+          threshold: 0
+        };
+
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            if (entry.isIntersecting && id) {
+              // Remove active from all
+              document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active-toc-link'));
+              // Add to current
+              const link = document.querySelector(`.toc a[href="#${id}"]`);
+              if (link) {
+                link.classList.add('active-toc-link');
+                // Scroll the TOC sidebar if link is out of view
+                link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+            }
+          });
+        }, observerOptions);
+
+        // Watch all H2 and H3 headings
+        document.querySelectorAll('.post-content h2, .post-content h3').forEach(section => {
+          observer.observe(section);
+        });
+
+      } else {
+        // Mobile: Wrap in Accordion
+        const details = document.createElement('details');
+        details.className = 'toc-mobile-accordion';
+        const summary = document.createElement('summary');
+        summary.innerHTML = 'Table of Contents';
+        
+        // Find first paragraph for mobile placement
+        const firstP = document.querySelector('.post-content p');
+        if (firstP) {
+          firstP.after(details);
+        } else {
+          toc.parentNode.insertBefore(details, toc);
+        }
+        
+        details.appendChild(summary);
+        details.appendChild(toc);
+      }
+    });
+  </script>
+
+  <!-- Social Share Buttons -->
+  <div class="share-buttons">
+    <span class="share-label">Share:</span>
+
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?url=https://analyticsdrive.tech/mastering-common-table-expressions-sql/&text=Mastering%20Common%20Table%20Expressions%20in%20SQL%20for%20Advanced%20Querying"
+      target="_blank" rel="noopener noreferrer" class="share-btn share-btn--twitter" aria-label="Share on X">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://analyticsdrive.tech/mastering-common-table-expressions-sql/" target="_blank"
+      rel="noopener noreferrer" class="share-btn share-btn--facebook" aria-label="Share on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+
+    <!-- Reddit -->
+    <a href="https://www.reddit.com/submit?url=https://analyticsdrive.tech/mastering-common-table-expressions-sql/&title=Mastering%20Common%20Table%20Expressions%20in%20SQL%20for%20Advanced%20Querying"
+      target="_blank" rel="noopener noreferrer" class="share-btn share-btn--reddit" aria-label="Share on Reddit">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+      </svg>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/?text=Mastering%20Common%20Table%20Expressions%20in%20SQL%20for%20Advanced%20Querying%20https://analyticsdrive.tech/mastering-common-table-expressions-sql/" target="_blank"
+      rel="noopener noreferrer" class="share-btn share-btn--whatsapp" aria-label="Share on WhatsApp">
+      <svg xmlns="http://www.w3.org/2008/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="article-footer-meta">
+    <p><strong>Category:</strong> <a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a></p>
+    <p itemprop="author" itemscope itemtype="https://schema.org/Organization">
+      <strong>Author:</strong>
+      <a itemprop="url" href="https://analyticsdrive.tech/about/">
+        <span itemprop="name">Analytics Drive Editorial Team</span>
+      </a>
+    </p>
+    <div class="tags-list">
+      <strong>Tags:</strong>
+      <a href="https://analyticsdrive.tech/tag/sql.html" class="tag">#SQL</a>
+      <a href="https://analyticsdrive.tech/tag/technology.html" class="tag">#Technology</a>
+      <a href="https://analyticsdrive.tech/tag/competitive-programming.html" class="tag">#Competitive Programming</a>
+      <a href="https://analyticsdrive.tech/tag/algorithms.html" class="tag">#Algorithms</a>
+    </div>
+  </div>
+
+  <div class="related-posts">
+    <h3>Related Articles</h3>
+    <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/mastering-sql-window-functions-advanced-analytics/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/mastering-sql-window-functions-advanced-analytics.webp" alt="Mastering SQL Window Functions for Advanced Analytics: A Deep Dive" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Mastering SQL Window Functions for Advanced Analytics: A Deep Dive</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>18 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/sql-joins-masterclass-inner-left-right-full-explored/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/sql-joins-masterclass-inner-left-right-full-explored.webp" alt="SQL Joins Masterclass: Inner, Left, Right, Full Explored" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">SQL Joins Masterclass: Inner, Left, Right, Full Explored</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>2 D</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/how-to-optimize-sql-queries-peak-performance/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/how-to-optimize-sql-queries-peak-performance.webp" alt="How to Optimize SQL Queries for Peak Performance" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Optimize SQL Queries for Peak Performance</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>1 D</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="related-posts">
+    <h3>Latest Articles</h3>
+    <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/understanding-vector-embeddings-semantic-search-deep-dive/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Artificial Intelligence</span>
+            <img src="https://analyticsdrive.tech/images/understanding-vector-embeddings-semantic-search-deep-dive.webp" alt="Understanding Vector Embeddings for Semantic Search: A Deep Dive" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Understanding Vector Embeddings for Semantic Search: A Deep Dive</div>
+          <div class="related-post-card__meta">
+            <span>Artificial Intelligence</span>
+            <span class="dot">•</span>
+            <span>now</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/implement-rate-limiting-distributed-systems/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Software Engineering</span>
+            <img src="https://analyticsdrive.tech/images/implement-rate-limiting-distributed-systems.webp" alt="How to Implement Rate Limiting in Distributed Systems Effectively" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">How to Implement Rate Limiting in Distributed Systems Effectively</div>
+          <div class="related-post-card__meta">
+            <span>Software Engineering</span>
+            <span class="dot">•</span>
+            <span>9 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Latest News</span>
+            <img src="https://analyticsdrive.tech/images/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend.webp" alt="March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend</div>
+          <div class="related-post-card__meta">
+            <span>Latest News</span>
+            <span class="dot">•</span>
+            <span>10 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/argonne-chip-real-time-scientific-data-analysis-boost/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Technology</span>
+            <img src="https://analyticsdrive.tech/images/argonne-chip-real-time-scientific-data-analysis-boost.webp" alt="Argonne Chip Boosts Real-time Scientific Data Analysis: A New Era" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Argonne Chip Boosts Real-time Scientific Data Analysis: A New Era</div>
+          <div class="related-post-card__meta">
+            <span>Technology</span>
+            <span class="dot">•</span>
+            <span>10 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/masters-tournament-ai-upgrade-fan-engagement/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Artificial Intelligence</span>
+            <img src="https://analyticsdrive.tech/images/masters-tournament-ai-upgrade-fan-engagement.webp" alt="Masters Tournament Gets AI Upgrade for Fans: A New Era of Engagement" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Masters Tournament Gets AI Upgrade for Fans: A New Era of Engagement</div>
+          <div class="related-post-card__meta">
+            <span>Artificial Intelligence</span>
+            <span class="dot">•</span>
+            <span>10 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">World News</span>
+            <img src="https://analyticsdrive.tech/images/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis.webp" alt="Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics</div>
+          <div class="related-post-card__meta">
+            <span>World News</span>
+            <span class="dot">•</span>
+            <span>10 h</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://analyticsdrive.tech/rsac-2026-securing-future-ai-agents/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Artificial Intelligence</span>
+            <img src="https://analyticsdrive.tech/images/rsac-2026-securing-future-ai-agents.webp" alt="RSAC 2026: Securing the Future of AI Agents in a Complex World" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">RSAC 2026: Securing the Future of AI Agents in a Complex World</div>
+          <div class="related-post-card__meta">
+            <span>Artificial Intelligence</span>
+            <span class="dot">•</span>
+            <span>10 h</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+      <div class="post-footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-line);">
+        <span style="visibility: hidden;">Placeholder</span>
+        
+        <a href="https://analyticsdrive.tech/" class="back-link">Back to Home</a>
+
+        <span style="visibility: hidden;">Placeholder</span>
+      </div>
+    </div>  </div></article>
+
+</div>    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column-about">
+                    <h3>About Analytics Drive</h3>
+                    <p>Analytics Drive is your destination for breaking news, in-depth tech tutorials, and expert analysis on AI and tech.</p>
+                </div>
+                <div class="footer-column-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Get the latest AI & Tech insights delivered to your inbox.</p>
+                    <form class="newsletter-form-footer">
+                        <input type="email" placeholder="email@example.com" required aria-label="Email Address">
+                        <button type="submit">Join</button>
+                    </form>
+                </div>
+            </div>
+            <p>&copy; 2026 Analytics Drive Editorial Team.
+            </p>
+            <div class="footer-legal">
+                <a href="https://analyticsdrive.tech/privacy-policy/">Privacy Policy</a> |                 <a href="https://analyticsdrive.tech/disclaimer/">Disclaimer</a> |                 <a href="https://analyticsdrive.tech/terms-and-conditions/">Terms & Conditions</a> |                 <a href="https://analyticsdrive.tech/contact/">Contact Us</a>            </div>
+            <div class="social-links">
+                <a href="https://twitter.com/analyticsdrive" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61588072082428" target="_blank" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/analyticsdrive" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a href="https://www.reddit.com/r/Analyticsdrive/" target="_blank" aria-label="Reddit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.688-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+                    </svg>
+                </a>
+                <a href="https://t.me/analyticsdrive" target="_blank" aria-label="Telegram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M11.944 0C5.346 0 0 5.348 0 11.944s5.346 11.944 11.944 11.944 11.944-5.348 11.944-11.944S18.542 0 11.944 0zm5.83 7.218l-2.004 9.456c-.149.659-.538.822-1.09.511l-3.054-2.25-1.472 1.417c-.163.163-.3.298-.614.298l.218-3.102 5.641-5.101c.245-.218-.054-.338-.378-.123l-6.974 4.39-3.004-.94c-.654-.205-.667-.654.137-.967l11.737-4.524c.544-.205 1.018.123.857.834z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const html = document.documentElement;
+
+            // Check local storage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                html.setAttribute('data-theme', 'dark');
+                if (themeIcon) themeIcon.textContent = '☀️';
+            }
+
+            if (toggleButton) {
+                toggleButton.addEventListener('click', () => {
+                    const currentTheme = html.getAttribute('data-theme');
+                    if (currentTheme === 'dark') {
+                        html.removeAttribute('data-theme');
+                        localStorage.setItem('theme', 'light');
+                        if (themeIcon) themeIcon.textContent = '🌙';
+                    } else {
+                        html.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        if (themeIcon) themeIcon.textContent = '☀️';
+                    }
+                });
+            }
+
+            // --- External Link Hygiene ---
+            (function () {
+                const siteHost = window.location.hostname;
+                document.querySelectorAll('a[href^="http"]').forEach(function (link) {
+                    try {
+                        const linkHost = new URL(link.href).hostname;
+                        if (linkHost !== siteHost) {
+                            link.setAttribute('rel', 'noopener noreferrer');
+                            link.setAttribute('target', '_blank');
+                        }
+                    } catch (e) { }
+                });
+            })();
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (mobileMenuToggle && mainNav) {
+                mobileMenuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                    mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+                    mainNav.classList.toggle('menu-open');
+                    mobileMenuToggle.classList.toggle('is-active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (mainNav.classList.contains('menu-open') && !mainNav.contains(e.target)) {
+                        mainNav.classList.remove('menu-open');
+                        mobileMenuToggle.classList.remove('is-active');
+                        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                mainNav.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            // --- Category Filtering ---
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const postCards = document.querySelectorAll('#main-post-list .post-card');
+
+            if (tabBtns.length > 0 && postCards.length > 0) {
+                tabBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const category = btn.getAttribute('data-category');
+                        postCards.forEach(card => {
+                            if (category === 'all' || card.getAttribute('data-category') === category) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
