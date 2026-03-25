@@ -1707,17 +1707,27 @@ a:hover {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Pagefind Inline Search UI
+   Pagefind Header Overlay Search UI
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-.nav-action-group {
-    display: flex;
-    align-items: center;
+.header-action-group {
     position: absolute;
-    right: 0;
+    right: 1.5rem;
     top: 50%;
     transform: translateY(-50%);
+    display: flex;
+    align-items: center;
     gap: 0.5rem;
+    z-index: 105;
+}
+
+@media (max-width: 768px) {
+    .header-action-group {
+        position: absolute;
+        right: 1rem;
+        top: 2rem;
+        transform: none;
+    }
 }
 
 .nav-search-wrapper {
@@ -1728,7 +1738,7 @@ a:hover {
 
 #inline-search-container {
     overflow: hidden;
-    max-width: 300px; /* Expands to this */
+    max-width: 450px; /* Desk: Larger */
     opacity: 1;
     transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     background: var(--bg-paper);
@@ -1750,22 +1760,22 @@ a:hover {
 
 /* Make Pagefind sleek to fit the nav box */
 .nav-search-wrapper .pagefind-ui__search-input {
-    font-size: 0.9rem !important;
+    font-size: 1.05rem !important;
     padding: 0.5rem 1rem !important;
-    height: 40px !important;
+    height: 48px !important;
     border: none !important;
     background: transparent !important;
 }
 
 .nav-search-wrapper .pagefind-ui__search-clear {
-    top: 5px !important;
+    top: 8px !important;
 }
 
 .nav-search-wrapper .pagefind-ui__drawer {
     position: absolute;
-    top: 45px;
+    top: 55px; /* Drop down below header */
     right: 0;
-    width: 350px;
+    width: 450px;
     background: var(--bg-paper);
     border: 1px solid var(--border-line);
     border-radius: 8px;
@@ -1799,49 +1809,33 @@ a:hover {
     color: var(--accent);
 }
 
-.theme-toggle {
-    position: static;
-    transform: none;
-}
-
 @media (max-width: 900px) {
-    .nav-action-group {
-        position: relative;
-        right: auto;
-        top: auto;
-        transform: none;
-        width: 100%;
-        justify-content: center;
-        margin-top: 2rem;
-        padding: 1rem 0;
-        border-top: 1px solid var(--border-line);
-    }
-
     #inline-search-container {
+        /* Drop completely below the header on mobile to full screen width */
         position: fixed;
         top: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-        right: auto;
-        max-width: 90vw;
-        width: 90vw;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        max-width: calc(100vw - 2rem);
+        width: calc(100vw - 2rem);
     }
     
     .nav-search-wrapper .pagefind-ui__drawer {
-        width: 90vw;
+        width: calc(100vw - 2rem);
         right: auto;
         left: 0;
     }
 }
 
-/* Pagefind UI Variable Inheritance */
+/* Pagefind Global CSS Variable Overrides */
 :root {
-    --pagefind-ui-scale: 0.8;
+    --pagefind-ui-scale: 0.9;
     --pagefind-ui-primary: var(--link-color);
     --pagefind-ui-text: var(--text-ink);
     --pagefind-ui-background: transparent;
     --pagefind-ui-border: transparent;
-    --pagefind-ui-tag: var(--border-line);
+    --pagefind-ui-tag: #f0f0f0;
     --pagefind-ui-border-width: 0px;
     --pagefind-ui-border-radius: 4px;
     --pagefind-ui-font: var(--font-body);
