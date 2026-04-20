@@ -38,8 +38,9 @@ It hosts only the compiled HTML/CSS static footprint of the site to ensure maxim
 
 ## ⚖️ Legal & Compliance
 
-*   [Privacy Policy](https://analyticsdrive.tech/privacy_policy.html)
-*   [Terms and Conditions](https://analyticsdrive.tech/Terms_and_Conditions.html)
-*   [Disclaimer](https://analyticsdrive.tech/Disclaimer.html)
+*   [Privacy Policy](https://analyticsdrive.tech/privacy-policy/)
+*   [Terms and Conditions](https://analyticsdrive.tech/terms-and-conditions/)
+*   [Disclaimer](https://analyticsdrive.tech/disclaimer/)
+*   [Contact Us](https://analyticsdrive.tech/contact/)
 
 *(c) 2026 Analytics Drive. All Rights Reserved.*
