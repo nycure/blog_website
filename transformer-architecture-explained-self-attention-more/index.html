@@ -99,6 +99,18 @@
 
 <!-- Twitter Player Card -->
 
+<!-- MathJax for rendering LaTeX formulas -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
@@ -2491,7 +2503,7 @@ a:hover {
 <p>The self-attention calculation proceeds as follows:</p>
 <ul>
 <li>For each word, its Query vector is multiplied (dot product) with the Key vectors of all other words in the sequence (including itself). This produces a score indicating how relevant each other word is to the current word.</li>
-<li><strong>Scaled Dot-Product Attention:</strong> The scores are then divided by the square root of the dimension of the Key vectors ($\sqrt{d_k}$). This scaling factor helps to stabilize gradients, especially when $d_k$ is large, preventing the dot products from growing too large and pushing the softmax function into regions with tiny gradients.</li>
+<li><strong>Scaled Dot-Product Attention:</strong> The scores are then divided by the square root of the dimension of the Key vectors (<script type="math/tex">\sqrt{d_k}</script>). This scaling factor helps to stabilize gradients, especially when <script type="math/tex">d_k</script> is large, preventing the dot products from growing too large and pushing the softmax function into regions with tiny gradients.</li>
 <li>The scaled scores are passed through a softmax function, which normalizes them into probabilities. These probabilities represent the attention weights – how much attention each word should pay to every other word.</li>
 <li>Finally, these attention weights are multiplied by the Value vectors of all words. The weighted Value vectors are then summed up to produce a new representation for the current word, which is a weighted average of all other words' Value vectors, with the weights determined by the attention scores. This new representation effectively encodes the word's meaning in the context of the entire sequence.</li>
 </ul>
@@ -2583,8 +2595,8 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
 </ul>
 <h3 id="limitations">Limitations</h3>
 <ul>
-<li><strong>High Computational Cost (Quadratic Complexity):</strong> The primary limitation of the standard Transformer's self-attention mechanism is its computational complexity. The calculation of attention scores requires comparing every token with every other token. If a sequence has length <code>L</code>, the complexity is $O(L^2)$ in both computation time and memory. This quadratic growth becomes a significant bottleneck for very long sequences (e.g., thousands or tens of thousands of tokens), limiting the maximum context window a model can effectively process.</li>
-<li><strong>Memory Footprint:</strong> Related to the quadratic complexity, the attention matrix for a long sequence can consume a substantial amount of GPU memory. For instance, a sequence of 4096 tokens requires an attention matrix of $4096 \times 4096$ elements, which quickly becomes prohibitive for typical hardware, especially when dealing with large batch sizes or high-dimensional embeddings.</li>
+<li><strong>High Computational Cost (Quadratic Complexity):</strong> The primary limitation of the standard Transformer's self-attention mechanism is its computational complexity. The calculation of attention scores requires comparing every token with every other token. If a sequence has length <code>L</code>, the complexity is <script type="math/tex">O(L^2)</script> in both computation time and memory. This quadratic growth becomes a significant bottleneck for very long sequences (e.g., thousands or tens of thousands of tokens), limiting the maximum context window a model can effectively process.</li>
+<li><strong>Memory Footprint:</strong> Related to the quadratic complexity, the attention matrix for a long sequence can consume a substantial amount of GPU memory. For instance, a sequence of 4096 tokens requires an attention matrix of <script type="math/tex">4096 \times 4096</script> elements, which quickly becomes prohibitive for typical hardware, especially when dealing with large batch sizes or high-dimensional embeddings.</li>
 <li><strong>Lack of Inductive Bias for Local Features:</strong> Unlike CNNs, which have an inherent inductive bias for local patterns (e.g., edges, textures in images) due to their fixed-size convolutional kernels, standard Transformers lack this. While they can learn local patterns, they don't have a built-in preference for them. For tasks where local relationships are paramount (like certain aspects of image processing), this can sometimes make them less efficient or require more data to learn what CNNs implicitly know.</li>
 <li><strong>Data Hungry:</strong> Training large Transformer models from scratch, especially LLMs, requires truly immense amounts of data. The sheer number of parameters in these models necessitates vast datasets to avoid overfitting and to generalize well. Access to such massive, high-quality datasets and the computational resources to process them is a significant barrier for many researchers and organizations.</li>
 <li><strong>Positional Encoding Challenges:</strong> While positional encoding addresses the lack of inherent order, the fixed sinusoidal positional embeddings in the original Transformer can sometimes struggle to generalize well to sequences significantly longer than those seen during training. Learned positional embeddings can alleviate this but might not extrapolate perfectly.</li>
@@ -2795,7 +2807,7 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
           <div class="related-post-card__meta">
             <span>World News</span>
             <span class="dot">•</span>
-            <span>1 W</span>
+            <span>2 W</span>
           </div>
         </div>
       </a>
@@ -2819,6 +2831,20 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
   <div class="related-posts">
     <h3>Latest Articles</h3>
     <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/fundamentals-sql-query-optimization-comprehensive-guide/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/fundamentals-sql-query-optimization-comprehensive-guide.webp" alt="Fundamentals of SQL Query Optimization: A Comprehensive Guide" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Fundamentals of SQL Query Optimization: A Comprehensive Guide</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>1 D</span>
+          </div>
+        </div>
+      </a>
       <a href="https://analyticsdrive.tech/understanding-the-basics-of-planetary-orbits/" class="related-post-card">
         <div class="related-post-card__img-wrap">
           <span class="category-badge">Space</span>
@@ -2829,7 +2855,7 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
           <div class="related-post-card__meta">
             <span>Space</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2843,7 +2869,7 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
           <div class="related-post-card__meta">
             <span>Lifestyle</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2857,7 +2883,7 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
           <div class="related-post-card__meta">
             <span>Sports</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2871,7 +2897,7 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
           <div class="related-post-card__meta">
             <span>Culture</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2885,7 +2911,7 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
           <div class="related-post-card__meta">
             <span>Science</span>
             <span class="dot">•</span>
-            <span>1 h</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2899,21 +2925,7 @@ Crucially, each of these sub-layers is wrapped in a residual connection followed
           <div class="related-post-card__meta">
             <span>World News</span>
             <span class="dot">•</span>
-            <span>1 h</span>
-          </div>
-        </div>
-      </a>
-      <a href="https://analyticsdrive.tech/benefits-of-strength-training-for-longevity/" class="related-post-card">
-        <div class="related-post-card__img-wrap">
-          <span class="category-badge">Lifestyle</span>
-            <img src="https://analyticsdrive.tech/images/benefits-of-strength-training-for-longevity.webp" alt="Benefits of Strength Training for Longevity: A Science Guide" loading="lazy">
-        </div>
-        <div class="related-post-card__content">
-          <div class="related-post-card__title">Benefits of Strength Training for Longevity: A Science Guide</div>
-          <div class="related-post-card__meta">
-            <span>Lifestyle</span>
-            <span class="dot">•</span>
-            <span>1 h</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>

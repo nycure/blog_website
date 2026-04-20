@@ -100,6 +100,18 @@
 
 <!-- Twitter Player Card -->
 
+<!-- MathJax for rendering LaTeX formulas -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
@@ -2534,7 +2546,7 @@ a:hover {
 
 <p>By comparing the raw column to a range, the engine can utilize a B-Tree index on <code>created_at</code> to jump straight to the relevant records.</p>
 <h3 id="avoiding-the-n1-query-problem">Avoiding the N+1 Query Problem</h3>
-<p>In high-performance applications using Object-Relational Mappers (ORMs) like Hibernate or Sequelize, the N+1 problem is a frequent silent killer. This occurs when the application makes one query to get a list of records and then $N$ additional queries to fetch related data for each record.</p>
+<p>In high-performance applications using Object-Relational Mappers (ORMs) like Hibernate or Sequelize, the N+1 problem is a frequent silent killer. This occurs when the application makes one query to get a list of records and then <script type="math/tex">N</script> additional queries to fetch related data for each record.</p>
 <p>For example, fetching 50 posts and then making 50 separate queries to get the author of each post results in 51 database roundtrips. This introduces massive network latency. The solution is to use <code>JOIN</code> or <code>Eager Loading</code> to fetch all necessary data in a single, optimized query.</p>
 <h3 id="subqueries-vs-joins">Subqueries vs. Joins</h3>
 <p>While subqueries are often easier to read, they can sometimes lead to poor performance if the optimizer treats them as "correlated subqueries" (running once for every row in the outer query). In most cases, converting a subquery to a <code>JOIN</code> allows the optimizer to use more efficient algorithms like <code>Hash Joins</code>.</p>
@@ -2580,7 +2592,7 @@ Partition 3 (Asia): IDs 2,000,001-3,000,000
 <h3 id="e-commerce-search-and-filtering">E-commerce Search and Filtering</h3>
 <p>In an e-commerce platform, users frequently filter products by category, price range, and rating. This requires multi-column (composite) indexes.</p>
 <p><strong>Example Scenario:</strong></p>
-<p>A user searches for "Laptops" between $500 and $1000 with a rating &gt; 4.
+<p>A user searches for "Laptops" between <script type="math/tex">500 and </script>1000 with a rating &gt; 4.
 The optimal index would be a composite index on <code>(category_id, price, rating)</code>.
 The order of columns in a composite index matters; you should put the column used for equality (<code>category_id</code>) first, followed by range columns to maximize the efficiency of the index scan.</p>
 <h3 id="financial-transaction-logging">Financial Transaction Logging</h3>
@@ -2796,6 +2808,20 @@ The order of columns in a composite index matters; you should put the column use
   <div class="related-posts">
     <h3>Related Articles</h3>
     <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/fundamentals-sql-query-optimization-comprehensive-guide/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/fundamentals-sql-query-optimization-comprehensive-guide.webp" alt="Fundamentals of SQL Query Optimization: A Comprehensive Guide" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Fundamentals of SQL Query Optimization: A Comprehensive Guide</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>1 D</span>
+          </div>
+        </div>
+      </a>
       <a href="https://analyticsdrive.tech/how-to-optimize-sql-queries-large-databases/" class="related-post-card">
         <div class="related-post-card__img-wrap">
           <span class="category-badge">SQL & Databases</span>
@@ -2806,7 +2832,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>SQL & Databases</span>
             <span class="dot">•</span>
-            <span>3 h</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2820,21 +2846,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>SQL & Databases</span>
             <span class="dot">•</span>
-            <span>5 h</span>
-          </div>
-        </div>
-      </a>
-      <a href="https://analyticsdrive.tech/optimize-sql-queries-better-performance-guide/" class="related-post-card">
-        <div class="related-post-card__img-wrap">
-          <span class="category-badge">SQL & Databases</span>
-            <img src="https://analyticsdrive.tech/images/optimize-sql-queries-better-performance-guide.webp" alt="How to optimize SQL queries for better performance: The Ultimate Guide" loading="lazy">
-        </div>
-        <div class="related-post-card__content">
-          <div class="related-post-card__title">How to optimize SQL queries for better performance: The Ultimate Guide</div>
-          <div class="related-post-card__meta">
-            <span>SQL & Databases</span>
-            <span class="dot">•</span>
-            <span>6 h</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2844,6 +2856,20 @@ The order of columns in a composite index matters; you should put the column use
   <div class="related-posts">
     <h3>Latest Articles</h3>
     <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/fundamentals-sql-query-optimization-comprehensive-guide/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">SQL & Databases</span>
+            <img src="https://analyticsdrive.tech/images/fundamentals-sql-query-optimization-comprehensive-guide.webp" alt="Fundamentals of SQL Query Optimization: A Comprehensive Guide" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Fundamentals of SQL Query Optimization: A Comprehensive Guide</div>
+          <div class="related-post-card__meta">
+            <span>SQL & Databases</span>
+            <span class="dot">•</span>
+            <span>1 D</span>
+          </div>
+        </div>
+      </a>
       <a href="https://analyticsdrive.tech/understanding-the-basics-of-planetary-orbits/" class="related-post-card">
         <div class="related-post-card__img-wrap">
           <span class="category-badge">Space</span>
@@ -2854,7 +2880,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>Space</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2868,7 +2894,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>Lifestyle</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2882,7 +2908,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>Sports</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2896,7 +2922,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>Culture</span>
             <span class="dot">•</span>
-            <span>now</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2910,7 +2936,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>Science</span>
             <span class="dot">•</span>
-            <span>1 h</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
@@ -2924,21 +2950,7 @@ The order of columns in a composite index matters; you should put the column use
           <div class="related-post-card__meta">
             <span>World News</span>
             <span class="dot">•</span>
-            <span>1 h</span>
-          </div>
-        </div>
-      </a>
-      <a href="https://analyticsdrive.tech/benefits-of-strength-training-for-longevity/" class="related-post-card">
-        <div class="related-post-card__img-wrap">
-          <span class="category-badge">Lifestyle</span>
-            <img src="https://analyticsdrive.tech/images/benefits-of-strength-training-for-longevity.webp" alt="Benefits of Strength Training for Longevity: A Science Guide" loading="lazy">
-        </div>
-        <div class="related-post-card__content">
-          <div class="related-post-card__title">Benefits of Strength Training for Longevity: A Science Guide</div>
-          <div class="related-post-card__meta">
-            <span>Lifestyle</span>
-            <span class="dot">•</span>
-            <span>1 h</span>
+            <span>1 D</span>
           </div>
         </div>
       </a>
