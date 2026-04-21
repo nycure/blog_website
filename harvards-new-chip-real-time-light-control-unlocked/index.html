@@ -2447,6 +2447,186 @@ a:hover {
     .author-page-header { flex-direction: column; align-items: center; text-align: center; }
     .author-page-name { font-size: 2rem; }
     .author-page-meta { justify-content: center; }
+}
+
+/* ═══════════════════════════════════════════════
+   ABOUT PAGE — TEAM SECTION
+═══════════════════════════════════════════════ */
+.team-section {
+    margin-top: 3.5rem;
+    padding-top: 3rem;
+    border-top: 2px solid var(--border-line);
+}
+
+.team-section__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.team-section__eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--accent);
+    font-weight: 700;
+    margin: 0 0 0.6rem;
+}
+
+.team-section__title {
+    font-family: var(--font-headline);
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin: 0 0 0.75rem;
+}
+
+.team-section__subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+/* Grid layout — 3 columns desktop, 2 tablet, 1 mobile */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .team-grid { grid-template-columns: 1fr; }
+    .team-section__title { font-size: 1.9rem; }
+}
+
+/* Individual team card */
+.team-card {
+    background: var(--bg-paper);
+    border: 1px solid var(--border-line);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #4285F4);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    border-color: transparent;
+}
+
+.team-card:hover::before { opacity: 1; }
+
+[data-theme="dark"] .team-card {
+    background: var(--bg-footer);
+    border-color: #2a2a2a;
+}
+
+[data-theme="dark"] .team-card:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    border-color: transparent;
+}
+
+/* Avatar circle */
+.team-card__link { display: block; width: fit-content; margin-bottom: 1rem; }
+
+.team-card__avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #4285F4);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-family: var(--font-headline);
+    box-shadow: 0 4px 14px rgba(66,133,244,.3);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.team-card:hover .team-card__avatar {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(66,133,244,.45);
+}
+
+/* Card body text */
+.team-card__body { flex: 1; }
+
+.team-card__title {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin: 0 0 0.25rem;
+}
+
+.team-card__name {
+    font-family: var(--font-ui);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 0.6rem;
+}
+
+.team-card__name a {
+    color: var(--text-ink);
+    text-decoration: none;
+    transition: color .15s;
+}
+
+.team-card__name a:hover { color: var(--accent); }
+
+.team-card__bio {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 0 0.9rem;
+}
+
+/* Expertise topic pills */
+.team-card__topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: auto;
+}
+
+.team-card__topic {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 20px;
+    background: rgba(66,133,244,0.09);
+    color: #4285F4;
+    border: 1px solid rgba(66,133,244,0.2);
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .team-card__topic {
+    background: rgba(66,133,244,0.14);
+    border-color: rgba(66,133,244,0.28);
 }    </style>
     <!-- Optimized Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3118,6 +3298,20 @@ a:hover {
   <div class="related-posts">
     <h3>Latest Articles</h3>
     <div class="related-posts__grid">
+      <a href="https://analyticsdrive.tech/chinese-actors-deny-iqiyi-ai-library-authorization/" class="related-post-card">
+        <div class="related-post-card__img-wrap">
+          <span class="category-badge">Artificial Intelligence</span>
+            <img src="https://analyticsdrive.tech/images/2026/04/chinese-actors-deny-iqiyi-ai-library-authorization.webp" alt="Chinese Actors Deny iQIYI AI Library Authorization: A Growing Industry Storm" loading="lazy">
+        </div>
+        <div class="related-post-card__content">
+          <div class="related-post-card__title">Chinese Actors Deny iQIYI AI Library Authorization: A Growing Industry Storm</div>
+          <div class="related-post-card__meta">
+            <span>Artificial Intelligence</span>
+            <span class="dot">•</span>
+            <span>now</span>
+          </div>
+        </div>
+      </a>
       <a href="https://analyticsdrive.tech/china-child-parainfluenza-surge-news/" class="related-post-card">
         <div class="related-post-card__img-wrap">
           <span class="category-badge">World News</span>
@@ -3142,7 +3336,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>Geopolitics</span>
             <span class="dot">•</span>
-            <span>2 h</span>
+            <span>3 h</span>
           </div>
         </div>
       </a>
@@ -3156,7 +3350,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>Entertainment</span>
             <span class="dot">•</span>
-            <span>2 h</span>
+            <span>3 h</span>
           </div>
         </div>
       </a>
@@ -3170,7 +3364,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>India</span>
             <span class="dot">•</span>
-            <span>2 h</span>
+            <span>3 h</span>
           </div>
         </div>
       </a>
@@ -3184,7 +3378,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>Politics</span>
             <span class="dot">•</span>
-            <span>6 h</span>
+            <span>7 h</span>
           </div>
         </div>
       </a>
@@ -3198,21 +3392,7 @@ a:hover {
           <div class="related-post-card__meta">
             <span>Technology</span>
             <span class="dot">•</span>
-            <span>8 h</span>
-          </div>
-        </div>
-      </a>
-      <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/" class="related-post-card">
-        <div class="related-post-card__img-wrap">
-          <span class="category-badge">Geopolitics</span>
-            <img src="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps.webp" alt="US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns" loading="lazy">
-        </div>
-        <div class="related-post-card__content">
-          <div class="related-post-card__title">US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns</div>
-          <div class="related-post-card__meta">
-            <span>Geopolitics</span>
-            <span class="dot">•</span>
-            <span>8 h</span>
+            <span>9 h</span>
           </div>
         </div>
       </a>
