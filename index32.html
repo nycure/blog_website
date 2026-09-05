@@ -151,30 +151,49 @@
     <style>
 :root {
     --bg-paper: #ffffff;
-    --text-ink: #2a2a2a;
-    --text-muted: #666;
-    --border-line: #e0e0e0;
-    --accent: #000;
-    --link-color: #005b96;
-    --font-masthead: 'UnifrakturMaguntia', cursive;
-    --font-headline: 'Playfair Display', serif;
+    --text-ink: #111827;
+    --text-muted: #6b7280;
+    --border-line: #e5e7eb;
+    --accent: #111827;
+    --link-color: #0066cc;
+    --font-masthead: 'Space Grotesk', sans-serif;
+    --font-headline: 'Plus Jakarta Sans', sans-serif;
     --font-body: 'Inter', sans-serif;
-    --font-ui: 'Libre Franklin', sans-serif;
-    --max-width: 1500px;
+    --font-ui: 'Plus Jakarta Sans', sans-serif;
+    --max-width: 1440px;
     --spacing: 2rem;
-    --bg-footer: #f9f9f9;
-    --text-summary: #444444;
+    --bg-footer: #f9fafb;
+    --text-summary: #4b5563;
+    
+    /* Modern UI Variables */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.04);
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.12);
+    --card-bg: #ffffff;
+    --card-border: #f0f2f5;
+    --tag-bg: #f3f4f6;
 }
 
 [data-theme="dark"] {
-    --bg-paper: #121212;
-    --text-ink: #e0e0e0;
-    --text-muted: #a0a0a0;
-    --border-line: #333333;
-    --accent: #ffffff;
-    --link-color: #64b5f6;
-    --bg-footer: #1e1e1e;
-    --text-summary: #d0d0d0;
+    --bg-paper: #0f1117;
+    --text-ink: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border-line: #1f2937;
+    --accent: #f9fafb;
+    --link-color: #60a5fa;
+    --bg-footer: #0a0c10;
+    --text-summary: #d1d5db;
+    
+    /* Dark Mode UI Variables */
+    --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.3);
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.6);
+    --card-bg: #161922;
+    --card-border: #222736;
+    --tag-bg: #1f2430;
 }
 
 * {
@@ -356,64 +375,380 @@ a:hover {
     /* Loop halfway for seamless transition */
 }
 
-/* --- Triple Column Grid --- */
-.home-grid {
+/* --- Site Header (Modern Sticky Glassmorphism) --- */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-line);
+    padding: 0.9rem 0;
+    margin-bottom: 2.5rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme="dark"] .site-header {
+    background: rgba(15, 17, 23, 0.94);
+    border-bottom-color: var(--border-line);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.site-header .logo-wrapper {
+    margin: 0;
+    line-height: 1;
+}
+
+.site-header .logo {
+    font-family: var(--font-masthead);
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    transition: opacity 0.2s ease;
+}
+
+.site-header .logo:hover {
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.logo-dot {
+    color: #0070f3;
+    display: inline-block;
+    font-size: 2.2rem;
+    line-height: 0.5;
+    margin-left: 2px;
+}
+
+/* --- Main Navigation (Pill Links) --- */
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav li {
+    margin: 0;
+}
+
+.main-nav a {
+    font-family: var(--font-ui);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-ink);
+    text-decoration: none;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.main-nav a:hover {
+    background: var(--tag-bg);
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+/* --- Header Action Group --- */
+.header-action-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-toggle,
+.theme-toggle {
+    background: var(--tag-bg);
+    border: 1px solid var(--border-line);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--text-ink);
+    padding: 0.45rem 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.search-toggle:hover,
+.theme-toggle:hover {
+    border-color: var(--text-muted);
+    background: var(--card-bg);
+    color: var(--accent);
+}
+
+.search-kbd-hint {
+    font-size: 0.68rem;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .search-kbd-hint {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Hero Bento Grid Section --- */
+.hero-bento-section {
+    margin-bottom: 3.5rem;
+}
+
+.hero-bento-grid {
     display: grid;
-    grid-template-columns: 280px 1fr 280px;
-    gap: 3rem;
+    grid-template-columns: 1.65fr 1fr;
+    gap: 1.75rem;
+    align-items: stretch;
+}
+
+/* Hero Lead Card */
+.hero-lead-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #090b10;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.35s ease;
+}
+
+.hero-lead-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.hero-card-link-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+}
+
+.hero-media-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.hero-media-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.hero-lead-card:hover .hero-media-wrapper img {
+    transform: scale(1.04);
+}
+
+.hero-gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.94) 100%);
+}
+
+.hero-lead-content {
+    position: relative;
+    z-index: 3;
+    padding: 2.25rem;
+    color: #fff;
+    pointer-events: none;
+}
+
+.hero-lead-content a {
+    color: #fff;
+    pointer-events: auto;
+    text-decoration: none;
+}
+
+.badge-featured {
+    background: #ff3b30;
+    color: #fff;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    display: inline-block;
+}
+
+.hero-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+}
+
+.hero-lead-title {
+    font-family: var(--font-headline);
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+.hero-lead-title a:hover {
+    text-decoration: underline;
+}
+
+.hero-lead-summary {
+    font-size: 0.98rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    max-width: 95%;
+}
+
+.article-byline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-ui);
+}
+
+.byline-author {
+    font-weight: 600;
+}
+
+.byline-sep {
+    opacity: 0.4;
+}
+
+/* Secondary Stories Stack */
+.hero-secondary-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.hero-secondary-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-subtle);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-secondary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+}
+
+.hero-secondary-thumb {
+    position: relative;
+    height: 155px;
+    overflow: hidden;
+    background: #090b10;
+}
+
+.hero-secondary-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.hero-secondary-card:hover .hero-secondary-thumb img {
+    transform: scale(1.05);
+}
+
+.hero-secondary-content {
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1;
+}
+
+.hero-secondary-title {
+    font-family: var(--font-headline);
+    font-size: 1.12rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.hero-secondary-title a {
+    color: var(--text-ink);
+    text-decoration: none;
+}
+
+.hero-secondary-title a:hover {
+    color: var(--link-color);
+}
+
+.article-byline.compact {
+    color: var(--text-muted);
+    font-size: 0.76rem;
+}
+
+/* --- Main Content Layout (70% Feed / 30% Sidebar) --- */
+.main-content-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2.75rem;
     align-items: start;
     margin-bottom: 4rem;
 }
 
-.side-column {
-    position: sticky;
-    top: 2rem;
+.feed-header {
+    margin-bottom: 1.75rem;
 }
 
-.side-column h2 {
+.section-title {
     font-family: var(--font-headline);
-    font-size: 1.1rem;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--accent);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 1.1rem;
+    color: var(--text-ink);
 }
 
-.side-post {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-line);
-}
-
-.side-post h3 {
-    font-family: var(--font-headline);
-    font-size: 1rem;
-    line-height: 1.3;
-    margin-bottom: 0.5rem;
-}
-
-.side-post h3 a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-.side-post .post-meta {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-}
-
-/* --- Category Tabs --- */
+/* --- Category Pill Tabs Filter --- */
 .category-tabs {
-    margin-bottom: 2.5rem;
-    border-bottom: 1px solid var(--border-line);
     display: flex;
-    gap: 1.5rem;
+    gap: 0.5rem;
     overflow-x: auto;
     padding-bottom: 0.5rem;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    border-bottom: 1px solid var(--border-line);
+    padding-bottom: 0.75rem;
 }
 
 .category-tabs::-webkit-scrollbar {
@@ -421,277 +756,508 @@ a:hover {
 }
 
 .tab-btn {
-    background: transparent;
-    border: none;
+    background: var(--tag-bg);
+    border: 1px solid var(--border-line);
+    border-radius: 999px;
+    padding: 0.4rem 0.95rem;
     font-family: var(--font-ui);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    text-transform: uppercase;
     color: var(--text-muted);
     cursor: pointer;
-    padding: 0.5rem 0;
-    position: relative;
     white-space: nowrap;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .tab-btn:hover {
-    color: var(--accent);
+    color: var(--text-ink);
+    border-color: var(--text-muted);
 }
 
 .tab-btn.active {
-    color: var(--accent);
-}
-
-.tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 3px;
     background: var(--accent);
-}
-
-/* --- Responsive Layout --- */
-@media (max-width: 1300px) {
-    .home-grid {
-        grid-template-columns: 1fr 280px;
-    }
-
-    .left-column {
-        display: none;
-    }
-}
-
-@media (max-width: 900px) {
-    .home-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .side-column {
-        position: static;
-        margin-top: 2rem;
-    }
-
-    .breaking-label {
-        padding: 0 0.75rem;
-        font-size: 0;
-        /* Hides the word 'BREAKING' */
-    }
-
-    .live-dot {
-        margin: 0;
-    }
-}
-
-.site-header {
-    padding: 2rem 0 1rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    border-bottom: 1px solid var(--accent);
-    position: relative;
-    z-index: 1000;
-    /* Ensure header is above ticker */
-}
-
-.site-header .logo {
-    font-family: var(--font-masthead);
-    font-size: 4rem;
-    color: var(--accent);
-    text-decoration: none;
-    display: block;
-    margin-bottom: 1rem;
-    line-height: 1;
-}
-
-
-
-.main-nav {
-    border-top: 1px solid var(--border-line);
-    border-bottom: 3px double var(--border-line);
-    padding: 0.75rem 0;
-    position: relative;
-}
-
-.main-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    font-family: var(--font-ui);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.main-nav a {
-    color: var(--text-ink);
-    text-decoration: none;
-}
-
-.main-nav a:hover {
-    color: #555;
-    text-decoration: underline;
-}
-
-/* --- Master Header Action Group --- */
-.header-action-group {
-    position: absolute;
-    right: 2rem;
-    top: 2.5rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 0.75rem;
-    z-index: 1005;
-}
-
-.search-toggle,
-.theme-toggle {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--text-ink);
-    font-size: 1.35rem;
-    padding: 0.5rem;
-    transition: transform 0.2s ease, color 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-toggle:hover,
-.theme-toggle:hover {
-    transform: translateY(-2px);
-    color: var(--accent);
-}
-
-@media (max-width: 768px) {
-    .header-action-group {
-        top: 2rem;
-        right: 1rem;
-        gap: 0.25rem;
-    }
-
-    .search-toggle,
-    .theme-toggle {
-        font-size: 1.25rem;
-        padding: 0.4rem;
-    }
-}
-
-.hero {
-    text-align: center;
-    padding: 3rem 0;
-    border-bottom: 1px solid var(--border-line);
-    margin-bottom: 3rem;
-}
-
-.hero h1 {
-    font-family: var(--font-headline);
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-    color: var(--accent);
-}
-
-.hero p {
-    font-family: var(--font-body);
-    font-style: italic;
-    color: var(--text-muted);
-    font-size: 1.25rem;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 3rem 0;
-    font-family: var(--font-ui);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
-
-.pagination a {
-    padding: 0.5rem 1.5rem;
-    border: 1px solid var(--border-line);
-    color: var(--text-ink);
-    transition: 0.2s;
-}
-
-.pagination a:hover {
-    background: var(--accent);
-    color: #fff;
-    text-decoration: none;
+    color: var(--bg-paper);
     border-color: var(--accent);
 }
 
-.grid {
+/* --- 2-Column Responsive Feed Grid --- */
+.feed-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    padding-bottom: 4rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.65rem;
 }
 
-.post-card {
-    padding-bottom: 2rem;
+.modern-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-subtle);
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.modern-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card);
+    border-color: var(--text-muted);
+}
+
+.card-media-wrapper {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #090b10;
+}
+
+.card-media-wrapper img,
+.card-media-wrapper video,
+.card-media-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.modern-card:hover .card-media-wrapper img {
+    transform: scale(1.04);
+}
+
+.card-category-badge {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    z-index: 2;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(8px);
+}
+
+.card-category-badge a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.card-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-title {
+    font-family: var(--font-headline);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+}
+
+.card-title a {
+    color: var(--text-ink);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.card-title a:hover {
+    color: var(--link-color);
+}
+
+.card-excerpt {
+    font-size: 0.88rem;
+    color: var(--text-summary);
+    line-height: 1.55;
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.card-footer-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-line);
+    padding-top: 0.8rem;
+    margin-top: auto;
+}
+
+.card-footer-meta .author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.card-footer-meta .meta-dot {
+    opacity: 0.4;
+}
+
+.read-time-pill {
+    background: var(--tag-bg);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.72rem;
+}
+
+/* --- Category Pill Badges (Color Themes) --- */
+.cat-pill,
+.cat-pill-micro {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: #0070f3;
+    color: #fff;
+    width: fit-content;
+}
+
+.cat-pill.artificial-intelligence,
+.card-category-badge.artificial-intelligence {
+    background: #7928ca;
+    color: #fff;
+}
+
+.cat-pill.technology,
+.card-category-badge.technology {
+    background: #0070f3;
+    color: #fff;
+}
+
+.cat-pill.geopolitics,
+.card-category-badge.geopolitics {
+    background: #d97706;
+    color: #fff;
+}
+
+.cat-pill.world-news,
+.card-category-badge.world-news {
+    background: #dc2626;
+    color: #fff;
+}
+
+.cat-pill.science,
+.card-category-badge.science {
+    background: #0284c7;
+    color: #fff;
+}
+
+.cat-pill.space,
+.card-category-badge.space {
+    background: #4f46e5;
+    color: #fff;
+}
+
+.cat-pill.sports,
+.card-category-badge.sports,
+.cat-pill.cricket,
+.card-category-badge.cricket {
+    background: #059669;
+    color: #fff;
+}
+
+.cat-pill.politics,
+.card-category-badge.politics {
+    background: #b91c1c;
+    color: #fff;
+}
+
+/* --- Glossary Spotlight Banner --- */
+.glossary-spotlight-banner {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #fff;
+    padding: 2rem 2.25rem;
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin: 0.75rem 0;
+}
+
+[data-theme="dark"] .glossary-spotlight-banner {
+    background: linear-gradient(135deg, #131b2e, #1a233a);
+    border: 1px solid #2d3748;
+}
+
+.spotlight-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #60a5fa;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.glossary-spotlight-banner h3 {
+    font-family: var(--font-headline);
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+    color: #fff;
+}
+
+.glossary-spotlight-banner p {
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 620px;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+}
+
+.spotlight-btn {
+    display: inline-block;
+    background: #0070f3;
+    color: #fff;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 0.55rem 1.15rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.spotlight-btn:hover {
+    background: #0056b3;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* --- Smart Sidebar --- */
+.smart-sidebar {
+    position: sticky;
+    top: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.sidebar-widget {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 1.35rem;
+    box-shadow: var(--shadow-subtle);
+}
+
+.widget-title {
+    font-family: var(--font-headline);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-ink);
+    margin-bottom: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.65rem;
     border-bottom: 1px solid var(--border-line);
 }
 
-.post-meta {
+.widget-icon {
+    font-size: 1.1rem;
+}
+
+.trending-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.trending-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+}
+
+.trending-rank {
+    font-family: var(--font-masthead);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    opacity: 0.45;
+    line-height: 1;
+    min-width: 1.8rem;
+    margin-top: 0.15rem;
+}
+
+.trending-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.trending-text h4 {
+    font-family: var(--font-headline);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.trending-text h4 a {
+    color: var(--text-ink);
+    text-decoration: none;
+}
+
+.trending-text h4 a:hover {
+    color: var(--link-color);
+}
+
+.trending-text time {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Subscribe Widget */
+.subscribe-widget p {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.feed-buttons-group {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.feed-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.65rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.feed-btn.atom {
+    background: #ea580c;
+    color: #fff;
+}
+
+.feed-btn.gnews {
+    background: #2563eb;
+    color: #fff;
+}
+
+.feed-btn:hover {
+    opacity: 0.9;
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Topic Cloud */
+.topics-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.topic-chip {
+    background: var(--tag-bg);
+    color: var(--text-ink);
     font-family: var(--font-ui);
     font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    display: block;
+    font-weight: 600;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    border: 1px solid var(--border-line);
+    transition: all 0.2s ease;
 }
 
-.post-meta .category a {
-    color: #d00;
+.topic-chip:hover {
+    background: var(--accent);
+    color: var(--bg-paper);
+    border-color: var(--accent);
+    text-decoration: none;
+}
+
+/* --- Pagination --- */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3.5rem 0 1rem;
+    font-family: var(--font-ui);
     font-weight: 700;
-    text-decoration: none;
-}
-
-.post-card h3 {
-    font-family: var(--font-headline);
-    font-size: 1.75rem;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-}
-
-.post-card h3 a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-.post-card h3 a:hover {
-    color: #444;
-    text-decoration: none;
-}
-
-.post-card p {
-    font-family: var(--font-ui);
-    color: var(--text-summary);
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-.read-more {
-    font-family: var(--font-ui);
     font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--link-color);
+}
+
+.page-link {
+    padding: 0.55rem 1.25rem;
+    border: 1px solid var(--border-line);
+    border-radius: var(--radius-sm);
+    color: var(--text-ink);
+    background: var(--card-bg);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.page-link:hover {
+    background: var(--accent);
+    color: var(--bg-paper);
+    border-color: var(--accent);
+    text-decoration: none;
+}
+
+.page-current {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.82rem;
+}
+
+/* --- Modern Responsive Media Queries --- */
+@media (max-width: 1100px) {
+    .hero-bento-grid {
+        grid-template-columns: 1fr;
+    }
+    .hero-lead-card {
+        min-height: 420px;
+    }
+    .main-content-layout {
+        grid-template-columns: 1fr;
+    }
+    .smart-sidebar {
+        position: static;
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-header .main-nav {
+        display: none;
+    }
+    .hero-lead-title {
+        font-size: 1.7rem;
+    }
+    .hero-lead-content {
+        padding: 1.5rem;
+    }
+    .feed-grid {
+        grid-template-columns: 1fr;
+    }
+    .feed-buttons-group {
+        flex-direction: column;
+    }
 }
 
 .single-post header {
@@ -2609,13 +3175,13 @@ a:hover {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap">
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
         media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Libre+Franklin:wght@300;500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=UnifrakturMaguntia&text=Analytics%20Drive&display=swap">
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
     </noscript>
 </head>
 
@@ -2750,498 +3316,803 @@ a:hover {
         </div>
     </div>
     <header class="site-header" data-pagefind-ignore>
-        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-        <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive</a>
+        <div class="header-inner container">
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <a href="https://analyticsdrive.tech/" class="logo">Analytics Drive<span class="logo-dot">•</span></a>
 
-        <!-- The Clean Header Overlay -->
-        <div id="navbar-search-overlay" class="search-overlay" data-pagefind-ignore>
-            <div class="search-container-inner">
-                <div id="search"></div>
-                <button id="close-search-overlay" class="close-search-overlay" aria-label="Close Search">✕</button>
+            <!-- The Clean Header Overlay -->
+            <div id="navbar-search-overlay" class="search-overlay" data-pagefind-ignore>
+                <div class="search-container-inner">
+                    <div id="search"></div>
+                    <button id="close-search-overlay" class="close-search-overlay" aria-label="Close Search">✕</button>
+                </div>
+            </div>
+
+            <nav id="main-nav" class="main-nav" aria-label="Main Navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
+                <ul>
+                    <li itemprop="name"><a href="https://analyticsdrive.tech/" itemprop="url">Home</a></li>
+                    <li itemprop="name"><a href="https://analyticsdrive.tech/archives.html" itemprop="url">Archives</a></li>
+                    <li itemprop="name"><a href="https://analyticsdrive.tech/categories.html" itemprop="url">Categories</a></li>
+                    <li itemprop="name"><a href="https://analyticsdrive.tech/tags.html" itemprop="url">Tags</a></li>
+                    <li itemprop="name"><a href="https://analyticsdrive.tech/about/" itemprop="url">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-action-group">
+                <button id="open-search-overlay" class="search-toggle" aria-label="Open Search" title="Search (Ctrl+K)">
+                    <span id="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                    <span class="search-kbd-hint">⌘K</span>
+                </button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode" title="Toggle theme">
+                    <span id="theme-icon">🌙</span>
+                </button>
             </div>
         </div>
-
-        <div class="header-action-group">
-            <button id="open-search-overlay" class="search-toggle" aria-label="Open Search">
-                <span id="search-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </span>
-            </button>
-            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
-                <span id="theme-icon">🌙</span>
-            </button>
-        </div>
-
-        <nav id="main-nav" class="main-nav" aria-label="Main Navigation" itemscope itemtype="https://schema.org/SiteNavigationElement">
-            <ul>
-                <li itemprop="name"><a href="https://analyticsdrive.tech/" itemprop="url">Home</a></li>
-                <li itemprop="name"><a href="https://analyticsdrive.tech/archives.html" itemprop="url">Archives</a></li>
-                <li itemprop="name"><a href="https://analyticsdrive.tech/categories.html" itemprop="url">Categories</a></li>
-                <li itemprop="name"><a href="https://analyticsdrive.tech/tags.html" itemprop="url">Tags</a></li>
-                <li itemprop="name"><a href="https://analyticsdrive.tech/about/" itemprop="url">About</a></li>
-            </ul>
-        </nav>
     </header>
 
 
     <main class="container content-wrapper">
-<div class="home-grid">
-    <!-- Left Column: Tech & AI -->
-    <aside class="side-column left-column">
-        <h2>Tech & AI</h2>
-            <div class="side-post">
-                <span class="post-meta">Thu 23 July 2026</span>
-                <h3><a href="https://analyticsdrive.tech/se-asia-ai-tech-export-investment-surge/">SE Asia: AI Drives Tech Export & Investment Surge – A Regional Boom</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sun 28 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/us-tightens-ai-rules-suspends-anthropic-models-security-fears/">US Tightens AI Rules, Suspends Anthropic Models Amid Security Fears</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sun 28 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/major-cyberattack-targets-us-infrastructure-nation-responds/">Major Cyberattack Targets US Infrastructure: A Nation Responds</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sun 28 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/india-ev-battery-tech-market-shakeup/">India's New EV Battery Tech Shakes Up Market: A Game Changer</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sat 27 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/eu-ai-ethics-guidelines-trustworthy-future/">EU Unveils Strict AI Ethics Guidelines for a Trustworthy Future</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sat 27 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/south-korea-first-female-pm-ai-leadership/">South Korea's First Female PM to Lead AI: A New Era Dawns</a></h3>
-            </div>
-    </aside>
+<div class="main-content-layout">
+    <!-- Left Column: Main Feed (70%) -->
+    <section class="feed-column">
+        <div class="feed-header">
+            <h2 class="section-title">Latest Intelligence & Analysis</h2>
+            <nav class="category-tabs" id="category-tabs">
+                <button class="tab-btn active" data-category="all">All Stories</button>
+                <button class="tab-btn" data-category="Artificial Intelligence">AI</button>
+                <button class="tab-btn" data-category="Technology">Tech</button>
+                <button class="tab-btn" data-category="Geopolitics">Geopolitics</button>
+                <button class="tab-btn" data-category="World News">World</button>
+                <button class="tab-btn" data-category="Science">Science</button>
+                <button class="tab-btn" data-category="Space">Space</button>
+            </nav>
+        </div>
 
-    <!-- Center Column: Main Feed -->
-    <section class="center-column">
-        <nav class="category-tabs" id="category-tabs">
-            <button class="tab-btn active" data-category="all">All</button>
-            <button class="tab-btn" data-category="Artificial Intelligence">AI</button>
-            <button class="tab-btn" data-category="Technology">Tech</button>
-            <button class="tab-btn" data-category="World News">World</button>
-            <button class="tab-btn" data-category="Geopolitics">Geopolitics</button>
-        </nav>
+        <div class="feed-grid" id="main-post-list">
+            <article class="modern-card" data-category="Sports">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/march-madness-continues-panthers-battle-razorbacks-second-round.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/march-madness-continues-panthers-battle-razorbacks-second-round-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/march-madness-continues-panthers-battle-razorbacks-second-round-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge sports">
+                        <a href="https://analyticsdrive.tech/category/sports.html">Sports</a>
+                    </span>
+                </div>
 
-        <div class="post-list" id="main-post-list">
-            <div class="grid">
-                <article class="post-card" data-category="Artificial Intelligence">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="AI Shifts Focus: Efficiency Trumps Scale in New Models" 
-fetchpriority="high" width="600" height="338" />
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/march-madness-continues-panthers-battle-razorbacks-second-round/">March Madness Continues: Panthers Battle Razorbacks in Pivotal Second Round</a>
+                    </h3>
+                    <p class="card-excerpt">The NCAA Men's Basketball Tournament continues as the Panthers face the Razorbacks in a critical second-round clash,...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Arjun Desai</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-21T21:50:00+05:30">Sat 21 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">15 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-21T19:07:00+05:30">Sat 21 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Artificial Intelligence">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="AI Shifts Focus: Efficiency Trumps Scale in New Models" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge artificial-intelligence">
+                        <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/">AI Shifts Focus: Efficiency Trumps Scale in New Models</a>
+                    </h3>
+                    <p class="card-excerpt">The AI landscape is evolving rapidly as new models prioritize efficiency over sheer scale, marking a significant...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Dr. Sarah Chen</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-21T19:07:00+05:30">Sat 21 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">9 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/">AI Shifts Focus: Efficiency Trumps Scale in New Models</a></h3>
-                    <p>The AI landscape is evolving rapidly as new models prioritize efficiency over sheer scale, marking a significant shift in development paradigms.</p>
-                    <a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Technology">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/bezos-blue-origin-space-data-race-vs-spacex.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/bezos-blue-origin-space-data-race-vs-spacex-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/bezos-blue-origin-space-data-race-vs-spacex-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Bezos' Blue Origin Enters Space Data Race vs. SpaceX: New Era Unfolds" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Technology">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/bezos-blue-origin-space-data-race-vs-spacex/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/bezos-blue-origin-space-data-race-vs-spacex.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/bezos-blue-origin-space-data-race-vs-spacex-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/bezos-blue-origin-space-data-race-vs-spacex-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Bezos' Blue Origin Enters Space Data Race vs. SpaceX: New Era Unfolds" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge technology">
+                        <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/bezos-blue-origin-space-data-race-vs-spacex/">Bezos' Blue Origin Enters Space Data Race vs. SpaceX: New Era Unfolds</a>
+                    </h3>
+                    <p class="card-excerpt">Blue Origin challenges SpaceX in the space data market. Bezos' company signals a new era for satellite internet &...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By James Harrington</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-21T18:40:00+05:30">Sat 21 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">18 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-21T18:40:00+05:30">Sat 21 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Geopolitics">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge geopolitics">
+                        <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
+                    </h3>
+                    <p class="card-excerpt">The Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments as geopolitical tensions escalate, posing significant...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Marcus Thorne</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-21T03:09:00+05:30">Sat 21 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">11 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/bezos-blue-origin-space-data-race-vs-spacex/">Bezos' Blue Origin Enters Space Data Race vs. SpaceX: New Era Unfolds</a></h3>
-                    <p>Blue Origin challenges SpaceX in the space data market. Bezos' company signals a new era for satellite internet & Earth observation,...</p>
-                    <a href="https://analyticsdrive.tech/bezos-blue-origin-space-data-race-vs-spacex/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Geopolitics">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Artificial Intelligence">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge artificial-intelligence">
+                        <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/">AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns</a>
+                    </h3>
+                    <p class="card-excerpt">AI Pause Protest Rocks SF: Leaders Urged to Halt Dev as activists demand a moratorium on advanced AI, citing...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Dr. Sarah Chen</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-21T02:53:00+05:30">Sat 21 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">13 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-21T03:09:00+05:30">Sat 21 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Technology">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/what-is-docker.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/what-is-docker-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-docker-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="What is Docker? A Beginner's Guide to Containerization" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge technology">
+                        <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/">What is Docker? A Beginner's Guide to Containerization</a>
+                    </h3>
+                    <p class="card-excerpt">Master Docker fundamentals. This guide explores containerization's core concepts, workings, and crucial role in...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By James Harrington</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-21T02:29:00+05:30">Sat 21 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">20 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a></h3>
-                    <p>The Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments as geopolitical tensions escalate, posing significant challenges to global...</p>
-                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Artificial Intelligence">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Algorithms & Data Structures">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Big O Notation Explained: A Beginner's Guide to Complexity" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge algorithms-&-data-structures">
+                        <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/">Big O Notation Explained: A Beginner's Guide to Complexity</a>
+                    </h3>
+                    <p class="card-excerpt">This comprehensive article offers Big O Notation Explained: A Beginner's Guide to Complexity, crucial for optimizing...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By David Lin</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-20T15:22:00+05:30">Fri 20 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">28 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-21T02:53:00+05:30">Sat 21 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="SQL & Databases">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/sql-joins-explained-comprehensive-guide/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/sql-joins-explained-comprehensive-guide.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/sql-joins-explained-comprehensive-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/sql-joins-explained-comprehensive-guide-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="SQL Joins Explained: A Comprehensive Guide to All Types" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge sql-&-databases">
+                        <a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/sql-joins-explained-comprehensive-guide/">SQL Joins Explained: A Comprehensive Guide to All Types</a>
+                    </h3>
+                    <p class="card-excerpt">Master SQL Joins with our comprehensive guide to all types. Understand INNER, LEFT, RIGHT, FULL, CROSS, and SELF...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Rachel Foster</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-20T00:18:00+05:30">Fri 20 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">25 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/">AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns</a></h3>
-                    <p>AI Pause Protest Rocks SF: Leaders Urged to Halt Dev as activists demand a moratorium on advanced AI, citing existential risks and...</p>
-                    <a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Technology">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/what-is-docker.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/what-is-docker-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-docker-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="What is Docker? A Beginner's Guide to Containerization" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Algorithms & Data Structures">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Hash Tables: Deep Dive into Their Inner Workings & Use Cases" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge algorithms-&-data-structures">
+                        <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/">Hash Tables: Deep Dive into Their Inner Workings & Use Cases</a>
+                    </h3>
+                    <p class="card-excerpt">Unlock the power of Hash Tables: Deep Dive into How They Work & Use Cases. Explore their O(1) efficiency, essential...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By David Lin</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-19T10:57:00+05:30">Thu 19 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">28 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-21T02:29:00+05:30">Sat 21 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Artificial Intelligence">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Gradient Descent Explained: A Machine Learning Tutorial for Optimization" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge artificial-intelligence">
+                        <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/">Gradient Descent Explained: A Machine Learning Tutorial for Optimization</a>
+                    </h3>
+                    <p class="card-excerpt">Master Gradient Descent, the cornerstone of machine learning optimization. This tutorial dives into its mechanics,...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Dr. Sarah Chen</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-19T09:45:00+05:30">Thu 19 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">26 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/">What is Docker? A Beginner's Guide to Containerization</a></h3>
-                    <p>Master Docker fundamentals. This guide explores containerization's core concepts, workings, and crucial role in modern software...</p>
-                    <a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Algorithms & Data Structures">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Big O Notation Explained: A Beginner's Guide to Complexity" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Technology">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Green Innovations: AI Drives Sustainable Tech Revolution Forward" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge technology">
+                        <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/">Green Innovations: AI Drives Sustainable Tech Revolution Forward</a>
+                    </h3>
+                    <p class="card-excerpt">Explore how cutting-edge Green Innovations: AI Drives Sustainable Tech Revolution, transforming industries and...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By James Harrington</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-19T09:42:00+05:30">Thu 19 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">13 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-20T15:22:00+05:30">Fri 20 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Politics">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Middle East on Edge: Tensions Surge, Markets React to Volatility" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge politics">
+                        <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
+                    </h3>
+                    <p class="card-excerpt">The Middle East is on edge as tensions surge, causing global markets to react with significant volatility. This...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Nathan Caldwell</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-19T09:38:00+05:30">Thu 19 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">16 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/">Big O Notation Explained: A Beginner's Guide to Complexity</a></h3>
-                    <p>This comprehensive article offers Big O Notation Explained: A Beginner's Guide to Complexity, crucial for optimizing code and mastering...</p>
-                    <a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="SQL & Databases">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/sql-joins-explained-comprehensive-guide.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/sql-joins-explained-comprehensive-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/sql-joins-explained-comprehensive-guide-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="SQL Joins Explained: A Comprehensive Guide to All Types" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Space">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/artemis-2-lunar-mission-exploration-era/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/artemis-2-lunar-mission-exploration-era.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/artemis-2-lunar-mission-exploration-era-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/artemis-2-lunar-mission-exploration-era-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Artemis 2 Preps for Lunar Mission: New Era of Exploration Beckons" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge space">
+                        <a href="https://analyticsdrive.tech/category/space.html">Space</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/artemis-2-lunar-mission-exploration-era/">Artemis 2 Preps for Lunar Mission: New Era of Exploration Beckons</a>
+                    </h3>
+                    <p class="card-excerpt">The highly anticipated Artemis 2 mission preps for lunar journey, marking humanity's return to the Moon's vicinity...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Dr. Julian Hayes</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-19T09:23:00+05:30">Thu 19 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">16 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-20T00:18:00+05:30">Fri 20 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Technology">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/quantum-leaps-commercial-reality-2026/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/quantum-leaps-commercial-reality-2026.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/quantum-leaps-commercial-reality-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/quantum-leaps-commercial-reality-2026-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Quantum Leaps: From Labs to Commercial Reality in 2026" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge technology">
+                        <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/quantum-leaps-commercial-reality-2026/">Quantum Leaps: From Labs to Commercial Reality in 2026</a>
+                    </h3>
+                    <p class="card-excerpt">2026 marks a pivotal year for quantum technology, as it transitions from theoretical breakthroughs in labs to...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By James Harrington</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-18T23:35:00+05:30">Wed 18 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">13 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/sql-joins-explained-comprehensive-guide/">SQL Joins Explained: A Comprehensive Guide to All Types</a></h3>
-                    <p>Master SQL Joins with our comprehensive guide to all types. Understand INNER, LEFT, RIGHT, FULL, CROSS, and SELF joins with practical...</p>
-                    <a href="https://analyticsdrive.tech/sql-joins-explained-comprehensive-guide/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Algorithms & Data Structures">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Hash Tables: Deep Dive into Their Inner Workings & Use Cases" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Artificial Intelligence">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge artificial-intelligence">
+                        <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/">GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech</a>
+                    </h3>
+                    <p class="card-excerpt">March 2026 marks a pivotal month in AI. From the anticipated GPT-5.4 to widespread industry shifts, the AI avalanche...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Dr. Sarah Chen</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-18T23:31:00+05:30">Wed 18 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">11 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-19T10:57:00+05:30">Thu 19 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Entertainment">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/dhurandhar-the-revenge-movie-review-box-office-collection-hero.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/dhurandhar-the-revenge-movie-review-box-office-collection-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/dhurandhar-the-revenge-movie-review-box-office-collection-hero-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge entertainment">
+                        <a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a>
+                    </h3>
+                    <p class="card-excerpt">Dive into our in-depth Dhurandhar The Revenge movie review, exploring its already impressive box office collection,...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Chloe Bennett</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-18T23:08:00+05:30">Wed 18 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">14 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/">Hash Tables: Deep Dive into Their Inner Workings & Use Cases</a></h3>
-                    <p>Unlock the power of Hash Tables: Deep Dive into How They Work & Use Cases. Explore their O(1) efficiency, essential components, and...</p>
-                    <a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Artificial Intelligence">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Gradient Descent Explained: A Machine Learning Tutorial for Optimization" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Artificial Intelligence">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Unraveling Neural Networks: A Comprehensive Beginner's Guide" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge artificial-intelligence">
+                        <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/">Unraveling Neural Networks: A Comprehensive Beginner's Guide</a>
+                    </h3>
+                    <p class="card-excerpt">Embark on an insightful journey with our comprehensive beginner's guide to neural networks. Discover their core...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Dr. Sarah Chen</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-18T22:38:00+05:30">Wed 18 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">31 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-19T09:45:00+05:30">Thu 19 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Politics">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/new-post-hero.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/new-post-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/new-post-hero-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="Ali Larijani Killed Along With Son by IDF in Escalating Conflict" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge politics">
+                        <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a>
+                    </h3>
+                    <p class="card-excerpt">Senior Iranian official Ali Larijani, along with his son Morteza, was killed in an IDF strike, marking a critical...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Nathan Caldwell</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-18T18:45:00+05:30">Wed 18 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">12 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/">Gradient Descent Explained: A Machine Learning Tutorial for Optimization</a></h3>
-                    <p>Master Gradient Descent, the cornerstone of machine learning optimization. This tutorial dives into its mechanics, variants, and...</p>
-                    <a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Technology">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Green Innovations: AI Drives Sustainable Tech Revolution Forward" 
-loading="lazy" />
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="Algorithms & Data Structures">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="QuickSort Algorithm Explained: A Step-by-Step Guide for Developers" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge algorithms-&-data-structures">
+                        <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/">QuickSort Algorithm Explained: A Step-by-Step Guide for Developers</a>
+                    </h3>
+                    <p class="card-excerpt">Demystify the QuickSort Algorithm Explained: A Step-by-Step Guide for developers. Learn its mechanics, complexity,...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By David Lin</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-18T14:23:00+05:30">Wed 18 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">25 min read</span>
                     </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-19T09:42:00+05:30">Thu 19 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+                </div>
+            </article>
+
+            <article class="modern-card" data-category="SQL & Databases">
+                <div class="card-media-wrapper">
+                    <a href="https://analyticsdrive.tech/sql-joins-masterclass-inner-outer-left-right-explained/" tabindex="-1" aria-hidden="true">
+                            <img 
+                              src="https://analyticsdrive.tech/images/2026/03/sql-joins-masterclass-inner-outer-left-right-explained.webp" 
+                              srcset="https://analyticsdrive.tech/images/2026/03/sql-joins-masterclass-inner-outer-left-right-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/sql-joins-masterclass-inner-outer-left-right-explained-mobile.webp 400w"
+                              sizes="(max-width: 600px) 100vw, 400px"
+                              alt="SQL Joins Masterclass: Inner, Outer, Left, Right Explained" 
+                              loading="lazy" width="600" height="338" />
+                    </a>
+                    <span class="card-category-badge sql-&-databases">
+                        <a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a>
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="https://analyticsdrive.tech/sql-joins-masterclass-inner-outer-left-right-explained/">SQL Joins Masterclass: Inner, Outer, Left, Right Explained</a>
+                    </h3>
+                    <p class="card-excerpt">Master SQL Joins: Inner, Outer, Left, Right Explained. Explore fundamental concepts, practical examples, and...</p>
+                    <div class="card-footer-meta">
+                        <div class="author-info">
+                            <span class="author-name">By Rachel Foster</span>
+                            <span class="meta-dot">•</span>
+                            <time datetime="2026-03-18T14:07:00+05:30">Wed 18 March 2026</time>
+                        </div>
+                        <span class="read-time-pill">28 min read</span>
                     </div>
-                    <h3><a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/">Green Innovations: AI Drives Sustainable Tech Revolution Forward</a></h3>
-                    <p>Explore how cutting-edge Green Innovations: AI Drives Sustainable Tech Revolution, transforming industries and powering a more...</p>
-                    <a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Politics">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Middle East on Edge: Tensions Surge, Markets React to Volatility" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-19T09:38:00+05:30">Thu 19 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a></h3>
-                    <p>The Middle East is on edge as tensions surge, causing global markets to react with significant volatility. This article explores the...</p>
-                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Space">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/artemis-2-lunar-mission-exploration-era.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/artemis-2-lunar-mission-exploration-era-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/artemis-2-lunar-mission-exploration-era-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Artemis 2 Preps for Lunar Mission: New Era of Exploration Beckons" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-19T09:23:00+05:30">Thu 19 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/space.html">Space</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/artemis-2-lunar-mission-exploration-era/">Artemis 2 Preps for Lunar Mission: New Era of Exploration Beckons</a></h3>
-                    <p>The highly anticipated Artemis 2 mission preps for lunar journey, marking humanity's return to the Moon's vicinity and testing vital...</p>
-                    <a href="https://analyticsdrive.tech/artemis-2-lunar-mission-exploration-era/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Technology">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/quantum-leaps-commercial-reality-2026.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/quantum-leaps-commercial-reality-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/quantum-leaps-commercial-reality-2026-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Quantum Leaps: From Labs to Commercial Reality in 2026" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T23:35:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/quantum-leaps-commercial-reality-2026/">Quantum Leaps: From Labs to Commercial Reality in 2026</a></h3>
-                    <p>2026 marks a pivotal year for quantum technology, as it transitions from theoretical breakthroughs in labs to tangible commercial...</p>
-                    <a href="https://analyticsdrive.tech/quantum-leaps-commercial-reality-2026/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Artificial Intelligence">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T23:31:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/">GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech</a></h3>
-                    <p>March 2026 marks a pivotal month in AI. From the anticipated GPT-5.4 to widespread industry shifts, the AI avalanche is reshaping our...</p>
-                    <a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Entertainment">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/dhurandhar-the-revenge-movie-review-box-office-collection-hero.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/dhurandhar-the-revenge-movie-review-box-office-collection-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/dhurandhar-the-revenge-movie-review-box-office-collection-hero-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T23:08:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/">Dhurandhar The Revenge Movie Review & Box Office: The Epic Conclusion!</a></h3>
-                    <p>Dive into our in-depth Dhurandhar The Revenge movie review, exploring its already impressive box office collection, early critical...</p>
-                    <a href="https://analyticsdrive.tech/dhurandhar-the-revenge-movie-review-box-office-collection/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Artificial Intelligence">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Unraveling Neural Networks: A Comprehensive Beginner's Guide" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T22:38:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/">Unraveling Neural Networks: A Comprehensive Beginner's Guide</a></h3>
-                    <p>Embark on an insightful journey with our comprehensive beginner's guide to neural networks. Discover their core principles,...</p>
-                    <a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Politics">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/new-post-hero.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/new-post-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/new-post-hero-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Ali Larijani Killed Along With Son by IDF in Escalating Conflict" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T18:45:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/">Ali Larijani Killed Along With Son by IDF in Escalating Conflict</a></h3>
-                    <p>Senior Iranian official Ali Larijani, along with his son Morteza, was killed in an IDF strike, marking a critical escalation in the...</p>
-                    <a href="https://analyticsdrive.tech/ali-larijani-killed-along-with-son-by-idf-in-escalating-conflict/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Algorithms & Data Structures">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="QuickSort Algorithm Explained: A Step-by-Step Guide for Developers" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T14:23:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/">QuickSort Algorithm Explained: A Step-by-Step Guide for Developers</a></h3>
-                    <p>Demystify the QuickSort Algorithm Explained: A Step-by-Step Guide for developers. Learn its mechanics, complexity, and practical...</p>
-                    <a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="SQL & Databases">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/sql-joins-masterclass-inner-outer-left-right-explained.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/sql-joins-masterclass-inner-outer-left-right-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/sql-joins-masterclass-inner-outer-left-right-explained-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="SQL Joins Masterclass: Inner, Outer, Left, Right Explained" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T14:07:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/sql-joins-masterclass-inner-outer-left-right-explained/">SQL Joins Masterclass: Inner, Outer, Left, Right Explained</a></h3>
-                    <p>Master SQL Joins: Inner, Outer, Left, Right Explained. Explore fundamental concepts, practical examples, and advanced techniques for...</p>
-                    <a href="https://analyticsdrive.tech/sql-joins-masterclass-inner-outer-left-right-explained/" class="read-more">Read Article &rarr;</a>
-                </article>
-                <article class="post-card" data-category="Algorithms & Data Structures">
-                    <div class="post-card-image">
-                        <img 
-                          src="https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use.webp" 
-                          srcset="https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use-mobile.webp 400w"
-                          sizes="(max-width: 600px) 100vw, 600px"
-                          alt="Demystifying Binary Trees: Structure, Traversal, & Use Explained" 
-loading="lazy" />
-                    </div>
-                    <div class="post-meta">
-                        <time datetime="2026-03-18T11:17:00+05:30">Wed 18 March 2026</time>
-                        <span class="category"><a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a></span>
-                    </div>
-                    <h3><a href="https://analyticsdrive.tech/demystifying-binary-trees-structure-traversal-use/">Demystifying Binary Trees: Structure, Traversal, & Use Explained</a></h3>
-                    <p>Explore Demystifying Binary Trees: Structure, Traversal, & Use. This guide covers core concepts, traversal algorithms, and real-world...</p>
-                    <a href="https://analyticsdrive.tech/demystifying-binary-trees-structure-traversal-use/" class="read-more">Read Article &rarr;</a>
-                </article>
-            </div>
+                </div>
+            </article>
+
         </div>
 
         <!-- Pagination -->
-        <div class="pagination">
-            <a href="https://analyticsdrive.tech/index31.html">&laquo; Newer</a>
-            <a href="https://analyticsdrive.tech/index33.html">Older &raquo;</a>
-        </div>
+        <nav class="pagination" aria-label="Pagination">
+                <a href="https://analyticsdrive.tech/index31.html" class="page-link prev">&laquo; Newer Stories</a>
+            
+            <span class="page-current">Page 32 of 40</span>
+
+            <a href="https://analyticsdrive.tech/index33.html" class="page-link next">Older Stories &raquo;</a>
+        </nav>
     </section>
 
-    <!-- Right Column: Sports & Culture -->
-    <aside class="side-column right-column">
-        <h2>Sports & Culture</h2>
-            <div class="side-post">
-                <span class="post-meta">Sat 05 September 2026</span>
-                <h3><a href="https://analyticsdrive.tech/new-material-converts-sunlight-to-uv-light-quantum-leap/">New Material Converts Sunlight to UV Light: A Quantum Leap in Energy</a></h3>
+    <!-- Right Column: Smart Sidebar (30%) -->
+    <aside class="smart-sidebar" data-pagefind-ignore>
+        <!-- Widget 1: Top 5 Trending Stories -->
+        <div class="sidebar-widget trending-widget">
+            <h3 class="widget-title"><span class="widget-icon">🔥</span> Trending Dispatches</h3>
+            <div class="trending-list">
+                <div class="trending-item">
+                    <span class="trending-rank">01</span>
+                    <div class="trending-text">
+                        <span class="cat-pill-micro politics">Politics</span>
+                        <h4><a href="https://analyticsdrive.tech/eu-migrant-return-hub-plan-2027/">EU Unveils Migrant 'Return Hub' Plan for 2027: A New Strategy</a></h4>
+                        <time datetime="2026-09-05T21:21:00+05:30">Sat 05 September 2026</time>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-rank">02</span>
+                    <div class="trending-text">
+                        <span class="cat-pill-micro world-news">World News</span>
+                        <h4><a href="https://analyticsdrive.tech/typhoon-saudel-deadly-china-landslides-havoc/">Typhoon Saudel Triggers Deadly China Landslides, Provinces Brace for More Havoc</a></h4>
+                        <time datetime="2026-09-05T21:07:00+05:30">Sat 05 September 2026</time>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-rank">03</span>
+                    <div class="trending-text">
+                        <span class="cat-pill-micro world-news">World News</span>
+                        <h4><a href="https://analyticsdrive.tech/se-asia-chokes-haze-emergency-declared-in-sarawak-as-air-pollution-soars/">SE Asia Chokes: Haze Emergency Declared in Sarawak as Air Pollution Soars</a></h4>
+                        <time datetime="2026-09-05T20:53:00+05:30">Sat 05 September 2026</time>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-rank">04</span>
+                    <div class="trending-text">
+                        <span class="cat-pill-micro geopolitics">Geopolitics</span>
+                        <h4><a href="https://analyticsdrive.tech/us-iran-war-escalates-tanker-hit-new-sanctions-deepen-tensions/">US-Iran War Escalates: Tanker Hit, New Sanctions Deepen Tensions</a></h4>
+                        <time datetime="2026-09-05T20:38:00+05:30">Sat 05 September 2026</time>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-rank">05</span>
+                    <div class="trending-text">
+                        <span class="cat-pill-micro science">Science</span>
+                        <h4><a href="https://analyticsdrive.tech/new-material-converts-sunlight-to-uv-light-quantum-leap/">New Material Converts Sunlight to UV Light: A Quantum Leap in Energy</a></h4>
+                        <time datetime="2026-09-05T16:58:00+05:30">Sat 05 September 2026</time>
+                    </div>
+                </div>
             </div>
-            <div class="side-post">
-                <span class="post-meta">Tue 01 September 2026</span>
-                <h3><a href="https://analyticsdrive.tech/umg-tiktok-ai-deal-supergirl-toy-story-clash/">UMG & TikTok Ink AI Deal; Supergirl vs Toy Story – A Clash of Titans</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Thu 23 July 2026</span>
-                <h3><a href="https://analyticsdrive.tech/world-cup-thrills-usa-messi-history/">World Cup Thrills: USA Progresses, Messi Makes History</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sun 28 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/cricket-world-cup-semi-final-thriller-india-australia/">Cricket World Cup Semi-Final Thriller! India Edges Australia in Epic Showdown</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sun 28 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/sea-film-global-box-office-records-historic-run/">SEA Film Breaks Global Box Office Records with Historic Run</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sun 28 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/spacex-mars-mission-new-milestone-historic-leap/">SpaceX Mars Mission Reaches New Milestone: A Historic Leap Forward</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sat 27 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector/">EU Approves New Cancer Treatment for MM: Sarclisa's On-Body Injector Marks Milestone</a></h3>
-            </div>
-            <div class="side-post">
-                <span class="post-meta">Sat 27 June 2026</span>
-                <h3><a href="https://analyticsdrive.tech/global-effort-combat-ebola-outbreak-coordinated-response/">Global Effort to Combat Ebola Outbreak: A Coordinated Response</a></h3>
-            </div>
+        </div>
 
-        <div style="margin-top: 3rem;">
-            <h2>Must Reads</h2>
-                <div class="side-post">
-                    <h3><a href="https://analyticsdrive.tech/us-tightens-ai-rules-suspends-anthropic-models-security-fears/">US Tightens AI Rules, Suspends Anthropic Models Amid Security Fears</a></h3>
-                    <span class="post-meta">Artificial Intelligence</span>
-                </div>
-                <div class="side-post">
-                    <h3><a href="https://analyticsdrive.tech/major-cyberattack-targets-us-infrastructure-nation-responds/">Major Cyberattack Targets US Infrastructure: A Nation Responds</a></h3>
-                    <span class="post-meta">Technology</span>
-                </div>
-                <div class="side-post">
-                    <h3><a href="https://analyticsdrive.tech/cricket-world-cup-semi-final-thriller-india-australia/">Cricket World Cup Semi-Final Thriller! India Edges Australia in Epic Showdown</a></h3>
-                    <span class="post-meta">Cricket</span>
-                </div>
-                <div class="side-post">
-                    <h3><a href="https://analyticsdrive.tech/middle-east-peace-talks-new-hope-2026/">Middle East Peace Talks See New Hope Amid Shifting Dynamics</a></h3>
-                    <span class="post-meta">Geopolitics</span>
-                </div>
-                <div class="side-post">
-                    <h3><a href="https://analyticsdrive.tech/sea-film-global-box-office-records-historic-run/">SEA Film Breaks Global Box Office Records with Historic Run</a></h3>
-                    <span class="post-meta">Entertainment</span>
-                </div>
+        <!-- Widget 2: Daily Brief & RSS Feed -->
+        <div class="sidebar-widget subscribe-widget">
+            <h3 class="widget-title"><span class="widget-icon">📡</span> Intelligence Brief</h3>
+            <p>Direct feed access for news aggregators, researchers, and automated workflows.</p>
+            <div class="feed-buttons-group">
+                <a href="https://analyticsdrive.tech/feeds/all.atom.xml" class="feed-btn atom" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+                    Atom / RSS
+                </a>
+                <a href="https://news.google.com/publications/CAowqpTfCw" class="feed-btn gnews" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z"/></svg>
+                    Google News
+                </a>
+            </div>
+        </div>
+
+        <!-- Widget 3: Popular Categories / Topic Cloud -->
+        <div class="sidebar-widget topics-widget">
+            <h3 class="widget-title"><span class="widget-icon">🏷️</span> Key Coverage Areas</h3>
+            <div class="topics-cloud">
+                <a href="https://analyticsdrive.tech/category/artificial-intelligence.html" class="topic-chip">
+                    Artificial Intelligence
+                </a>
+                <a href="https://analyticsdrive.tech/category/technology.html" class="topic-chip">
+                    Technology
+                </a>
+                <a href="https://analyticsdrive.tech/category/geopolitics.html" class="topic-chip">
+                    Geopolitics
+                </a>
+                <a href="https://analyticsdrive.tech/category/world-news.html" class="topic-chip">
+                    World News
+                </a>
+                <a href="https://analyticsdrive.tech/category/science.html" class="topic-chip">
+                    Science
+                </a>
+                <a href="https://analyticsdrive.tech/category/space.html" class="topic-chip">
+                    Space
+                </a>
+                <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html" class="topic-chip">
+                    Algorithms & Data Structures
+                </a>
+                <a href="https://analyticsdrive.tech/category/politics.html" class="topic-chip">
+                    Politics
+                </a>
+                <a href="https://analyticsdrive.tech/category/sports.html" class="topic-chip">
+                    Sports
+                </a>
+                <a href="https://analyticsdrive.tech/category/cricket.html" class="topic-chip">
+                    Cricket
+                </a>
+                <a href="https://analyticsdrive.tech/category/culture.html" class="topic-chip">
+                    Culture
+                </a>
+            </div>
         </div>
     </aside>
 </div>
@@ -3427,7 +4298,7 @@ loading="lazy" />
 
             // --- Category Filtering ---
             const tabBtns = document.querySelectorAll('.tab-btn');
-            const postCards = document.querySelectorAll('#main-post-list .post-card');
+            const postCards = document.querySelectorAll('#main-post-list .modern-card, #main-post-list .post-card');
 
             if (tabBtns.length > 0 && postCards.length > 0) {
                 tabBtns.forEach(btn => {
