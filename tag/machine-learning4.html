@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,387 +3452,628 @@ a:hover {
         <span class="current">#Machine Learning</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #Machine Learning
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            97 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">97 Articles</span>
+        </div>
+        <h1 class="archive-title">#Machine Learning</h1>
+        <p class="archive-description">Learn the theory and practice of building intelligent systems. Detailed guides on ML models, neural networks, and data science applications.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/how-to-fine-tune-large-language-models-custom-tasks.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/how-to-fine-tune-large-language-models-custom-tasks-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-fine-tune-large-language-models-custom-tasks-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="How to Fine-Tune Large Language Models for Custom Tasks: A Deep Dive" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/how-to-fine-tune-large-language-models-custom-tasks/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/how-to-fine-tune-large-language-models-custom-tasks.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/how-to-fine-tune-large-language-models-custom-tasks-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-fine-tune-large-language-models-custom-tasks-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="How to Fine-Tune Large Language Models for Custom Tasks: A Deep Dive" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T00:58:00+05:30">Mon 23 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/how-to-fine-tune-large-language-models-custom-tasks/">How to Fine-Tune Large Language Models for Custom Tasks: A Deep Dive</a>
+                </h3>
+                <p class="card-excerpt">Master fine-tuning large language models (LLMs) for custom tasks. Transform general LLM capabilities into...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T00:58:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">31 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/how-to-fine-tune-large-language-models-custom-tasks/">How to Fine-Tune Large Language Models for Custom Tasks: A Deep Dive</a></h3>
-            <p>Master fine-tuning large language models (LLMs) for custom tasks. Transform general LLM capabilities into specialized tools for unique...</p>
-            <a href="https://analyticsdrive.tech/how-to-fine-tune-large-language-models-custom-tasks/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/understanding-vector-databases-llm-applications.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/understanding-vector-databases-llm-applications-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/understanding-vector-databases-llm-applications-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Understanding Vector Databases for LLM Applications: A Deep Dive" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/understanding-vector-databases-llm-applications/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/understanding-vector-databases-llm-applications.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/understanding-vector-databases-llm-applications-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/understanding-vector-databases-llm-applications-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Understanding Vector Databases for LLM Applications: A Deep Dive" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T00:22:00+05:30">Mon 23 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/understanding-vector-databases-llm-applications/">Understanding Vector Databases for LLM Applications: A Deep Dive</a>
+                </h3>
+                <p class="card-excerpt">Unlock LLM power with vector databases. This deep guide covers their mechanics, critical role, and impact on modern...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T00:22:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">29 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/understanding-vector-databases-llm-applications/">Understanding Vector Databases for LLM Applications: A Deep Dive</a></h3>
-            <p>Unlock LLM power with vector databases. This deep guide covers their mechanics, critical role, and impact on modern AI applications for...</p>
-            <a href="https://analyticsdrive.tech/understanding-vector-databases-llm-applications/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/window-functions-sql-advanced-data-analysis-guide.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/window-functions-sql-advanced-data-analysis-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/window-functions-sql-advanced-data-analysis-guide-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Window Functions in SQL: Advanced Data Analysis Guide" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="SQL & Databases">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/window-functions-sql-advanced-data-analysis-guide.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/window-functions-sql-advanced-data-analysis-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/window-functions-sql-advanced-data-analysis-guide-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Window Functions in SQL: Advanced Data Analysis Guide" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge sql-&-databases">
+                    <a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T00:18:00+05:30">Mon 23 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/sql-databases.html">SQL & Databases</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/">Window Functions in SQL: Advanced Data Analysis Guide</a>
+                </h3>
+                <p class="card-excerpt">Master advanced data analysis with Window Functions in SQL. This comprehensive guide covers their mechanics, syntax,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Rachel Foster</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T00:18:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">28 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/">Window Functions in SQL: Advanced Data Analysis Guide</a></h3>
-            <p>Master advanced data analysis with Window Functions in SQL. This comprehensive guide covers their mechanics, syntax, and real-world...</p>
-            <a href="https://analyticsdrive.tech/window-functions-sql-advanced-data-analysis-guide/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/what-is-machine-learning-beginners-guide.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/what-is-machine-learning-beginners-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-machine-learning-beginners-guide-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="What is Machine Learning? A Comprehensive Beginner's Guide" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/what-is-machine-learning-beginners-guide/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/what-is-machine-learning-beginners-guide.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/what-is-machine-learning-beginners-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-machine-learning-beginners-guide-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="What is Machine Learning? A Comprehensive Beginner's Guide" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T21:37:00+05:30">Sun 22 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/what-is-machine-learning-beginners-guide/">What is Machine Learning? A Comprehensive Beginner's Guide</a>
+                </h3>
+                <p class="card-excerpt">Machine Learning is transforming industries. This comprehensive beginner's guide demystifies ML, explaining its core...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T21:37:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">21 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/what-is-machine-learning-beginners-guide/">What is Machine Learning? A Comprehensive Beginner's Guide</a></h3>
-            <p>Machine Learning is transforming industries. This comprehensive beginner's guide demystifies ML, explaining its core concepts, types,...</p>
-            <a href="https://analyticsdrive.tech/what-is-machine-learning-beginners-guide/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/ai-powers-smarter-greener-energy-grids-sustainable-future.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/ai-powers-smarter-greener-energy-grids-sustainable-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-powers-smarter-greener-energy-grids-sustainable-future-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="AI Powers Smarter, Greener Energy Grids: A Sustainable Future Unlocked" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ai-powers-smarter-greener-energy-grids-sustainable-future/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/ai-powers-smarter-greener-energy-grids-sustainable-future.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/ai-powers-smarter-greener-energy-grids-sustainable-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-powers-smarter-greener-energy-grids-sustainable-future-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="AI Powers Smarter, Greener Energy Grids: A Sustainable Future Unlocked" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T21:04:00+05:30">Sun 22 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ai-powers-smarter-greener-energy-grids-sustainable-future/">AI Powers Smarter, Greener Energy Grids: A Sustainable Future Unlocked</a>
+                </h3>
+                <p class="card-excerpt">Explore how AI powers smarter, greener energy grids, transforming infrastructure, boosting efficiency, and paving...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T21:04:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ai-powers-smarter-greener-energy-grids-sustainable-future/">AI Powers Smarter, Greener Energy Grids: A Sustainable Future Unlocked</a></h3>
-            <p>Explore how AI powers smarter, greener energy grids, transforming infrastructure, boosting efficiency, and paving the way for a...</p>
-            <a href="https://analyticsdrive.tech/ai-powers-smarter-greener-energy-grids-sustainable-future/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="What is Cloud Computing? AWS, Azure, GCP Basics Explored Deeply" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="What is Cloud Computing? AWS, Azure, GCP Basics Explored Deeply" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T00:31:00+05:30">Sun 22 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply/">What is Cloud Computing? AWS, Azure, GCP Basics Explored Deeply</a>
+                </h3>
+                <p class="card-excerpt">Demystify cloud computing with a deep dive into its core concepts, benefits, and the fundamental differences between...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T00:31:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">29 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply/">What is Cloud Computing? AWS, Azure, GCP Basics Explored Deeply</a></h3>
-            <p>Demystify cloud computing with a deep dive into its core concepts, benefits, and the fundamental differences between AWS, Azure, and GCP Basics.</p>
-            <a href="https://analyticsdrive.tech/what-is-cloud-computing-aws-azure-gcp-basics-explored-deeply/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/neural-networks-explained-perceptron-deep-learning.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/neural-networks-explained-perceptron-deep-learning-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/neural-networks-explained-perceptron-deep-learning-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Neural Networks Explained: From Perceptron to Deep Learning" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/neural-networks-explained-perceptron-deep-learning/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/neural-networks-explained-perceptron-deep-learning.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/neural-networks-explained-perceptron-deep-learning-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/neural-networks-explained-perceptron-deep-learning-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Neural Networks Explained: From Perceptron to Deep Learning" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T00:23:00+05:30">Sun 22 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/neural-networks-explained-perceptron-deep-learning/">Neural Networks Explained: From Perceptron to Deep Learning</a>
+                </h3>
+                <p class="card-excerpt">Dive deep into neural networks explained, from their foundational origins with the Perceptron to the transformative...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T00:23:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">25 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/neural-networks-explained-perceptron-deep-learning/">Neural Networks Explained: From Perceptron to Deep Learning</a></h3>
-            <p>Dive deep into neural networks explained, from their foundational origins with the Perceptron to the transformative power of modern deep...</p>
-            <a href="https://analyticsdrive.tech/neural-networks-explained-perceptron-deep-learning/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/ai-breakthrough-predicts-cancer-spread-mangrovegs.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/ai-breakthrough-predicts-cancer-spread-mangrovegs-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-breakthrough-predicts-cancer-spread-mangrovegs-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="AI Breakthrough: New Tool Predicts Cancer Spread with 80% Accuracy" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ai-breakthrough-predicts-cancer-spread-mangrovegs/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/ai-breakthrough-predicts-cancer-spread-mangrovegs.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/ai-breakthrough-predicts-cancer-spread-mangrovegs-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-breakthrough-predicts-cancer-spread-mangrovegs-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="AI Breakthrough: New Tool Predicts Cancer Spread with 80% Accuracy" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T22:46:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ai-breakthrough-predicts-cancer-spread-mangrovegs/">AI Breakthrough: New Tool Predicts Cancer Spread with 80% Accuracy</a>
+                </h3>
+                <p class="card-excerpt">A groundbreaking AI breakthrough: New Tool Predicts Cancer Spread, MangroveGS, developed by University of Geneva...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T22:46:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ai-breakthrough-predicts-cancer-spread-mangrovegs/">AI Breakthrough: New Tool Predicts Cancer Spread with 80% Accuracy</a></h3>
-            <p>A groundbreaking AI breakthrough: New Tool Predicts Cancer Spread, MangroveGS, developed by University of Geneva researchers, offers 80%...</p>
-            <a href="https://analyticsdrive.tech/ai-breakthrough-predicts-cancer-spread-mangrovegs/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/what-is-generative-ai-models-concepts-future.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/what-is-generative-ai-models-concepts-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-generative-ai-models-concepts-future-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="What is Generative AI? Models, Concepts, & The Future Ahead" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/what-is-generative-ai-models-concepts-future/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/what-is-generative-ai-models-concepts-future.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/what-is-generative-ai-models-concepts-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-generative-ai-models-concepts-future-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="What is Generative AI? Models, Concepts, & The Future Ahead" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T22:32:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/what-is-generative-ai-models-concepts-future/">What is Generative AI? Models, Concepts, & The Future Ahead</a>
+                </h3>
+                <p class="card-excerpt">Explore Generative AI: its models, core concepts, and future impact on technology, creativity, and innovation....</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T22:32:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">29 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/what-is-generative-ai-models-concepts-future/">What is Generative AI? Models, Concepts, & The Future Ahead</a></h3>
-            <p>Explore Generative AI: its models, core concepts, and future impact on technology, creativity, and innovation. Discover how it creates...</p>
-            <a href="https://analyticsdrive.tech/what-is-generative-ai-models-concepts-future/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/reinforcement-learning-explained-deep-dive-tutorial-ai.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/reinforcement-learning-explained-deep-dive-tutorial-ai-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/reinforcement-learning-explained-deep-dive-tutorial-ai-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Reinforcement Learning Explained: Deep Dive Tutorial into AI" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/reinforcement-learning-explained-deep-dive-tutorial-ai/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/reinforcement-learning-explained-deep-dive-tutorial-ai.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/reinforcement-learning-explained-deep-dive-tutorial-ai-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/reinforcement-learning-explained-deep-dive-tutorial-ai-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Reinforcement Learning Explained: Deep Dive Tutorial into AI" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T21:58:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/reinforcement-learning-explained-deep-dive-tutorial-ai/">Reinforcement Learning Explained: Deep Dive Tutorial into AI</a>
+                </h3>
+                <p class="card-excerpt">Unlock the power of Reinforcement Learning. This deep dive tutorial explains core concepts, algorithms like...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T21:58:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">30 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/reinforcement-learning-explained-deep-dive-tutorial-ai/">Reinforcement Learning Explained: Deep Dive Tutorial into AI</a></h3>
-            <p>Unlock the power of Reinforcement Learning. This deep dive tutorial explains core concepts, algorithms like Q-learning, real-world...</p>
-            <a href="https://analyticsdrive.tech/reinforcement-learning-explained-deep-dive-tutorial-ai/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="AI Shifts Focus: Efficiency Trumps Scale in New Models" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-efficiency-trumps-scale-new-models-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="AI Shifts Focus: Efficiency Trumps Scale in New Models" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T19:07:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/">AI Shifts Focus: Efficiency Trumps Scale in New Models</a>
+                </h3>
+                <p class="card-excerpt">The AI landscape is evolving rapidly as new models prioritize efficiency over sheer scale, marking a significant...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T19:07:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/">AI Shifts Focus: Efficiency Trumps Scale in New Models</a></h3>
-            <p>The AI landscape is evolving rapidly as new models prioritize efficiency over sheer scale, marking a significant shift in development paradigms.</p>
-            <a href="https://analyticsdrive.tech/ai-efficiency-trumps-scale-new-models/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-pause-protest-san-francisco-halt-dev-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T02:53:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/">AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns</a>
+                </h3>
+                <p class="card-excerpt">AI Pause Protest Rocks SF: Leaders Urged to Halt Dev as activists demand a moratorium on advanced AI, citing...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T02:53:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/">AI Pause Protest Rocks SF: Leaders Urged to Halt Dev Amid Growing Concerns</a></h3>
-            <p>AI Pause Protest Rocks SF: Leaders Urged to Halt Dev as activists demand a moratorium on advanced AI, citing existential risks and...</p>
-            <a href="https://analyticsdrive.tech/ai-pause-protest-san-francisco-halt-dev/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/what-is-docker.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/what-is-docker-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-docker-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="What is Docker? A Beginner's Guide to Containerization" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/what-is-docker.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/what-is-docker-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-docker-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="What is Docker? A Beginner's Guide to Containerization" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T02:29:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/">What is Docker? A Beginner's Guide to Containerization</a>
+                </h3>
+                <p class="card-excerpt">Master Docker fundamentals. This guide explores containerization's core concepts, workings, and crucial role in...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T02:29:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">20 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/">What is Docker? A Beginner's Guide to Containerization</a></h3>
-            <p>Master Docker fundamentals. This guide explores containerization's core concepts, workings, and crucial role in modern software...</p>
-            <a href="https://analyticsdrive.tech/what-is-docker-beginners-guide-containerization/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Gradient Descent Explained: A Machine Learning Tutorial for Optimization" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-machine-learning-tutorial-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Gradient Descent Explained: A Machine Learning Tutorial for Optimization" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-19T09:45:00+05:30">Thu 19 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/">Gradient Descent Explained: A Machine Learning Tutorial for Optimization</a>
+                </h3>
+                <p class="card-excerpt">Master Gradient Descent, the cornerstone of machine learning optimization. This tutorial dives into its mechanics,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-19T09:45:00+05:30">Thu 19 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">26 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/">Gradient Descent Explained: A Machine Learning Tutorial for Optimization</a></h3>
-            <p>Master Gradient Descent, the cornerstone of machine learning optimization. This tutorial dives into its mechanics, variants, and...</p>
-            <a href="https://analyticsdrive.tech/gradient-descent-explained-machine-learning-tutorial/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Green Innovations: AI Drives Sustainable Tech Revolution Forward" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/green-innovations-ai-sustainable-tech-revolution-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Green Innovations: AI Drives Sustainable Tech Revolution Forward" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-19T09:42:00+05:30">Thu 19 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/">Green Innovations: AI Drives Sustainable Tech Revolution Forward</a>
+                </h3>
+                <p class="card-excerpt">Explore how cutting-edge Green Innovations: AI Drives Sustainable Tech Revolution, transforming industries and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-19T09:42:00+05:30">Thu 19 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/">Green Innovations: AI Drives Sustainable Tech Revolution Forward</a></h3>
-            <p>Explore how cutting-edge Green Innovations: AI Drives Sustainable Tech Revolution, transforming industries and powering a more...</p>
-            <a href="https://analyticsdrive.tech/green-innovations-ai-sustainable-tech-revolution/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gpt-5-4-ai-avalanche-march-milestones-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-18T23:31:00+05:30">Wed 18 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/">GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech</a>
+                </h3>
+                <p class="card-excerpt">March 2026 marks a pivotal month in AI. From the anticipated GPT-5.4 to widespread industry shifts, the AI avalanche...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-18T23:31:00+05:30">Wed 18 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/">GPT-5.4 & AI Avalanche: March's Major Milestones Reshape Tech</a></h3>
-            <p>March 2026 marks a pivotal month in AI. From the anticipated GPT-5.4 to widespread industry shifts, the AI avalanche is reshaping our...</p>
-            <a href="https://analyticsdrive.tech/gpt-5-4-ai-avalanche-march-milestones/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Unraveling Neural Networks: A Comprehensive Beginner's Guide" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/unraveling-neural-networks-beginner-guide-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Unraveling Neural Networks: A Comprehensive Beginner's Guide" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-18T22:38:00+05:30">Wed 18 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/">Unraveling Neural Networks: A Comprehensive Beginner's Guide</a>
+                </h3>
+                <p class="card-excerpt">Embark on an insightful journey with our comprehensive beginner's guide to neural networks. Discover their core...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-18T22:38:00+05:30">Wed 18 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">31 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/">Unraveling Neural Networks: A Comprehensive Beginner's Guide</a></h3>
-            <p>Embark on an insightful journey with our comprehensive beginner's guide to neural networks. Discover their core principles,...</p>
-            <a href="https://analyticsdrive.tech/unraveling-neural-networks-beginner-guide/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-deep-dive-beginners.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-deep-dive-beginners-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-deep-dive-beginners-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Gradient Descent Explained: A Deep Dive for Beginners" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/gradient-descent-explained-deep-dive-beginners/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-deep-dive-beginners.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-deep-dive-beginners-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/gradient-descent-explained-deep-dive-beginners-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Gradient Descent Explained: A Deep Dive for Beginners" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-18T10:54:00+05:30">Wed 18 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/gradient-descent-explained-deep-dive-beginners/">Gradient Descent Explained: A Deep Dive for Beginners</a>
+                </h3>
+                <p class="card-excerpt">Unlock the core of machine learning. This deep dive into Gradient Descent Explained: A Deep Dive for Beginners truly...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-18T10:54:00+05:30">Wed 18 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">25 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/gradient-descent-explained-deep-dive-beginners/">Gradient Descent Explained: A Deep Dive for Beginners</a></h3>
-            <p>Unlock the core of machine learning. This deep dive into Gradient Descent Explained: A Deep Dive for Beginners truly demystifies how...</p>
-            <a href="https://analyticsdrive.tech/gradient-descent-explained-deep-dive-beginners/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/ai-automation-business-growth.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/ai-automation-business-growth-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-automation-business-growth-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Powering Growth: The Rise of AI Automation for Business" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ai-automation-business-growth/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/ai-automation-business-growth.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/ai-automation-business-growth-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ai-automation-business-growth-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Powering Growth: The Rise of AI Automation for Business" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-16T15:08:00+05:30">Mon 16 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ai-automation-business-growth/">Powering Growth: The Rise of AI Automation for Business</a>
+                </h3>
+                <p class="card-excerpt">Discover how AI automation for business is revolutionizing operations, boosting efficiency, and driving strategic...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-16T15:08:00+05:30">Mon 16 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ai-automation-business-growth/">Powering Growth: The Rise of AI Automation for Business</a></h3>
-            <p>Discover how AI automation for business is revolutionizing operations, boosting efficiency, and driving strategic growth across industries.</p>
-            <a href="https://analyticsdrive.tech/ai-automation-business-growth/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/how-to-use-ai-for-coding-developer-guide.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/how-to-use-ai-for-coding-developer-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-use-ai-for-coding-developer-guide-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="How to Use AI for Coding: A Practical Developer's Guide" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/how-to-use-ai-for-coding-developer-guide/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/how-to-use-ai-for-coding-developer-guide.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/how-to-use-ai-for-coding-developer-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-use-ai-for-coding-developer-guide-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="How to Use AI for Coding: A Practical Developer's Guide" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-16T11:04:00+05:30">Mon 16 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/how-to-use-ai-for-coding-developer-guide/">How to Use AI for Coding: A Practical Developer's Guide</a>
+                </h3>
+                <p class="card-excerpt">Unlock the power of AI in your development workflow. This guide explains how to use AI for coding to boost...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-16T11:04:00+05:30">Mon 16 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">19 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/how-to-use-ai-for-coding-developer-guide/">How to Use AI for Coding: A Practical Developer's Guide</a></h3>
-            <p>Unlock the power of AI in your development workflow. This guide explains how to use AI for coding to boost productivity, improve code...</p>
-            <a href="https://analyticsdrive.tech/how-to-use-ai-for-coding-developer-guide/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/machine-learning3.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/machine-learning5.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/machine-learning3.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 4 of 5</span>
+
+        <a href="https://analyticsdrive.tech/tag/machine-learning5.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>

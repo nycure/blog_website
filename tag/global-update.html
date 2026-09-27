@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,221 +3452,351 @@ a:hover {
         <span class="current">#Global Update</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #Global Update
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            11 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">11 Articles</span>
+        </div>
+        <h1 class="archive-title">#Global Update</h1>
+        <p class="archive-description">Quick-hit insights and essential context on the most important news events happening across the globe right now.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/15-days-iran-war-update-tensions-middle-east-hero.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/15-days-iran-war-update-tensions-middle-east-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/15-days-iran-war-update-tensions-middle-east-hero-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="15 Days Passed Since Iran War Update: Tensions Grip Middle East" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/15-days-iran-war-update-tensions-middle-east/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/15-days-iran-war-update-tensions-middle-east-hero.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/15-days-iran-war-update-tensions-middle-east-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/15-days-iran-war-update-tensions-middle-east-hero-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="15 Days Passed Since Iran War Update: Tensions Grip Middle East" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-15T02:26:00+05:30">Sun 15 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/15-days-iran-war-update-tensions-middle-east/">15 Days Passed Since Iran War Update: Tensions Grip Middle East</a>
+                </h3>
+                <p class="card-excerpt">With 15 Days Passed since Iran War update, the world watches as regional tensions escalate, impacting global...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-15T02:26:00+05:30">Sun 15 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/15-days-iran-war-update-tensions-middle-east/">15 Days Passed Since Iran War Update: Tensions Grip Middle East</a></h3>
-            <p>With 15 Days Passed since Iran War update, the world watches as regional tensions escalate, impacting global stability and economy.</p>
-            <a href="https://analyticsdrive.tech/15-days-iran-war-update-tensions-middle-east/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/iran-usa-war-update-escalating-tensions-regional-stability.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/iran-usa-war-update-escalating-tensions-regional-stability-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/iran-usa-war-update-escalating-tensions-regional-stability-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Iran vs Usa War Update: Escalating Tensions and Regional Stability" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/iran-usa-war-update-escalating-tensions-regional-stability/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/iran-usa-war-update-escalating-tensions-regional-stability.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/iran-usa-war-update-escalating-tensions-regional-stability-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/iran-usa-war-update-escalating-tensions-regional-stability-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Iran vs Usa War Update: Escalating Tensions and Regional Stability" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-28T21:27:00+05:30">Sat 28 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/iran-usa-war-update-escalating-tensions-regional-stability/">Iran vs Usa War Update: Escalating Tensions and Regional Stability</a>
+                </h3>
+                <p class="card-excerpt">This Iran vs Usa War Update examines the recent escalation of tensions, looking at background, key events, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-28T21:27:00+05:30">Sat 28 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/iran-usa-war-update-escalating-tensions-regional-stability/">Iran vs Usa War Update: Escalating Tensions and Regional Stability</a></h3>
-            <p>This Iran vs Usa War Update examines the recent escalation of tensions, looking at background, key events, and future implications.</p>
-            <a href="https://analyticsdrive.tech/iran-usa-war-update-escalating-tensions-regional-stability/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/pakistan-afghanistan-war-update-escalating-border-tensions-future.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/pakistan-afghanistan-war-update-escalating-border-tensions-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/pakistan-afghanistan-war-update-escalating-border-tensions-future-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Pakistan vs Afghanistan War Update: Escalating Border Tensions & Future" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/pakistan-afghanistan-war-update-escalating-border-tensions-future/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/pakistan-afghanistan-war-update-escalating-border-tensions-future.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/pakistan-afghanistan-war-update-escalating-border-tensions-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/pakistan-afghanistan-war-update-escalating-border-tensions-future-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Pakistan vs Afghanistan War Update: Escalating Border Tensions & Future" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-28T00:22:00+05:30">Sat 28 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/pakistan-afghanistan-war-update-escalating-border-tensions-future/">Pakistan vs Afghanistan War Update: Escalating Border Tensions & Future</a>
+                </h3>
+                <p class="card-excerpt">Stay informed on the latest Pakistan vs Afghanistan war update, as escalating border tensions and security...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-28T00:22:00+05:30">Sat 28 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/pakistan-afghanistan-war-update-escalating-border-tensions-future/">Pakistan vs Afghanistan War Update: Escalating Border Tensions & Future</a></h3>
-            <p>Stay informed on the latest Pakistan vs Afghanistan war update, as escalating border tensions and security challenges reshape regional dynamics.</p>
-            <a href="https://analyticsdrive.tech/pakistan-afghanistan-war-update-escalating-border-tensions-future/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/el-mencho-demise-mexico-cartel-war.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/el-mencho-demise-mexico-cartel-war-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/el-mencho-demise-mexico-cartel-war-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="El Mencho's Demise: What His Death Means for Mexico's Cartel War" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/el-mencho-demise-mexico-cartel-war/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/el-mencho-demise-mexico-cartel-war.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/el-mencho-demise-mexico-cartel-war-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/el-mencho-demise-mexico-cartel-war-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="El Mencho's Demise: What His Death Means for Mexico's Cartel War" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-26T16:10:00+05:30">Thu 26 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/el-mencho-demise-mexico-cartel-war/">El Mencho's Demise: What His Death Means for Mexico's Cartel War</a>
+                </h3>
+                <p class="card-excerpt">The death of Nemesio Oseguera Cervantes, 'El Mencho', leader of the CJNG, marks a pivotal moment in Mexico's...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-26T16:10:00+05:30">Thu 26 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/el-mencho-demise-mexico-cartel-war/">El Mencho's Demise: What His Death Means for Mexico's Cartel War</a></h3>
-            <p>The death of Nemesio Oseguera Cervantes, 'El Mencho', leader of the CJNG, marks a pivotal moment in Mexico's relentless cartel war.</p>
-            <a href="https://analyticsdrive.tech/el-mencho-demise-mexico-cartel-war/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/us-supreme-court-trump-tariffs-legal-overview.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/us-supreme-court-trump-tariffs-legal-overview-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/us-supreme-court-trump-tariffs-legal-overview-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US Supreme Court on Trump Tariffs: A Legal Overview" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-supreme-court-trump-tariffs-legal-overview/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/us-supreme-court-trump-tariffs-legal-overview.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/us-supreme-court-trump-tariffs-legal-overview-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/us-supreme-court-trump-tariffs-legal-overview-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US Supreme Court on Trump Tariffs: A Legal Overview" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-21T18:18:00+05:30">Sat 21 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-supreme-court-trump-tariffs-legal-overview/">US Supreme Court on Trump Tariffs: A Legal Overview</a>
+                </h3>
+                <p class="card-excerpt">The legal landscape surrounding the US Supreme Court on Trump tariffs remains a complex area. Explore key...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-21T18:18:00+05:30">Sat 21 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-supreme-court-trump-tariffs-legal-overview/">US Supreme Court on Trump Tariffs: A Legal Overview</a></h3>
-            <p>The legal landscape surrounding the US Supreme Court on Trump tariffs remains a complex area. Explore key challenges, rulings, and the...</p>
-            <a href="https://analyticsdrive.tech/us-supreme-court-trump-tariffs-legal-overview/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/andrew-mountbatten-windsor-epstein-arrest.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/andrew-mountbatten-windsor-epstein-arrest-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/andrew-mountbatten-windsor-epstein-arrest-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Royal Shock: Andrew Arrested Over Epstein Files" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/andrew-mountbatten-windsor-epstein-arrest/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/andrew-mountbatten-windsor-epstein-arrest.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/andrew-mountbatten-windsor-epstein-arrest-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/andrew-mountbatten-windsor-epstein-arrest-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Royal Shock: Andrew Arrested Over Epstein Files" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-19T22:13:00+05:30">Thu 19 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/andrew-mountbatten-windsor-epstein-arrest/">Royal Shock: Andrew Arrested Over Epstein Files</a>
+                </h3>
+                <p class="card-excerpt">Andrew Mountbatten-Windsor has been arrested on suspicion of misconduct in public office, a dramatic turn linked to...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-19T22:13:00+05:30">Thu 19 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">4 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/andrew-mountbatten-windsor-epstein-arrest/">Royal Shock: Andrew Arrested Over Epstein Files</a></h3>
-            <p>Andrew Mountbatten-Windsor has been arrested on suspicion of misconduct in public office, a dramatic turn linked to explosive...</p>
-            <a href="https://analyticsdrive.tech/andrew-mountbatten-windsor-epstein-arrest/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/pakistan-economic-tightrope-walk.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/pakistan-economic-tightrope-walk-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/pakistan-economic-tightrope-walk-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Pakistan's Economic Tightrope Walk" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/pakistan-economic-tightrope-walk/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/pakistan-economic-tightrope-walk.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/pakistan-economic-tightrope-walk-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/pakistan-economic-tightrope-walk-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Pakistan's Economic Tightrope Walk" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-17T22:40:00+05:30">Tue 17 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/pakistan-economic-tightrope-walk/">Pakistan's Economic Tightrope Walk</a>
+                </h3>
+                <p class="card-excerpt">Pakistan's economy faces persistent challenges, from soaring inflation and a heavy debt burden to political...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-17T22:40:00+05:30">Tue 17 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">6 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/pakistan-economic-tightrope-walk/">Pakistan's Economic Tightrope Walk</a></h3>
-            <p>Pakistan's economy faces persistent challenges, from soaring inflation and a heavy debt burden to political instability, despite recent...</p>
-            <a href="https://analyticsdrive.tech/pakistan-economic-tightrope-walk/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/epstein-files-unveiling-power-privilege-pain.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/epstein-files-unveiling-power-privilege-pain-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/epstein-files-unveiling-power-privilege-pain-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Epstein Files: Unveiling Power, Privilege & Pain" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/epstein-files-unveiling-power-privilege-pain/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/epstein-files-unveiling-power-privilege-pain.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/epstein-files-unveiling-power-privilege-pain-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/epstein-files-unveiling-power-privilege-pain-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Epstein Files: Unveiling Power, Privilege & Pain" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-17T22:17:00+05:30">Tue 17 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/epstein-files-unveiling-power-privilege-pain/">Epstein Files: Unveiling Power, Privilege & Pain</a>
+                </h3>
+                <p class="card-excerpt">The recent release of millions of "Epstein Files" documents has shed new light on Jeffrey Epstein's network, raising...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-17T22:17:00+05:30">Tue 17 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">4 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/epstein-files-unveiling-power-privilege-pain/">Epstein Files: Unveiling Power, Privilege & Pain</a></h3>
-            <p>The recent release of millions of "Epstein Files" documents has shed new light on Jeffrey Epstein's network, raising questions about...</p>
-            <a href="https://analyticsdrive.tech/epstein-files-unveiling-power-privilege-pain/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/silver-rate-rising-investment-outlook.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/silver-rate-rising-investment-outlook-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/silver-rate-rising-investment-outlook-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Silver's Ascent: Unpacking the Forces Driving Its Price Surge" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/silver-rate-rising-investment-outlook/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/silver-rate-rising-investment-outlook.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/silver-rate-rising-investment-outlook-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/silver-rate-rising-investment-outlook-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Silver's Ascent: Unpacking the Forces Driving Its Price Surge" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-13T00:08:00+05:30">Fri 13 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/silver-rate-rising-investment-outlook/">Silver's Ascent: Unpacking the Forces Driving Its Price Surge</a>
+                </h3>
+                <p class="card-excerpt">Silver prices are experiencing a notable upward trend. This analysis explores the key factors fueling this surge,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-13T00:08:00+05:30">Fri 13 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">6 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/silver-rate-rising-investment-outlook/">Silver's Ascent: Unpacking the Forces Driving Its Price Surge</a></h3>
-            <p>Silver prices are experiencing a notable upward trend. This analysis explores the key factors fueling this surge, its implications for...</p>
-            <a href="https://analyticsdrive.tech/silver-rate-rising-investment-outlook/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/unpacking-epstein-files-transparency-accountability.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/unpacking-epstein-files-transparency-accountability-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/unpacking-epstein-files-transparency-accountability-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Unpacking the "Epstein Files": A Quest for Transparency and Accountability" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/unpacking-epstein-files-transparency-accountability/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/unpacking-epstein-files-transparency-accountability.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/unpacking-epstein-files-transparency-accountability-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/unpacking-epstein-files-transparency-accountability-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Unpacking the "Epstein Files": A Quest for Transparency and Accountability" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-13T00:07:00+05:30">Fri 13 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/unpacking-epstein-files-transparency-accountability/">Unpacking the "Epstein Files": A Quest for Transparency and Accountability</a>
+                </h3>
+                <p class="card-excerpt">The "Epstein Files" have ignited global conversations about justice and transparency. Explore the origins, impact,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-13T00:07:00+05:30">Fri 13 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">5 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/unpacking-epstein-files-transparency-accountability/">Unpacking the "Epstein Files": A Quest for Transparency and Accountability</a></h3>
-            <p>The "Epstein Files" have ignited global conversations about justice and transparency. Explore the origins, impact, and ongoing...</p>
-            <a href="https://analyticsdrive.tech/unpacking-epstein-files-transparency-accountability/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/the-hurricane-natures-fury-resilience.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/the-hurricane-natures-fury-resilience-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/the-hurricane-natures-fury-resilience-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="The Hurricane: Understanding Nature's Fury and Building Resilience" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/the-hurricane-natures-fury-resilience/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/the-hurricane-natures-fury-resilience.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/the-hurricane-natures-fury-resilience-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/the-hurricane-natures-fury-resilience-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="The Hurricane: Understanding Nature's Fury and Building Resilience" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-12T00:55:00+05:30">Thu 12 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/the-hurricane-natures-fury-resilience/">The Hurricane: Understanding Nature's Fury and Building Resilience</a>
+                </h3>
+                <p class="card-excerpt">Explore the immense power of hurricanes, their devastating impacts, and crucial steps for preparedness, safety, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-12T00:55:00+05:30">Thu 12 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">6 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/the-hurricane-natures-fury-resilience/">The Hurricane: Understanding Nature's Fury and Building Resilience</a></h3>
-            <p>Explore the immense power of hurricanes, their devastating impacts, and crucial steps for preparedness, safety, and community resilience...</p>
-            <a href="https://analyticsdrive.tech/the-hurricane-natures-fury-resilience/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
+    <!-- Polished Pagination -->
 
 </section>
     </main>

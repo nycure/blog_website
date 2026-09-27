@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,382 +3452,623 @@ a:hover {
         <span class="current">#Iran</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #Iran
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            92 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">92 Articles</span>
+        </div>
+        <h1 class="archive-title">#Iran</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #Iran.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T17:05:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/">US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate</a>
+                </h3>
+                <p class="card-excerpt">Tensions in the critical Strait of Hormuz cast a long shadow over the fragile US-Iran ceasefire, raising concerns...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T17:05:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/">US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate</a></h3>
-            <p>Tensions in the critical Strait of Hormuz cast a long shadow over the fragile US-Iran ceasefire, raising concerns about global stability...</p>
-            <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T15:51:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/">US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern</a>
+                </h3>
+                <p class="card-excerpt">Persistent US-Iran ceasefire doubts and rising tensions in the crucial Strait of Hormuz continue to fuel global...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T15:51:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/">US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern</a></h3>
-            <p>Persistent US-Iran ceasefire doubts and rising tensions in the crucial Strait of Hormuz continue to fuel global security concerns,...</p>
-            <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T05:48:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/">US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns</a>
+                </h3>
+                <p class="card-excerpt">Escalating US-Iran tensions see a cargo ship seized in vital waterways. A subsequent oil price jump signals...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T05:48:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/">US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns</a></h3>
-            <p>Escalating US-Iran tensions see a cargo ship seized in vital waterways. A subsequent oil price jump signals heightened global...</p>
-            <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/trumps-hormuz-blockade-threat-global-impact.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/trumps-hormuz-blockade-threat-global-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trumps-hormuz-blockade-threat-global-impact-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump's Hormuz Blockade Threat: Global Impact Examined" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trumps-hormuz-blockade-threat-global-impact/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/trumps-hormuz-blockade-threat-global-impact.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/trumps-hormuz-blockade-threat-global-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trumps-hormuz-blockade-threat-global-impact-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump's Hormuz Blockade Threat: Global Impact Examined" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-13T00:12:00+05:30">Mon 13 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trumps-hormuz-blockade-threat-global-impact/">Trump's Hormuz Blockade Threat: Global Impact Examined</a>
+                </h3>
+                <p class="card-excerpt">Explore the profound global impact stemming from former President Trump's threats to blockade the Strait of Hormuz,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-13T00:12:00+05:30">Mon 13 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trumps-hormuz-blockade-threat-global-impact/">Trump's Hormuz Blockade Threat: Global Impact Examined</a></h3>
-            <p>Explore the profound global impact stemming from former President Trump's threats to blockade the Strait of Hormuz, a critical oil...</p>
-            <a href="https://analyticsdrive.tech/trumps-hormuz-blockade-threat-global-impact/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/trump-orders-hormuz-blockade-iran-talks-fail.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/trump-orders-hormuz-blockade-iran-talks-fail-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-orders-hormuz-blockade-iran-talks-fail-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Orders Hormuz Blockade Amid Failed Iran Talks, Global Oil in Crisis" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-orders-hormuz-blockade-iran-talks-fail/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/trump-orders-hormuz-blockade-iran-talks-fail.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/trump-orders-hormuz-blockade-iran-talks-fail-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-orders-hormuz-blockade-iran-talks-fail-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Orders Hormuz Blockade Amid Failed Iran Talks, Global Oil in Crisis" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-12T21:05:00+05:30">Sun 12 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-orders-hormuz-blockade-iran-talks-fail/">Trump Orders Hormuz Blockade Amid Failed Iran Talks, Global Oil in Crisis</a>
+                </h3>
+                <p class="card-excerpt">Following collapsed talks, President Trump orders a naval blockade of the Strait of Hormuz amid failed Iran...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-12T21:05:00+05:30">Sun 12 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">17 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-orders-hormuz-blockade-iran-talks-fail/">Trump Orders Hormuz Blockade Amid Failed Iran Talks, Global Oil in Crisis</a></h3>
-            <p>Following collapsed talks, President Trump orders a naval blockade of the Strait of Hormuz amid failed Iran negotiations, triggering a...</p>
-            <a href="https://analyticsdrive.tech/trump-orders-hormuz-blockade-iran-talks-fail/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/gaza-flotilla-sails-today-aid-mission-challenges-blockade.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/gaza-flotilla-sails-today-aid-mission-challenges-blockade-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/gaza-flotilla-sails-today-aid-mission-challenges-blockade-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Gaza Flotilla Sails Today: Aid Mission Challenges Blockade" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/gaza-flotilla-sails-today-aid-mission-challenges-blockade/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/gaza-flotilla-sails-today-aid-mission-challenges-blockade.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/gaza-flotilla-sails-today-aid-mission-challenges-blockade-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/gaza-flotilla-sails-today-aid-mission-challenges-blockade-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Gaza Flotilla Sails Today: Aid Mission Challenges Blockade" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-12T05:08:00+05:30">Sun 12 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/gaza-flotilla-sails-today-aid-mission-challenges-blockade/">Gaza Flotilla Sails Today: Aid Mission Challenges Blockade</a>
+                </h3>
+                <p class="card-excerpt">The Global Sumud Flotilla sails today, April 12, 2026, challenging Gaza's blockade. This critical aid mission...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-12T05:08:00+05:30">Sun 12 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/gaza-flotilla-sails-today-aid-mission-challenges-blockade/">Gaza Flotilla Sails Today: Aid Mission Challenges Blockade</a></h3>
-            <p>The Global Sumud Flotilla sails today, April 12, 2026, challenging Gaza's blockade. This critical aid mission carries vital supplies,...</p>
-            <a href="https://analyticsdrive.tech/gaza-flotilla-sails-today-aid-mission-challenges-blockade/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/trump-warns-strait-of-hormuz-mideast-tensions-overview.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/trump-warns-strait-of-hormuz-mideast-tensions-overview-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-warns-strait-of-hormuz-mideast-tensions-overview-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Warns on Strait of Hormuz Amid Mideast Tensions: A Critical Overview" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-warns-strait-of-hormuz-mideast-tensions-overview/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/trump-warns-strait-of-hormuz-mideast-tensions-overview.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/trump-warns-strait-of-hormuz-mideast-tensions-overview-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-warns-strait-of-hormuz-mideast-tensions-overview-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Warns on Strait of Hormuz Amid Mideast Tensions: A Critical Overview" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-12T05:01:00+05:30">Sun 12 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-warns-strait-of-hormuz-mideast-tensions-overview/">Trump Warns on Strait of Hormuz Amid Mideast Tensions: A Critical Overview</a>
+                </h3>
+                <p class="card-excerpt">Amid escalating Mideast tensions, former President Trump's warnings on the Strait of Hormuz highlight enduring...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-12T05:01:00+05:30">Sun 12 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-warns-strait-of-hormuz-mideast-tensions-overview/">Trump Warns on Strait of Hormuz Amid Mideast Tensions: A Critical Overview</a></h3>
-            <p>Amid escalating Mideast tensions, former President Trump's warnings on the Strait of Hormuz highlight enduring geopolitical flashpoints...</p>
-            <a href="https://analyticsdrive.tech/trump-warns-strait-of-hormuz-mideast-tensions-overview/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img src="https://images.unsplash.com/photo-1772299399273-d71c7fce5da0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NzQ0MDJ8MHwxfHNlYXJjaHwxfHxJcmFuJTIwUmVqZWN0cyUyMFRydWNlfGVufDB8MHx8fDE3NzU1NDIxODR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Iran Rejects Truce as Trump's Deadline Looms: A Diplomatic Standoff" loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/iran-rejects-truce-trumps-deadline-looms-diplomatic-standoff/" tabindex="-1" aria-hidden="true">
+                        <img src="https://images.unsplash.com/photo-1772299399273-d71c7fce5da0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NzQ0MDJ8MHwxfHNlYXJjaHwxfHxJcmFuJTIwUmVqZWN0cyUyMFRydWNlfGVufDB8MHx8fDE3NzU1NDIxODR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Iran Rejects Truce as Trump's Deadline Looms: A Diplomatic Standoff" loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-07T11:38:00+05:30">Tue 07 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/iran-rejects-truce-trumps-deadline-looms-diplomatic-standoff/">Iran Rejects Truce as Trump's Deadline Looms: A Diplomatic Standoff</a>
+                </h3>
+                <p class="card-excerpt">As Trump's firm deadlines for sanctions approach, Iran staunchly rejects any truce or negotiations, deepening a...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-07T11:38:00+05:30">Tue 07 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/iran-rejects-truce-trumps-deadline-looms-diplomatic-standoff/">Iran Rejects Truce as Trump's Deadline Looms: A Diplomatic Standoff</a></h3>
-            <p>As Trump's firm deadlines for sanctions approach, Iran staunchly rejects any truce or negotiations, deepening a critical diplomatic...</p>
-            <a href="https://analyticsdrive.tech/iran-rejects-truce-trumps-deadline-looms-diplomatic-standoff/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-07T10:35:00+05:30">Tue 07 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/">Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know</a>
+                </h3>
+                <p class="card-excerpt">Global oil tensions are driving gas prices to new highs, impacting consumers and economies worldwide. Understand the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-07T10:35:00+05:30">Tue 07 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/">Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know</a></h3>
-            <p>Global oil tensions are driving gas prices to new highs, impacting consumers and economies worldwide. Understand the complex factors at play.</p>
-            <a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump's Iran Ultimatum: Strait of Hormuz Crisis Escalates" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump's Iran Ultimatum: Strait of Hormuz Crisis Escalates" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-05T19:05:00+05:30">Sun 05 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates/">Trump's Iran Ultimatum: Strait of Hormuz Crisis Escalates</a>
+                </h3>
+                <p class="card-excerpt">As tensions rise, the world watches Trump's Iran ultimatum regarding the critical Strait of Hormuz, fearing a major...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-05T19:05:00+05:30">Sun 05 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates/">Trump's Iran Ultimatum: Strait of Hormuz Crisis Escalates</a></h3>
-            <p>As tensions rise, the world watches Trump's Iran ultimatum regarding the critical Strait of Hormuz, fearing a major crisis escalates...</p>
-            <a href="https://analyticsdrive.tech/trumps-iran-ultimatum-strait-of-hormuz-crisis-escalates/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-01T11:30:00+05:30">Wed 01 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/">Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions</a>
+                </h3>
+                <p class="card-excerpt">Escalating tensions in the Middle East as Israel launches "wide-scale" strikes on Tehran. This post details the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-01T11:30:00+05:30">Wed 01 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/">Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions</a></h3>
-            <p>Escalating tensions in the Middle East as Israel launches "wide-scale" strikes on Tehran. This post details the event and its global...</p>
-            <a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Iran Threatens Apple, Google, Meta Over Assassinations: A Geopolitical Escalation" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Iran Threatens Apple, Google, Meta Over Assassinations: A Geopolitical Escalation" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-01T10:23:00+05:30">Wed 01 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation/">Iran Threatens Apple, Google, Meta Over Assassinations: A Geopolitical Escalation</a>
+                </h3>
+                <p class="card-excerpt">Iran's Revolutionary Guard has issued a stark warning, threatening tech giants Apple, Google, and Meta over alleged...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-01T10:23:00+05:30">Wed 01 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation/">Iran Threatens Apple, Google, Meta Over Assassinations: A Geopolitical Escalation</a></h3>
-            <p>Iran's Revolutionary Guard has issued a stark warning, threatening tech giants Apple, Google, and Meta over alleged involvement in...</p>
-            <a href="https://analyticsdrive.tech/iran-threatens-apple-google-meta-assassinations-geopolitical-escalation/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-30T14:47:00+05:30">Mon 30 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/">Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint</a>
+                </h3>
+                <p class="card-excerpt">Reports indicate former President Trump's focus on Iran's Kharg Island, a crucial oil terminal. This strategic...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-30T14:47:00+05:30">Mon 30 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/">Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint</a></h3>
-            <p>Reports indicate former President Trump's focus on Iran's Kharg Island, a crucial oil terminal. This strategic interest could signal new...</p>
-            <a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East on Edge: New Strikes Escalate Tensions Regionally" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East on Edge: New Strikes Escalate Tensions Regionally" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T16:29:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/">Middle East on Edge: New Strikes Escalate Tensions Regionally</a>
+                </h3>
+                <p class="card-excerpt">Amidst renewed regional skirmishes, the Middle East on Edge: New Strikes Escalate Tensions, plunging the volatile...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T16:29:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/">Middle East on Edge: New Strikes Escalate Tensions Regionally</a></h3>
-            <p>Amidst renewed regional skirmishes, the Middle East on Edge: New Strikes Escalate Tensions, plunging the volatile region into deeper uncertainty.</p>
-            <a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/mideast-conflict-iran-commander-killed-russia-arms-shift.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/mideast-conflict-iran-commander-killed-russia-arms-shift-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/mideast-conflict-iran-commander-killed-russia-arms-shift-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast Conflict: Iran Commander Killed, Russia Arms Shift Dynamics" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-conflict-iran-commander-killed-russia-arms-shift/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/mideast-conflict-iran-commander-killed-russia-arms-shift.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/mideast-conflict-iran-commander-killed-russia-arms-shift-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/mideast-conflict-iran-commander-killed-russia-arms-shift-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast Conflict: Iran Commander Killed, Russia Arms Shift Dynamics" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-26T23:10:00+05:30">Thu 26 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-conflict-iran-commander-killed-russia-arms-shift/">Mideast Conflict: Iran Commander Killed, Russia Arms Shift Dynamics</a>
+                </h3>
+                <p class="card-excerpt">The Mideast Conflict intensifies as an Iran Commander is killed and Russia expands arms deals, reshaping alliances...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-26T23:10:00+05:30">Thu 26 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-conflict-iran-commander-killed-russia-arms-shift/">Mideast Conflict: Iran Commander Killed, Russia Arms Shift Dynamics</a></h3>
-            <p>The Mideast Conflict intensifies as an Iran Commander is killed and Russia expands arms deals, reshaping alliances and escalating...</p>
-            <a href="https://analyticsdrive.tech/mideast-conflict-iran-commander-killed-russia-arms-shift/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T23:11:00+05:30">Mon 23 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis/">Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics</a>
+                </h3>
+                <p class="card-excerpt">A new chapter in the volatile Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline creates profound...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T23:11:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">17 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis/">Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline Reshapes Dynamics</a></h3>
-            <p>A new chapter in the volatile Mideast Crisis: Israel Strikes Tehran; Trump Extends Deadline creates profound geopolitical ripples,...</p>
-            <a href="https://analyticsdrive.tech/mideast-crisis-israel-strikes-tehran-trump-extends-deadline-analysis/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/geopolitical-tensions-reshape-global-landscape-analysis.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/geopolitical-tensions-reshape-global-landscape-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/geopolitical-tensions-reshape-global-landscape-analysis-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Geopolitical Tensions Reshape Global Landscape: A Global Analysis" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/geopolitical-tensions-reshape-global-landscape-analysis.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/geopolitical-tensions-reshape-global-landscape-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/geopolitical-tensions-reshape-global-landscape-analysis-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Geopolitical Tensions Reshape Global Landscape: A Global Analysis" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T20:59:00+05:30">Sun 22 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/">Geopolitical Tensions Reshape Global Landscape: A Global Analysis</a>
+                </h3>
+                <p class="card-excerpt">Geopolitical Tensions Reshape Global Landscape, impacting economies, alliances, and international stability. This...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T20:59:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/">Geopolitical Tensions Reshape Global Landscape: A Global Analysis</a></h3>
-            <p>Geopolitical Tensions Reshape Global Landscape, impacting economies, alliances, and international stability. This article analyzes key...</p>
-            <a href="https://analyticsdrive.tech/geopolitical-tensions-reshape-global-landscape-analysis/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-soar-israel-strikes-iran-retaliates.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-soar-israel-strikes-iran-retaliates-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-tensions-soar-israel-strikes-iran-retaliates-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East Tensions Soar: Israel Strikes, Iran Retaliates" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-soar-israel-strikes-iran-retaliates.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-soar-israel-strikes-iran-retaliates-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-tensions-soar-israel-strikes-iran-retaliates-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East Tensions Soar: Israel Strikes, Iran Retaliates" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T22:38:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/">Middle East Tensions Soar: Israel Strikes, Iran Retaliates</a>
+                </h3>
+                <p class="card-excerpt">Recent Israeli strikes on Iranian targets and Iran's swift retaliation have sent Middle East tensions soaring,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T22:38:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/">Middle East Tensions Soar: Israel Strikes, Iran Retaliates</a></h3>
-            <p>Recent Israeli strikes on Iranian targets and Iran's swift retaliation have sent Middle East tensions soaring, raising fears of wider conflict.</p>
-            <a href="https://analyticsdrive.tech/middle-east-tensions-soar-israel-strikes-iran-retaliates/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hormuz-crisis-oil-prices-surge-deployments-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T03:09:00+05:30">Sat 21 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a>
+                </h3>
+                <p class="card-excerpt">The Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments as geopolitical tensions escalate, posing significant...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T03:09:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/">Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments: A Global Concern</a></h3>
-            <p>The Hormuz Crisis Deepens, Oil Prices Surge Amid Deployments as geopolitical tensions escalate, posing significant challenges to global...</p>
-            <a href="https://analyticsdrive.tech/hormuz-crisis-oil-prices-surge-deployments/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East on Edge: Tensions Surge, Markets React to Volatility" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-tensions-surge-market-react-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East on Edge: Tensions Surge, Markets React to Volatility" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-19T09:38:00+05:30">Thu 19 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a>
+                </h3>
+                <p class="card-excerpt">The Middle East is on edge as tensions surge, causing global markets to react with significant volatility. This...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-19T09:38:00+05:30">Thu 19 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">16 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/">Middle East on Edge: Tensions Surge, Markets React to Volatility</a></h3>
-            <p>The Middle East is on edge as tensions surge, causing global markets to react with significant volatility. This article explores the...</p>
-            <a href="https://analyticsdrive.tech/middle-east-tensions-surge-market-react/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/iran3.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/iran5.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/iran3.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 4 of 5</span>
+
+        <a href="https://analyticsdrive.tech/tag/iran5.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>

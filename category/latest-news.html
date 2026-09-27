@@ -1171,22 +1171,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3311,9 +3443,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/categories.html">Categories</a>
@@ -3321,361 +3453,622 @@ a:hover {
         <span class="current">Latest News</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Category</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            Latest News
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            21 articles        </p>
+    <!-- Category Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Collection</span>
+            <span class="archive-count-badge">21 Articles</span>
+        </div>
+        <h1 class="archive-title">Latest News</h1>
+        <p class="archive-description">Stay ahead with up-to-the-minute coverage of breaking stories. Real-time updates and essential context on the day's most important headlines.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/09/thailand-severe-flooding-24-provinces-alert-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/09/thailand-severe-flooding-24-provinces-alert-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/09/thailand-severe-flooding-24-provinces-alert-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Thailand Faces Severe Flooding, 24 Provinces Under Alert" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="category-grid">
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/thailand-severe-flooding-24-provinces-alert-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/09/thailand-severe-flooding-24-provinces-alert-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/09/thailand-severe-flooding-24-provinces-alert-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/09/thailand-severe-flooding-24-provinces-alert-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Thailand Faces Severe Flooding, 24 Provinces Under Alert" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-09-13T00:38:00+05:30">Sun 13 September 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/thailand-severe-flooding-24-provinces-alert-2026/">Thailand Faces Severe Flooding, 24 Provinces Under Alert</a>
+                </h3>
+                <p class="card-excerpt">Thailand is grappling with severe widespread flooding as heavy monsoon rains trigger alerts across 24 provinces....</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-09-13T00:38:00+05:30">Sun 13 September 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/thailand-severe-flooding-24-provinces-alert-2026/">Thailand Faces Severe Flooding, 24 Provinces Under Alert</a></h3>
-            <p>Thailand is grappling with severe widespread flooding as heavy monsoon rains trigger alerts across 24 provinces. Authorities urge...</p>
-            <a href="https://analyticsdrive.tech/thailand-severe-flooding-24-provinces-alert-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/09/italy-train-strike-widespread-disruption-travel.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/09/italy-train-strike-widespread-disruption-travel-tablet.webp 800w, https://analyticsdrive.tech/images/2026/09/italy-train-strike-widespread-disruption-travel-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Italy Train Strike Causes Widespread Disruption for Travelers" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/italy-train-strike-widespread-disruption-travel/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/09/italy-train-strike-widespread-disruption-travel.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/09/italy-train-strike-widespread-disruption-travel-tablet.webp 800w, https://analyticsdrive.tech/images/2026/09/italy-train-strike-widespread-disruption-travel-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Italy Train Strike Causes Widespread Disruption for Travelers" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-09-08T01:05:00+05:30">Tue 08 September 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/italy-train-strike-widespread-disruption-travel/">Italy Train Strike Causes Widespread Disruption for Travelers</a>
+                </h3>
+                <p class="card-excerpt">A major Italy train strike causes widespread disruption across the nation, impacting millions of travelers and the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-09-08T01:05:00+05:30">Tue 08 September 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/italy-train-strike-widespread-disruption-travel/">Italy Train Strike Causes Widespread Disruption for Travelers</a></h3>
-            <p>A major Italy train strike causes widespread disruption across the nation, impacting millions of travelers and the economy. Get the...</p>
-            <a href="https://analyticsdrive.tech/italy-train-strike-widespread-disruption-travel/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/09/cargo-plane-crash-miami-kills-five-investigation.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/09/cargo-plane-crash-miami-kills-five-investigation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/09/cargo-plane-crash-miami-kills-five-investigation-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Cargo Plane Crash in Miami Kills Five: Investigation Underway" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/cargo-plane-crash-miami-kills-five-investigation/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/09/cargo-plane-crash-miami-kills-five-investigation.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/09/cargo-plane-crash-miami-kills-five-investigation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/09/cargo-plane-crash-miami-kills-five-investigation-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Cargo Plane Crash in Miami Kills Five: Investigation Underway" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-09-07T22:25:00+05:30">Mon 07 September 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/cargo-plane-crash-miami-kills-five-investigation/">Cargo Plane Crash in Miami Kills Five: Investigation Underway</a>
+                </h3>
+                <p class="card-excerpt">A tragic cargo plane crash in Miami killed five crew members, sparking an intensive investigation by federal...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-09-07T22:25:00+05:30">Mon 07 September 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/cargo-plane-crash-miami-kills-five-investigation/">Cargo Plane Crash in Miami Kills Five: Investigation Underway</a></h3>
-            <p>A tragic cargo plane crash in Miami killed five crew members, sparking an intensive investigation by federal authorities into the cause...</p>
-            <a href="https://analyticsdrive.tech/cargo-plane-crash-miami-kills-five-investigation/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/india-telangana-thunderstorm-orange-alert-june-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/india-telangana-thunderstorm-orange-alert-june-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/india-telangana-thunderstorm-orange-alert-june-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India: Telangana Under Thunderstorm Orange Alert – Stay Safe!" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-telangana-thunderstorm-orange-alert-june-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/india-telangana-thunderstorm-orange-alert-june-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/india-telangana-thunderstorm-orange-alert-june-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/india-telangana-thunderstorm-orange-alert-june-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India: Telangana Under Thunderstorm Orange Alert – Stay Safe!" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-03T03:33:00+05:30">Wed 03 June 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-telangana-thunderstorm-orange-alert-june-2026/">India: Telangana Under Thunderstorm Orange Alert – Stay Safe!</a>
+                </h3>
+                <p class="card-excerpt">Telangana faces an Orange Alert for thunderstorms, with the IMD forecasting gusty winds and rain. Residents are...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Priya Nair</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-03T03:33:00+05:30">Wed 03 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-telangana-thunderstorm-orange-alert-june-2026/">India: Telangana Under Thunderstorm Orange Alert – Stay Safe!</a></h3>
-            <p>Telangana faces an Orange Alert for thunderstorms, with the IMD forecasting gusty winds and rain. Residents are urged to stay informed...</p>
-            <a href="https://analyticsdrive.tech/india-telangana-thunderstorm-orange-alert-june-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Africa's Ebola Outbreak Triggers Expanded Travel Bans Globally" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/africas-ebola-outbreak-triggers-expanded-travel-bans/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Africa's Ebola Outbreak Triggers Expanded Travel Bans Globally" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T11:41:00+05:30">Sat 30 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/africas-ebola-outbreak-triggers-expanded-travel-bans/">Africa's Ebola Outbreak Triggers Expanded Travel Bans Globally</a>
+                </h3>
+                <p class="card-excerpt">Africa's new Ebola outbreak triggers global travel bans and heightened screenings, raising critical concerns about...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T11:41:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/africas-ebola-outbreak-triggers-expanded-travel-bans/">Africa's Ebola Outbreak Triggers Expanded Travel Bans Globally</a></h3>
-            <p>Africa's new Ebola outbreak triggers global travel bans and heightened screenings, raising critical concerns about worldwide health...</p>
-            <a href="https://analyticsdrive.tech/africas-ebola-outbreak-triggers-expanded-travel-bans/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/navigating-sa-market-trends-challenges-opportunities.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/navigating-sa-market-trends-challenges-opportunities-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/navigating-sa-market-trends-challenges-opportunities-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Navigating the SA Market: Trends, Challenges, and Opportunities" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/navigating-sa-market-trends-challenges-opportunities/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/navigating-sa-market-trends-challenges-opportunities.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/navigating-sa-market-trends-challenges-opportunities-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/navigating-sa-market-trends-challenges-opportunities-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Navigating the SA Market: Trends, Challenges, and Opportunities" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-29T11:59:00+05:30">Fri 29 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/navigating-sa-market-trends-challenges-opportunities/">Navigating the SA Market: Trends, Challenges, and Opportunities</a>
+                </h3>
+                <p class="card-excerpt">Explore the dynamic landscape of the SA Market in 2026, examining key economic trends, persistent challenges, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-29T11:59:00+05:30">Fri 29 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/navigating-sa-market-trends-challenges-opportunities/">Navigating the SA Market: Trends, Challenges, and Opportunities</a></h3>
-            <p>Explore the dynamic landscape of the SA Market in 2026, examining key economic trends, persistent challenges, and emerging investment...</p>
-            <a href="https://analyticsdrive.tech/navigating-sa-market-trends-challenges-opportunities/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/tragic-fire-kills-16-girls-kenya-boarding-school.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/tragic-fire-kills-16-girls-kenya-boarding-school-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/tragic-fire-kills-16-girls-kenya-boarding-school-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Tragic Fire Kills 16 Girls at Kenya Boarding School, Devastating Families" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/tragic-fire-kills-16-girls-kenya-boarding-school/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/tragic-fire-kills-16-girls-kenya-boarding-school.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/tragic-fire-kills-16-girls-kenya-boarding-school-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/tragic-fire-kills-16-girls-kenya-boarding-school-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Tragic Fire Kills 16 Girls at Kenya Boarding School, Devastating Families" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-28T20:44:00+05:30">Thu 28 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/tragic-fire-kills-16-girls-kenya-boarding-school/">Tragic Fire Kills 16 Girls at Kenya Boarding School, Devastating Families</a>
+                </h3>
+                <p class="card-excerpt">A tragic fire killed 16 girls at a Kenya boarding school, sparking national mourning and calls for improved safety...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-28T20:44:00+05:30">Thu 28 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/tragic-fire-kills-16-girls-kenya-boarding-school/">Tragic Fire Kills 16 Girls at Kenya Boarding School, Devastating Families</a></h3>
-            <p>A tragic fire killed 16 girls at a Kenya boarding school, sparking national mourning and calls for improved safety standards across the country.</p>
-            <a href="https://analyticsdrive.tech/tragic-fire-kills-16-girls-kenya-boarding-school/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/india-heatwave-telangana-deaths.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/india-heatwave-telangana-deaths-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/india-heatwave-telangana-deaths-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India Heatwave: 16 Dead in Telangana From Suspected Heatstroke" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-heatwave-telangana-deaths/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/india-heatwave-telangana-deaths.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/india-heatwave-telangana-deaths-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/india-heatwave-telangana-deaths-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India Heatwave: 16 Dead in Telangana From Suspected Heatstroke" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-25T01:26:00+05:30">Mon 25 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-heatwave-telangana-deaths/">India Heatwave: 16 Dead in Telangana From Suspected Heatstroke</a>
+                </h3>
+                <p class="card-excerpt">A severe India heatwave has gripped Telangana, leading to the tragic deaths of 16 individuals from suspected...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Priya Nair</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-25T01:26:00+05:30">Mon 25 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-heatwave-telangana-deaths/">India Heatwave: 16 Dead in Telangana From Suspected Heatstroke</a></h3>
-            <p>A severe India heatwave has gripped Telangana, leading to the tragic deaths of 16 individuals from suspected heatstroke, raising serious...</p>
-            <a href="https://analyticsdrive.tech/india-heatwave-telangana-deaths/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T15:10:00+05:30">Wed 20 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/">San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack</a>
+                </h3>
+                <p class="card-excerpt">The San Diego Mosque Shooting has sparked a major FBI hate crime probe after two teens killed three at the Islamic...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T15:10:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/">San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack</a></h3>
-            <p>The San Diego Mosque Shooting has sparked a major FBI hate crime probe after two teens killed three at the Islamic Center of San Diego.</p>
-            <a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/deadly-earthquake-southern-china-response.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/deadly-earthquake-southern-china-response-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/deadly-earthquake-southern-china-response-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Deadly Earthquake Strikes Southern China: A Nation Responds" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/deadly-earthquake-southern-china-response/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/deadly-earthquake-southern-china-response.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/deadly-earthquake-southern-china-response-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/deadly-earthquake-southern-china-response-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Deadly Earthquake Strikes Southern China: A Nation Responds" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T02:36:00+05:30">Wed 20 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/deadly-earthquake-southern-china-response/">Deadly Earthquake Strikes Southern China: A Nation Responds</a>
+                </h3>
+                <p class="card-excerpt">A powerful and deadly earthquake strikes Southern China, causing tragic loss of life and widespread destruction....</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T02:36:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/deadly-earthquake-southern-china-response/">Deadly Earthquake Strikes Southern China: A Nation Responds</a></h3>
-            <p>A powerful and deadly earthquake strikes Southern China, causing tragic loss of life and widespread destruction. Emergency responders...</p>
-            <a href="https://analyticsdrive.tech/deadly-earthquake-southern-china-response/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img src="https://images.unsplash.com/photo-1583911300272-5d93addd0c5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NzQ0MDJ8MHwxfHNlYXJjaHwxfHxIYW50YXZpcnVzJTIwT3V0YnJlYWslMjBvbnxlbnwwfDB8fHwxNzc4NTc5MzE4fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Hantavirus Outbreak on Cruise Ship Sparks Global Alarm: MV Hondius Under Scrutiny" loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-global-alarm-mv-hondius/" tabindex="-1" aria-hidden="true">
+                        <img src="https://images.unsplash.com/photo-1583911300272-5d93addd0c5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NzQ0MDJ8MHwxfHNlYXJjaHwxfHxIYW50YXZpcnVzJTIwT3V0YnJlYWslMjBvbnxlbnwwfDB8fHwxNzc4NTc5MzE4fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Hantavirus Outbreak on Cruise Ship Sparks Global Alarm: MV Hondius Under Scrutiny" loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-12T15:16:00+05:30">Tue 12 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-global-alarm-mv-hondius/">Hantavirus Outbreak on Cruise Ship Sparks Global Alarm: MV Hondius Under Scrutiny</a>
+                </h3>
+                <p class="card-excerpt">A Hantavirus Outbreak on Cruise Ship Sparks Global Alarm as the MV Hondius reports cases and fatalities, triggering...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-12T15:16:00+05:30">Tue 12 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">17 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-global-alarm-mv-hondius/">Hantavirus Outbreak on Cruise Ship Sparks Global Alarm: MV Hondius Under Scrutiny</a></h3>
-            <p>A Hantavirus Outbreak on Cruise Ship Sparks Global Alarm as the MV Hondius reports cases and fatalities, triggering international health...</p>
-            <a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-global-alarm-mv-hondius/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/hantavirus-outbreak-cruise-ship-africa.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/hantavirus-outbreak-cruise-ship-africa-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hantavirus-outbreak-cruise-ship-africa-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hantavirus Outbreak Hits Cruise Ship off Africa: A Public Health Crisis" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-africa/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/hantavirus-outbreak-cruise-ship-africa.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/hantavirus-outbreak-cruise-ship-africa-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hantavirus-outbreak-cruise-ship-africa-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hantavirus Outbreak Hits Cruise Ship off Africa: A Public Health Crisis" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-06T11:13:00+05:30">Wed 06 May 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-africa/">Hantavirus Outbreak Hits Cruise Ship off Africa: A Public Health Crisis</a>
+                </h3>
+                <p class="card-excerpt">A concerning Hantavirus outbreak hits cruise ship off Africa, raising urgent public health questions and impacting...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-06T11:13:00+05:30">Wed 06 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-africa/">Hantavirus Outbreak Hits Cruise Ship off Africa: A Public Health Crisis</a></h3>
-            <p>A concerning Hantavirus outbreak hits cruise ship off Africa, raising urgent public health questions and impacting international travel.</p>
-            <a href="https://analyticsdrive.tech/hantavirus-outbreak-cruise-ship-africa/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/sa-market-crash-economic-turmoil.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/sa-market-crash-economic-turmoil-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/sa-market-crash-economic-turmoil-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="SA Market Crash: Navigating Recent Economic Turmoil in SA" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/sa-market-crash-economic-turmoil/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/sa-market-crash-economic-turmoil.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/sa-market-crash-economic-turmoil-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/sa-market-crash-economic-turmoil-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="SA Market Crash: Navigating Recent Economic Turmoil in SA" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-28T23:00:00+05:30">Tue 28 April 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/sa-market-crash-economic-turmoil/">SA Market Crash: Navigating Recent Economic Turmoil in SA</a>
+                </h3>
+                <p class="card-excerpt">Explore the recent SA Market Crash, its global and local triggers, impact on sectors like mining and finance, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-28T23:00:00+05:30">Tue 28 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/sa-market-crash-economic-turmoil/">SA Market Crash: Navigating Recent Economic Turmoil in SA</a></h3>
-            <p>Explore the recent SA Market Crash, its global and local triggers, impact on sectors like mining and finance, and what lies ahead for...</p>
-            <a href="https://analyticsdrive.tech/sa-market-crash-economic-turmoil/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/europe-ahead-plastic-targets-belgium-germany-lead.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/europe-ahead-plastic-targets-belgium-germany-lead-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/europe-ahead-plastic-targets-belgium-germany-lead-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Europe Ahead on Plastic Targets: Belgium, Germany Lead the Way" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/europe-ahead-plastic-targets-belgium-germany-lead/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/europe-ahead-plastic-targets-belgium-germany-lead.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/europe-ahead-plastic-targets-belgium-germany-lead-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/europe-ahead-plastic-targets-belgium-germany-lead-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Europe Ahead on Plastic Targets: Belgium, Germany Lead the Way" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T17:55:00+05:30">Tue 21 April 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/europe-ahead-plastic-targets-belgium-germany-lead/">Europe Ahead on Plastic Targets: Belgium, Germany Lead the Way</a>
+                </h3>
+                <p class="card-excerpt">European nations are making significant strides in combating plastic pollution, with Europe ahead on plastic...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Evelyn Reed</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T17:55:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/europe-ahead-plastic-targets-belgium-germany-lead/">Europe Ahead on Plastic Targets: Belgium, Germany Lead the Way</a></h3>
-            <p>European nations are making significant strides in combating plastic pollution, with Europe ahead on plastic targets, especially Belgium...</p>
-            <a href="https://analyticsdrive.tech/europe-ahead-plastic-targets-belgium-germany-lead/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/boca-raton-viral-kidnapping-hoax-arrest.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/boca-raton-viral-kidnapping-hoax-arrest-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/boca-raton-viral-kidnapping-hoax-arrest-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Boca Raton Viral Kidnapping Hoax Leads to Arrest, Sparking Concern" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/boca-raton-viral-kidnapping-hoax-arrest/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/boca-raton-viral-kidnapping-hoax-arrest.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/boca-raton-viral-kidnapping-hoax-arrest-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/boca-raton-viral-kidnapping-hoax-arrest-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Boca Raton Viral Kidnapping Hoax Leads to Arrest, Sparking Concern" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-12T22:30:00+05:30">Sun 12 April 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/boca-raton-viral-kidnapping-hoax-arrest/">Boca Raton Viral Kidnapping Hoax Leads to Arrest, Sparking Concern</a>
+                </h3>
+                <p class="card-excerpt">A viral kidnapping hoax in Boca Raton, Florida, has culminated in an arrest, highlighting dangers of online misinformation.</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-12T22:30:00+05:30">Sun 12 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/boca-raton-viral-kidnapping-hoax-arrest/">Boca Raton Viral Kidnapping Hoax Leads to Arrest, Sparking Concern</a></h3>
-            <p>A viral kidnapping hoax in Boca Raton, Florida, has culminated in an arrest, highlighting dangers of online misinformation.</p>
-            <a href="https://analyticsdrive.tech/boca-raton-viral-kidnapping-hoax-arrest/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/gas-prices-soar-global-oil-tensions-impact-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-07T10:35:00+05:30">Tue 07 April 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/">Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know</a>
+                </h3>
+                <p class="card-excerpt">Global oil tensions are driving gas prices to new highs, impacting consumers and economies worldwide. Understand the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-07T10:35:00+05:30">Tue 07 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/">Gas Prices Soar Amidst Global Oil Tensions: What You Need to Know</a></h3>
-            <p>Global oil tensions are driving gas prices to new highs, impacting consumers and economies worldwide. Understand the complex factors at play.</p>
-            <a href="https://analyticsdrive.tech/gas-prices-soar-global-oil-tensions-impact/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/baby-born-mid-flight-jfk-kennedy-viral.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/baby-born-mid-flight-jfk-kennedy-viral-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/baby-born-mid-flight-jfk-kennedy-viral-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mid-Flight Miracle: Baby Born to JFK, 'Kennedy' Suggestion Goes Viral" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/baby-born-mid-flight-jfk-kennedy-viral/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/baby-born-mid-flight-jfk-kennedy-viral.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/baby-born-mid-flight-jfk-kennedy-viral-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/baby-born-mid-flight-jfk-kennedy-viral-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mid-Flight Miracle: Baby Born to JFK, 'Kennedy' Suggestion Goes Viral" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-07T10:32:00+05:30">Tue 07 April 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/baby-born-mid-flight-jfk-kennedy-viral/">Mid-Flight Miracle: Baby Born to JFK, 'Kennedy' Suggestion Goes Viral</a>
+                </h3>
+                <p class="card-excerpt">A baby born mid-flight to JFK Airport sparked global interest. The ATC's playful 'Kennedy' name suggestion went...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-07T10:32:00+05:30">Tue 07 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/baby-born-mid-flight-jfk-kennedy-viral/">Mid-Flight Miracle: Baby Born to JFK, 'Kennedy' Suggestion Goes Viral</a></h3>
-            <p>A baby born mid-flight to JFK Airport sparked global interest. The ATC's playful 'Kennedy' name suggestion went viral, captivating...</p>
-            <a href="https://analyticsdrive.tech/baby-born-mid-flight-jfk-kennedy-viral/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/viral-stunt-man-clings-speeding-truck-klang.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/viral-stunt-man-clings-speeding-truck-klang-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/viral-stunt-man-clings-speeding-truck-klang-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Viral Stunt: Man Clings to Speeding Truck in Klang Raises Alarm" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/viral-stunt-man-clings-speeding-truck-klang/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/viral-stunt-man-clings-speeding-truck-klang.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/viral-stunt-man-clings-speeding-truck-klang-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/viral-stunt-man-clings-speeding-truck-klang-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Viral Stunt: Man Clings to Speeding Truck in Klang Raises Alarm" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-01T10:20:00+05:30">Wed 01 April 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/viral-stunt-man-clings-speeding-truck-klang/">Viral Stunt: Man Clings to Speeding Truck in Klang Raises Alarm</a>
+                </h3>
+                <p class="card-excerpt">A shocking viral stunt involving a man clinging to a speeding truck in Klang has ignited widespread public alarm and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-01T10:20:00+05:30">Wed 01 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/viral-stunt-man-clings-speeding-truck-klang/">Viral Stunt: Man Clings to Speeding Truck in Klang Raises Alarm</a></h3>
-            <p>A shocking viral stunt involving a man clinging to a speeding truck in Klang has ignited widespread public alarm and prompted a police...</p>
-            <a href="https://analyticsdrive.tech/viral-stunt-man-clings-speeding-truck-klang/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-29T02:47:00+05:30">Sun 29 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/">Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked</a>
+                </h3>
+                <p class="card-excerpt">Explore the complex details surrounding the Tiger Woods crash, scrutinizing viral claims, and analyzing the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-29T02:47:00+05:30">Sun 29 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/">Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked</a></h3>
-            <p>Explore the complex details surrounding the Tiger Woods crash, scrutinizing viral claims, and analyzing the particulars of his prior DUI...</p>
-            <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Viral Video: Florida Airboat Fires on Alligator Ignites Debate" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Viral Video: Florida Airboat Fires on Alligator Ignites Debate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T16:32:00+05:30">Fri 27 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/">Viral Video: Florida Airboat Fires on Alligator Ignites Debate</a>
+                </h3>
+                <p class="card-excerpt">A viral video of a Florida airboat operator firing on an alligator sparks outrage & legal scrutiny. Dive into the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T16:32:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/">Viral Video: Florida Airboat Fires on Alligator Ignites Debate</a></h3>
-            <p>A viral video of a Florida airboat operator firing on an alligator sparks outrage & legal scrutiny. Dive into the incident, wildlife...</p>
-            <a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/category/latest-news2.html">Older
-            &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Category Page Navigation">
+
+        <span class="page-current">Page 1 of 2</span>
+
+        <a href="https://analyticsdrive.tech/category/latest-news2.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 </section>
     </main>
 

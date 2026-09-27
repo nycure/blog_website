@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,382 +3452,623 @@ a:hover {
         <span class="current">#USA</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #USA
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            206 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">206 Articles</span>
+        </div>
+        <h1 class="archive-title">#USA</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #USA.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/mideast-war-escalates-iran-tensions-oil-shock-reverberate.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/mideast-war-escalates-iran-tensions-oil-shock-reverberate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/mideast-war-escalates-iran-tensions-oil-shock-reverberate-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast War Escalates: Iran Tensions & Oil Shock Reverberate Globally" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-war-escalates-iran-tensions-oil-shock-reverberate/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/mideast-war-escalates-iran-tensions-oil-shock-reverberate.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/mideast-war-escalates-iran-tensions-oil-shock-reverberate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/mideast-war-escalates-iran-tensions-oil-shock-reverberate-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast War Escalates: Iran Tensions & Oil Shock Reverberate Globally" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-29T04:14:00+05:30">Wed 29 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-war-escalates-iran-tensions-oil-shock-reverberate/">Mideast War Escalates: Iran Tensions & Oil Shock Reverberate Globally</a>
+                </h3>
+                <p class="card-excerpt">The Mideast War Escalates: Iran Tensions & Oil Shock are causing unprecedented global economic disruption and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-29T04:14:00+05:30">Wed 29 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">16 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-war-escalates-iran-tensions-oil-shock-reverberate/">Mideast War Escalates: Iran Tensions & Oil Shock Reverberate Globally</a></h3>
-            <p>The Mideast War Escalates: Iran Tensions & Oil Shock are causing unprecedented global economic disruption and geopolitical instability.</p>
-            <a href="https://analyticsdrive.tech/mideast-war-escalates-iran-tensions-oil-shock-reverberate/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-chip-law-new-era-semiconductor-manufacturing.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-chip-law-new-era-semiconductor-manufacturing-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-chip-law-new-era-semiconductor-manufacturing-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US Chip Law: A New Era for Semiconductor Manufacturing" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-chip-law-new-era-semiconductor-manufacturing/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-chip-law-new-era-semiconductor-manufacturing.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-chip-law-new-era-semiconductor-manufacturing-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-chip-law-new-era-semiconductor-manufacturing-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US Chip Law: A New Era for Semiconductor Manufacturing" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-29T02:07:00+05:30">Wed 29 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-chip-law-new-era-semiconductor-manufacturing/">US Chip Law: A New Era for Semiconductor Manufacturing</a>
+                </h3>
+                <p class="card-excerpt">The US Chip Law, officially the CHIPS and Science Act, ushers in a new era for semiconductor manufacturing, aiming...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-29T02:07:00+05:30">Wed 29 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-chip-law-new-era-semiconductor-manufacturing/">US Chip Law: A New Era for Semiconductor Manufacturing</a></h3>
-            <p>The US Chip Law, officially the CHIPS and Science Act, ushers in a new era for semiconductor manufacturing, aiming to revitalize...</p>
-            <a href="https://analyticsdrive.tech/us-chip-law-new-era-semiconductor-manufacturing/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/unpacking-complexities-me-peace-talks.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/unpacking-complexities-me-peace-talks-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/unpacking-complexities-me-peace-talks-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Unpacking the Complexities of ME Peace Talks" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/unpacking-complexities-me-peace-talks/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/unpacking-complexities-me-peace-talks.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/unpacking-complexities-me-peace-talks-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/unpacking-complexities-me-peace-talks-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Unpacking the Complexities of ME Peace Talks" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-28T00:26:00+05:30">Tue 28 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/unpacking-complexities-me-peace-talks/">Unpacking the Complexities of ME Peace Talks</a>
+                </h3>
+                <p class="card-excerpt">Explore the persistent challenges and renewed efforts in ME Peace Talks, examining historical context, key players,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-28T00:26:00+05:30">Tue 28 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/unpacking-complexities-me-peace-talks/">Unpacking the Complexities of ME Peace Talks</a></h3>
-            <p>Explore the persistent challenges and renewed efforts in ME Peace Talks, examining historical context, key players, and the path forward.</p>
-            <a href="https://analyticsdrive.tech/unpacking-complexities-me-peace-talks/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-ai-breakthrough-innovations.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-ai-breakthrough-innovations-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-ai-breakthrough-innovations-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US AI Break: Groundbreaking Innovations Redefining Technology" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-ai-breakthrough-innovations/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-ai-breakthrough-innovations.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-ai-breakthrough-innovations-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-ai-breakthrough-innovations-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US AI Break: Groundbreaking Innovations Redefining Technology" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-27T19:24:00+05:30">Mon 27 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-ai-breakthrough-innovations/">US AI Break: Groundbreaking Innovations Redefining Technology</a>
+                </h3>
+                <p class="card-excerpt">The US AI break is catalyzing a digital transformation, driving unprecedented innovations in machine learning and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-27T19:24:00+05:30">Mon 27 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">7 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-ai-breakthrough-innovations/">US AI Break: Groundbreaking Innovations Redefining Technology</a></h3>
-            <p>The US AI break is catalyzing a digital transformation, driving unprecedented innovations in machine learning and global industry...</p>
-            <a href="https://analyticsdrive.tech/us-ai-breakthrough-innovations/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/africa-parliament-key-leadership-vote.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/africa-parliament-key-leadership-vote-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/africa-parliament-key-leadership-vote-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Africa's Parliament Convenes for Key Leadership Vote: A Pivotal Moment" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/africa-parliament-key-leadership-vote/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/africa-parliament-key-leadership-vote.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/africa-parliament-key-leadership-vote-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/africa-parliament-key-leadership-vote-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Africa's Parliament Convenes for Key Leadership Vote: A Pivotal Moment" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-27T06:05:00+05:30">Mon 27 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/africa-parliament-key-leadership-vote/">Africa's Parliament Convenes for Key Leadership Vote: A Pivotal Moment</a>
+                </h3>
+                <p class="card-excerpt">Africa's Parliament convenes for a crucial leadership vote, a pivotal moment for continental governance. This...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-27T06:05:00+05:30">Mon 27 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/africa-parliament-key-leadership-vote/">Africa's Parliament Convenes for Key Leadership Vote: A Pivotal Moment</a></h3>
-            <p>Africa's Parliament convenes for a crucial leadership vote, a pivotal moment for continental governance. This election shapes future...</p>
-            <a href="https://analyticsdrive.tech/africa-parliament-key-leadership-vote/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/white-house-dinner-shooting-trump-unharmed-amid-chaos.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/white-house-dinner-shooting-trump-unharmed-amid-chaos-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/white-house-dinner-shooting-trump-unharmed-amid-chaos-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="White House Dinner Shooting: Trump Unharmed Amid Chaos" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/white-house-dinner-shooting-trump-unharmed-amid-chaos/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/white-house-dinner-shooting-trump-unharmed-amid-chaos.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/white-house-dinner-shooting-trump-unharmed-amid-chaos-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/white-house-dinner-shooting-trump-unharmed-amid-chaos-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="White House Dinner Shooting: Trump Unharmed Amid Chaos" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-27T01:55:00+05:30">Mon 27 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/white-house-dinner-shooting-trump-unharmed-amid-chaos/">White House Dinner Shooting: Trump Unharmed Amid Chaos</a>
+                </h3>
+                <p class="card-excerpt">A shooting incident at a high-profile White House dinner left President Trump unharmed but sent shockwaves through...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-27T01:55:00+05:30">Mon 27 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/white-house-dinner-shooting-trump-unharmed-amid-chaos/">White House Dinner Shooting: Trump Unharmed Amid Chaos</a></h3>
-            <p>A shooting incident at a high-profile White House dinner left President Trump unharmed but sent shockwaves through the nation. Learn...</p>
-            <a href="https://analyticsdrive.tech/white-house-dinner-shooting-trump-unharmed-amid-chaos/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/global-economy-at-risk-us-iran-tensions-soar.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/global-economy-at-risk-us-iran-tensions-soar-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/global-economy-at-risk-us-iran-tensions-soar-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Global Economy at Risk as US-Iran Tensions Soar: A Detailed Analysis" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/global-economy-at-risk-us-iran-tensions-soar/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/global-economy-at-risk-us-iran-tensions-soar.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/global-economy-at-risk-us-iran-tensions-soar-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/global-economy-at-risk-us-iran-tensions-soar-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Global Economy at Risk as US-Iran Tensions Soar: A Detailed Analysis" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-27T00:52:00+05:30">Mon 27 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/global-economy-at-risk-us-iran-tensions-soar/">Global Economy at Risk as US-Iran Tensions Soar: A Detailed Analysis</a>
+                </h3>
+                <p class="card-excerpt">Rising US-Iran tensions threaten global economic stability, impacting oil markets, trade routes, and international...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-27T00:52:00+05:30">Mon 27 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/global-economy-at-risk-us-iran-tensions-soar/">Global Economy at Risk as US-Iran Tensions Soar: A Detailed Analysis</a></h3>
-            <p>Rising US-Iran tensions threaten global economic stability, impacting oil markets, trade routes, and international relations. This post...</p>
-            <a href="https://analyticsdrive.tech/global-economy-at-risk-us-iran-tensions-soar/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/stagecoach-festival-evacuated-high-winds.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/stagecoach-festival-evacuated-high-winds-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/stagecoach-festival-evacuated-high-winds-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Stagecoach Festival Evacuated Amid High Winds: Safety First at Country's Biggest Stage" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Entertainment">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/stagecoach-festival-evacuated-high-winds/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/stagecoach-festival-evacuated-high-winds.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/stagecoach-festival-evacuated-high-winds-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/stagecoach-festival-evacuated-high-winds-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Stagecoach Festival Evacuated Amid High Winds: Safety First at Country's Biggest Stage" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge entertainment">
+                    <a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-26T20:52:00+05:30">Sun 26 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/stagecoach-festival-evacuated-high-winds/">Stagecoach Festival Evacuated Amid High Winds: Safety First at Country's Biggest Stage</a>
+                </h3>
+                <p class="card-excerpt">The 2026 Stagecoach Festival faced an emergency evacuation on Saturday night due to extreme high winds, prioritizing...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-26T20:52:00+05:30">Sun 26 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/stagecoach-festival-evacuated-high-winds/">Stagecoach Festival Evacuated Amid High Winds: Safety First at Country's Biggest Stage</a></h3>
-            <p>The 2026 Stagecoach Festival faced an emergency evacuation on Saturday night due to extreme high winds, prioritizing attendee safety....</p>
-            <a href="https://analyticsdrive.tech/stagecoach-festival-evacuated-high-winds/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/middle-east-escalation-ceasefire-attempts-regional-overview.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/middle-east-escalation-ceasefire-attempts-regional-overview-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/middle-east-escalation-ceasefire-attempts-regional-overview-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East: Escalation & Ceasefire Attempts - A Regional Overview" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-escalation-ceasefire-attempts-regional-overview/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/middle-east-escalation-ceasefire-attempts-regional-overview.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/middle-east-escalation-ceasefire-attempts-regional-overview-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/middle-east-escalation-ceasefire-attempts-regional-overview-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East: Escalation & Ceasefire Attempts - A Regional Overview" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-26T20:30:00+05:30">Sun 26 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-escalation-ceasefire-attempts-regional-overview/">Middle East: Escalation & Ceasefire Attempts - A Regional Overview</a>
+                </h3>
+                <p class="card-excerpt">The Middle East grapples with ongoing conflict and persistent diplomatic efforts. This post examines recent...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-26T20:30:00+05:30">Sun 26 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-escalation-ceasefire-attempts-regional-overview/">Middle East: Escalation & Ceasefire Attempts - A Regional Overview</a></h3>
-            <p>The Middle East grapples with ongoing conflict and persistent diplomatic efforts. This post examines recent escalations and ceasefire...</p>
-            <a href="https://analyticsdrive.tech/middle-east-escalation-ceasefire-attempts-regional-overview/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img src="https://images.unsplash.com/photo-1740645580450-ac411e61117f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NzQ0MDJ8MHwxfHNlYXJjaHwxfHxXSENEJTIwU2hvb3RpbmclM0ElMjBUcnVtcHxlbnwwfDB8fHwxNzc3MjE0Mzg0fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="WHCD Shooting: Trump Evacuated Safely Amid Chaos – A Full Report" loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/whcd-shooting-trump-evacuated-safely-report/" tabindex="-1" aria-hidden="true">
+                        <img src="https://images.unsplash.com/photo-1740645580450-ac411e61117f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NzQ0MDJ8MHwxfHNlYXJjaHwxfHxXSENEJTIwU2hvb3RpbmclM0ElMjBUcnVtcHxlbnwwfDB8fHwxNzc3MjE0Mzg0fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="WHCD Shooting: Trump Evacuated Safely Amid Chaos – A Full Report" loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-26T20:08:00+05:30">Sun 26 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/whcd-shooting-trump-evacuated-safely-report/">WHCD Shooting: Trump Evacuated Safely Amid Chaos – A Full Report</a>
+                </h3>
+                <p class="card-excerpt">President Trump was evacuated safely from the White House Correspondents' Dinner after a shooting incident. This...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-26T20:08:00+05:30">Sun 26 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/whcd-shooting-trump-evacuated-safely-report/">WHCD Shooting: Trump Evacuated Safely Amid Chaos – A Full Report</a></h3>
-            <p>President Trump was evacuated safely from the White House Correspondents' Dinner after a shooting incident. This report details the...</p>
-            <a href="https://analyticsdrive.tech/whcd-shooting-trump-evacuated-safely-report/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/china-blocks-taiwan-africa-trip-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/china-blocks-taiwan-africa-trip-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/china-blocks-taiwan-africa-trip-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="China Blocks Taiwan Leader's Africa Trip Amid Rising Tensions" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/china-blocks-taiwan-africa-trip-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/china-blocks-taiwan-africa-trip-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/china-blocks-taiwan-africa-trip-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/china-blocks-taiwan-africa-trip-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="China Blocks Taiwan Leader's Africa Trip Amid Rising Tensions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-25T18:00:00+05:30">Sat 25 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/china-blocks-taiwan-africa-trip-tensions/">China Blocks Taiwan Leader's Africa Trip Amid Rising Tensions</a>
+                </h3>
+                <p class="card-excerpt">A recent incident where China blocks Taiwan leader's Africa trip highlights escalating cross-strait tensions and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-25T18:00:00+05:30">Sat 25 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/china-blocks-taiwan-africa-trip-tensions/">China Blocks Taiwan Leader's Africa Trip Amid Rising Tensions</a></h3>
-            <p>A recent incident where China blocks Taiwan leader's Africa trip highlights escalating cross-strait tensions and Beijing's global...</p>
-            <a href="https://analyticsdrive.tech/china-blocks-taiwan-africa-trip-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="EU Approves €90B Ukraine Aid & New Russia Sanctions: A Geopolitical Shift" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="EU Approves €90B Ukraine Aid & New Russia Sanctions: A Geopolitical Shift" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-25T16:53:00+05:30">Sat 25 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift/">EU Approves €90B Ukraine Aid & New Russia Sanctions: A Geopolitical Shift</a>
+                </h3>
+                <p class="card-excerpt">The EU has approved a monumental €90 billion aid package for Ukraine and a new wave of Russia sanctions. This...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-25T16:53:00+05:30">Sat 25 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift/">EU Approves €90B Ukraine Aid & New Russia Sanctions: A Geopolitical Shift</a></h3>
-            <p>The EU has approved a monumental €90 billion aid package for Ukraine and a new wave of Russia sanctions. This decision marks a major...</p>
-            <a href="https://analyticsdrive.tech/eu-approves-90b-ukraine-aid-new-russia-sanctions-geopolitical-shift/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-iran-escalation-strait-of-hormuz-standoff.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-iran-escalation-strait-of-hormuz-standoff-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-escalation-strait-of-hormuz-standoff-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Escalation: Strait of Hormuz Standoff Sparks Global Concerns" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-escalation-strait-of-hormuz-standoff/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-iran-escalation-strait-of-hormuz-standoff.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-iran-escalation-strait-of-hormuz-standoff-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-escalation-strait-of-hormuz-standoff-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Escalation: Strait of Hormuz Standoff Sparks Global Concerns" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-24T02:39:00+05:30">Fri 24 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-escalation-strait-of-hormuz-standoff/">US-Iran Escalation: Strait of Hormuz Standoff Sparks Global Concerns</a>
+                </h3>
+                <p class="card-excerpt">Tensions rise as US and Iran engage in a standoff at the Strait of Hormuz, a critical waterway for global oil...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-24T02:39:00+05:30">Fri 24 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-escalation-strait-of-hormuz-standoff/">US-Iran Escalation: Strait of Hormuz Standoff Sparks Global Concerns</a></h3>
-            <p>Tensions rise as US and Iran engage in a standoff at the Strait of Hormuz, a critical waterway for global oil supplies, sparking...</p>
-            <a href="https://analyticsdrive.tech/us-iran-escalation-strait-of-hormuz-standoff/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/eu-ukraine-aid-russia-sanctions-geopolitics.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/eu-ukraine-aid-russia-sanctions-geopolitics-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/eu-ukraine-aid-russia-sanctions-geopolitics-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="EU Unlocks €90B Ukraine Aid, Sanctions Russia Amid Ongoing Conflict" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/eu-ukraine-aid-russia-sanctions-geopolitics/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/eu-ukraine-aid-russia-sanctions-geopolitics.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/eu-ukraine-aid-russia-sanctions-geopolitics-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/eu-ukraine-aid-russia-sanctions-geopolitics-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="EU Unlocks €90B Ukraine Aid, Sanctions Russia Amid Ongoing Conflict" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-24T00:40:00+05:30">Fri 24 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/eu-ukraine-aid-russia-sanctions-geopolitics/">EU Unlocks €90B Ukraine Aid, Sanctions Russia Amid Ongoing Conflict</a>
+                </h3>
+                <p class="card-excerpt">The EU has decisively acted, approving €90B in Ukraine aid and new sanctions on Russia. This blog examines the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-24T00:40:00+05:30">Fri 24 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/eu-ukraine-aid-russia-sanctions-geopolitics/">EU Unlocks €90B Ukraine Aid, Sanctions Russia Amid Ongoing Conflict</a></h3>
-            <p>The EU has decisively acted, approving €90B in Ukraine aid and new sanctions on Russia. This blog examines the geopolitical impact and...</p>
-            <a href="https://analyticsdrive.tech/eu-ukraine-aid-russia-sanctions-geopolitics/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/trump-orders-shoot-and-kill-hormuz-crisis-analysis.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/trump-orders-shoot-and-kill-hormuz-crisis-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-orders-shoot-and-kill-hormuz-crisis-analysis-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Orders 'Shoot and Kill' Amid Hormuz Crisis: A Look Back" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-orders-shoot-and-kill-hormuz-crisis-analysis/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/trump-orders-shoot-and-kill-hormuz-crisis-analysis.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/trump-orders-shoot-and-kill-hormuz-crisis-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-orders-shoot-and-kill-hormuz-crisis-analysis-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Orders 'Shoot and Kill' Amid Hormuz Crisis: A Look Back" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-23T21:30:00+05:30">Thu 23 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-orders-shoot-and-kill-hormuz-crisis-analysis/">Trump Orders 'Shoot and Kill' Amid Hormuz Crisis: A Look Back</a>
+                </h3>
+                <p class="card-excerpt">Examining the 2020 'shoot and kill' order by former President Trump during the Hormuz Crisis, this post analyzes its...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-23T21:30:00+05:30">Thu 23 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-orders-shoot-and-kill-hormuz-crisis-analysis/">Trump Orders 'Shoot and Kill' Amid Hormuz Crisis: A Look Back</a></h3>
-            <p>Examining the 2020 'shoot and kill' order by former President Trump during the Hormuz Crisis, this post analyzes its impact, rules of...</p>
-            <a href="https://analyticsdrive.tech/trump-orders-shoot-and-kill-hormuz-crisis-analysis/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T17:05:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/">US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate</a>
+                </h3>
+                <p class="card-excerpt">Tensions in the critical Strait of Hormuz cast a long shadow over the fragile US-Iran ceasefire, raising concerns...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T17:05:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/">US-Iran Ceasefire in Doubt: Strait of Hormuz Tensions Escalate</a></h3>
-            <p>Tensions in the critical Strait of Hormuz cast a long shadow over the fragile US-Iran ceasefire, raising concerns about global stability...</p>
-            <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubt-strait-hormuz-tensions-escalate/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-labor-secretary-resigns-misconduct-probe.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-labor-secretary-resigns-misconduct-probe-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-labor-secretary-resigns-misconduct-probe-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US Labor Secretary Resigns Amid Misconduct Probe, Shaking Washington" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-labor-secretary-resigns-misconduct-probe/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-labor-secretary-resigns-misconduct-probe.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-labor-secretary-resigns-misconduct-probe-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-labor-secretary-resigns-misconduct-probe-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US Labor Secretary Resigns Amid Misconduct Probe, Shaking Washington" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T16:16:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-labor-secretary-resigns-misconduct-probe/">US Labor Secretary Resigns Amid Misconduct Probe, Shaking Washington</a>
+                </h3>
+                <p class="card-excerpt">US Labor Secretary Sarah Jenkins has resigned amid a deepening misconduct probe, sending shockwaves through...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T16:16:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-labor-secretary-resigns-misconduct-probe/">US Labor Secretary Resigns Amid Misconduct Probe, Shaking Washington</a></h3>
-            <p>US Labor Secretary Sarah Jenkins has resigned amid a deepening misconduct probe, sending shockwaves through Washington and raising...</p>
-            <a href="https://analyticsdrive.tech/us-labor-secretary-resigns-misconduct-probe/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-ceasefire-doubts-hormuz-tensions-rise-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T15:51:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/">US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern</a>
+                </h3>
+                <p class="card-excerpt">Persistent US-Iran ceasefire doubts and rising tensions in the crucial Strait of Hormuz continue to fuel global...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T15:51:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/">US-Iran Ceasefire Doubts, Hormuz Tensions Rise: A Global Security Concern</a></h3>
-            <p>Persistent US-Iran ceasefire doubts and rising tensions in the crucial Strait of Hormuz continue to fuel global security concerns,...</p>
-            <a href="https://analyticsdrive.tech/us-iran-ceasefire-doubts-hormuz-tensions-rise/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/hungary-political-earthquake-pro-russia-party-sweeps-vote.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/hungary-political-earthquake-pro-russia-party-sweeps-vote-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/hungary-political-earthquake-pro-russia-party-sweeps-vote-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hungary's Political Earthquake: Pro-Russia Party Sweeps Vote, Reshaping EU Dynamics" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hungary-political-earthquake-pro-russia-party-sweeps-vote/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/hungary-political-earthquake-pro-russia-party-sweeps-vote.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/hungary-political-earthquake-pro-russia-party-sweeps-vote-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/hungary-political-earthquake-pro-russia-party-sweeps-vote-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hungary's Political Earthquake: Pro-Russia Party Sweeps Vote, Reshaping EU Dynamics" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T07:27:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hungary-political-earthquake-pro-russia-party-sweeps-vote/">Hungary's Political Earthquake: Pro-Russia Party Sweeps Vote, Reshaping EU Dynamics</a>
+                </h3>
+                <p class="card-excerpt">Hungary's election sees a pro-Russia party sweep, creating a political earthquake that challenges EU cohesion and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T07:27:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hungary-political-earthquake-pro-russia-party-sweeps-vote/">Hungary's Political Earthquake: Pro-Russia Party Sweeps Vote, Reshaping EU Dynamics</a></h3>
-            <p>Hungary's election sees a pro-Russia party sweep, creating a political earthquake that challenges EU cohesion and raises questions about...</p>
-            <a href="https://analyticsdrive.tech/hungary-political-earthquake-pro-russia-party-sweeps-vote/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T05:48:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/">US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns</a>
+                </h3>
+                <p class="card-excerpt">Escalating US-Iran tensions see a cargo ship seized in vital waterways. A subsequent oil price jump signals...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T05:48:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/">US-Iran Tensions Escalate: Cargo Ship Seized & Oil Jumps Intensify Global Concerns</a></h3>
-            <p>Escalating US-Iran tensions see a cargo ship seized in vital waterways. A subsequent oil price jump signals heightened global...</p>
-            <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-cargo-ship-seized-oil-jumps/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/usa6.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/usa8.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/usa6.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 7 of 11</span>
+
+        <a href="https://analyticsdrive.tech/tag/usa8.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>

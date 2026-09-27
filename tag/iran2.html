@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,387 +3452,628 @@ a:hover {
         <span class="current">#Iran</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #Iran
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            92 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">92 Articles</span>
+        </div>
+        <h1 class="archive-title">#Iran</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #Iran.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T14:51:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/">Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon</a>
+                </h3>
+                <p class="card-excerpt">Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon with intensified ground operations and airstrikes,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T14:51:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/">Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon</a></h3>
-            <p>Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon with intensified ground operations and airstrikes, exacerbating a...</p>
-            <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T13:58:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/">US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters</a>
+                </h3>
+                <p class="card-excerpt">US jobless claims rise amid Iran War uncertainty, sparking economic jitters. This analysis explores implications for...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T13:58:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">16 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/">US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters</a></h3>
-            <p>US jobless claims rise amid Iran War uncertainty, sparking economic jitters. This analysis explores implications for workers, markets,...</p>
-            <a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/mideast-hezbollah-tank-hits-israel-evacuates-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/mideast-hezbollah-tank-hits-israel-evacuates-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-hezbollah-tank-hits-israel-evacuates-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast: Hezbollah Claims Tank Hits, Israel Evacuates – Escalating Tensions" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-hezbollah-tank-hits-israel-evacuates-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/mideast-hezbollah-tank-hits-israel-evacuates-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/mideast-hezbollah-tank-hits-israel-evacuates-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-hezbollah-tank-hits-israel-evacuates-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast: Hezbollah Claims Tank Hits, Israel Evacuates – Escalating Tensions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T12:55:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-hezbollah-tank-hits-israel-evacuates-tensions/">Mideast: Hezbollah Claims Tank Hits, Israel Evacuates – Escalating Tensions</a>
+                </h3>
+                <p class="card-excerpt">Escalating tensions in the Mideast as Hezbollah claims tank hits and Israel evacuates border communities, signaling...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T12:55:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-hezbollah-tank-hits-israel-evacuates-tensions/">Mideast: Hezbollah Claims Tank Hits, Israel Evacuates – Escalating Tensions</a></h3>
-            <p>Escalating tensions in the Mideast as Hezbollah claims tank hits and Israel evacuates border communities, signaling a volatile new phase...</p>
-            <a href="https://analyticsdrive.tech/mideast-hezbollah-tank-hits-israel-evacuates-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-ceasefire-woes.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-ceasefire-woes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-ceasefire-woes-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East Conflict Escalates Amid Ceasefire Woes" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-ceasefire-woes/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-ceasefire-woes.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-ceasefire-woes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-ceasefire-woes-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East Conflict Escalates Amid Ceasefire Woes" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T10:50:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-ceasefire-woes/">Middle East Conflict Escalates Amid Ceasefire Woes</a>
+                </h3>
+                <p class="card-excerpt">The Middle East conflict escalates amid ceasefire woes, marked by renewed hostilities, stalled peace talks, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T10:50:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-conflict-escalates-ceasefire-woes/">Middle East Conflict Escalates Amid Ceasefire Woes</a></h3>
-            <p>The Middle East conflict escalates amid ceasefire woes, marked by renewed hostilities, stalled peace talks, and deepening humanitarian...</p>
-            <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-ceasefire-woes/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/crucial-mideast-talk-geopolitical-landscapes.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/crucial-mideast-talk-geopolitical-landscapes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/crucial-mideast-talk-geopolitical-landscapes-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Crucial Mideast Talk: Navigating Complex Geopolitical Landscapes" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/crucial-mideast-talk-geopolitical-landscapes/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/crucial-mideast-talk-geopolitical-landscapes.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/crucial-mideast-talk-geopolitical-landscapes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/crucial-mideast-talk-geopolitical-landscapes-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Crucial Mideast Talk: Navigating Complex Geopolitical Landscapes" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-29T11:46:00+05:30">Fri 29 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/crucial-mideast-talk-geopolitical-landscapes/">Crucial Mideast Talk: Navigating Complex Geopolitical Landscapes</a>
+                </h3>
+                <p class="card-excerpt">Explore the crucial Mideast Talk, dissecting recent diplomatic efforts and their impact on navigating the region's...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-29T11:46:00+05:30">Fri 29 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/crucial-mideast-talk-geopolitical-landscapes/">Crucial Mideast Talk: Navigating Complex Geopolitical Landscapes</a></h3>
-            <p>Explore the crucial Mideast Talk, dissecting recent diplomatic efforts and their impact on navigating the region's complex geopolitical...</p>
-            <a href="https://analyticsdrive.tech/crucial-mideast-talk-geopolitical-landscapes/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/mideast-talk-fragile-peace-regional-turmoil.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/mideast-talk-fragile-peace-regional-turmoil-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-talk-fragile-peace-regional-turmoil-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast Talk: Navigating Fragile Peace Amidst Regional Turmoil" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-talk-fragile-peace-regional-turmoil/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/mideast-talk-fragile-peace-regional-turmoil.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/mideast-talk-fragile-peace-regional-turmoil-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-talk-fragile-peace-regional-turmoil-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast Talk: Navigating Fragile Peace Amidst Regional Turmoil" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-28T23:08:00+05:30">Thu 28 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-talk-fragile-peace-regional-turmoil/">Mideast Talk: Navigating Fragile Peace Amidst Regional Turmoil</a>
+                </h3>
+                <p class="card-excerpt">Ongoing Mideast talk initiatives aim to stabilize a volatile region. Explore the critical diplomatic efforts, key...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-28T23:08:00+05:30">Thu 28 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-talk-fragile-peace-regional-turmoil/">Mideast Talk: Navigating Fragile Peace Amidst Regional Turmoil</a></h3>
-            <p>Ongoing Mideast talk initiatives aim to stabilize a volatile region. Explore the critical diplomatic efforts, key players, and core...</p>
-            <a href="https://analyticsdrive.tech/mideast-talk-fragile-peace-regional-turmoil/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/israel-hezbollah-conflict-escalates-middle-east.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/israel-hezbollah-conflict-escalates-middle-east-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/israel-hezbollah-conflict-escalates-middle-east-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East Erupts: Israel-Hezbollah Conflict Escalates" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/israel-hezbollah-conflict-escalates-middle-east/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/israel-hezbollah-conflict-escalates-middle-east.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/israel-hezbollah-conflict-escalates-middle-east-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/israel-hezbollah-conflict-escalates-middle-east-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East Erupts: Israel-Hezbollah Conflict Escalates" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-28T20:15:00+05:30">Thu 28 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/israel-hezbollah-conflict-escalates-middle-east/">Middle East Erupts: Israel-Hezbollah Conflict Escalates</a>
+                </h3>
+                <p class="card-excerpt">The Israel-Hezbollah conflict escalates, pushing the Middle East to the brink of a wider regional war. International...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-28T20:15:00+05:30">Thu 28 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/israel-hezbollah-conflict-escalates-middle-east/">Middle East Erupts: Israel-Hezbollah Conflict Escalates</a></h3>
-            <p>The Israel-Hezbollah conflict escalates, pushing the Middle East to the brink of a wider regional war. International efforts are...</p>
-            <a href="https://analyticsdrive.tech/israel-hezbollah-conflict-escalates-middle-east/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/trump-warns-oman-escalating-iran-tensions-hormuz.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/trump-warns-oman-escalating-iran-tensions-hormuz-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/trump-warns-oman-escalating-iran-tensions-hormuz-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Warns Oman Amid Escalating Iran Tensions Over Hormuz" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-warns-oman-escalating-iran-tensions-hormuz/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/trump-warns-oman-escalating-iran-tensions-hormuz.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/trump-warns-oman-escalating-iran-tensions-hormuz-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/trump-warns-oman-escalating-iran-tensions-hormuz-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Warns Oman Amid Escalating Iran Tensions Over Hormuz" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-28T20:02:00+05:30">Thu 28 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-warns-oman-escalating-iran-tensions-hormuz/">Trump Warns Oman Amid Escalating Iran Tensions Over Hormuz</a>
+                </h3>
+                <p class="card-excerpt">Former President Trump issued a stark warning to Oman over its reported talks with Iran regarding the Strait of...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-28T20:02:00+05:30">Thu 28 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">16 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-warns-oman-escalating-iran-tensions-hormuz/">Trump Warns Oman Amid Escalating Iran Tensions Over Hormuz</a></h3>
-            <p>Former President Trump issued a stark warning to Oman over its reported talks with Iran regarding the Strait of Hormuz, intensifying...</p>
-            <a href="https://analyticsdrive.tech/trump-warns-oman-escalating-iran-tensions-hormuz/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/asia-diversifies-oil-supply-middle-east-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/asia-diversifies-oil-supply-middle-east-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/asia-diversifies-oil-supply-middle-east-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Asia Diversifies Oil Supply Amid Middle East Tensions: A Strategic Shift" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/asia-diversifies-oil-supply-middle-east-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/asia-diversifies-oil-supply-middle-east-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/asia-diversifies-oil-supply-middle-east-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/asia-diversifies-oil-supply-middle-east-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Asia Diversifies Oil Supply Amid Middle East Tensions: A Strategic Shift" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-28T19:39:00+05:30">Thu 28 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/asia-diversifies-oil-supply-middle-east-tensions/">Asia Diversifies Oil Supply Amid Middle East Tensions: A Strategic Shift</a>
+                </h3>
+                <p class="card-excerpt">Amid rising Middle East tensions, Asia is strategically diversifying its oil supply to enhance energy security and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-28T19:39:00+05:30">Thu 28 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/asia-diversifies-oil-supply-middle-east-tensions/">Asia Diversifies Oil Supply Amid Middle East Tensions: A Strategic Shift</a></h3>
-            <p>Amid rising Middle East tensions, Asia is strategically diversifying its oil supply to enhance energy security and mitigate geopolitical risks.</p>
-            <a href="https://analyticsdrive.tech/asia-diversifies-oil-supply-middle-east-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/israel-lebanon-conflict-intensifies-strikes-global-update.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/israel-lebanon-conflict-intensifies-strikes-global-update-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/israel-lebanon-conflict-intensifies-strikes-global-update-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Israel Intensifies Strikes as Lebanon Conflict Grows: A Global Update" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/israel-lebanon-conflict-intensifies-strikes-global-update/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/israel-lebanon-conflict-intensifies-strikes-global-update.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/israel-lebanon-conflict-intensifies-strikes-global-update-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/israel-lebanon-conflict-intensifies-strikes-global-update-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Israel Intensifies Strikes as Lebanon Conflict Grows: A Global Update" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-26T12:07:00+05:30">Tue 26 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/israel-lebanon-conflict-intensifies-strikes-global-update/">Israel Intensifies Strikes as Lebanon Conflict Grows: A Global Update</a>
+                </h3>
+                <p class="card-excerpt">As tensions escalate, Israel intensifies strikes as Lebanon conflict grows, raising regional and international...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-26T12:07:00+05:30">Tue 26 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/israel-lebanon-conflict-intensifies-strikes-global-update/">Israel Intensifies Strikes as Lebanon Conflict Grows: A Global Update</a></h3>
-            <p>As tensions escalate, Israel intensifies strikes as Lebanon conflict grows, raising regional and international alarm. This post details...</p>
-            <a href="https://analyticsdrive.tech/israel-lebanon-conflict-intensifies-strikes-global-update/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-talks-snag-new-strikes.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-talks-snag-new-strikes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-talks-snag-new-strikes-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Peace Talks Hit Snag Amid New Strikes" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-peace-talks-snag-new-strikes/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-talks-snag-new-strikes.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-talks-snag-new-strikes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-talks-snag-new-strikes-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Peace Talks Hit Snag Amid New Strikes" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-26T11:43:00+05:30">Tue 26 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-peace-talks-snag-new-strikes/">US-Iran Peace Talks Hit Snag Amid New Strikes</a>
+                </h3>
+                <p class="card-excerpt">US-Iran peace talks face significant hurdles as fresh military strikes in the region threaten to derail crucial...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-26T11:43:00+05:30">Tue 26 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-peace-talks-snag-new-strikes/">US-Iran Peace Talks Hit Snag Amid New Strikes</a></h3>
-            <p>US-Iran peace talks face significant hurdles as fresh military strikes in the region threaten to derail crucial diplomatic efforts....</p>
-            <a href="https://analyticsdrive.tech/us-iran-peace-talks-snag-new-strikes/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/sea-seafood-crisis-middle-east-conflict-fuel-costs.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/sea-seafood-crisis-middle-east-conflict-fuel-costs-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/sea-seafood-crisis-middle-east-conflict-fuel-costs-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="SEA Seafood Crisis: Middle East Conflict Hikes Fuel Costs" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/sea-seafood-crisis-middle-east-conflict-fuel-costs/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/sea-seafood-crisis-middle-east-conflict-fuel-costs.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/sea-seafood-crisis-middle-east-conflict-fuel-costs-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/sea-seafood-crisis-middle-east-conflict-fuel-costs-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="SEA Seafood Crisis: Middle East Conflict Hikes Fuel Costs" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-25T00:39:00+05:30">Mon 25 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/sea-seafood-crisis-middle-east-conflict-fuel-costs/">SEA Seafood Crisis: Middle East Conflict Hikes Fuel Costs</a>
+                </h3>
+                <p class="card-excerpt">Escalating Middle East tensions are driving up global fuel costs, creating a significant SEA Seafood Crisis and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-25T00:39:00+05:30">Mon 25 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/sea-seafood-crisis-middle-east-conflict-fuel-costs/">SEA Seafood Crisis: Middle East Conflict Hikes Fuel Costs</a></h3>
-            <p>Escalating Middle East tensions are driving up global fuel costs, creating a significant SEA Seafood Crisis and threatening livelihoods...</p>
-            <a href="https://analyticsdrive.tech/sea-seafood-crisis-middle-east-conflict-fuel-costs/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/hezbollah-drone-targets-idf-northern-israel-escalating-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/hezbollah-drone-targets-idf-northern-israel-escalating-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hezbollah-drone-targets-idf-northern-israel-escalating-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hezbollah Drone Targets IDF in Northern Israel: Escalating Tensions" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hezbollah-drone-targets-idf-northern-israel-escalating-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/hezbollah-drone-targets-idf-northern-israel-escalating-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/hezbollah-drone-targets-idf-northern-israel-escalating-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hezbollah-drone-targets-idf-northern-israel-escalating-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hezbollah Drone Targets IDF in Northern Israel: Escalating Tensions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-24T23:54:00+05:30">Sun 24 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hezbollah-drone-targets-idf-northern-israel-escalating-tensions/">Hezbollah Drone Targets IDF in Northern Israel: Escalating Tensions</a>
+                </h3>
+                <p class="card-excerpt">Hezbollah's escalating use of advanced fiber-optic drones against IDF positions in northern Israel marks a critical...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-24T23:54:00+05:30">Sun 24 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">16 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hezbollah-drone-targets-idf-northern-israel-escalating-tensions/">Hezbollah Drone Targets IDF in Northern Israel: Escalating Tensions</a></h3>
-            <p>Hezbollah's escalating use of advanced fiber-optic drones against IDF positions in northern Israel marks a critical shift in the ongoing...</p>
-            <a href="https://analyticsdrive.tech/hezbollah-drone-targets-idf-northern-israel-escalating-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-tensions-hope.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-tensions-hope-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-tensions-hope-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US & Iran Near Peace Deal Amid Hormuz Tensions: A Glimmer of Hope" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-tensions-hope/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-tensions-hope.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-tensions-hope-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-tensions-hope-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US & Iran Near Peace Deal Amid Hormuz Tensions: A Glimmer of Hope" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-24T21:34:00+05:30">Sun 24 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-tensions-hope/">US & Iran Near Peace Deal Amid Hormuz Tensions: A Glimmer of Hope</a>
+                </h3>
+                <p class="card-excerpt">As reports emerge of a potential peace deal between the US and Iran, the world watches for de-escalation amidst...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-24T21:34:00+05:30">Sun 24 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-tensions-hope/">US & Iran Near Peace Deal Amid Hormuz Tensions: A Glimmer of Hope</a></h3>
-            <p>As reports emerge of a potential peace deal between the US and Iran, the world watches for de-escalation amidst persistent Strait of...</p>
-            <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-tensions-hope/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-24T18:31:00+05:30">Sun 24 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/">US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift</a>
+                </h3>
+                <p class="card-excerpt">Reports indicate a US-Iran peace deal is imminent, potentially leading to the reopening of the crucial Hormuz...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-24T18:31:00+05:30">Sun 24 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/">US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift</a></h3>
-            <p>Reports indicate a US-Iran peace deal is imminent, potentially leading to the reopening of the crucial Hormuz Strait, signaling a major...</p>
-            <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Tensions Escalate: Trump Warns of 'Big Hit'" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Tensions Escalate: Trump Warns of 'Big Hit'" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T07:44:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/">US-Iran Tensions Escalate: Trump Warns of 'Big Hit'</a>
+                </h3>
+                <p class="card-excerpt">Amidst heightened regional instability, US-Iran tensions escalate as former President Trump warned of a 'big hit,'...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T07:44:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/">US-Iran Tensions Escalate: Trump Warns of 'Big Hit'</a></h3>
-            <p>Amidst heightened regional instability, US-Iran tensions escalate as former President Trump warned of a 'big hit,' fueling global...</p>
-            <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/india-hosts-brics-global-policy-debates-geopolitical-chapter.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/india-hosts-brics-global-policy-debates-geopolitical-chapter-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/india-hosts-brics-global-policy-debates-geopolitical-chapter-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India Hosts BRICS Amidst Global Policy Debates: A New Geopolitical Chapter" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="India">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-hosts-brics-global-policy-debates-geopolitical-chapter/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/india-hosts-brics-global-policy-debates-geopolitical-chapter.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/india-hosts-brics-global-policy-debates-geopolitical-chapter-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/india-hosts-brics-global-policy-debates-geopolitical-chapter-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India Hosts BRICS Amidst Global Policy Debates: A New Geopolitical Chapter" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge india">
+                    <a href="https://analyticsdrive.tech/category/india.html">India</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T06:54:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/india.html">India</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-hosts-brics-global-policy-debates-geopolitical-chapter/">India Hosts BRICS Amidst Global Policy Debates: A New Geopolitical Chapter</a>
+                </h3>
+                <p class="card-excerpt">India hosts the BRICS summit, navigating complex global policy debates on economic cooperation, geopolitical shifts,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T06:54:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-hosts-brics-global-policy-debates-geopolitical-chapter/">India Hosts BRICS Amidst Global Policy Debates: A New Geopolitical Chapter</a></h3>
-            <p>India hosts the BRICS summit, navigating complex global policy debates on economic cooperation, geopolitical shifts, and a new world order.</p>
-            <a href="https://analyticsdrive.tech/india-hosts-brics-global-policy-debates-geopolitical-chapter/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T04:11:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/">Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis</a>
+                </h3>
+                <p class="card-excerpt">Geopolitical conflicts increasingly threaten the global economy, disrupting supply chains, energy markets, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T04:11:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/">Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis</a></h3>
-            <p>Geopolitical conflicts increasingly threaten the global economy, disrupting supply chains, energy markets, and investment. This analysis...</p>
-            <a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T03:47:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/">Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate</a>
+                </h3>
+                <p class="card-excerpt">Mideast tensions escalate with a surge in drone strikes and faltering ceasefire agreements, painting a volatile...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T03:47:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/">Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate</a></h3>
-            <p>Mideast tensions escalate with a surge in drone strikes and faltering ceasefire agreements, painting a volatile security landscape. This...</p>
-            <a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T02:13:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/">Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean</a>
+                </h3>
+                <p class="card-excerpt">Cuba issues stern warnings to the US amid reports of a significant drone buildup and alleged threats against...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T02:13:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/">Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean</a></h3>
-            <p>Cuba issues stern warnings to the US amid reports of a significant drone buildup and alleged threats against American interests,...</p>
-            <a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/iran.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/iran3.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/iran.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 2 of 5</span>
+
+        <a href="https://analyticsdrive.tech/tag/iran3.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>

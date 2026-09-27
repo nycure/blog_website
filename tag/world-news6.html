@@ -28,7 +28,7 @@
     <!-- Dynamic Category/Author Feeds -->
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="All articles tagged #World News on Analytics Drive. Browse 346 articles on this topic." />
+    <meta name="description" content="All articles tagged #World News on Analytics Drive. Browse 347 articles on this topic." />
     <meta name="author" content="Analytics Drive Editorial Team" />
 
     <!-- Open Graph -->
@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,387 +3452,628 @@ a:hover {
         <span class="current">#World News</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #World News
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            346 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">347 Articles</span>
+        </div>
+        <h1 class="archive-title">#World News</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #World News.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/blue-origin-rocket-explodes-florida-test-new-glenn.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/blue-origin-rocket-explodes-florida-test-new-glenn-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/blue-origin-rocket-explodes-florida-test-new-glenn-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Blue Origin Rocket Explodes in Florida Test, Halting Lunar Ambitions" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-delays-iran-deal-hormuz-reopening/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/trump-delays-iran-deal-hormuz-reopening.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/trump-delays-iran-deal-hormuz-reopening-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/trump-delays-iran-deal-hormuz-reopening-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Delays Iran Deal on Hormuz Reopening, Global Markets React" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T17:10:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/space.html">Space</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-delays-iran-deal-hormuz-reopening/">Trump Delays Iran Deal on Hormuz Reopening, Global Markets React</a>
+                </h3>
+                <p class="card-excerpt">President Trump's delay in approving a tentative Iran deal leaves the critical Strait of Hormuz closed, sparking...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T17:23:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/blue-origin-rocket-explodes-florida-test-new-glenn/">Blue Origin Rocket Explodes in Florida Test, Halting Lunar Ambitions</a></h3>
-            <p>Blue Origin's New Glenn rocket exploded during a Florida test, causing significant damage and raising concerns for future missions,...</p>
-            <a href="https://analyticsdrive.tech/blue-origin-rocket-explodes-florida-test-new-glenn/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/indian-police-service-vacancies-drop-sharply-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/indian-police-service-vacancies-drop-sharply-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/indian-police-service-vacancies-drop-sharply-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Indian Police Service Vacancies Drop Sharply for 2026" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Space">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/blue-origin-rocket-explodes-florida-test-new-glenn/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/blue-origin-rocket-explodes-florida-test-new-glenn.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/blue-origin-rocket-explodes-florida-test-new-glenn-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/blue-origin-rocket-explodes-florida-test-new-glenn-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Blue Origin Rocket Explodes in Florida Test, Halting Lunar Ambitions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge space">
+                    <a href="https://analyticsdrive.tech/category/space.html">Space</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T16:54:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/india.html">India</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/blue-origin-rocket-explodes-florida-test-new-glenn/">Blue Origin Rocket Explodes in Florida Test, Halting Lunar Ambitions</a>
+                </h3>
+                <p class="card-excerpt">Blue Origin's New Glenn rocket exploded during a Florida test, causing significant damage and raising concerns for...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Julian Hayes</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T17:10:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">18 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/indian-police-service-vacancies-drop-sharply-2026/">Indian Police Service Vacancies Drop Sharply for 2026</a></h3>
-            <p>A significant development in India's civil services: Indian Police Service vacancies drop sharply for 2026, raising concerns about...</p>
-            <a href="https://analyticsdrive.tech/indian-police-service-vacancies-drop-sharply-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/ebola-crisis-drc-kenya-us-quarantine-facility.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/ebola-crisis-drc-kenya-us-quarantine-facility-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/ebola-crisis-drc-kenya-us-quarantine-facility-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Ebola Crisis Worsens in DRC, Kenya Builds US Quarantine" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="India">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/indian-police-service-vacancies-drop-sharply-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/indian-police-service-vacancies-drop-sharply-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/indian-police-service-vacancies-drop-sharply-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/indian-police-service-vacancies-drop-sharply-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Indian Police Service Vacancies Drop Sharply for 2026" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge india">
+                    <a href="https://analyticsdrive.tech/category/india.html">India</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T16:39:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/science.html">Science</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/indian-police-service-vacancies-drop-sharply-2026/">Indian Police Service Vacancies Drop Sharply for 2026</a>
+                </h3>
+                <p class="card-excerpt">A significant development in India's civil services: Indian Police Service vacancies drop sharply for 2026, raising...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Priya Nair</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T16:54:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ebola-crisis-drc-kenya-us-quarantine-facility/">Ebola Crisis Worsens in DRC, Kenya Builds US Quarantine</a></h3>
-            <p>The Ebola crisis worsens in DRC, raising global concerns. Kenya's strategic move to build a US quarantine facility signals proactive...</p>
-            <a href="https://analyticsdrive.tech/ebola-crisis-drc-kenya-us-quarantine-facility/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/pentagon-chief-addresses-china-alarm-asia-summit.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/pentagon-chief-addresses-china-alarm-asia-summit-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/pentagon-chief-addresses-china-alarm-asia-summit-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Pentagon Chief Addresses China Alarm at Asia Summit: Key Insights" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Science">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ebola-crisis-drc-kenya-us-quarantine-facility/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/ebola-crisis-drc-kenya-us-quarantine-facility.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/ebola-crisis-drc-kenya-us-quarantine-facility-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/ebola-crisis-drc-kenya-us-quarantine-facility-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Ebola Crisis Worsens in DRC, Kenya Builds US Quarantine" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge science">
+                    <a href="https://analyticsdrive.tech/category/science.html">Science</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T16:24:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ebola-crisis-drc-kenya-us-quarantine-facility/">Ebola Crisis Worsens in DRC, Kenya Builds US Quarantine</a>
+                </h3>
+                <p class="card-excerpt">The Ebola crisis worsens in DRC, raising global concerns. Kenya's strategic move to build a US quarantine facility...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T16:39:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/pentagon-chief-addresses-china-alarm-asia-summit/">Pentagon Chief Addresses China Alarm at Asia Summit: Key Insights</a></h3>
-            <p>The Pentagon Chief addressed escalating China alarm at a major Asia summit, outlining US strategy for Indo-Pacific stability and partnerships.</p>
-            <a href="https://analyticsdrive.tech/pentagon-chief-addresses-china-alarm-asia-summit/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/china-digital-yuan-global-belt-road-focus.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/china-digital-yuan-global-belt-road-focus-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/china-digital-yuan-global-belt-road-focus-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="China's Digital Yuan Expands Globally: Belt & Road Focus Shapes Future Finance" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/pentagon-chief-addresses-china-alarm-asia-summit/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/pentagon-chief-addresses-china-alarm-asia-summit.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/pentagon-chief-addresses-china-alarm-asia-summit-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/pentagon-chief-addresses-china-alarm-asia-summit-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Pentagon Chief Addresses China Alarm at Asia Summit: Key Insights" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T16:10:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/pentagon-chief-addresses-china-alarm-asia-summit/">Pentagon Chief Addresses China Alarm at Asia Summit: Key Insights</a>
+                </h3>
+                <p class="card-excerpt">The Pentagon Chief addressed escalating China alarm at a major Asia summit, outlining US strategy for Indo-Pacific...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T16:24:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/china-digital-yuan-global-belt-road-focus/">China's Digital Yuan Expands Globally: Belt & Road Focus Shapes Future Finance</a></h3>
-            <p>China's digital yuan, or e-CNY, is rapidly expanding its global footprint, with a significant focus on Belt & Road nations. This move...</p>
-            <a href="https://analyticsdrive.tech/china-digital-yuan-global-belt-road-focus/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/chinas-astronauts-return-safely-200-days-space-milestone.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/chinas-astronauts-return-safely-200-days-space-milestone-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/chinas-astronauts-return-safely-200-days-space-milestone-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="China's Astronauts Return Safely After 200 Days in Space: A New Milestone" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/china-digital-yuan-global-belt-road-focus/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/china-digital-yuan-global-belt-road-focus.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/china-digital-yuan-global-belt-road-focus-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/china-digital-yuan-global-belt-road-focus-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="China's Digital Yuan Expands Globally: Belt & Road Focus Shapes Future Finance" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T15:17:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/space.html">Space</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/china-digital-yuan-global-belt-road-focus/">China's Digital Yuan Expands Globally: Belt & Road Focus Shapes Future Finance</a>
+                </h3>
+                <p class="card-excerpt">China's digital yuan, or e-CNY, is rapidly expanding its global footprint, with a significant focus on Belt & Road...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T16:10:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/chinas-astronauts-return-safely-200-days-space-milestone/">China's Astronauts Return Safely After 200 Days in Space: A New Milestone</a></h3>
-            <p>China's astronauts return safely after 200 days in space, marking a significant milestone for the nation's ambitious space program and...</p>
-            <a href="https://analyticsdrive.tech/chinas-astronauts-return-safely-200-days-space-milestone/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-iran-deal-stalls-trump-undecided-tehran-pushback.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-iran-deal-stalls-trump-undecided-tehran-pushback-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-deal-stalls-trump-undecided-tehran-pushback-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Deal Stalls: Trump Undecided Amid Tehran Pushback" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Space">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/chinas-astronauts-return-safely-200-days-space-milestone/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/chinas-astronauts-return-safely-200-days-space-milestone.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/chinas-astronauts-return-safely-200-days-space-milestone-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/chinas-astronauts-return-safely-200-days-space-milestone-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="China's Astronauts Return Safely After 200 Days in Space: A New Milestone" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge space">
+                    <a href="https://analyticsdrive.tech/category/space.html">Space</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T15:04:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/chinas-astronauts-return-safely-200-days-space-milestone/">China's Astronauts Return Safely After 200 Days in Space: A New Milestone</a>
+                </h3>
+                <p class="card-excerpt">China's astronauts return safely after 200 days in space, marking a significant milestone for the nation's ambitious...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Julian Hayes</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T15:17:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-deal-stalls-trump-undecided-tehran-pushback/">US-Iran Deal Stalls: Trump Undecided Amid Tehran Pushback</a></h3>
-            <p>The US-Iran deal stalls as President Trump remains undecided on key terms amid strong pushback from Tehran, raising global uncertainty.</p>
-            <a href="https://analyticsdrive.tech/us-iran-deal-stalls-trump-undecided-tehran-pushback/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-deal-stalls-trump-undecided-tehran-pushback/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-iran-deal-stalls-trump-undecided-tehran-pushback.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-iran-deal-stalls-trump-undecided-tehran-pushback-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-deal-stalls-trump-undecided-tehran-pushback-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Deal Stalls: Trump Undecided Amid Tehran Pushback" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T14:51:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-deal-stalls-trump-undecided-tehran-pushback/">US-Iran Deal Stalls: Trump Undecided Amid Tehran Pushback</a>
+                </h3>
+                <p class="card-excerpt">The US-Iran deal stalls as President Trump remains undecided on key terms amid strong pushback from Tehran, raising...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T15:04:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/">Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon</a></h3>
-            <p>Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon with intensified ground operations and airstrikes, exacerbating a...</p>
-            <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-cuba-military-talks-trump-pressure-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-cuba-military-talks-trump-pressure-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-cuba-military-talks-trump-pressure-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Cuba Military Talks Amid Rising Trump Pressure: A Critical Juncture" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T14:10:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-conflict-escalates-israel-pushes-deeper-into-lebanon/">Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon</a>
+                </h3>
+                <p class="card-excerpt">Middle East Conflict Escalates: Israel Pushes Deeper into Lebanon with intensified ground operations and airstrikes,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T14:51:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-cuba-military-talks-trump-pressure-2026/">US-Cuba Military Talks Amid Rising Trump Pressure: A Critical Juncture</a></h3>
-            <p>High-level US-Cuba military talks are unfolding in May 2026 amidst escalating pressure from the Trump administration, raising regional tensions.</p>
-            <a href="https://analyticsdrive.tech/us-cuba-military-talks-trump-pressure-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-cuba-military-talks-trump-pressure-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-cuba-military-talks-trump-pressure-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-cuba-military-talks-trump-pressure-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-cuba-military-talks-trump-pressure-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Cuba Military Talks Amid Rising Trump Pressure: A Critical Juncture" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T13:58:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-cuba-military-talks-trump-pressure-2026/">US-Cuba Military Talks Amid Rising Trump Pressure: A Critical Juncture</a>
+                </h3>
+                <p class="card-excerpt">High-level US-Cuba military talks are unfolding in May 2026 amidst escalating pressure from the Trump...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T14:10:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/">US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters</a></h3>
-            <p>US jobless claims rise amid Iran War uncertainty, sparking economic jitters. This analysis explores implications for workers, markets,...</p>
-            <a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/eu-fines-temu-232m-unsafe-products-dsa.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/eu-fines-temu-232m-unsafe-products-dsa-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/eu-fines-temu-232m-unsafe-products-dsa-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="EU Fines Temu $232M Over Unsafe Products: A Landmark DSA Ruling" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T13:45:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-jobless-claims-rise-iran-war-uncertainty-economic-jitters/">US Jobless Claims Rise Amid Iran War Uncertainty: Economic Jitters</a>
+                </h3>
+                <p class="card-excerpt">US jobless claims rise amid Iran War uncertainty, sparking economic jitters. This analysis explores implications for...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T13:58:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">16 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/eu-fines-temu-232m-unsafe-products-dsa/">EU Fines Temu $232M Over Unsafe Products: A Landmark DSA Ruling</a></h3>
-            <p>The EU has issued a landmark $232 million fine to e-commerce giant Temu under the Digital Services Act for systemic failures in...</p>
-            <a href="https://analyticsdrive.tech/eu-fines-temu-232m-unsafe-products-dsa/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/congo-ebola-outbreak-spreads-wild-meat-link-eyed.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/congo-ebola-outbreak-spreads-wild-meat-link-eyed-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/congo-ebola-outbreak-spreads-wild-meat-link-eyed-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Congo Ebola Outbreak Spreads: Wild Meat Link Eyed in Resurgence" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/eu-fines-temu-232m-unsafe-products-dsa/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/eu-fines-temu-232m-unsafe-products-dsa.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/eu-fines-temu-232m-unsafe-products-dsa-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/eu-fines-temu-232m-unsafe-products-dsa-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="EU Fines Temu $232M Over Unsafe Products: A Landmark DSA Ruling" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T13:33:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/science.html">Science</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/eu-fines-temu-232m-unsafe-products-dsa/">EU Fines Temu $232M Over Unsafe Products: A Landmark DSA Ruling</a>
+                </h3>
+                <p class="card-excerpt">The EU has issued a landmark $232 million fine to e-commerce giant Temu under the Digital Services Act for systemic...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T13:45:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/congo-ebola-outbreak-spreads-wild-meat-link-eyed/">Congo Ebola Outbreak Spreads: Wild Meat Link Eyed in Resurgence</a></h3>
-            <p>A new Congo Ebola outbreak spreads, raising concerns as a wild meat link is eyed as a potential vector, prompting urgent public health responses.</p>
-            <a href="https://analyticsdrive.tech/congo-ebola-outbreak-spreads-wild-meat-link-eyed/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/india-us-trade-deal-finalization-new-era.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/india-us-trade-deal-finalization-new-era-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/india-us-trade-deal-finalization-new-era-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India-US Trade Deal Nears Finalization: A New Era of Partnership" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Science">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/congo-ebola-outbreak-spreads-wild-meat-link-eyed/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/congo-ebola-outbreak-spreads-wild-meat-link-eyed.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/congo-ebola-outbreak-spreads-wild-meat-link-eyed-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/congo-ebola-outbreak-spreads-wild-meat-link-eyed-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Congo Ebola Outbreak Spreads: Wild Meat Link Eyed in Resurgence" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge science">
+                    <a href="https://analyticsdrive.tech/category/science.html">Science</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T13:20:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/india.html">India</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/congo-ebola-outbreak-spreads-wild-meat-link-eyed/">Congo Ebola Outbreak Spreads: Wild Meat Link Eyed in Resurgence</a>
+                </h3>
+                <p class="card-excerpt">A new Congo Ebola outbreak spreads, raising concerns as a wild meat link is eyed as a potential vector, prompting...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T13:33:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-us-trade-deal-finalization-new-era/">India-US Trade Deal Nears Finalization: A New Era of Partnership</a></h3>
-            <p>India-US Trade Deal nears finalization, marking a pivotal moment for both nations. Explore key aspects, benefits, and challenges of this...</p>
-            <a href="https://analyticsdrive.tech/india-us-trade-deal-finalization-new-era/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/europe-on-edge-russian-drone-crashes-romania.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/europe-on-edge-russian-drone-crashes-romania-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/europe-on-edge-russian-drone-crashes-romania-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Europe on Edge: Russian Drone Crashes in Romania, Injuring Civilians" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="India">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-us-trade-deal-finalization-new-era/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/india-us-trade-deal-finalization-new-era.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/india-us-trade-deal-finalization-new-era-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/india-us-trade-deal-finalization-new-era-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India-US Trade Deal Nears Finalization: A New Era of Partnership" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge india">
+                    <a href="https://analyticsdrive.tech/category/india.html">India</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T13:07:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-us-trade-deal-finalization-new-era/">India-US Trade Deal Nears Finalization: A New Era of Partnership</a>
+                </h3>
+                <p class="card-excerpt">India-US Trade Deal nears finalization, marking a pivotal moment for both nations. Explore key aspects, benefits,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T13:20:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/europe-on-edge-russian-drone-crashes-romania/">Europe on Edge: Russian Drone Crashes in Romania, Injuring Civilians</a></h3>
-            <p>A Russian drone crash in Galati, Romania, injuring civilians, has heightened tensions across Europe. This unprecedented incident sparks...</p>
-            <a href="https://analyticsdrive.tech/europe-on-edge-russian-drone-crashes-romania/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/hegseth-us-committed-pacific-security-china-alarm-intensifies.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/hegseth-us-committed-pacific-security-china-alarm-intensifies-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hegseth-us-committed-pacific-security-china-alarm-intensifies-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hegseth: US Committed to Pacific Security, China Alarm Intensifies" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/europe-on-edge-russian-drone-crashes-romania/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/europe-on-edge-russian-drone-crashes-romania.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/europe-on-edge-russian-drone-crashes-romania-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/europe-on-edge-russian-drone-crashes-romania-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Europe on Edge: Russian Drone Crashes in Romania, Injuring Civilians" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T12:43:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/europe-on-edge-russian-drone-crashes-romania/">Europe on Edge: Russian Drone Crashes in Romania, Injuring Civilians</a>
+                </h3>
+                <p class="card-excerpt">A Russian drone crash in Galati, Romania, injuring civilians, has heightened tensions across Europe. This...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T13:07:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hegseth-us-committed-pacific-security-china-alarm-intensifies/">Hegseth: US Committed to Pacific Security, China Alarm Intensifies</a></h3>
-            <p>U.S. Defense Secretary Pete Hegseth reaffirmed American commitment to Pacific security at Shangri-La Dialogue, raising alarm over...</p>
-            <a href="https://analyticsdrive.tech/hegseth-us-committed-pacific-security-china-alarm-intensifies/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/southeast-asias-digital-economy-rapid-expansion-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/southeast-asias-digital-economy-rapid-expansion-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/southeast-asias-digital-economy-rapid-expansion-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Southeast Asia's Digital Economy Continues Rapid Expansion" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hegseth-us-committed-pacific-security-china-alarm-intensifies/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/hegseth-us-committed-pacific-security-china-alarm-intensifies.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/hegseth-us-committed-pacific-security-china-alarm-intensifies-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hegseth-us-committed-pacific-security-china-alarm-intensifies-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hegseth: US Committed to Pacific Security, China Alarm Intensifies" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T12:30:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hegseth-us-committed-pacific-security-china-alarm-intensifies/">Hegseth: US Committed to Pacific Security, China Alarm Intensifies</a>
+                </h3>
+                <p class="card-excerpt">U.S. Defense Secretary Pete Hegseth reaffirmed American commitment to Pacific security at Shangri-La Dialogue,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T12:43:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/southeast-asias-digital-economy-rapid-expansion-2026/">Southeast Asia's Digital Economy Continues Rapid Expansion</a></h3>
-            <p>Southeast Asia's digital economy continues rapid expansion, poised to exceed $300 billion in GMV by 2025, driven by e-commerce, digital...</p>
-            <a href="https://analyticsdrive.tech/southeast-asias-digital-economy-rapid-expansion-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/giro-italia-thrilling-final-stages.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/giro-italia-thrilling-final-stages-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/giro-italia-thrilling-final-stages-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Giro d'Italia Approaches Thrilling Final Stages: A Grand Tour Showdown" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/southeast-asias-digital-economy-rapid-expansion-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/southeast-asias-digital-economy-rapid-expansion-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/southeast-asias-digital-economy-rapid-expansion-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/southeast-asias-digital-economy-rapid-expansion-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Southeast Asia's Digital Economy Continues Rapid Expansion" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T12:18:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/sports.html">Sports</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/southeast-asias-digital-economy-rapid-expansion-2026/">Southeast Asia's Digital Economy Continues Rapid Expansion</a>
+                </h3>
+                <p class="card-excerpt">Southeast Asia's digital economy continues rapid expansion, poised to exceed $300 billion in GMV by 2025, driven by...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T12:30:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/giro-italia-thrilling-final-stages/">Giro d'Italia Approaches Thrilling Final Stages: A Grand Tour Showdown</a></h3>
-            <p>The 2026 Giro d'Italia approaches thrilling final stages, with Jonas Vingegaard holding the Maglia Rosa. The race's climactic mountain...</p>
-            <a href="https://analyticsdrive.tech/giro-italia-thrilling-final-stages/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/south-america-major-political-shifts-underway.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/south-america-major-political-shifts-underway-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/south-america-major-political-shifts-underway-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="South America Sees Major Political Shifts Underway: A Comprehensive Overview" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Sports">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/giro-italia-thrilling-final-stages/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/giro-italia-thrilling-final-stages.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/giro-italia-thrilling-final-stages-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/giro-italia-thrilling-final-stages-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Giro d'Italia Approaches Thrilling Final Stages: A Grand Tour Showdown" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge sports">
+                    <a href="https://analyticsdrive.tech/category/sports.html">Sports</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T12:05:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/giro-italia-thrilling-final-stages/">Giro d'Italia Approaches Thrilling Final Stages: A Grand Tour Showdown</a>
+                </h3>
+                <p class="card-excerpt">The 2026 Giro d'Italia approaches thrilling final stages, with Jonas Vingegaard holding the Maglia Rosa. The race's...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Arjun Desai</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T12:18:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/south-america-major-political-shifts-underway/">South America Sees Major Political Shifts Underway: A Comprehensive Overview</a></h3>
-            <p>South America Sees Major Political Shifts Underway, driven by economic pressures, social demands, and evolving geopolitics. Explore key...</p>
-            <a href="https://analyticsdrive.tech/south-america-major-political-shifts-underway/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/china-economic-moderation-eu-trade-tensions-global-shift.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/china-economic-moderation-eu-trade-tensions-global-shift-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/china-economic-moderation-eu-trade-tensions-global-shift-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="China's Economic Moderation & Rising EU Trade Tensions: A Global Shift" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/south-america-major-political-shifts-underway/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/south-america-major-political-shifts-underway.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/south-america-major-political-shifts-underway-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/south-america-major-political-shifts-underway-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="South America Sees Major Political Shifts Underway: A Comprehensive Overview" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T11:53:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/south-america-major-political-shifts-underway/">South America Sees Major Political Shifts Underway: A Comprehensive Overview</a>
+                </h3>
+                <p class="card-excerpt">South America Sees Major Political Shifts Underway, driven by economic pressures, social demands, and evolving...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T12:05:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/china-economic-moderation-eu-trade-tensions-global-shift/">China's Economic Moderation & Rising EU Trade Tensions: A Global Shift</a></h3>
-            <p>China's economic moderation presents new global challenges, coinciding with rising EU trade tensions. This post examines the shifting dynamics.</p>
-            <a href="https://analyticsdrive.tech/china-economic-moderation-eu-trade-tensions-global-shift/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/africas-ebola-outbreak-triggers-expanded-travel-bans-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Africa's Ebola Outbreak Triggers Expanded Travel Bans Globally" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/china-economic-moderation-eu-trade-tensions-global-shift/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/china-economic-moderation-eu-trade-tensions-global-shift.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/china-economic-moderation-eu-trade-tensions-global-shift-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/china-economic-moderation-eu-trade-tensions-global-shift-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="China's Economic Moderation & Rising EU Trade Tensions: A Global Shift" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-30T11:41:00+05:30">Sat 30 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/china-economic-moderation-eu-trade-tensions-global-shift/">China's Economic Moderation & Rising EU Trade Tensions: A Global Shift</a>
+                </h3>
+                <p class="card-excerpt">China's economic moderation presents new global challenges, coinciding with rising EU trade tensions. This post...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-30T11:53:00+05:30">Sat 30 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/africas-ebola-outbreak-triggers-expanded-travel-bans/">Africa's Ebola Outbreak Triggers Expanded Travel Bans Globally</a></h3>
-            <p>Africa's new Ebola outbreak triggers global travel bans and heightened screenings, raising critical concerns about worldwide health...</p>
-            <a href="https://analyticsdrive.tech/africas-ebola-outbreak-triggers-expanded-travel-bans/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/world-news5.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/world-news7.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/world-news5.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 6 of 18</span>
+
+        <a href="https://analyticsdrive.tech/tag/world-news7.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>

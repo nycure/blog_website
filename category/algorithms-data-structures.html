@@ -1171,22 +1171,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3311,9 +3443,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/categories.html">Categories</a>
@@ -3321,366 +3453,627 @@ a:hover {
         <span class="current">Algorithms & Data Structures</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Category</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            Algorithms & Data Structures
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            29 articles        </p>
+    <!-- Category Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Collection</span>
+            <span class="archive-count-badge">29 Articles</span>
+        </div>
+        <h1 class="archive-title">Algorithms & Data Structures</h1>
+        <p class="archive-description">Master the foundations of computer science. Detailed guides on complex algorithms, data structures, and efficient problem-solving for developers of all levels.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/trie-data-structures-prefix-searching-explained.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/trie-data-structures-prefix-searching-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/trie-data-structures-prefix-searching-explained-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trie Data Structures: Efficient Prefix Searching Explained" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="category-grid">
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trie-data-structures-prefix-searching-explained/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/trie-data-structures-prefix-searching-explained.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/trie-data-structures-prefix-searching-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/trie-data-structures-prefix-searching-explained-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trie Data Structures: Efficient Prefix Searching Explained" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-25T17:02:00+05:30">Wed 25 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trie-data-structures-prefix-searching-explained/">Trie Data Structures: Efficient Prefix Searching Explained</a>
+                </h3>
+                <p class="card-excerpt">Explore Trie data structures for lightning-fast prefix searching, a core technique for applications like...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-25T17:02:00+05:30">Wed 25 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">28 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trie-data-structures-prefix-searching-explained/">Trie Data Structures: Efficient Prefix Searching Explained</a></h3>
-            <p>Explore Trie data structures for lightning-fast prefix searching, a core technique for applications like autocomplete, spell checkers,...</p>
-            <a href="https://analyticsdrive.tech/trie-data-structures-prefix-searching-explained/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/implementing-heaps-efficient-priority-queues.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/implementing-heaps-efficient-priority-queues-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/implementing-heaps-efficient-priority-queues-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Implementing Heaps for Efficient Priority Queues: A Deep Dive" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/implementing-heaps-efficient-priority-queues/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/implementing-heaps-efficient-priority-queues.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/implementing-heaps-efficient-priority-queues-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/implementing-heaps-efficient-priority-queues-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Implementing Heaps for Efficient Priority Queues: A Deep Dive" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-24T22:10:00+05:30">Tue 24 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/implementing-heaps-efficient-priority-queues/">Implementing Heaps for Efficient Priority Queues: A Deep Dive</a>
+                </h3>
+                <p class="card-excerpt">Deep dive into implementing heaps for efficient priority queues. Grasp their structure, core operations, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-24T22:10:00+05:30">Tue 24 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">25 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/implementing-heaps-efficient-priority-queues/">Implementing Heaps for Efficient Priority Queues: A Deep Dive</a></h3>
-            <p>Deep dive into implementing heaps for efficient priority queues. Grasp their structure, core operations, and widespread applications in...</p>
-            <a href="https://analyticsdrive.tech/implementing-heaps-efficient-priority-queues/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/dijkstras-algorithm-shortest-path-explained.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/dijkstras-algorithm-shortest-path-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/dijkstras-algorithm-shortest-path-explained-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Dijkstra's Algorithm: Shortest Path Finding Explained In Depth" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/dijkstras-algorithm-shortest-path-explained/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/dijkstras-algorithm-shortest-path-explained.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/dijkstras-algorithm-shortest-path-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/dijkstras-algorithm-shortest-path-explained-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Dijkstra's Algorithm: Shortest Path Finding Explained In Depth" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T13:46:00+05:30">Mon 23 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/dijkstras-algorithm-shortest-path-explained/">Dijkstra's Algorithm: Shortest Path Finding Explained In Depth</a>
+                </h3>
+                <p class="card-excerpt">Demystify Dijkstra's Algorithm, the core of shortest path finding. Explore its mechanics, applications, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T13:46:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">27 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/dijkstras-algorithm-shortest-path-explained/">Dijkstra's Algorithm: Shortest Path Finding Explained In Depth</a></h3>
-            <p>Demystify Dijkstra's Algorithm, the core of shortest path finding. Explore its mechanics, applications, and complexity, powering...</p>
-            <a href="https://analyticsdrive.tech/dijkstras-algorithm-shortest-path-explained/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/understanding-a-star-search-pathfinding-algorithm-tutorial.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/understanding-a-star-search-pathfinding-algorithm-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/understanding-a-star-search-pathfinding-algorithm-tutorial-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Understanding A* Search: Pathfinding Algorithm Tutorial" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/understanding-a-star-search-pathfinding-algorithm-tutorial/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/understanding-a-star-search-pathfinding-algorithm-tutorial.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/understanding-a-star-search-pathfinding-algorithm-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/understanding-a-star-search-pathfinding-algorithm-tutorial-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Understanding A* Search: Pathfinding Algorithm Tutorial" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T00:55:00+05:30">Mon 23 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/understanding-a-star-search-pathfinding-algorithm-tutorial/">Understanding A* Search: Pathfinding Algorithm Tutorial</a>
+                </h3>
+                <p class="card-excerpt">Explore Understanding A* Search, a critical pathfinding algorithm. Learn its mechanics, key components, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T00:55:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">27 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/understanding-a-star-search-pathfinding-algorithm-tutorial/">Understanding A* Search: Pathfinding Algorithm Tutorial</a></h3>
-            <p>Explore Understanding A* Search, a critical pathfinding algorithm. Learn its mechanics, key components, and real-world applications in...</p>
-            <a href="https://analyticsdrive.tech/understanding-a-star-search-pathfinding-algorithm-tutorial/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/what-is-a-hash-map-hashing-concepts.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/what-is-a-hash-map-hashing-concepts-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-a-hash-map-hashing-concepts-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="What is a Hash Map? Deep Dive into Hashing Concepts Unveiled" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/what-is-a-hash-map-hashing-concepts/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/what-is-a-hash-map-hashing-concepts.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/what-is-a-hash-map-hashing-concepts-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/what-is-a-hash-map-hashing-concepts-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="What is a Hash Map? Deep Dive into Hashing Concepts Unveiled" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T21:42:00+05:30">Sun 22 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/what-is-a-hash-map-hashing-concepts/">What is a Hash Map? Deep Dive into Hashing Concepts Unveiled</a>
+                </h3>
+                <p class="card-excerpt">A comprehensive guide on what is a Hash Map, exploring its inner workings, hashing concepts, collision resolution,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T21:42:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">25 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/what-is-a-hash-map-hashing-concepts/">What is a Hash Map? Deep Dive into Hashing Concepts Unveiled</a></h3>
-            <p>A comprehensive guide on what is a Hash Map, exploring its inner workings, hashing concepts, collision resolution, and real-world applications.</p>
-            <a href="https://analyticsdrive.tech/what-is-a-hash-map-hashing-concepts/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/how-to-implement-binary-search-tree-python.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/how-to-implement-binary-search-tree-python-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-implement-binary-search-tree-python-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="How to Implement a Binary Search Tree in Python: A Deep Dive" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/how-to-implement-binary-search-tree-python/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/how-to-implement-binary-search-tree-python.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/how-to-implement-binary-search-tree-python-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-implement-binary-search-tree-python-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="How to Implement a Binary Search Tree in Python: A Deep Dive" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T21:33:00+05:30">Sun 22 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/how-to-implement-binary-search-tree-python/">How to Implement a Binary Search Tree in Python: A Deep Dive</a>
+                </h3>
+                <p class="card-excerpt">Master Python's Binary Search Tree (BST) implementation. Explore its structure, core operations, and practical...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T21:33:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">33 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/how-to-implement-binary-search-tree-python/">How to Implement a Binary Search Tree in Python: A Deep Dive</a></h3>
-            <p>Master Python's Binary Search Tree (BST) implementation. Explore its structure, core operations, and practical applications for...</p>
-            <a href="https://analyticsdrive.tech/how-to-implement-binary-search-tree-python/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/linked-lists-python-deep-dive-tutorial-data-structures.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/linked-lists-python-deep-dive-tutorial-data-structures-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/linked-lists-python-deep-dive-tutorial-data-structures-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Linked Lists in Python: A Deep Dive Tutorial into Data Structures" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/linked-lists-python-deep-dive-tutorial-data-structures/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/linked-lists-python-deep-dive-tutorial-data-structures.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/linked-lists-python-deep-dive-tutorial-data-structures-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/linked-lists-python-deep-dive-tutorial-data-structures-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Linked Lists in Python: A Deep Dive Tutorial into Data Structures" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-22T00:20:00+05:30">Sun 22 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/linked-lists-python-deep-dive-tutorial-data-structures/">Linked Lists in Python: A Deep Dive Tutorial into Data Structures</a>
+                </h3>
+                <p class="card-excerpt">Explore Linked Lists in Python: A Deep Dive Tutorial covering fundamental concepts, implementations, complexity...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-22T00:20:00+05:30">Sun 22 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">29 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/linked-lists-python-deep-dive-tutorial-data-structures/">Linked Lists in Python: A Deep Dive Tutorial into Data Structures</a></h3>
-            <p>Explore Linked Lists in Python: A Deep Dive Tutorial covering fundamental concepts, implementations, complexity analysis, and real-world...</p>
-            <a href="https://analyticsdrive.tech/linked-lists-python-deep-dive-tutorial-data-structures/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/hash-tables-comprehensive-guide-real-world-uses.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/hash-tables-comprehensive-guide-real-world-uses-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hash-tables-comprehensive-guide-real-world-uses-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hash Tables: Comprehensive Guide & Real-World Uses" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hash-tables-comprehensive-guide-real-world-uses/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/hash-tables-comprehensive-guide-real-world-uses.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/hash-tables-comprehensive-guide-real-world-uses-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hash-tables-comprehensive-guide-real-world-uses-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hash Tables: Comprehensive Guide & Real-World Uses" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T22:19:00+05:30">Sat 21 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hash-tables-comprehensive-guide-real-world-uses/">Hash Tables: Comprehensive Guide & Real-World Uses</a>
+                </h3>
+                <p class="card-excerpt">Dive deep into Hash Tables: Comprehensive Guide & Real-World Uses. Explore their mechanics, collision resolution,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T22:19:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">22 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hash-tables-comprehensive-guide-real-world-uses/">Hash Tables: Comprehensive Guide & Real-World Uses</a></h3>
-            <p>Dive deep into Hash Tables: Comprehensive Guide & Real-World Uses. Explore their mechanics, collision resolution, performance, and...</p>
-            <a href="https://analyticsdrive.tech/hash-tables-comprehensive-guide-real-world-uses/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/binary-search-tree-step-by-step-implementation-guide.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/binary-search-tree-step-by-step-implementation-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/binary-search-tree-step-by-step-implementation-guide-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Binary Search Tree: A Step-by-Step Implementation Guide for Developers" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/binary-search-tree-step-by-step-implementation-guide/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/binary-search-tree-step-by-step-implementation-guide.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/binary-search-tree-step-by-step-implementation-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/binary-search-tree-step-by-step-implementation-guide-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Binary Search Tree: A Step-by-Step Implementation Guide for Developers" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-21T22:06:00+05:30">Sat 21 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/binary-search-tree-step-by-step-implementation-guide/">Binary Search Tree: A Step-by-Step Implementation Guide for Developers</a>
+                </h3>
+                <p class="card-excerpt">Dive deep into the Binary Search Tree: A Step-by-Step Implementation Guide. Learn its core concepts, operations, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-21T22:06:00+05:30">Sat 21 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">20 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/binary-search-tree-step-by-step-implementation-guide/">Binary Search Tree: A Step-by-Step Implementation Guide for Developers</a></h3>
-            <p>Dive deep into the Binary Search Tree: A Step-by-Step Implementation Guide. Learn its core concepts, operations, and practical...</p>
-            <a href="https://analyticsdrive.tech/binary-search-tree-step-by-step-implementation-guide/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Big O Notation Explained: A Beginner's Guide to Complexity" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/big-o-notation-explained-beginner-guide-complexity-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Big O Notation Explained: A Beginner's Guide to Complexity" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-20T15:22:00+05:30">Fri 20 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/">Big O Notation Explained: A Beginner's Guide to Complexity</a>
+                </h3>
+                <p class="card-excerpt">This comprehensive article offers Big O Notation Explained: A Beginner's Guide to Complexity, crucial for optimizing...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-20T15:22:00+05:30">Fri 20 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">28 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/">Big O Notation Explained: A Beginner's Guide to Complexity</a></h3>
-            <p>This comprehensive article offers Big O Notation Explained: A Beginner's Guide to Complexity, crucial for optimizing code and mastering...</p>
-            <a href="https://analyticsdrive.tech/big-o-notation-explained-beginner-guide-complexity/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hash Tables: Deep Dive into Their Inner Workings & Use Cases" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/hash-tables-deep-dive-how-they-work-use-cases-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hash Tables: Deep Dive into Their Inner Workings & Use Cases" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-19T10:57:00+05:30">Thu 19 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/">Hash Tables: Deep Dive into Their Inner Workings & Use Cases</a>
+                </h3>
+                <p class="card-excerpt">Unlock the power of Hash Tables: Deep Dive into How They Work & Use Cases. Explore their O(1) efficiency, essential...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-19T10:57:00+05:30">Thu 19 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">28 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/">Hash Tables: Deep Dive into Their Inner Workings & Use Cases</a></h3>
-            <p>Unlock the power of Hash Tables: Deep Dive into How They Work & Use Cases. Explore their O(1) efficiency, essential components, and...</p>
-            <a href="https://analyticsdrive.tech/hash-tables-deep-dive-how-they-work-use-cases/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="QuickSort Algorithm Explained: A Step-by-Step Guide for Developers" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/quicksort-algorithm-explained-step-by-step-guide-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="QuickSort Algorithm Explained: A Step-by-Step Guide for Developers" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-18T14:23:00+05:30">Wed 18 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/">QuickSort Algorithm Explained: A Step-by-Step Guide for Developers</a>
+                </h3>
+                <p class="card-excerpt">Demystify the QuickSort Algorithm Explained: A Step-by-Step Guide for developers. Learn its mechanics, complexity,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-18T14:23:00+05:30">Wed 18 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">25 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/">QuickSort Algorithm Explained: A Step-by-Step Guide for Developers</a></h3>
-            <p>Demystify the QuickSort Algorithm Explained: A Step-by-Step Guide for developers. Learn its mechanics, complexity, and practical...</p>
-            <a href="https://analyticsdrive.tech/quicksort-algorithm-explained-step-by-step-guide/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Demystifying Binary Trees: Structure, Traversal, & Use Explained" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/demystifying-binary-trees-structure-traversal-use/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/demystifying-binary-trees-structure-traversal-use-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Demystifying Binary Trees: Structure, Traversal, & Use Explained" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-18T11:17:00+05:30">Wed 18 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/demystifying-binary-trees-structure-traversal-use/">Demystifying Binary Trees: Structure, Traversal, & Use Explained</a>
+                </h3>
+                <p class="card-excerpt">Explore Demystifying Binary Trees: Structure, Traversal, & Use. This guide covers core concepts, traversal...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-18T11:17:00+05:30">Wed 18 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">22 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/demystifying-binary-trees-structure-traversal-use/">Demystifying Binary Trees: Structure, Traversal, & Use Explained</a></h3>
-            <p>Explore Demystifying Binary Trees: Structure, Traversal, & Use. This guide covers core concepts, traversal algorithms, and real-world...</p>
-            <a href="https://analyticsdrive.tech/demystifying-binary-trees-structure-traversal-use/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/839-similar-string-groups-leetcode-python-cpp-java-tutorial.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/839-similar-string-groups-leetcode-python-cpp-java-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/839-similar-string-groups-leetcode-python-cpp-java-tutorial-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="839 Similar String Groups LeetCode: Python, C++, Java Solutions" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/839-similar-string-groups-leetcode-python-cpp-java-tutorial/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/839-similar-string-groups-leetcode-python-cpp-java-tutorial.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/839-similar-string-groups-leetcode-python-cpp-java-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/839-similar-string-groups-leetcode-python-cpp-java-tutorial-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="839 Similar String Groups LeetCode: Python, C++, Java Solutions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-12T16:37:00+05:30">Thu 12 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/839-similar-string-groups-leetcode-python-cpp-java-tutorial/">839 Similar String Groups LeetCode: Python, C++, Java Solutions</a>
+                </h3>
+                <p class="card-excerpt">Solve LeetCode 839 Similar String Groups effectively. This tutorial provides comprehensive solutions in Python, C++,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-12T16:37:00+05:30">Thu 12 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">26 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/839-similar-string-groups-leetcode-python-cpp-java-tutorial/">839 Similar String Groups LeetCode: Python, C++, Java Solutions</a></h3>
-            <p>Solve LeetCode 839 Similar String Groups effectively. This tutorial provides comprehensive solutions in Python, C++, and Java using...</p>
-            <a href="https://analyticsdrive.tech/839-similar-string-groups-leetcode-python-cpp-java-tutorial/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/find-all-people-with-secret-leetcode-2092-tutorial.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/find-all-people-with-secret-leetcode-2092-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/find-all-people-with-secret-leetcode-2092-tutorial-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="2092. Find All People With Secret: LeetCode Tutorial in C++, Python, Java" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/find-all-people-with-secret-leetcode-2092-tutorial/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/find-all-people-with-secret-leetcode-2092-tutorial.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/find-all-people-with-secret-leetcode-2092-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/find-all-people-with-secret-leetcode-2092-tutorial-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="2092. Find All People With Secret: LeetCode Tutorial in C++, Python, Java" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-12T15:25:00+05:30">Thu 12 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/find-all-people-with-secret-leetcode-2092-tutorial/">2092. Find All People With Secret: LeetCode Tutorial in C++, Python, Java</a>
+                </h3>
+                <p class="card-excerpt">Master LeetCode 2092. Find All People With Secret using C++, Python, and Java. This tutorial guides you through an...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-12T15:25:00+05:30">Thu 12 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">26 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/find-all-people-with-secret-leetcode-2092-tutorial/">2092. Find All People With Secret: LeetCode Tutorial in C++, Python, Java</a></h3>
-            <p>Master LeetCode 2092. Find All People With Secret using C++, Python, and Java. This tutorial guides you through an efficient solution...</p>
-            <a href="https://analyticsdrive.tech/find-all-people-with-secret-leetcode-2092-tutorial/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/number-of-islands-graph-traversal-tutorial.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/number-of-islands-graph-traversal-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/number-of-islands-graph-traversal-tutorial-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Number Of Islands: A Deep Dive into Graph Traversal Algorithms" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/number-of-islands-graph-traversal-tutorial/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/number-of-islands-graph-traversal-tutorial.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/number-of-islands-graph-traversal-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/number-of-islands-graph-traversal-tutorial-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Number Of Islands: A Deep Dive into Graph Traversal Algorithms" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-12T15:07:00+05:30">Thu 12 March 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/number-of-islands-graph-traversal-tutorial/">Number Of Islands: A Deep Dive into Graph Traversal Algorithms</a>
+                </h3>
+                <p class="card-excerpt">Master the classic 'Number Of Islands' problem. This tutorial explores efficient graph traversal algorithms like BFS...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-12T15:07:00+05:30">Thu 12 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">30 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/number-of-islands-graph-traversal-tutorial/">Number Of Islands: A Deep Dive into Graph Traversal Algorithms</a></h3>
-            <p>Master the classic 'Number Of Islands' problem. This tutorial explores efficient graph traversal algorithms like BFS and DFS to count...</p>
-            <a href="https://analyticsdrive.tech/number-of-islands-graph-traversal-tutorial/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/minimum-spanning-tree-prims-algorithm-python-java-cpp-hero.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/minimum-spanning-tree-prims-algorithm-python-java-cpp-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/minimum-spanning-tree-prims-algorithm-python-java-cpp-hero-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Minimum Spanning Tree with Prim's Algorithm: Python, Java & C++" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/minimum-spanning-tree-prims-algorithm-python-java-cpp/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/minimum-spanning-tree-prims-algorithm-python-java-cpp-hero.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/minimum-spanning-tree-prims-algorithm-python-java-cpp-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/minimum-spanning-tree-prims-algorithm-python-java-cpp-hero-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Minimum Spanning Tree with Prim's Algorithm: Python, Java & C++" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-27T12:27:00+05:30">Fri 27 February 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/minimum-spanning-tree-prims-algorithm-python-java-cpp/">Minimum Spanning Tree with Prim's Algorithm: Python, Java & C++</a>
+                </h3>
+                <p class="card-excerpt">Master the minimum spanning tree using Prim's algorithm in Python, Java, and C++. This tutorial guides you through...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-27T12:27:00+05:30">Fri 27 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">28 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/minimum-spanning-tree-prims-algorithm-python-java-cpp/">Minimum Spanning Tree with Prim's Algorithm: Python, Java & C++</a></h3>
-            <p>Master the minimum spanning tree using Prim's algorithm in Python, Java, and C++. This tutorial guides you through implementation,...</p>
-            <a href="https://analyticsdrive.tech/minimum-spanning-tree-prims-algorithm-python-java-cpp/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/floyd-warshall-algorithm-python-java-cpp-hero.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/floyd-warshall-algorithm-python-java-cpp-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/floyd-warshall-algorithm-python-java-cpp-hero-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Floyd Warshall Algorithm in Python, Java & C++: A Tutorial" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/floyd-warshall-algorithm-python-java-cpp-hero.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/floyd-warshall-algorithm-python-java-cpp-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/floyd-warshall-algorithm-python-java-cpp-hero-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Floyd Warshall Algorithm in Python, Java & C++: A Tutorial" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-27T11:29:00+05:30">Fri 27 February 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/">Floyd Warshall Algorithm in Python, Java & C++: A Tutorial</a>
+                </h3>
+                <p class="card-excerpt">Master the Floyd Warshall Algorithm in Python, Java, and C++ with this comprehensive tutorial. Learn to find...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-27T11:29:00+05:30">Fri 27 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">28 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/">Floyd Warshall Algorithm in Python, Java & C++: A Tutorial</a></h3>
-            <p>Master the Floyd Warshall Algorithm in Python, Java, and C++ with this comprehensive tutorial. Learn to find all-pairs shortest paths...</p>
-            <a href="https://analyticsdrive.tech/floyd-warshall-algorithm-python-java-cpp/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/bellman-ford-algorithm-python-cpp-java-tutorial.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/bellman-ford-algorithm-python-cpp-java-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/bellman-ford-algorithm-python-cpp-java-tutorial-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/bellman-ford-algorithm-python-cpp-java-tutorial.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/bellman-ford-algorithm-python-cpp-java-tutorial-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/bellman-ford-algorithm-python-cpp-java-tutorial-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-27T09:45:00+05:30">Fri 27 February 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/">Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial</a>
+                </h3>
+                <p class="card-excerpt">Master the Bellman Ford Algorithm in Python, C++, and Java. This comprehensive tutorial covers implementation, time...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-27T09:45:00+05:30">Fri 27 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">29 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/">Bellman Ford Algorithm in Python, C++, Java: A Complete Tutorial</a></h3>
-            <p>Master the Bellman Ford Algorithm in Python, C++, and Java. This comprehensive tutorial covers implementation, time complexity, and...</p>
-            <a href="https://analyticsdrive.tech/bellman-ford-algorithm-python-cpp-java-tutorial/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/segment-tree-tutorial-python-java-cpp-hero.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/segment-tree-tutorial-python-java-cpp-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/segment-tree-tutorial-python-java-cpp-hero-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Segment Tree in Python, Java & C++: A Comprehensive Guide" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Algorithms & Data Structures">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/segment-tree-tutorial-python-java-cpp-hero.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/segment-tree-tutorial-python-java-cpp-hero-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/segment-tree-tutorial-python-java-cpp-hero-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Segment Tree in Python, Java & C++: A Comprehensive Guide" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge algorithms-&-data-structures">
+                    <a href="https://analyticsdrive.tech/category/algorithms-data-structures.html">Algorithms & Data Structures</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-26T15:39:00+05:30">Thu 26 February 2026</time>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/">Segment Tree in Python, Java & C++: A Comprehensive Guide</a>
+                </h3>
+                <p class="card-excerpt">Master the Segment Tree data structure in Python, Java, and C++ with this comprehensive guide. Learn its operations,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By David Lin</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-26T15:39:00+05:30">Thu 26 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">28 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/">Segment Tree in Python, Java & C++: A Comprehensive Guide</a></h3>
-            <p>Master the Segment Tree data structure in Python, Java, and C++ with this comprehensive guide. Learn its operations, applications, and...</p>
-            <a href="https://analyticsdrive.tech/segment-tree-tutorial-python-java-cpp/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/category/algorithms-data-structures2.html">Older
-            &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Category Page Navigation">
+
+        <span class="page-current">Page 1 of 2</span>
+
+        <a href="https://analyticsdrive.tech/category/algorithms-data-structures2.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 </section>
     </main>
 

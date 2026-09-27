@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,365 +3452,591 @@ a:hover {
         <span class="current">#Sports</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #Sports
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            19 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">19 Articles</span>
+        </div>
+        <h1 class="archive-title">#Sports</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #Sports.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/cricket-world-cup-semi-final-thriller-india-australia.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/cricket-world-cup-semi-final-thriller-india-australia-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/cricket-world-cup-semi-final-thriller-india-australia-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Cricket World Cup Semi-Final Thriller! India Edges Australia in Epic Showdown" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/cricket-world-cup-semi-final-thriller-india-australia/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/cricket-world-cup-semi-final-thriller-india-australia.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/cricket-world-cup-semi-final-thriller-india-australia-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/cricket-world-cup-semi-final-thriller-india-australia-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Cricket World Cup Semi-Final Thriller! India Edges Australia in Epic Showdown" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-28T01:23:00+05:30">Sun 28 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/cricket-world-cup-semi-final-thriller-india-australia/">Cricket World Cup Semi-Final Thriller! India Edges Australia in Epic Showdown</a>
+                </h3>
+                <p class="card-excerpt">Witness the electrifying Cricket World Cup Semi-Final Thriller! India triumphs over arch-rivals Australia in a...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-28T01:23:00+05:30">Sun 28 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/cricket-world-cup-semi-final-thriller-india-australia/">Cricket World Cup Semi-Final Thriller! India Edges Australia in Epic Showdown</a></h3>
-            <p>Witness the electrifying Cricket World Cup Semi-Final Thriller! India triumphs over arch-rivals Australia in a nail-biting finish,...</p>
-            <a href="https://analyticsdrive.tech/cricket-world-cup-semi-final-thriller-india-australia/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/india-cricket-rise-of-a-cricketing-powerhouse.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/india-cricket-rise-of-a-cricketing-powerhouse-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/india-cricket-rise-of-a-cricketing-powerhouse-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India Cricket: The Rise of a Cricketing Powerhouse" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-cricket-rise-of-a-cricketing-powerhouse/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/india-cricket-rise-of-a-cricketing-powerhouse.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/india-cricket-rise-of-a-cricketing-powerhouse-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/india-cricket-rise-of-a-cricketing-powerhouse-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India Cricket: The Rise of a Cricketing Powerhouse" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-30T20:01:00+05:30">Thu 30 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-cricket-rise-of-a-cricketing-powerhouse/">India Cricket: The Rise of a Cricketing Powerhouse</a>
+                </h3>
+                <p class="card-excerpt">Explore India's journey to becoming a cricketing powerhouse, from its early days to its current status as a dominant...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-30T20:01:00+05:30">Thu 30 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-cricket-rise-of-a-cricketing-powerhouse/">India Cricket: The Rise of a Cricketing Powerhouse</a></h3>
-            <p>Explore India's journey to becoming a cricketing powerhouse, from its early days to its current status as a dominant force in the sport...</p>
-            <a href="https://analyticsdrive.tech/india-cricket-rise-of-a-cricketing-powerhouse/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/ipl-updates-starc-cleared-klaasen-new-record.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/ipl-updates-starc-cleared-klaasen-new-record-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/ipl-updates-starc-cleared-klaasen-new-record-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="IPL Updates: Starc Cleared, Klaasen's New Record Shakes League" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ipl-updates-starc-cleared-klaasen-new-record/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/ipl-updates-starc-cleared-klaasen-new-record.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/ipl-updates-starc-cleared-klaasen-new-record-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/ipl-updates-starc-cleared-klaasen-new-record-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="IPL Updates: Starc Cleared, Klaasen's New Record Shakes League" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-26T19:00:00+05:30">Sun 26 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ipl-updates-starc-cleared-klaasen-new-record/">IPL Updates: Starc Cleared, Klaasen's New Record Shakes League</a>
+                </h3>
+                <p class="card-excerpt">Major IPL Updates: Mitchell Starc is cleared for Delhi Capitals debut on May 1 after injury, while Heinrich Klaasen...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-26T19:00:00+05:30">Sun 26 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ipl-updates-starc-cleared-klaasen-new-record/">IPL Updates: Starc Cleared, Klaasen's New Record Shakes League</a></h3>
-            <p>Major IPL Updates: Mitchell Starc is cleared for Delhi Capitals debut on May 1 after injury, while Heinrich Klaasen sets a new record as...</p>
-            <a href="https://analyticsdrive.tech/ipl-updates-starc-cleared-klaasen-new-record/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/chinese-humanoid-robot-half-marathon-record.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/chinese-humanoid-robot-half-marathon-record-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/chinese-humanoid-robot-half-marathon-record-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Chinese Humanoid Robot Breaks Half-Marathon Record, Stuns World" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/chinese-humanoid-robot-half-marathon-record/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/chinese-humanoid-robot-half-marathon-record.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/chinese-humanoid-robot-half-marathon-record-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/chinese-humanoid-robot-half-marathon-record-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Chinese Humanoid Robot Breaks Half-Marathon Record, Stuns World" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T16:03:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/chinese-humanoid-robot-half-marathon-record/">Chinese Humanoid Robot Breaks Half-Marathon Record, Stuns World</a>
+                </h3>
+                <p class="card-excerpt">A Chinese humanoid robot, "Lightning," has shattered the half-marathon record in Beijing, finishing in 50:26 and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T16:03:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/chinese-humanoid-robot-half-marathon-record/">Chinese Humanoid Robot Breaks Half-Marathon Record, Stuns World</a></h3>
-            <p>A Chinese humanoid robot, "Lightning," has shattered the half-marathon record in Beijing, finishing in 50:26 and outpacing human...</p>
-            <a href="https://analyticsdrive.tech/chinese-humanoid-robot-half-marathon-record/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/chinese-robots-half-marathon-record-beijing.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/chinese-robots-half-marathon-record-beijing-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/chinese-robots-half-marathon-record-beijing-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Chinese Robots Set New Record in Beijing Half-Marathon" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/chinese-robots-half-marathon-record-beijing/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/chinese-robots-half-marathon-record-beijing.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/chinese-robots-half-marathon-record-beijing-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/chinese-robots-half-marathon-record-beijing-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Chinese Robots Set New Record in Beijing Half-Marathon" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-21T06:00:00+05:30">Tue 21 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/chinese-robots-half-marathon-record-beijing/">Chinese Robots Set New Record in Beijing Half-Marathon</a>
+                </h3>
+                <p class="card-excerpt">A humanoid robot named Lightning shattered the human half-marathon world record at the Beijing E-Town Half Marathon,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-21T06:00:00+05:30">Tue 21 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/chinese-robots-half-marathon-record-beijing/">Chinese Robots Set New Record in Beijing Half-Marathon</a></h3>
-            <p>A humanoid robot named Lightning shattered the human half-marathon world record at the Beijing E-Town Half Marathon, completing the race...</p>
-            <a href="https://analyticsdrive.tech/chinese-robots-half-marathon-record-beijing/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/volleyball-star-viral-celebration-debate.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/volleyball-star-viral-celebration-debate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/volleyball-star-viral-celebration-debate-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Volleyball Star's Viral Celebration Sparks Debate: A Global Conversation" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Culture">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/volleyball-star-viral-celebration-debate/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/volleyball-star-viral-celebration-debate.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/volleyball-star-viral-celebration-debate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/volleyball-star-viral-celebration-debate-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Volleyball Star's Viral Celebration Sparks Debate: A Global Conversation" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge culture">
+                    <a href="https://analyticsdrive.tech/category/culture.html">Culture</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-19T03:03:00+05:30">Sun 19 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/culture.html">Culture</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/volleyball-star-viral-celebration-debate/">Volleyball Star's Viral Celebration Sparks Debate: A Global Conversation</a>
+                </h3>
+                <p class="card-excerpt">A recent incident involving a prominent volleyball star's viral celebration has sparked debate across social media...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Sophia Jenkins</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-19T03:03:00+05:30">Sun 19 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/volleyball-star-viral-celebration-debate/">Volleyball Star's Viral Celebration Sparks Debate: A Global Conversation</a></h3>
-            <p>A recent incident involving a prominent volleyball star's viral celebration has sparked debate across social media and sports...</p>
-            <a href="https://analyticsdrive.tech/volleyball-star-viral-celebration-debate/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/kohli-viral-clapback-overseas-player-ipl-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/kohli-viral-clapback-overseas-player-ipl-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/kohli-viral-clapback-overseas-player-ipl-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Kohli's Viral Clapback: "Overseas Player" Taunt in IPL 2026 Ignites Debate" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/kohli-viral-clapback-overseas-player-ipl-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/kohli-viral-clapback-overseas-player-ipl-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/kohli-viral-clapback-overseas-player-ipl-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/kohli-viral-clapback-overseas-player-ipl-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Kohli's Viral Clapback: "Overseas Player" Taunt in IPL 2026 Ignites Debate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-05T01:59:00+05:30">Sun 05 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/kohli-viral-clapback-overseas-player-ipl-2026/">Kohli's Viral Clapback: "Overseas Player" Taunt in IPL 2026 Ignites Debate</a>
+                </h3>
+                <p class="card-excerpt">Virat Kohli's fierce "overseas player" retort in IPL 2026 has set social media ablaze. Explore the incident, its...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-05T01:59:00+05:30">Sun 05 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">19 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/kohli-viral-clapback-overseas-player-ipl-2026/">Kohli's Viral Clapback: "Overseas Player" Taunt in IPL 2026 Ignites Debate</a></h3>
-            <p>Virat Kohli's fierce "overseas player" retort in IPL 2026 has set social media ablaze. Explore the incident, its context, and the...</p>
-            <a href="https://analyticsdrive.tech/kohli-viral-clapback-overseas-player-ipl-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/arjun-tendulkar-viral-reply-cricket-world-bold-stance.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/arjun-tendulkar-viral-reply-cricket-world-bold-stance-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/arjun-tendulkar-viral-reply-cricket-world-bold-stance-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Arjun Tendulkar's Viral Reply Shakes Cricket World: A Bold Stance" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/arjun-tendulkar-viral-reply-cricket-world-bold-stance/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/arjun-tendulkar-viral-reply-cricket-world-bold-stance.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/arjun-tendulkar-viral-reply-cricket-world-bold-stance-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/arjun-tendulkar-viral-reply-cricket-world-bold-stance-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Arjun Tendulkar's Viral Reply Shakes Cricket World: A Bold Stance" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-01T10:18:00+05:30">Wed 01 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/arjun-tendulkar-viral-reply-cricket-world-bold-stance/">Arjun Tendulkar's Viral Reply Shakes Cricket World: A Bold Stance</a>
+                </h3>
+                <p class="card-excerpt">Arjun Tendulkar's viral reply shakes cricket world, showcasing his fearless attitude amidst immense pressure....</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-01T10:18:00+05:30">Wed 01 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/arjun-tendulkar-viral-reply-cricket-world-bold-stance/">Arjun Tendulkar's Viral Reply Shakes Cricket World: A Bold Stance</a></h3>
-            <p>Arjun Tendulkar's viral reply shakes cricket world, showcasing his fearless attitude amidst immense pressure. Explore the full story...</p>
-            <a href="https://analyticsdrive.tech/arjun-tendulkar-viral-reply-cricket-world-bold-stance/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/tiger-woods-mugshot-sun-day-red-sales-surge.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-mugshot-sun-day-red-sales-surge-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-mugshot-sun-day-red-sales-surge-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Tiger Woods' Viral Mugshot Boosts Sun Day Red Sales Surging" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Culture">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/tiger-woods-mugshot-sun-day-red-sales-surge/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/tiger-woods-mugshot-sun-day-red-sales-surge.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-mugshot-sun-day-red-sales-surge-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-mugshot-sun-day-red-sales-surge-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Tiger Woods' Viral Mugshot Boosts Sun Day Red Sales Surging" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge culture">
+                    <a href="https://analyticsdrive.tech/category/culture.html">Culture</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-30T12:07:00+05:30">Mon 30 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/culture.html">Culture</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/tiger-woods-mugshot-sun-day-red-sales-surge/">Tiger Woods' Viral Mugshot Boosts Sun Day Red Sales Surging</a>
+                </h3>
+                <p class="card-excerpt">Tiger Woods' recent viral mugshot, featuring him in a Sun Day Red polo, has unexpectedly boosted sales for his new...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Sophia Jenkins</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-30T12:07:00+05:30">Mon 30 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/tiger-woods-mugshot-sun-day-red-sales-surge/">Tiger Woods' Viral Mugshot Boosts Sun Day Red Sales Surging</a></h3>
-            <p>Tiger Woods' recent viral mugshot, featuring him in a Sun Day Red polo, has unexpectedly boosted sales for his new apparel brand,...</p>
-            <a href="https://analyticsdrive.tech/tiger-woods-mugshot-sun-day-red-sales-surge/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/ipl-2026-season-begins-rcb-srh-opener-excites-fans.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/ipl-2026-season-begins-rcb-srh-opener-excites-fans-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ipl-2026-season-begins-rcb-srh-opener-excites-fans-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="IPL 2026 Season Begins! RCB vs SRH Opener Excites Fans" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ipl-2026-season-begins-rcb-srh-opener-excites-fans/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/ipl-2026-season-begins-rcb-srh-opener-excites-fans.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/ipl-2026-season-begins-rcb-srh-opener-excites-fans-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/ipl-2026-season-begins-rcb-srh-opener-excites-fans-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="IPL 2026 Season Begins! RCB vs SRH Opener Excites Fans" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-29T02:56:00+05:30">Sun 29 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ipl-2026-season-begins-rcb-srh-opener-excites-fans/">IPL 2026 Season Begins! RCB vs SRH Opener Excites Fans</a>
+                </h3>
+                <p class="card-excerpt">The much-anticipated IPL 2026 Season Begins! RCB vs SRH Opener Excites Fans across the globe, setting the stage for...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-29T02:56:00+05:30">Sun 29 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ipl-2026-season-begins-rcb-srh-opener-excites-fans/">IPL 2026 Season Begins! RCB vs SRH Opener Excites Fans</a></h3>
-            <p>The much-anticipated IPL 2026 Season Begins! RCB vs SRH Opener Excites Fans across the globe, setting the stage for an electrifying...</p>
-            <a href="https://analyticsdrive.tech/ipl-2026-season-begins-rcb-srh-opener-excites-fans/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-29T02:47:00+05:30">Sun 29 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/">Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked</a>
+                </h3>
+                <p class="card-excerpt">Explore the complex details surrounding the Tiger Woods crash, scrutinizing viral claims, and analyzing the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-29T02:47:00+05:30">Sun 29 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/">Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked</a></h3>
-            <p>Explore the complex details surrounding the Tiger Woods crash, scrutinizing viral claims, and analyzing the particulars of his prior DUI...</p>
-            <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/how-to-start-budget-friendly-home-workout-plan.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/how-to-start-budget-friendly-home-workout-plan-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-start-budget-friendly-home-workout-plan-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="How to Start a Budget-Friendly Home Workout Plan Today" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Lifestyle">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/how-to-start-budget-friendly-home-workout-plan/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/how-to-start-budget-friendly-home-workout-plan.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/how-to-start-budget-friendly-home-workout-plan-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/how-to-start-budget-friendly-home-workout-plan-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="How to Start a Budget-Friendly Home Workout Plan Today" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge lifestyle">
+                    <a href="https://analyticsdrive.tech/category/lifestyle.html">Lifestyle</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T16:12:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/lifestyle.html">Lifestyle</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/how-to-start-budget-friendly-home-workout-plan/">How to Start a Budget-Friendly Home Workout Plan Today</a>
+                </h3>
+                <p class="card-excerpt">Discover how to start a budget-friendly home workout plan without breaking the bank. Learn practical tips, essential...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Amelia Voss</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T16:12:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">29 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/how-to-start-budget-friendly-home-workout-plan/">How to Start a Budget-Friendly Home Workout Plan Today</a></h3>
-            <p>Discover how to start a budget-friendly home workout plan without breaking the bank. Learn practical tips, essential gear, and effective...</p>
-            <a href="https://analyticsdrive.tech/how-to-start-budget-friendly-home-workout-plan/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt=""Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Culture">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt=""Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge culture">
+                    <a href="https://analyticsdrive.tech/category/culture.html">Culture</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-26T23:23:00+05:30">Thu 26 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/culture.html">Culture</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/">"Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation</a>
+                </h3>
+                <p class="card-excerpt">Elvera "Peps" Neuman, the 81-year-old "Blanket Lady," has become a viral sports sensation with her infectious...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Sophia Jenkins</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-26T23:23:00+05:30">Thu 26 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/">"Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation</a></h3>
-            <p>Elvera "Peps" Neuman, the 81-year-old "Blanket Lady," has become a viral sports sensation with her infectious Minnesota Gophers...</p>
-            <a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/fundamental-rules-cricket-new-fans-explained.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/fundamental-rules-cricket-new-fans-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/fundamental-rules-cricket-new-fans-explained-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Unlocking Cricket: Fundamental Rules for New Fans Explained" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/fundamental-rules-cricket-new-fans-explained/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/fundamental-rules-cricket-new-fans-explained.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/fundamental-rules-cricket-new-fans-explained-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/fundamental-rules-cricket-new-fans-explained-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Unlocking Cricket: Fundamental Rules for New Fans Explained" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-26T22:49:00+05:30">Thu 26 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/fundamental-rules-cricket-new-fans-explained/">Unlocking Cricket: Fundamental Rules for New Fans Explained</a>
+                </h3>
+                <p class="card-excerpt">Dive deep into the fundamental rules of cricket for new fans, covering gameplay, roles, scoring, and formats....</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-26T22:49:00+05:30">Thu 26 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">20 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/fundamental-rules-cricket-new-fans-explained/">Unlocking Cricket: Fundamental Rules for New Fans Explained</a></h3>
-            <p>Dive deep into the fundamental rules of cricket for new fans, covering gameplay, roles, scoring, and formats. Understand this complex...</p>
-            <a href="https://analyticsdrive.tech/fundamental-rules-cricket-new-fans-explained/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T23:29:00+05:30">Mon 23 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/">March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend</a>
+                </h3>
+                <p class="card-excerpt">The 2026 March Madness tournament delivered incredible upsets and dominant performances. Iowa upset Florida, ending...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T23:29:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/">March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend</a></h3>
-            <p>The 2026 March Madness tournament delivered incredible upsets and dominant performances. Iowa upset Florida, ending their title run,...</p>
-            <a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/masters-tournament-ai-upgrade-fan-engagement.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/masters-tournament-ai-upgrade-fan-engagement-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/masters-tournament-ai-upgrade-fan-engagement-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Masters Tournament Gets AI Upgrade for Fans: A New Era of Engagement" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/masters-tournament-ai-upgrade-fan-engagement/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/masters-tournament-ai-upgrade-fan-engagement.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/masters-tournament-ai-upgrade-fan-engagement-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/masters-tournament-ai-upgrade-fan-engagement-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Masters Tournament Gets AI Upgrade for Fans: A New Era of Engagement" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T23:19:00+05:30">Mon 23 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/masters-tournament-ai-upgrade-fan-engagement/">Masters Tournament Gets AI Upgrade for Fans: A New Era of Engagement</a>
+                </h3>
+                <p class="card-excerpt">The Masters Tournament Gets AI Upgrade for Fans, promising unprecedented viewer engagement and personalized...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T23:19:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/masters-tournament-ai-upgrade-fan-engagement/">Masters Tournament Gets AI Upgrade for Fans: A New Era of Engagement</a></h3>
-            <p>The Masters Tournament Gets AI Upgrade for Fans, promising unprecedented viewer engagement and personalized insights. Discover how AI is...</p>
-            <a href="https://analyticsdrive.tech/masters-tournament-ai-upgrade-fan-engagement/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/india-vs-new-zealand-final-t20-world-cup-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/india-vs-new-zealand-final-t20-world-cup-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/india-vs-new-zealand-final-t20-world-cup-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India vs New Zealand Final: 2026 T20 World Cup Glory!" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-vs-new-zealand-final-t20-world-cup-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/india-vs-new-zealand-final-t20-world-cup-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/india-vs-new-zealand-final-t20-world-cup-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/india-vs-new-zealand-final-t20-world-cup-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India vs New Zealand Final: 2026 T20 World Cup Glory!" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-09T10:13:00+05:30">Mon 09 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-vs-new-zealand-final-t20-world-cup-2026/">India vs New Zealand Final: 2026 T20 World Cup Glory!</a>
+                </h3>
+                <p class="card-excerpt">Relive the epic 2026 T20 World Cup final where India triumphed over New Zealand, securing their third title and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-09T10:13:00+05:30">Mon 09 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-vs-new-zealand-final-t20-world-cup-2026/">India vs New Zealand Final: 2026 T20 World Cup Glory!</a></h3>
-            <p>Relive the epic 2026 T20 World Cup final where India triumphed over New Zealand, securing their third title and defending their crown on...</p>
-            <a href="https://analyticsdrive.tech/india-vs-new-zealand-final-t20-world-cup-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/02/dangal-enduring-legacy-indias-inspiring-sports-biopic.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/02/dangal-enduring-legacy-indias-inspiring-sports-biopic-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/dangal-enduring-legacy-indias-inspiring-sports-biopic-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Dangal: The Enduring Legacy of India's Most Inspiring Sports Biopic" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Entertainment">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/dangal-enduring-legacy-indias-inspiring-sports-biopic/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/02/dangal-enduring-legacy-indias-inspiring-sports-biopic.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/02/dangal-enduring-legacy-indias-inspiring-sports-biopic-tablet.webp 800w, https://analyticsdrive.tech/images/2026/02/dangal-enduring-legacy-indias-inspiring-sports-biopic-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Dangal: The Enduring Legacy of India's Most Inspiring Sports Biopic" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge entertainment">
+                    <a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-02-12T01:19:00+05:30">Thu 12 February 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/dangal-enduring-legacy-indias-inspiring-sports-biopic/">Dangal: The Enduring Legacy of India's Most Inspiring Sports Biopic</a>
+                </h3>
+                <p class="card-excerpt">Explore the incredible true story behind Dangal, the Bollywood masterpiece that captivated the world. Discover its...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Chloe Bennett</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-02-12T01:19:00+05:30">Thu 12 February 2026</time>
+                    </div>
+                    <span class="read-time-pill">5 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/dangal-enduring-legacy-indias-inspiring-sports-biopic/">Dangal: The Enduring Legacy of India's Most Inspiring Sports Biopic</a></h3>
-            <p>Explore the incredible true story behind Dangal, the Bollywood masterpiece that captivated the world. Discover its themes of grit,...</p>
-            <a href="https://analyticsdrive.tech/dangal-enduring-legacy-indias-inspiring-sports-biopic/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2023/11/india-wins-cricket-world-cup-2023.webp" 
-                  srcset="https://analyticsdrive.tech/images/2023/11/india-wins-cricket-world-cup-2023-tablet.webp 800w, https://analyticsdrive.tech/images/2023/11/india-wins-cricket-world-cup-2023-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India Wins: Historic Victory in Cricket World Cup 2023" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Cricket">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-wins-cricket-world-cup-2023/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2023/11/india-wins-cricket-world-cup-2023.webp" 
+                          srcset="https://analyticsdrive.tech/images/2023/11/india-wins-cricket-world-cup-2023-tablet.webp 800w, https://analyticsdrive.tech/images/2023/11/india-wins-cricket-world-cup-2023-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India Wins: Historic Victory in Cricket World Cup 2023" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge cricket">
+                    <a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2023-11-20T14:40:00+05:30">Mon 20 November 2023</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/cricket.html">Cricket</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-wins-cricket-world-cup-2023/">India Wins: Historic Victory in Cricket World Cup 2023</a>
+                </h3>
+                <p class="card-excerpt">India wins the 2023 Cricket World Cup in a historic victory against Australia. Explore the match highlights, key...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Ravi Kumar</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2023-11-20T14:40:00+05:30">Mon 20 November 2023</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-wins-cricket-world-cup-2023/">India Wins: Historic Victory in Cricket World Cup 2023</a></h3>
-            <p>India wins the 2023 Cricket World Cup in a historic victory against Australia. Explore the match highlights, key player stats, and the...</p>
-            <a href="https://analyticsdrive.tech/india-wins-cricket-world-cup-2023/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
+    <!-- Polished Pagination -->
 
 </section>
     </main>

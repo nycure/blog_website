@@ -28,7 +28,7 @@
     <!-- Dynamic Category/Author Feeds -->
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="All articles tagged #World News on Analytics Drive. Browse 346 articles on this topic." />
+    <meta name="description" content="All articles tagged #World News on Analytics Drive. Browse 347 articles on this topic." />
     <meta name="author" content="Analytics Drive Editorial Team" />
 
     <!-- Open Graph -->
@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,387 +3452,628 @@ a:hover {
         <span class="current">#World News</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #World News
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            346 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">347 Articles</span>
+        </div>
+        <h1 class="archive-title">#World News</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #World News.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/critical-elections-west-african-nation.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/critical-elections-west-african-nation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/critical-elections-west-african-nation-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Critical Elections Rock West African Nation's Future" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Entertainment">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/sea-film-global-box-office-records-historic-run/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/sea-film-global-box-office-records-historic-run.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/sea-film-global-box-office-records-historic-run-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/sea-film-global-box-office-records-historic-run-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="SEA Film Breaks Global Box Office Records with Historic Run" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge entertainment">
+                    <a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-28T00:44:00+05:30">Sun 28 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/sea-film-global-box-office-records-historic-run/">SEA Film Breaks Global Box Office Records with Historic Run</a>
+                </h3>
+                <p class="card-excerpt">A groundbreaking Southeast Asian film shatters global box office records, a historic win for regional cinema that...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Chloe Bennett</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-28T00:58:00+05:30">Sun 28 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/critical-elections-west-african-nation/">Critical Elections Rock West African Nation's Future</a></h3>
-            <p>Historic critical elections rock a key West African nation, testing its democratic institutions and potentially reshaping its regional...</p>
-            <a href="https://analyticsdrive.tech/critical-elections-west-african-nation/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/quantum-leap-us-china-tech-race-semiconductors.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/quantum-leap-us-china-tech-race-semiconductors-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/quantum-leap-us-china-tech-race-semiconductors-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Quantum Leap: US-China Tech Race Heats Up in Semiconductors" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/critical-elections-west-african-nation/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/critical-elections-west-african-nation.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/critical-elections-west-african-nation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/critical-elections-west-african-nation-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Critical Elections Rock West African Nation's Future" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-27T04:07:00+05:30">Sat 27 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/critical-elections-west-african-nation/">Critical Elections Rock West African Nation's Future</a>
+                </h3>
+                <p class="card-excerpt">Historic critical elections rock a key West African nation, testing its democratic institutions and potentially...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-28T00:44:00+05:30">Sun 28 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/quantum-leap-us-china-tech-race-semiconductors/">Quantum Leap: US-China Tech Race Heats Up in Semiconductors</a></h3>
-            <p>The global tech landscape faces a Quantum Leap: US-China Tech Race Heats Up, focusing on semiconductors and AI. This competition...</p>
-            <a href="https://analyticsdrive.tech/quantum-leap-us-china-tech-race-semiconductors/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/eu-ai-ethics-guidelines-trustworthy-future.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/eu-ai-ethics-guidelines-trustworthy-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/eu-ai-ethics-guidelines-trustworthy-future-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="EU Unveils Strict AI Ethics Guidelines for a Trustworthy Future" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/quantum-leap-us-china-tech-race-semiconductors/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/quantum-leap-us-china-tech-race-semiconductors.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/quantum-leap-us-china-tech-race-semiconductors-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/quantum-leap-us-china-tech-race-semiconductors-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Quantum Leap: US-China Tech Race Heats Up in Semiconductors" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-27T03:54:00+05:30">Sat 27 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/quantum-leap-us-china-tech-race-semiconductors/">Quantum Leap: US-China Tech Race Heats Up in Semiconductors</a>
+                </h3>
+                <p class="card-excerpt">The global tech landscape faces a Quantum Leap: US-China Tech Race Heats Up, focusing on semiconductors and AI. This...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-27T04:07:00+05:30">Sat 27 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/eu-ai-ethics-guidelines-trustworthy-future/">EU Unveils Strict AI Ethics Guidelines for a Trustworthy Future</a></h3>
-            <p>The EU's landmark AI Act, the world's first comprehensive legal framework, establishes strict AI ethics guidelines to ensure safety,...</p>
-            <a href="https://analyticsdrive.tech/eu-ai-ethics-guidelines-trustworthy-future/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/south-korea-first-female-pm-ai-leadership.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/south-korea-first-female-pm-ai-leadership-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/south-korea-first-female-pm-ai-leadership-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="South Korea's First Female PM to Lead AI: A New Era Dawns" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/eu-ai-ethics-guidelines-trustworthy-future/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/eu-ai-ethics-guidelines-trustworthy-future.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/eu-ai-ethics-guidelines-trustworthy-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/eu-ai-ethics-guidelines-trustworthy-future-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="EU Unveils Strict AI Ethics Guidelines for a Trustworthy Future" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-27T03:19:00+05:30">Sat 27 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/eu-ai-ethics-guidelines-trustworthy-future/">EU Unveils Strict AI Ethics Guidelines for a Trustworthy Future</a>
+                </h3>
+                <p class="card-excerpt">The EU's landmark AI Act, the world's first comprehensive legal framework, establishes strict AI ethics guidelines...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Sarah Chen</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-27T03:54:00+05:30">Sat 27 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/south-korea-first-female-pm-ai-leadership/">South Korea's First Female PM to Lead AI: A New Era Dawns</a></h3>
-            <p>Han Seong-sook's nomination as South Korea's first female PM in decades signals a pivotal shift. She's tasked with spearheading the...</p>
-            <a href="https://analyticsdrive.tech/south-korea-first-female-pm-ai-leadership/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="EU Approves New Cancer Treatment for MM: Sarclisa's On-Body Injector Marks Milestone" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Artificial Intelligence">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/south-korea-first-female-pm-ai-leadership/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/south-korea-first-female-pm-ai-leadership.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/south-korea-first-female-pm-ai-leadership-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/south-korea-first-female-pm-ai-leadership-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="South Korea's First Female PM to Lead AI: A New Era Dawns" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge artificial-intelligence">
+                    <a href="https://analyticsdrive.tech/category/artificial-intelligence.html">Artificial Intelligence</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-27T02:51:00+05:30">Sat 27 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/science.html">Science</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/south-korea-first-female-pm-ai-leadership/">South Korea's First Female PM to Lead AI: A New Era Dawns</a>
+                </h3>
+                <p class="card-excerpt">Han Seong-sook's nomination as South Korea's first female PM in decades signals a pivotal shift. She's tasked with...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-27T03:19:00+05:30">Sat 27 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector/">EU Approves New Cancer Treatment for MM: Sarclisa's On-Body Injector Marks Milestone</a></h3>
-            <p>The EU has approved a new cancer treatment for Multiple Myeloma, featuring Sanofi's Sarclisa in a subcutaneous on-body injector. This...</p>
-            <a href="https://analyticsdrive.tech/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/global-effort-combat-ebola-outbreak-coordinated-response.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/global-effort-combat-ebola-outbreak-coordinated-response-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/global-effort-combat-ebola-outbreak-coordinated-response-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Global Effort to Combat Ebola Outbreak: A Coordinated Response" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Science">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="EU Approves New Cancer Treatment for MM: Sarclisa's On-Body Injector Marks Milestone" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge science">
+                    <a href="https://analyticsdrive.tech/category/science.html">Science</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-27T02:38:00+05:30">Sat 27 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/science.html">Science</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/eu-approves-new-cancer-treatment-mm-sarclisa-on-body-injector/">EU Approves New Cancer Treatment for MM: Sarclisa's On-Body Injector Marks Milestone</a>
+                </h3>
+                <p class="card-excerpt">The EU has approved a new cancer treatment for Multiple Myeloma, featuring Sanofi's Sarclisa in a subcutaneous...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Evelyn Reed</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-27T02:51:00+05:30">Sat 27 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/global-effort-combat-ebola-outbreak-coordinated-response/">Global Effort to Combat Ebola Outbreak: A Coordinated Response</a></h3>
-            <p>The global community unites in a robust Global Effort to Combat Ebola Outbreak, deploying resources, vaccines, and coordinated...</p>
-            <a href="https://analyticsdrive.tech/global-effort-combat-ebola-outbreak-coordinated-response/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/south-africa-unveils-new-migration-plan-national-overhaul.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/south-africa-unveils-new-migration-plan-national-overhaul-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/south-africa-unveils-new-migration-plan-national-overhaul-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="South Africa Unveils New Migration Plan: A National Overhaul" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Science">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/global-effort-combat-ebola-outbreak-coordinated-response/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/global-effort-combat-ebola-outbreak-coordinated-response.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/global-effort-combat-ebola-outbreak-coordinated-response-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/global-effort-combat-ebola-outbreak-coordinated-response-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Global Effort to Combat Ebola Outbreak: A Coordinated Response" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge science">
+                    <a href="https://analyticsdrive.tech/category/science.html">Science</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-27T02:26:00+05:30">Sat 27 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/global-effort-combat-ebola-outbreak-coordinated-response/">Global Effort to Combat Ebola Outbreak: A Coordinated Response</a>
+                </h3>
+                <p class="card-excerpt">The global community unites in a robust Global Effort to Combat Ebola Outbreak, deploying resources, vaccines, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-27T02:38:00+05:30">Sat 27 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/south-africa-unveils-new-migration-plan-national-overhaul/">South Africa Unveils New Migration Plan: A National Overhaul</a></h3>
-            <p>South Africa unveils a new, comprehensive migration plan aimed at economic growth, skill retention, and border management, sparking...</p>
-            <a href="https://analyticsdrive.tech/south-africa-unveils-new-migration-plan-national-overhaul/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/india-opposition-india-bloc-holds-key-meet-political-ferment.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/india-opposition-india-bloc-holds-key-meet-political-ferment-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/india-opposition-india-bloc-holds-key-meet-political-ferment-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India Opposition INDIA Bloc Holds Key Meet Amidst Political Ferment" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/south-africa-unveils-new-migration-plan-national-overhaul/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/south-africa-unveils-new-migration-plan-national-overhaul.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/south-africa-unveils-new-migration-plan-national-overhaul-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/south-africa-unveils-new-migration-plan-national-overhaul-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="South Africa Unveils New Migration Plan: A National Overhaul" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-27T02:14:00+05:30">Sat 27 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/south-africa-unveils-new-migration-plan-national-overhaul/">South Africa Unveils New Migration Plan: A National Overhaul</a>
+                </h3>
+                <p class="card-excerpt">South Africa unveils a new, comprehensive migration plan aimed at economic growth, skill retention, and border...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-27T02:26:00+05:30">Sat 27 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-opposition-india-bloc-holds-key-meet-political-ferment/">India Opposition INDIA Bloc Holds Key Meet Amidst Political Ferment</a></h3>
-            <p>The India Opposition INDIA Bloc Holds Key Meet to strategize for upcoming elections, address critical national issues, and strengthen...</p>
-            <a href="https://analyticsdrive.tech/india-opposition-india-bloc-holds-key-meet-political-ferment/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/mideast-on-brink-israel-iran-exchange-fire-new-fears.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/mideast-on-brink-israel-iran-exchange-fire-new-fears-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/mideast-on-brink-israel-iran-exchange-fire-new-fears-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast on Brink: Israel & Iran Exchange Fire Ignites New Fears" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-opposition-india-bloc-holds-key-meet-political-ferment/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/india-opposition-india-bloc-holds-key-meet-political-ferment.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/india-opposition-india-bloc-holds-key-meet-political-ferment-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/india-opposition-india-bloc-holds-key-meet-political-ferment-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India Opposition INDIA Bloc Holds Key Meet Amidst Political Ferment" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-08T12:20:00+05:30">Mon 08 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-opposition-india-bloc-holds-key-meet-political-ferment/">India Opposition INDIA Bloc Holds Key Meet Amidst Political Ferment</a>
+                </h3>
+                <p class="card-excerpt">The India Opposition INDIA Bloc Holds Key Meet to strategize for upcoming elections, address critical national...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-27T02:14:00+05:30">Sat 27 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-on-brink-israel-iran-exchange-fire-new-fears/">Mideast on Brink: Israel & Iran Exchange Fire Ignites New Fears</a></h3>
-            <p>The Mideast is on the brink as Israel and Iran exchange fire, shattering a fragile ceasefire and igniting new fears of a wider regional conflict.</p>
-            <a href="https://analyticsdrive.tech/mideast-on-brink-israel-iran-exchange-fire-new-fears/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/kenya-protests-us-ebola-quarantine-facility-plan.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/kenya-protests-us-ebola-quarantine-facility-plan-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/kenya-protests-us-ebola-quarantine-facility-plan-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Kenya Protests US Ebola Quarantine Facility Plan Sparks Outcry" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-on-brink-israel-iran-exchange-fire-new-fears/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/mideast-on-brink-israel-iran-exchange-fire-new-fears.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/mideast-on-brink-israel-iran-exchange-fire-new-fears-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/mideast-on-brink-israel-iran-exchange-fire-new-fears-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast on Brink: Israel & Iran Exchange Fire Ignites New Fears" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-08T11:39:00+05:30">Mon 08 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-on-brink-israel-iran-exchange-fire-new-fears/">Mideast on Brink: Israel & Iran Exchange Fire Ignites New Fears</a>
+                </h3>
+                <p class="card-excerpt">The Mideast is on the brink as Israel and Iran exchange fire, shattering a fragile ceasefire and igniting new fears...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-08T12:20:00+05:30">Mon 08 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/kenya-protests-us-ebola-quarantine-facility-plan/">Kenya Protests US Ebola Quarantine Facility Plan Sparks Outcry</a></h3>
-            <p>Intense public outcry erupts in Kenya over proposed US-funded Ebola quarantine facilities, fueling concerns about public safety and...</p>
-            <a href="https://analyticsdrive.tech/kenya-protests-us-ebola-quarantine-facility-plan/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/europes-tech-sovereignty-bid-us-giants.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/europes-tech-sovereignty-bid-us-giants-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/europes-tech-sovereignty-bid-us-giants-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Europe's Tech Sovereignty Bid Against US Giants Intensifies" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/kenya-protests-us-ebola-quarantine-facility-plan/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/kenya-protests-us-ebola-quarantine-facility-plan.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/kenya-protests-us-ebola-quarantine-facility-plan-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/kenya-protests-us-ebola-quarantine-facility-plan-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Kenya Protests US Ebola Quarantine Facility Plan Sparks Outcry" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-08T11:14:00+05:30">Mon 08 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/kenya-protests-us-ebola-quarantine-facility-plan/">Kenya Protests US Ebola Quarantine Facility Plan Sparks Outcry</a>
+                </h3>
+                <p class="card-excerpt">Intense public outcry erupts in Kenya over proposed US-funded Ebola quarantine facilities, fueling concerns about...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-08T11:39:00+05:30">Mon 08 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/europes-tech-sovereignty-bid-us-giants/">Europe's Tech Sovereignty Bid Against US Giants Intensifies</a></h3>
-            <p>Europe is accelerating its bold bid for tech sovereignty against US giants, implementing new regulations and initiatives to reclaim...</p>
-            <a href="https://analyticsdrive.tech/europes-tech-sovereignty-bid-us-giants/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/ai-boom-fuels-tsmc-chip-price-hike-global-impact.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/ai-boom-fuels-tsmc-chip-price-hike-global-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/ai-boom-fuels-tsmc-chip-price-hike-global-impact-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="AI Boom Fuels TSMC Chip Price Hike: Global Impact Explored" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/europes-tech-sovereignty-bid-us-giants/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/europes-tech-sovereignty-bid-us-giants.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/europes-tech-sovereignty-bid-us-giants-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/europes-tech-sovereignty-bid-us-giants-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Europe's Tech Sovereignty Bid Against US Giants Intensifies" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-08T11:01:00+05:30">Mon 08 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/europes-tech-sovereignty-bid-us-giants/">Europe's Tech Sovereignty Bid Against US Giants Intensifies</a>
+                </h3>
+                <p class="card-excerpt">Europe is accelerating its bold bid for tech sovereignty against US giants, implementing new regulations and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-08T11:14:00+05:30">Mon 08 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ai-boom-fuels-tsmc-chip-price-hike-global-impact/">AI Boom Fuels TSMC Chip Price Hike: Global Impact Explored</a></h3>
-            <p>The escalating demand for AI chips is significantly driving up prices at TSMC, impacting the global tech supply chain and future innovation.</p>
-            <a href="https://analyticsdrive.tech/ai-boom-fuels-tsmc-chip-price-hike-global-impact/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/lifes-master-clock-unveiled-scientists-revolution-biology.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/lifes-master-clock-unveiled-scientists-revolution-biology-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/lifes-master-clock-unveiled-scientists-revolution-biology-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Life's Master Clock Unveiled by Scientists: A Revolution in Biology" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ai-boom-fuels-tsmc-chip-price-hike-global-impact/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/ai-boom-fuels-tsmc-chip-price-hike-global-impact.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/ai-boom-fuels-tsmc-chip-price-hike-global-impact-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/ai-boom-fuels-tsmc-chip-price-hike-global-impact-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="AI Boom Fuels TSMC Chip Price Hike: Global Impact Explored" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-08T10:49:00+05:30">Mon 08 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/science.html">Science</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ai-boom-fuels-tsmc-chip-price-hike-global-impact/">AI Boom Fuels TSMC Chip Price Hike: Global Impact Explored</a>
+                </h3>
+                <p class="card-excerpt">The escalating demand for AI chips is significantly driving up prices at TSMC, impacting the global tech supply...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-08T11:01:00+05:30">Mon 08 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/lifes-master-clock-unveiled-scientists-revolution-biology/">Life's Master Clock Unveiled by Scientists: A Revolution in Biology</a></h3>
-            <p>Scientists unveil a master clock governing biological growth and development. This revolutionary discovery, focused on gene timing,...</p>
-            <a href="https://analyticsdrive.tech/lifes-master-clock-unveiled-scientists-revolution-biology/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/china-tiananmen-silence-37-years-on.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/china-tiananmen-silence-37-years-on-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/china-tiananmen-silence-37-years-on-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="China's Tiananmen Silence: 37 Years On - A Somber Anniversary" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Science">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/lifes-master-clock-unveiled-scientists-revolution-biology/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/lifes-master-clock-unveiled-scientists-revolution-biology.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/lifes-master-clock-unveiled-scientists-revolution-biology-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/lifes-master-clock-unveiled-scientists-revolution-biology-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Life's Master Clock Unveiled by Scientists: A Revolution in Biology" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge science">
+                    <a href="https://analyticsdrive.tech/category/science.html">Science</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-07T00:12:00+05:30">Sun 07 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/lifes-master-clock-unveiled-scientists-revolution-biology/">Life's Master Clock Unveiled by Scientists: A Revolution in Biology</a>
+                </h3>
+                <p class="card-excerpt">Scientists unveil a master clock governing biological growth and development. This revolutionary discovery, focused...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Dr. Evelyn Reed</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-08T10:49:00+05:30">Mon 08 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/china-tiananmen-silence-37-years-on/">China's Tiananmen Silence: 37 Years On - A Somber Anniversary</a></h3>
-            <p>As Beijing marks 37 years since the Tiananmen crackdown, state silence continues to spark deep international criticism over the...</p>
-            <a href="https://analyticsdrive.tech/china-tiananmen-silence-37-years-on/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/mideast-ceasefire-israel-lebanon-iran-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/mideast-ceasefire-israel-lebanon-iran-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/mideast-ceasefire-israel-lebanon-iran-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast Ceasefire: Israel-Lebanon Deal, Iran Tensions Explored" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/china-tiananmen-silence-37-years-on/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/china-tiananmen-silence-37-years-on.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/china-tiananmen-silence-37-years-on-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/china-tiananmen-silence-37-years-on-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="China's Tiananmen Silence: 37 Years On - A Somber Anniversary" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-04T16:56:00+05:30">Thu 04 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/china-tiananmen-silence-37-years-on/">China's Tiananmen Silence: 37 Years On - A Somber Anniversary</a>
+                </h3>
+                <p class="card-excerpt">As Beijing marks 37 years since the Tiananmen crackdown, state silence continues to spark deep international...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-07T00:12:00+05:30">Sun 07 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">9 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-ceasefire-israel-lebanon-iran-tensions/">Mideast Ceasefire: Israel-Lebanon Deal, Iran Tensions Explored</a></h3>
-            <p>Exploring the Mideast ceasefire deal between Israel and Lebanon, this post examines its implications amidst ongoing Iran tensions and...</p>
-            <a href="https://analyticsdrive.tech/mideast-ceasefire-israel-lebanon-iran-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/sa-music-scene-emerging-trends-and-top-artists.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/sa-music-scene-emerging-trends-and-top-artists-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/sa-music-scene-emerging-trends-and-top-artists-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="SA Music Scene: Emerging Trends and Top Artists in South Africa" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-ceasefire-israel-lebanon-iran-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/mideast-ceasefire-israel-lebanon-iran-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/mideast-ceasefire-israel-lebanon-iran-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/mideast-ceasefire-israel-lebanon-iran-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast Ceasefire: Israel-Lebanon Deal, Iran Tensions Explored" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-03T07:54:00+05:30">Wed 03 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-ceasefire-israel-lebanon-iran-tensions/">Mideast Ceasefire: Israel-Lebanon Deal, Iran Tensions Explored</a>
+                </h3>
+                <p class="card-excerpt">Exploring the Mideast ceasefire deal between Israel and Lebanon, this post examines its implications amidst ongoing...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-04T16:56:00+05:30">Thu 04 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/sa-music-scene-emerging-trends-and-top-artists/">SA Music Scene: Emerging Trends and Top Artists in South Africa</a></h3>
-            <p>Discover the vibrant SA music scene, exploring the rapid rise of Amapiano, global success of top South African artists, and key emerging...</p>
-            <a href="https://analyticsdrive.tech/sa-music-scene-emerging-trends-and-top-artists/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/sa-tech-boom-emerging-technology-sector.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/sa-tech-boom-emerging-technology-sector-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/sa-tech-boom-emerging-technology-sector-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="SA Tech Boom: South Africa's Emerging Technology Sector" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Entertainment">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/sa-music-scene-emerging-trends-and-top-artists/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/sa-music-scene-emerging-trends-and-top-artists.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/sa-music-scene-emerging-trends-and-top-artists-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/sa-music-scene-emerging-trends-and-top-artists-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="SA Music Scene: Emerging Trends and Top Artists in South Africa" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge entertainment">
+                    <a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-03T07:21:00+05:30">Wed 03 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/sa-music-scene-emerging-trends-and-top-artists/">SA Music Scene: Emerging Trends and Top Artists in South Africa</a>
+                </h3>
+                <p class="card-excerpt">Discover the vibrant SA music scene, exploring the rapid rise of Amapiano, global success of top South African...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Chloe Bennett</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-03T07:54:00+05:30">Wed 03 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/sa-tech-boom-emerging-technology-sector/">SA Tech Boom: South Africa's Emerging Technology Sector</a></h3>
-            <p>Discover the latest insights on the SA Tech boom as South Africa builds a rapidly growing technology sector that drives global digital...</p>
-            <a href="https://analyticsdrive.tech/sa-tech-boom-emerging-technology-sector/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/india-polls-key-updates-and-insights.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/india-polls-key-updates-and-insights-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/india-polls-key-updates-and-insights-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="India Polls: Key Updates and Insights on the Ongoing Elections" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/sa-tech-boom-emerging-technology-sector/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/sa-tech-boom-emerging-technology-sector.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/sa-tech-boom-emerging-technology-sector-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/sa-tech-boom-emerging-technology-sector-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="SA Tech Boom: South Africa's Emerging Technology Sector" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-03T06:49:00+05:30">Wed 03 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/sa-tech-boom-emerging-technology-sector/">SA Tech Boom: South Africa's Emerging Technology Sector</a>
+                </h3>
+                <p class="card-excerpt">Discover the latest insights on the SA Tech boom as South Africa builds a rapidly growing technology sector that...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-03T07:21:00+05:30">Wed 03 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">7 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/india-polls-key-updates-and-insights/">India Polls: Key Updates and Insights on the Ongoing Elections</a></h3>
-            <p>Get comprehensive updates on the India polls, featuring key insights, voter turnout trends, geopolitical impacts, and expert analysis on...</p>
-            <a href="https://analyticsdrive.tech/india-polls-key-updates-and-insights/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/se-asia-tech-boom-ai-investment-grid-hurdles.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/se-asia-tech-boom-ai-investment-grid-hurdles-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/se-asia-tech-boom-ai-investment-grid-hurdles-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="SE Asia Tech Boom: AI Investment Faces Grid Hurdles" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/india-polls-key-updates-and-insights/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/india-polls-key-updates-and-insights.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/india-polls-key-updates-and-insights-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/india-polls-key-updates-and-insights-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="India Polls: Key Updates and Insights on the Ongoing Elections" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-03T06:02:00+05:30">Wed 03 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/india-polls-key-updates-and-insights/">India Polls: Key Updates and Insights on the Ongoing Elections</a>
+                </h3>
+                <p class="card-excerpt">Get comprehensive updates on the India polls, featuring key insights, voter turnout trends, geopolitical impacts,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Priya Nair</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-03T06:49:00+05:30">Wed 03 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">7 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/se-asia-tech-boom-ai-investment-grid-hurdles/">SE Asia Tech Boom: AI Investment Faces Grid Hurdles</a></h3>
-            <p>The SE Asia Tech Boom is attracting massive AI investment, but the region's aging power grids pose significant hurdles to sustainable growth.</p>
-            <a href="https://analyticsdrive.tech/se-asia-tech-boom-ai-investment-grid-hurdles/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/06/post-maduro-venezuela-political-shift.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/06/post-maduro-venezuela-political-shift-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/post-maduro-venezuela-political-shift-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Post-Maduro Venezuela Navigates Political Shift: A Nation's Future" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/se-asia-tech-boom-ai-investment-grid-hurdles/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/06/se-asia-tech-boom-ai-investment-grid-hurdles.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/06/se-asia-tech-boom-ai-investment-grid-hurdles-tablet.webp 800w, https://analyticsdrive.tech/images/2026/06/se-asia-tech-boom-ai-investment-grid-hurdles-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="SE Asia Tech Boom: AI Investment Faces Grid Hurdles" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-06-03T05:47:00+05:30">Wed 03 June 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/se-asia-tech-boom-ai-investment-grid-hurdles/">SE Asia Tech Boom: AI Investment Faces Grid Hurdles</a>
+                </h3>
+                <p class="card-excerpt">The SE Asia Tech Boom is attracting massive AI investment, but the region's aging power grids pose significant...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-06-03T06:02:00+05:30">Wed 03 June 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/post-maduro-venezuela-political-shift/">Post-Maduro Venezuela Navigates Political Shift: A Nation's Future</a></h3>
-            <p>As Venezuela grapples with profound challenges, the prospect of a post-Maduro era prompts crucial questions about its political shift...</p>
-            <a href="https://analyticsdrive.tech/post-maduro-venezuela-political-shift/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/world-news2.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/world-news4.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/world-news2.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 3 of 18</span>
+
+        <a href="https://analyticsdrive.tech/tag/world-news4.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>

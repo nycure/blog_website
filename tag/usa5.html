@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,387 +3452,628 @@ a:hover {
         <span class="current">#USA</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #USA
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            206 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">206 Articles</span>
+        </div>
+        <h1 class="archive-title">#USA</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #USA.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-peace-deal-hormuz-strait-reopening-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-24T18:31:00+05:30">Sun 24 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/">US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift</a>
+                </h3>
+                <p class="card-excerpt">Reports indicate a US-Iran peace deal is imminent, potentially leading to the reopening of the crucial Hormuz...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-24T18:31:00+05:30">Sun 24 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/">US-Iran Peace Deal Near: Hormuz Strait Reopening? A Global Shift</a></h3>
-            <p>Reports indicate a US-Iran peace deal is imminent, potentially leading to the reopening of the crucial Hormuz Strait, signaling a major...</p>
-            <a href="https://analyticsdrive.tech/us-iran-peace-deal-hormuz-strait-reopening/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/gunman-shot-dead-white-house-checkpoint-report.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/gunman-shot-dead-white-house-checkpoint-report-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/gunman-shot-dead-white-house-checkpoint-report-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Gunman Shot Dead Near White House Checkpoint: A Detailed Report" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/gunman-shot-dead-white-house-checkpoint-report/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/gunman-shot-dead-white-house-checkpoint-report.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/gunman-shot-dead-white-house-checkpoint-report-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/gunman-shot-dead-white-house-checkpoint-report-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Gunman Shot Dead Near White House Checkpoint: A Detailed Report" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-24T18:08:00+05:30">Sun 24 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/gunman-shot-dead-white-house-checkpoint-report/">Gunman Shot Dead Near White House Checkpoint: A Detailed Report</a>
+                </h3>
+                <p class="card-excerpt">A gunman was fatally shot near a White House checkpoint after brandishing a weapon, prompting swift Secret Service...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-24T18:08:00+05:30">Sun 24 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">17 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/gunman-shot-dead-white-house-checkpoint-report/">Gunman Shot Dead Near White House Checkpoint: A Detailed Report</a></h3>
-            <p>A gunman was fatally shot near a White House checkpoint after brandishing a weapon, prompting swift Secret Service action and an...</p>
-            <a href="https://analyticsdrive.tech/gunman-shot-dead-white-house-checkpoint-report/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/san-diego-mosque-shooting-fbi-hate-crime-probe-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T15:10:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/">San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack</a>
+                </h3>
+                <p class="card-excerpt">The San Diego Mosque Shooting has sparked a major FBI hate crime probe after two teens killed three at the Islamic...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T15:10:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/">San Diego Mosque Shooting: FBI Probes Hate Crime After Tragic Attack</a></h3>
-            <p>The San Diego Mosque Shooting has sparked a major FBI hate crime probe after two teens killed three at the Islamic Center of San Diego.</p>
-            <a href="https://analyticsdrive.tech/san-diego-mosque-shooting-fbi-hate-crime-probe/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="EU, US Reach Trade Deal to Avert Trump's Tariffs, Bolstering Transatlantic Ties" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="EU, US Reach Trade Deal to Avert Trump's Tariffs, Bolstering Transatlantic Ties" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T14:24:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties/">EU, US Reach Trade Deal to Avert Trump's Tariffs, Bolstering Transatlantic Ties</a>
+                </h3>
+                <p class="card-excerpt">The EU and US have successfully reached a critical trade deal to avert Trump's tariffs, marking a significant step...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T14:24:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties/">EU, US Reach Trade Deal to Avert Trump's Tariffs, Bolstering Transatlantic Ties</a></h3>
-            <p>The EU and US have successfully reached a critical trade deal to avert Trump's tariffs, marking a significant step in strengthening...</p>
-            <a href="https://analyticsdrive.tech/eu-us-trade-deal-avert-trump-tariffs-transatlantic-ties/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/putin-beijing-russia-china-alliance.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/putin-beijing-russia-china-alliance-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/putin-beijing-russia-china-alliance-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Putin in Beijing: Boosting Russia-China Strategic Alliance" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/putin-beijing-russia-china-alliance/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/putin-beijing-russia-china-alliance.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/putin-beijing-russia-china-alliance-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/putin-beijing-russia-china-alliance-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Putin in Beijing: Boosting Russia-China Strategic Alliance" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T13:57:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/putin-beijing-russia-china-alliance/">Putin in Beijing: Boosting Russia-China Strategic Alliance</a>
+                </h3>
+                <p class="card-excerpt">Vladimir Putin's recent visit to Beijing underscores the growing collaboration between Russia and China, signaling a...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T13:57:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/putin-beijing-russia-china-alliance/">Putin in Beijing: Boosting Russia-China Strategic Alliance</a></h3>
-            <p>Vladimir Putin's recent visit to Beijing underscores the growing collaboration between Russia and China, signaling a strengthened...</p>
-            <a href="https://analyticsdrive.tech/putin-beijing-russia-china-alliance/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-Iran Tensions Escalate: Trump Warns of 'Big Hit'" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-iran-tensions-escalate-trump-warns-big-hit-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-Iran Tensions Escalate: Trump Warns of 'Big Hit'" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T07:44:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/">US-Iran Tensions Escalate: Trump Warns of 'Big Hit'</a>
+                </h3>
+                <p class="card-excerpt">Amidst heightened regional instability, US-Iran tensions escalate as former President Trump warned of a 'big hit,'...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T07:44:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/">US-Iran Tensions Escalate: Trump Warns of 'Big Hit'</a></h3>
-            <p>Amidst heightened regional instability, US-Iran tensions escalate as former President Trump warned of a 'big hit,' fueling global...</p>
-            <a href="https://analyticsdrive.tech/us-iran-tensions-escalate-trump-warns-big-hit/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/europe-anxious-us-troop-cuts-ukraine-conflict.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/europe-anxious-us-troop-cuts-ukraine-conflict-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/europe-anxious-us-troop-cuts-ukraine-conflict-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Europe Anxious Over US Troop Cuts, Ukraine Conflict Deepens" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/europe-anxious-us-troop-cuts-ukraine-conflict/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/europe-anxious-us-troop-cuts-ukraine-conflict.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/europe-anxious-us-troop-cuts-ukraine-conflict-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/europe-anxious-us-troop-cuts-ukraine-conflict-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Europe Anxious Over US Troop Cuts, Ukraine Conflict Deepens" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T06:31:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/europe-anxious-us-troop-cuts-ukraine-conflict/">Europe Anxious Over US Troop Cuts, Ukraine Conflict Deepens</a>
+                </h3>
+                <p class="card-excerpt">Europe's security is fraught as US troop cuts loom amidst the escalating Ukraine conflict, sparking widespread...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T06:31:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/europe-anxious-us-troop-cuts-ukraine-conflict/">Europe Anxious Over US Troop Cuts, Ukraine Conflict Deepens</a></h3>
-            <p>Europe's security is fraught as US troop cuts loom amidst the escalating Ukraine conflict, sparking widespread anxiety and forcing a...</p>
-            <a href="https://analyticsdrive.tech/europe-anxious-us-troop-cuts-ukraine-conflict/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/se-asia-defense-tensions-geopolitical-shifts.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/se-asia-defense-tensions-geopolitical-shifts-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/se-asia-defense-tensions-geopolitical-shifts-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="SE Asia Navigates Rising Defense Tensions Amidst Geopolitical Shifts" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/se-asia-defense-tensions-geopolitical-shifts/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/se-asia-defense-tensions-geopolitical-shifts.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/se-asia-defense-tensions-geopolitical-shifts-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/se-asia-defense-tensions-geopolitical-shifts-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="SE Asia Navigates Rising Defense Tensions Amidst Geopolitical Shifts" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T06:07:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/se-asia-defense-tensions-geopolitical-shifts/">SE Asia Navigates Rising Defense Tensions Amidst Geopolitical Shifts</a>
+                </h3>
+                <p class="card-excerpt">As global powers vie for influence, SE Asia navigates rising defense tensions, facing complex security challenges...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T06:07:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/se-asia-defense-tensions-geopolitical-shifts/">SE Asia Navigates Rising Defense Tensions Amidst Geopolitical Shifts</a></h3>
-            <p>As global powers vie for influence, SE Asia navigates rising defense tensions, facing complex security challenges and strategic dilemmas...</p>
-            <a href="https://analyticsdrive.tech/se-asia-defense-tensions-geopolitical-shifts/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/us-china-new-legal-battleground-emerges.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/us-china-new-legal-battleground-emerges-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-china-new-legal-battleground-emerges-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="US-China: A New Legal Battleground Emerges – Global Implications" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/us-china-new-legal-battleground-emerges/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/us-china-new-legal-battleground-emerges.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/us-china-new-legal-battleground-emerges-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/us-china-new-legal-battleground-emerges-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="US-China: A New Legal Battleground Emerges – Global Implications" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T05:44:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/us-china-new-legal-battleground-emerges/">US-China: A New Legal Battleground Emerges – Global Implications</a>
+                </h3>
+                <p class="card-excerpt">The escalating tensions between the US and China are creating a new legal battleground, with significant global...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T05:44:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/us-china-new-legal-battleground-emerges/">US-China: A New Legal Battleground Emerges – Global Implications</a></h3>
-            <p>The escalating tensions between the US and China are creating a new legal battleground, with significant global implications for trade,...</p>
-            <a href="https://analyticsdrive.tech/us-china-new-legal-battleground-emerges/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/bolivia-protests-economic-turmoil.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/bolivia-protests-economic-turmoil-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/bolivia-protests-economic-turmoil-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Bolivia Rocked by Protests Amid Economic Turmoil: Crisis Deepens" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/bolivia-protests-economic-turmoil/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/bolivia-protests-economic-turmoil.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/bolivia-protests-economic-turmoil-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/bolivia-protests-economic-turmoil-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Bolivia Rocked by Protests Amid Economic Turmoil: Crisis Deepens" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T05:20:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/bolivia-protests-economic-turmoil/">Bolivia Rocked by Protests Amid Economic Turmoil: Crisis Deepens</a>
+                </h3>
+                <p class="card-excerpt">Bolivia faces widespread protests amid escalating economic turmoil, fueled by severe shortages of fuel and US...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T05:20:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">10 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/bolivia-protests-economic-turmoil/">Bolivia Rocked by Protests Amid Economic Turmoil: Crisis Deepens</a></h3>
-            <p>Bolivia faces widespread protests amid escalating economic turmoil, fueled by severe shortages of fuel and US dollars, rising costs, and...</p>
-            <a href="https://analyticsdrive.tech/bolivia-protests-economic-turmoil/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/geopolitical-conflicts-global-economy-threat-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T04:11:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/">Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis</a>
+                </h3>
+                <p class="card-excerpt">Geopolitical conflicts increasingly threaten the global economy, disrupting supply chains, energy markets, and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T04:11:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/">Geopolitical Conflicts Threaten Global Economy: An Urgent Analysis</a></h3>
-            <p>Geopolitical conflicts increasingly threaten the global economy, disrupting supply chains, energy markets, and investment. This analysis...</p>
-            <a href="https://analyticsdrive.tech/geopolitical-conflicts-global-economy-threat/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/mideast-tensions-mount-drone-strikes-ceasefire-woes-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T03:47:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/">Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate</a>
+                </h3>
+                <p class="card-excerpt">Mideast tensions escalate with a surge in drone strikes and faltering ceasefire agreements, painting a volatile...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T03:47:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/">Mideast Tensions Mount: Drone Strikes & Ceasefire Woes Escalate</a></h3>
-            <p>Mideast tensions escalate with a surge in drone strikes and faltering ceasefire agreements, painting a volatile security landscape. This...</p>
-            <a href="https://analyticsdrive.tech/mideast-tensions-mount-drone-strikes-ceasefire-woes/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/new-workforce-pell-grant-program-launched-us.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/new-workforce-pell-grant-program-launched-us-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/new-workforce-pell-grant-program-launched-us-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="New Workforce Pell Grant Program Launched in US to Boost Skilled Trades" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/new-workforce-pell-grant-program-launched-us/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/new-workforce-pell-grant-program-launched-us.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/new-workforce-pell-grant-program-launched-us-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/new-workforce-pell-grant-program-launched-us-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="New Workforce Pell Grant Program Launched in US to Boost Skilled Trades" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T03:00:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/new-workforce-pell-grant-program-launched-us/">New Workforce Pell Grant Program Launched in US to Boost Skilled Trades</a>
+                </h3>
+                <p class="card-excerpt">The groundbreaking New Workforce Pell Grant Program, launched in the US, transforms career training for millions. It...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T03:00:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">15 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/new-workforce-pell-grant-program-launched-us/">New Workforce Pell Grant Program Launched in US to Boost Skilled Trades</a></h3>
-            <p>The groundbreaking New Workforce Pell Grant Program, launched in the US, transforms career training for millions. It expands federal aid...</p>
-            <a href="https://analyticsdrive.tech/new-workforce-pell-grant-program-launched-us/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/cuba-warns-us-rising-tensions-drone-buildup-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-20T02:13:00+05:30">Wed 20 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/">Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean</a>
+                </h3>
+                <p class="card-excerpt">Cuba issues stern warnings to the US amid reports of a significant drone buildup and alleged threats against...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-20T02:13:00+05:30">Wed 20 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/">Cuba Warns US Amid Rising Tensions, Drone Buildup in Caribbean</a></h3>
-            <p>Cuba issues stern warnings to the US amid reports of a significant drone buildup and alleged threats against American interests,...</p>
-            <a href="https://analyticsdrive.tech/cuba-warns-us-rising-tensions-drone-buildup/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/ebola-outbreak-africa-us-imposes-travel-curbs-2026.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/ebola-outbreak-africa-us-imposes-travel-curbs-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/ebola-outbreak-africa-us-imposes-travel-curbs-2026-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Ebola Outbreak in Africa: US Imposes Travel Curbs Amid Rising Concern" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/ebola-outbreak-africa-us-imposes-travel-curbs-2026/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/ebola-outbreak-africa-us-imposes-travel-curbs-2026.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/ebola-outbreak-africa-us-imposes-travel-curbs-2026-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/ebola-outbreak-africa-us-imposes-travel-curbs-2026-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Ebola Outbreak in Africa: US Imposes Travel Curbs Amid Rising Concern" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-19T12:07:00+05:30">Tue 19 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/ebola-outbreak-africa-us-imposes-travel-curbs-2026/">Ebola Outbreak in Africa: US Imposes Travel Curbs Amid Rising Concern</a>
+                </h3>
+                <p class="card-excerpt">Amid a dangerous Ebola Outbreak in Africa, the US imposes travel curbs and enhanced screenings to prevent the spread...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-19T12:07:00+05:30">Tue 19 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/ebola-outbreak-africa-us-imposes-travel-curbs-2026/">Ebola Outbreak in Africa: US Imposes Travel Curbs Amid Rising Concern</a></h3>
-            <p>Amid a dangerous Ebola Outbreak in Africa, the US imposes travel curbs and enhanced screenings to prevent the spread of the Bundibugyo...</p>
-            <a href="https://analyticsdrive.tech/ebola-outbreak-africa-us-imposes-travel-curbs-2026/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/trump-halts-iran-strike-seeks-nuclear-deal.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/trump-halts-iran-strike-seeks-nuclear-deal-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/trump-halts-iran-strike-seeks-nuclear-deal-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Halts Iran Strike, Seeks New Nuclear Deal Diplomacy" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-halts-iran-strike-seeks-nuclear-deal/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/trump-halts-iran-strike-seeks-nuclear-deal.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/trump-halts-iran-strike-seeks-nuclear-deal-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/trump-halts-iran-strike-seeks-nuclear-deal-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Halts Iran Strike, Seeks New Nuclear Deal Diplomacy" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-19T11:45:00+05:30">Tue 19 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-halts-iran-strike-seeks-nuclear-deal/">Trump Halts Iran Strike, Seeks New Nuclear Deal Diplomacy</a>
+                </h3>
+                <p class="card-excerpt">Former President Trump's decision to halt a retaliatory strike against Iran and pursue a new nuclear deal marked a...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-19T11:45:00+05:30">Tue 19 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-halts-iran-strike-seeks-nuclear-deal/">Trump Halts Iran Strike, Seeks New Nuclear Deal Diplomacy</a></h3>
-            <p>Former President Trump's decision to halt a retaliatory strike against Iran and pursue a new nuclear deal marked a critical pivot in US...</p>
-            <a href="https://analyticsdrive.tech/trump-halts-iran-strike-seeks-nuclear-deal/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Hezbollah Plot to Occupy Beirut Unveiled Amid Tensions" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Hezbollah Plot to Occupy Beirut Unveiled Amid Tensions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-19T11:21:00+05:30">Tue 19 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions/">Hezbollah Plot to Occupy Beirut Unveiled Amid Tensions</a>
+                </h3>
+                <p class="card-excerpt">A significant development has emerged from Beirut, as intelligence reports unveil a Hezbollah plot to occupy Beirut...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-19T11:21:00+05:30">Tue 19 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions/">Hezbollah Plot to Occupy Beirut Unveiled Amid Tensions</a></h3>
-            <p>A significant development has emerged from Beirut, as intelligence reports unveil a Hezbollah plot to occupy Beirut amid escalating...</p>
-            <a href="https://analyticsdrive.tech/hezbollah-plot-to-occupy-beirut-unveiled-amid-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/eu-taliban-migrant-return-backlash.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/eu-taliban-migrant-return-backlash-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/eu-taliban-migrant-return-backlash-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="EU Faces Backlash for Taliban Migrant Return Talks Over Rights" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/eu-taliban-migrant-return-backlash/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/eu-taliban-migrant-return-backlash.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/eu-taliban-migrant-return-backlash-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/eu-taliban-migrant-return-backlash-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="EU Faces Backlash for Taliban Migrant Return Talks Over Rights" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-16T00:13:00+05:30">Sat 16 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/eu-taliban-migrant-return-backlash/">EU Faces Backlash for Taliban Migrant Return Talks Over Rights</a>
+                </h3>
+                <p class="card-excerpt">The EU faces severe backlash for talks with the Taliban on returning Afghan migrants, sparking human rights concerns...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-16T00:13:00+05:30">Sat 16 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/eu-taliban-migrant-return-backlash/">EU Faces Backlash for Taliban Migrant Return Talks Over Rights</a></h3>
-            <p>The EU faces severe backlash for talks with the Taliban on returning Afghan migrants, sparking human rights concerns and widespread...</p>
-            <a href="https://analyticsdrive.tech/eu-taliban-migrant-return-backlash/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/trump-xi-summit-beijing-global-future.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/trump-xi-summit-beijing-global-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/trump-xi-summit-beijing-global-future-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump & Xi Meet: High-Stakes Summit in Beijing Shapes Global Future" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-xi-summit-beijing-global-future/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/trump-xi-summit-beijing-global-future.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/trump-xi-summit-beijing-global-future-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/trump-xi-summit-beijing-global-future-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump & Xi Meet: High-Stakes Summit in Beijing Shapes Global Future" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-13T12:35:00+05:30">Wed 13 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-xi-summit-beijing-global-future/">Trump & Xi Meet: High-Stakes Summit in Beijing Shapes Global Future</a>
+                </h3>
+                <p class="card-excerpt">The highly anticipated Trump & Xi Meet: High-Stakes Summit in Beijing promises to reshape global dynamics,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-13T12:35:00+05:30">Wed 13 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">16 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-xi-summit-beijing-global-future/">Trump & Xi Meet: High-Stakes Summit in Beijing Shapes Global Future</a></h3>
-            <p>The highly anticipated Trump & Xi Meet: High-Stakes Summit in Beijing promises to reshape global dynamics, addressing trade, security,...</p>
-            <a href="https://analyticsdrive.tech/trump-xi-summit-beijing-global-future/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/05/global-oil-crisis-us-iran-tensions-soar.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/05/global-oil-crisis-us-iran-tensions-soar-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/global-oil-crisis-us-iran-tensions-soar-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Global Oil Crisis Deepens as US-Iran Tensions Soar: A Detailed Analysis" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/global-oil-crisis-us-iran-tensions-soar/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/05/global-oil-crisis-us-iran-tensions-soar.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/05/global-oil-crisis-us-iran-tensions-soar-tablet.webp 800w, https://analyticsdrive.tech/images/2026/05/global-oil-crisis-us-iran-tensions-soar-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Global Oil Crisis Deepens as US-Iran Tensions Soar: A Detailed Analysis" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-05-13T11:31:00+05:30">Wed 13 May 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/global-oil-crisis-us-iran-tensions-soar/">Global Oil Crisis Deepens as US-Iran Tensions Soar: A Detailed Analysis</a>
+                </h3>
+                <p class="card-excerpt">The global oil crisis deepens as US-Iran tensions soar, impacting markets and stability. Explore the geopolitical...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-05-13T11:31:00+05:30">Wed 13 May 2026</time>
+                    </div>
+                    <span class="read-time-pill">17 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/global-oil-crisis-us-iran-tensions-soar/">Global Oil Crisis Deepens as US-Iran Tensions Soar: A Detailed Analysis</a></h3>
-            <p>The global oil crisis deepens as US-Iran tensions soar, impacting markets and stability. Explore the geopolitical ramifications and...</p>
-            <a href="https://analyticsdrive.tech/global-oil-crisis-us-iran-tensions-soar/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/usa4.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/usa6.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/usa4.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 5 of 11</span>
+
+        <a href="https://analyticsdrive.tech/tag/usa6.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>

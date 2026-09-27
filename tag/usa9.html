@@ -1170,22 +1170,154 @@ a:hover {
     display: block;
 }
 
-.post-card-image {
-    border-radius: 8px;
-    overflow: hidden;
+/* --- Modern Archive & Category Section --- */
+.archive-section {
+    margin-bottom: 3.5rem;
+}
+
+.archive-hero-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-line);
+}
+
+.archive-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.archive-breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.archive-breadcrumb a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.archive-breadcrumb .sep {
+    opacity: 0.4;
+    font-size: 0.75rem;
+}
+
+.archive-breadcrumb .current {
+    color: var(--text-ink);
+    font-weight: 600;
+}
+
+.archive-header-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.archive-type-badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--link-color);
+}
+
+.archive-count-badge {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-line);
+}
+
+.archive-title {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: var(--accent);
     margin-bottom: 0.75rem;
 }
 
-.post-card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
+.archive-description {
+    font-size: 1.05rem;
+    color: var(--text-summary);
+    line-height: 1.6;
+    max-width: 820px;
+    margin-bottom: 0;
 }
 
-.post-card:hover .post-card-image img {
-    transform: scale(1.05);
+/* --- 3-Column Modern Archive Grid --- */
+.category-grid,
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+.category-grid .card-title,
+.archive-grid .card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.05rem;
+}
+
+.category-grid .card-excerpt,
+.archive-grid .card-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.84rem;
+}
+
+.card-placeholder-media {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1024px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.35rem;
+    }
+    .archive-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .category-grid,
+    .archive-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .archive-title {
+        font-size: 1.85rem;
+    }
+    .archive-hero-header {
+        margin-bottom: 1.75rem;
+        padding-bottom: 1.25rem;
+    }
 }
 
 .post-content {
@@ -3310,9 +3442,9 @@ a:hover {
 
 
     <main class="container content-wrapper">
-<section class="post-list">
+<section class="archive-section">
     <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
+    <nav class="archive-breadcrumb" aria-label="Breadcrumb">
         <a href="https://analyticsdrive.tech/">Home</a>
         <span class="sep">›</span>
         <a href="https://analyticsdrive.tech/tags.html">Tags</a>
@@ -3320,387 +3452,628 @@ a:hover {
         <span class="current">#USA</span>
     </nav>
 
-    <header class="page-header"
-        style="margin-bottom: 2.5rem; border-bottom: 2px solid var(--border-line); padding-bottom: 1.5rem;">
-        <p
-            style="font-family: var(--font-ui); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Tag Archive</p>
-        <h1 style="font-family: var(--font-headline); font-size: 2.75rem; line-height: 1.1; margin-bottom: 0.5rem;">
-            #USA
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1rem; font-style: italic;">
-            206 articles found
-        </p>
+    <!-- Tag Hero Header -->
+    <header class="archive-hero-header">
+        <div class="archive-header-meta-row">
+            <span class="archive-type-badge">Topic Tag</span>
+            <span class="archive-count-badge">206 Articles</span>
+        </div>
+        <h1 class="archive-title">#USA</h1>
+        <p class="archive-description">Explore in-depth articles, analysis, and perspectives tagged #USA.</p>
     </header>
 
-    <div class="grid">
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/senior-skip-day-wedding-crasher-viral-legend.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/senior-skip-day-wedding-crasher-viral-legend-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/senior-skip-day-wedding-crasher-viral-legend-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Senior Skip Day Wedding Crasher Goes Viral! A High School Legend is Born" 
-                  loading="lazy" />
+    <!-- 3-Column Modern Cards Grid -->
+    <div class="archive-grid">
+        <article class="modern-card" data-category="Culture">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/senior-skip-day-wedding-crasher-viral-legend/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/senior-skip-day-wedding-crasher-viral-legend.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/senior-skip-day-wedding-crasher-viral-legend-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/senior-skip-day-wedding-crasher-viral-legend-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Senior Skip Day Wedding Crasher Goes Viral! A High School Legend is Born" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge culture">
+                    <a href="https://analyticsdrive.tech/category/culture.html">Culture</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-05T01:24:00+05:30">Sun 05 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/culture.html">Culture</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/senior-skip-day-wedding-crasher-viral-legend/">Senior Skip Day Wedding Crasher Goes Viral! A High School Legend is Born</a>
+                </h3>
+                <p class="card-excerpt">A high school senior's Senior Skip Day prank accidentally turns into a heartwarming wedding crash, sparking a global...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Sophia Jenkins</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-05T01:24:00+05:30">Sun 05 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/senior-skip-day-wedding-crasher-viral-legend/">Senior Skip Day Wedding Crasher Goes Viral! A High School Legend is Born</a></h3>
-            <p>A high school senior's Senior Skip Day prank accidentally turns into a heartwarming wedding crash, sparking a global viral sensation.</p>
-            <a href="https://analyticsdrive.tech/senior-skip-day-wedding-crasher-viral-legend/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/trump-national-voter-list-controversy.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/trump-national-voter-list-controversy-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-national-voter-list-controversy-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Orders National Voter List Amid Controversy, Sparking Debate" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-national-voter-list-controversy/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/trump-national-voter-list-controversy.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/trump-national-voter-list-controversy-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/trump-national-voter-list-controversy-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Orders National Voter List Amid Controversy, Sparking Debate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-01T11:33:00+05:30">Wed 01 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-national-voter-list-controversy/">Trump Orders National Voter List Amid Controversy, Sparking Debate</a>
+                </h3>
+                <p class="card-excerpt">President Trump has signed an executive order to create a national voter list, a move that immediately ignited...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-01T11:33:00+05:30">Wed 01 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-national-voter-list-controversy/">Trump Orders National Voter List Amid Controversy, Sparking Debate</a></h3>
-            <p>President Trump has signed an executive order to create a national voter list, a move that immediately ignited widespread controversy...</p>
-            <a href="https://analyticsdrive.tech/trump-national-voter-list-controversy/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-tablet.webp 800w, https://analyticsdrive.tech/images/2026/04/israel-launches-wide-scale-strikes-on-tehran-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-04-01T11:30:00+05:30">Wed 01 April 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/">Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions</a>
+                </h3>
+                <p class="card-excerpt">Escalating tensions in the Middle East as Israel launches "wide-scale" strikes on Tehran. This post details the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-04-01T11:30:00+05:30">Wed 01 April 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/">Israel Launches "Wide-Scale" Strikes on Tehran Amid Rising Tensions</a></h3>
-            <p>Escalating tensions in the Middle East as Israel launches "wide-scale" strikes on Tehran. This post details the event and its global...</p>
-            <a href="https://analyticsdrive.tech/israel-launches-wide-scale-strikes-on-tehran/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/airport-chaos-tsa-pay-dispute-escalates.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/airport-chaos-tsa-pay-dispute-escalates-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/airport-chaos-tsa-pay-dispute-escalates-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Airport Chaos: TSA Pay Dispute Escalates Amid Travel Rush" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Politics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/airport-chaos-tsa-pay-dispute-escalates/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/airport-chaos-tsa-pay-dispute-escalates.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/airport-chaos-tsa-pay-dispute-escalates-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/airport-chaos-tsa-pay-dispute-escalates-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Airport Chaos: TSA Pay Dispute Escalates Amid Travel Rush" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge politics">
+                    <a href="https://analyticsdrive.tech/category/politics.html">Politics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-30T14:50:00+05:30">Mon 30 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/politics.html">Politics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/airport-chaos-tsa-pay-dispute-escalates/">Airport Chaos: TSA Pay Dispute Escalates Amid Travel Rush</a>
+                </h3>
+                <p class="card-excerpt">Escalating tensions over TSA agent pay threaten to plunge U.S. airports into chaos, impacting millions of travelers...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Nathan Caldwell</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-30T14:50:00+05:30">Mon 30 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/airport-chaos-tsa-pay-dispute-escalates/">Airport Chaos: TSA Pay Dispute Escalates Amid Travel Rush</a></h3>
-            <p>Escalating tensions over TSA agent pay threaten to plunge U.S. airports into chaos, impacting millions of travelers nationwide and...</p>
-            <a href="https://analyticsdrive.tech/airport-chaos-tsa-pay-dispute-escalates/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/trump-eyes-irans-kharg-island-geopolitical-flashpoint-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-30T14:47:00+05:30">Mon 30 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/">Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint</a>
+                </h3>
+                <p class="card-excerpt">Reports indicate former President Trump's focus on Iran's Kharg Island, a crucial oil terminal. This strategic...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-30T14:47:00+05:30">Mon 30 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/">Trump Eyes Iran's Kharg Island: A New Geopolitical Flashpoint</a></h3>
-            <p>Reports indicate former President Trump's focus on Iran's Kharg Island, a crucial oil terminal. This strategic interest could signal new...</p>
-            <a href="https://analyticsdrive.tech/trump-eyes-irans-kharg-island-geopolitical-flashpoint/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/cuba-is-next-trump-viral-remark-cold-war-fears.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/cuba-is-next-trump-viral-remark-cold-war-fears-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/cuba-is-next-trump-viral-remark-cold-war-fears-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="'Cuba Is Next': Trump's Viral Remark Ignites Cold War Fears" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/cuba-is-next-trump-viral-remark-cold-war-fears/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/cuba-is-next-trump-viral-remark-cold-war-fears.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/cuba-is-next-trump-viral-remark-cold-war-fears-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/cuba-is-next-trump-viral-remark-cold-war-fears-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="'Cuba Is Next': Trump's Viral Remark Ignites Cold War Fears" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-29T02:53:00+05:30">Sun 29 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/cuba-is-next-trump-viral-remark-cold-war-fears/">'Cuba Is Next': Trump's Viral Remark Ignites Cold War Fears</a>
+                </h3>
+                <p class="card-excerpt">Donald Trump's recent viral remark, "'Cuba Is Next'," has sparked intense debate and ignited Cold War fears,...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-29T02:53:00+05:30">Sun 29 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">18 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/cuba-is-next-trump-viral-remark-cold-war-fears/">'Cuba Is Next': Trump's Viral Remark Ignites Cold War Fears</a></h3>
-            <p>Donald Trump's recent viral remark, "'Cuba Is Next'," has sparked intense debate and ignited Cold War fears, prompting analysis of...</p>
-            <a href="https://analyticsdrive.tech/cuba-is-next-trump-viral-remark-cold-war-fears/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-29T02:47:00+05:30">Sun 29 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/">Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked</a>
+                </h3>
+                <p class="card-excerpt">Explore the complex details surrounding the Tiger Woods crash, scrutinizing viral claims, and analyzing the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-29T02:47:00+05:30">Sun 29 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/">Tiger Woods Crash: Viral Claims & DUI Arrest Details Unpacked</a></h3>
-            <p>Explore the complex details surrounding the Tiger Woods crash, scrutinizing viral claims, and analyzing the particulars of his prior DUI...</p>
-            <a href="https://analyticsdrive.tech/tiger-woods-crash-viral-claims-dui-arrest-details-unpacked/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/twitch-streamer-musa-usa-robbed-live-baltimore.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/twitch-streamer-musa-usa-robbed-live-baltimore-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/twitch-streamer-musa-usa-robbed-live-baltimore-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Twitch Streamer Robbed Live: Viral Incident Rocks Baltimore" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Entertainment">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/twitch-streamer-musa-usa-robbed-live-baltimore/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/twitch-streamer-musa-usa-robbed-live-baltimore.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/twitch-streamer-musa-usa-robbed-live-baltimore-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/twitch-streamer-musa-usa-robbed-live-baltimore-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Twitch Streamer Robbed Live: Viral Incident Rocks Baltimore" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge entertainment">
+                    <a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-29T02:21:00+05:30">Sun 29 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/twitch-streamer-musa-usa-robbed-live-baltimore/">Twitch Streamer Robbed Live: Viral Incident Rocks Baltimore</a>
+                </h3>
+                <p class="card-excerpt">A recent incident where Twitch streamer Musa_Usa was robbed live in Baltimore has gone viral, sparking concerns...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Chloe Bennett</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-29T02:21:00+05:30">Sun 29 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">20 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/twitch-streamer-musa-usa-robbed-live-baltimore/">Twitch Streamer Robbed Live: Viral Incident Rocks Baltimore</a></h3>
-            <p>A recent incident where Twitch streamer Musa_Usa was robbed live in Baltimore has gone viral, sparking concerns about streamer safety...</p>
-            <a href="https://analyticsdrive.tech/twitch-streamer-musa-usa-robbed-live-baltimore/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/viral-ncaa-coach-rant-coaching-debate.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/viral-ncaa-coach-rant-coaching-debate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-ncaa-coach-rant-coaching-debate-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Viral NCAA Coach Rant Sparks Debate on Coaching: A Deep Dive" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Sports">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/viral-ncaa-coach-rant-coaching-debate/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/viral-ncaa-coach-rant-coaching-debate.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/viral-ncaa-coach-rant-coaching-debate-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-ncaa-coach-rant-coaching-debate-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Viral NCAA Coach Rant Sparks Debate on Coaching: A Deep Dive" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge sports">
+                    <a href="https://analyticsdrive.tech/category/sports.html">Sports</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T16:36:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/sports.html">Sports</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/viral-ncaa-coach-rant-coaching-debate/">Viral NCAA Coach Rant Sparks Debate on Coaching: A Deep Dive</a>
+                </h3>
+                <p class="card-excerpt">A viral NCAA coach rant has ignited a national debate on coaching styles, athlete welfare, and the intense pressures...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Arjun Desai</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T16:36:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/viral-ncaa-coach-rant-coaching-debate/">Viral NCAA Coach Rant Sparks Debate on Coaching: A Deep Dive</a></h3>
-            <p>A viral NCAA coach rant has ignited a national debate on coaching styles, athlete welfare, and the intense pressures within college...</p>
-            <a href="https://analyticsdrive.tech/viral-ncaa-coach-rant-coaching-debate/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Viral Video: Florida Airboat Fires on Alligator Ignites Debate" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-video-florida-airboat-fires-alligator-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Viral Video: Florida Airboat Fires on Alligator Ignites Debate" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T16:32:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/">Viral Video: Florida Airboat Fires on Alligator Ignites Debate</a>
+                </h3>
+                <p class="card-excerpt">A viral video of a Florida airboat operator firing on an alligator sparks outrage & legal scrutiny. Dive into the...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T16:32:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/">Viral Video: Florida Airboat Fires on Alligator Ignites Debate</a></h3>
-            <p>A viral video of a Florida airboat operator firing on an alligator sparks outrage & legal scrutiny. Dive into the incident, wildlife...</p>
-            <a href="https://analyticsdrive.tech/viral-video-florida-airboat-fires-alligator/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Middle East on Edge: New Strikes Escalate Tensions Regionally" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/middle-east-on-edge-new-strikes-escalate-tensions-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Middle East on Edge: New Strikes Escalate Tensions Regionally" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T16:29:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/">Middle East on Edge: New Strikes Escalate Tensions Regionally</a>
+                </h3>
+                <p class="card-excerpt">Amidst renewed regional skirmishes, the Middle East on Edge: New Strikes Escalate Tensions, plunging the volatile...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T16:29:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/">Middle East on Edge: New Strikes Escalate Tensions Regionally</a></h3>
-            <p>Amidst renewed regional skirmishes, the Middle East on Edge: New Strikes Escalate Tensions, plunging the volatile region into deeper uncertainty.</p>
-            <a href="https://analyticsdrive.tech/middle-east-on-edge-new-strikes-escalate-tensions/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/understanding-history-major-international-alliances.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/understanding-history-major-international-alliances-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/understanding-history-major-international-alliances-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Understanding the History of Major International Alliances: A Deep Dive" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Geopolitics">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/understanding-history-major-international-alliances/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/understanding-history-major-international-alliances.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/understanding-history-major-international-alliances-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/understanding-history-major-international-alliances-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Understanding the History of Major International Alliances: A Deep Dive" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge geopolitics">
+                    <a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T16:16:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/geopolitics.html">Geopolitics</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/understanding-history-major-international-alliances/">Understanding the History of Major International Alliances: A Deep Dive</a>
+                </h3>
+                <p class="card-excerpt">Dive deep into understanding the history of major international alliances, exploring their evolution, impact on...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Marcus Thorne</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T16:16:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">29 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/understanding-history-major-international-alliances/">Understanding the History of Major International Alliances: A Deep Dive</a></h3>
-            <p>Dive deep into understanding the history of major international alliances, exploring their evolution, impact on global stability, and...</p>
-            <a href="https://analyticsdrive.tech/understanding-history-major-international-alliances/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/druskis-erika-kirk-skit-goes-viral.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/druskis-erika-kirk-skit-goes-viral-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/druskis-erika-kirk-skit-goes-viral-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Druski's Erika Kirk Skit Goes Viral, Sparks Millions of Views" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Entertainment">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/druskis-erika-kirk-skit-goes-viral/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/druskis-erika-kirk-skit-goes-viral.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/druskis-erika-kirk-skit-goes-viral-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/druskis-erika-kirk-skit-goes-viral-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Druski's Erika Kirk Skit Goes Viral, Sparks Millions of Views" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge entertainment">
+                    <a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T13:43:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/entertainment.html">Entertainment</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/druskis-erika-kirk-skit-goes-viral/">Druski's Erika Kirk Skit Goes Viral, Sparks Millions of Views</a>
+                </h3>
+                <p class="card-excerpt">Comedian Druski's viral skit, a sharp parody of conservative figure Erika Kirk, has sparked millions of views and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Chloe Bennett</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T13:43:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">12 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/druskis-erika-kirk-skit-goes-viral/">Druski's Erika Kirk Skit Goes Viral, Sparks Millions of Views</a></h3>
-            <p>Comedian Druski's viral skit, a sharp parody of conservative figure Erika Kirk, has sparked millions of views and ignited intense online...</p>
-            <a href="https://analyticsdrive.tech/druskis-erika-kirk-skit-goes-viral/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/viral-alligator-shooting-florida-everglades-outrage.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/viral-alligator-shooting-florida-everglades-outrage-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-alligator-shooting-florida-everglades-outrage-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Viral Alligator Shooting Sparks Outrage in Florida Everglades: Streamer Under Investigation" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="World News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/viral-alligator-shooting-florida-everglades-outrage/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/viral-alligator-shooting-florida-everglades-outrage.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/viral-alligator-shooting-florida-everglades-outrage-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/viral-alligator-shooting-florida-everglades-outrage-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Viral Alligator Shooting Sparks Outrage in Florida Everglades: Streamer Under Investigation" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge world-news">
+                    <a href="https://analyticsdrive.tech/category/world-news.html">World News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-27T13:33:00+05:30">Fri 27 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/world-news.html">World News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/viral-alligator-shooting-florida-everglades-outrage/">Viral Alligator Shooting Sparks Outrage in Florida Everglades: Streamer Under Investigation</a>
+                </h3>
+                <p class="card-excerpt">A viral video showing an alleged alligator shooting in Florida's Everglades by streamer 'Clavicular' sparks outrage....</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Elena Rostova</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-27T13:33:00+05:30">Fri 27 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/viral-alligator-shooting-florida-everglades-outrage/">Viral Alligator Shooting Sparks Outrage in Florida Everglades: Streamer Under Investigation</a></h3>
-            <p>A viral video showing an alleged alligator shooting in Florida's Everglades by streamer 'Clavicular' sparks outrage. FWC investigates...</p>
-            <a href="https://analyticsdrive.tech/viral-alligator-shooting-florida-everglades-outrage/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt=""Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Culture">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/blanket-lady-cheers-go-viral-sports-fan-sensation-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt=""Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge culture">
+                    <a href="https://analyticsdrive.tech/category/culture.html">Culture</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-26T23:23:00+05:30">Thu 26 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/culture.html">Culture</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/">"Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation</a>
+                </h3>
+                <p class="card-excerpt">Elvera "Peps" Neuman, the 81-year-old "Blanket Lady," has become a viral sports sensation with her infectious...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Sophia Jenkins</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-26T23:23:00+05:30">Thu 26 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/">"Blanket Lady" Cheers Go Viral: Sports Fan Sensation Ignites Gophers Nation</a></h3>
-            <p>Elvera "Peps" Neuman, the 81-year-old "Blanket Lady," has become a viral sports sensation with her infectious Minnesota Gophers...</p>
-            <a href="https://analyticsdrive.tech/blanket-lady-cheers-go-viral-sports-fan-sensation/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/bucees-pump-policy-viral-customer-fury.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/bucees-pump-policy-viral-customer-fury-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/bucees-pump-policy-viral-customer-fury-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Buc-ee's Pump Policy Sparks Viral Customer Fury" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Culture">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/bucees-pump-policy-viral-customer-fury/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/bucees-pump-policy-viral-customer-fury.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/bucees-pump-policy-viral-customer-fury-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/bucees-pump-policy-viral-customer-fury-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Buc-ee's Pump Policy Sparks Viral Customer Fury" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge culture">
+                    <a href="https://analyticsdrive.tech/category/culture.html">Culture</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-26T23:17:00+05:30">Thu 26 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/culture.html">Culture</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/bucees-pump-policy-viral-customer-fury/">Buc-ee's Pump Policy Sparks Viral Customer Fury</a>
+                </h3>
+                <p class="card-excerpt">A new Buc-ee's pump policy prohibiting gift cards for fuel and requiring card payments at the pump has sparked viral...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Sophia Jenkins</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-26T23:17:00+05:30">Thu 26 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">14 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/bucees-pump-policy-viral-customer-fury/">Buc-ee's Pump Policy Sparks Viral Customer Fury</a></h3>
-            <p>A new Buc-ee's pump policy prohibiting gift cards for fuel and requiring card payments at the pump has sparked viral customer fury and...</p>
-            <a href="https://analyticsdrive.tech/bucees-pump-policy-viral-customer-fury/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/social-media-giants-liable-addiction-trial-verdict-analysis.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/social-media-giants-liable-addiction-trial-verdict-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/social-media-giants-liable-addiction-trial-verdict-analysis-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Social Media Giants Liable: Addiction Trial Verdict Reshapes Tech Accountability" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Technology">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/social-media-giants-liable-addiction-trial-verdict-analysis/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/social-media-giants-liable-addiction-trial-verdict-analysis.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/social-media-giants-liable-addiction-trial-verdict-analysis-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/social-media-giants-liable-addiction-trial-verdict-analysis-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Social Media Giants Liable: Addiction Trial Verdict Reshapes Tech Accountability" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge technology">
+                    <a href="https://analyticsdrive.tech/category/technology.html">Technology</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-26T23:13:00+05:30">Thu 26 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/technology.html">Technology</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/social-media-giants-liable-addiction-trial-verdict-analysis/">Social Media Giants Liable: Addiction Trial Verdict Reshapes Tech Accountability</a>
+                </h3>
+                <p class="card-excerpt">Landmark verdicts in New Mexico and California find Meta & Google liable for social media addiction, reshaping tech...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By James Harrington</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-26T23:13:00+05:30">Thu 26 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/social-media-giants-liable-addiction-trial-verdict-analysis/">Social Media Giants Liable: Addiction Trial Verdict Reshapes Tech Accountability</a></h3>
-            <p>Landmark verdicts in New Mexico and California find Meta & Google liable for social media addiction, reshaping tech accountability....</p>
-            <a href="https://analyticsdrive.tech/social-media-giants-liable-addiction-trial-verdict-analysis/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/spring-breakers-geopolitics-gaffe-shocks.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/spring-breakers-geopolitics-gaffe-shocks-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/spring-breakers-geopolitics-gaffe-shocks-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="Spring Breakers' Viral Geopolitics Gaffe Shocks Global Viewers" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Culture">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/spring-breakers-geopolitics-gaffe-shocks/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/spring-breakers-geopolitics-gaffe-shocks.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/spring-breakers-geopolitics-gaffe-shocks-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/spring-breakers-geopolitics-gaffe-shocks-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="Spring Breakers' Viral Geopolitics Gaffe Shocks Global Viewers" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge culture">
+                    <a href="https://analyticsdrive.tech/category/culture.html">Culture</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-25T17:16:00+05:30">Wed 25 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/culture.html">Culture</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/spring-breakers-geopolitics-gaffe-shocks/">Spring Breakers' Viral Geopolitics Gaffe Shocks Global Viewers</a>
+                </h3>
+                <p class="card-excerpt">A recent Spring Breakers' Viral Geopolitics Gaffe Shocks global audiences, sparking debate on digital diplomacy and...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Sophia Jenkins</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-25T17:16:00+05:30">Wed 25 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/spring-breakers-geopolitics-gaffe-shocks/">Spring Breakers' Viral Geopolitics Gaffe Shocks Global Viewers</a></h3>
-            <p>A recent Spring Breakers' Viral Geopolitics Gaffe Shocks global audiences, sparking debate on digital diplomacy and the ripple effects...</p>
-            <a href="https://analyticsdrive.tech/spring-breakers-geopolitics-gaffe-shocks/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/wnba-salaries-soar-new-cba-quadruples-player-pay.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/wnba-salaries-soar-new-cba-quadruples-player-pay-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/wnba-salaries-soar-new-cba-quadruples-player-pay-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="WNBA Salaries Soar: New CBA Quadruples Player Pay, Reshaping the League" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Sports">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/wnba-salaries-soar-new-cba-quadruples-player-pay/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/wnba-salaries-soar-new-cba-quadruples-player-pay.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/wnba-salaries-soar-new-cba-quadruples-player-pay-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/wnba-salaries-soar-new-cba-quadruples-player-pay-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="WNBA Salaries Soar: New CBA Quadruples Player Pay, Reshaping the League" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge sports">
+                    <a href="https://analyticsdrive.tech/category/sports.html">Sports</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-25T10:44:00+05:30">Wed 25 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/sports.html">Sports</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/wnba-salaries-soar-new-cba-quadruples-player-pay/">WNBA Salaries Soar: New CBA Quadruples Player Pay, Reshaping the League</a>
+                </h3>
+                <p class="card-excerpt">The groundbreaking 2020 WNBA Collective Bargaining Agreement has led to significant financial gains, and WNBA...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Arjun Desai</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-25T10:44:00+05:30">Wed 25 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">11 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/wnba-salaries-soar-new-cba-quadruples-player-pay/">WNBA Salaries Soar: New CBA Quadruples Player Pay, Reshaping the League</a></h3>
-            <p>The groundbreaking 2020 WNBA Collective Bargaining Agreement has led to significant financial gains, and WNBA Salaries Soar: New CBA...</p>
-            <a href="https://analyticsdrive.tech/wnba-salaries-soar-new-cba-quadruples-player-pay/" class="read-more">Read Article &rarr;</a>
         </article>
-        <article class="post-card">
-            <div class="post-card-image">
-                <img 
-                  src="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend.webp" 
-                  srcset="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-mobile.webp 400w"
-                  sizes="(max-width: 600px) 100vw, 400px"
-                  alt="March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend" 
-                  loading="lazy" />
+        <article class="modern-card" data-category="Latest News">
+            <div class="card-media-wrapper">
+                <a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/" tabindex="-1" aria-hidden="true">
+                        <img 
+                          src="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend.webp" 
+                          srcset="https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-tablet.webp 800w, https://analyticsdrive.tech/images/2026/03/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend-mobile.webp 400w"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                          alt="March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend" 
+                          loading="lazy" width="600" height="338" />
+                </a>
+                <span class="card-category-badge latest-news">
+                    <a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a>
+                </span>
             </div>
 
-            <div class="post-meta">
-                <time datetime="2026-03-23T23:29:00+05:30">Mon 23 March 2026</time>
-                <span class="category"><a href="https://analyticsdrive.tech/category/latest-news.html">Latest News</a></span>
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/">March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend</a>
+                </h3>
+                <p class="card-excerpt">The 2026 March Madness tournament delivered incredible upsets and dominant performances. Iowa upset Florida, ending...</p>
+                <div class="card-footer-meta">
+                    <div class="author-info">
+                        <span class="author-name">By Maya Patel</span>
+                        <span class="meta-dot">•</span>
+                        <time datetime="2026-03-23T23:29:00+05:30">Mon 23 March 2026</time>
+                    </div>
+                    <span class="read-time-pill">13 min read</span>
+                </div>
             </div>
-            <h3><a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/">March Madness: Iowa Upsets Florida, UConn Advances in Thrilling Weekend</a></h3>
-            <p>The 2026 March Madness tournament delivered incredible upsets and dominant performances. Iowa upset Florida, ending their title run,...</p>
-            <a href="https://analyticsdrive.tech/march-madness-iowa-upsets-florida-uconn-advances-thrilling-weekend/" class="read-more">Read Article &rarr;</a>
         </article>
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <a href="https://analyticsdrive.tech/tag/usa8.html">&laquo; Newer</a>
-        <a href="https://analyticsdrive.tech/tag/usa10.html">Older &raquo;</a>
-    </div>
+    <!-- Polished Pagination -->
+    <nav class="pagination" aria-label="Tag Page Navigation">
+            <a href="https://analyticsdrive.tech/tag/usa8.html" class="page-link">&laquo; Newer Stories</a>
+
+        <span class="page-current">Page 9 of 11</span>
+
+        <a href="https://analyticsdrive.tech/tag/usa10.html" class="page-link">Older Stories &raquo;</a>
+    </nav>
 
 </section>
     </main>
